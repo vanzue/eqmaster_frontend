@@ -11,9 +11,14 @@
 					const homepageData = this.$store.getters.getHomepageData;
 					console.log(homepageData);
 					if (homepageData.response && homepageData.response.eq_scores) {
-						uni.navigateTo({
-							url: `/pages/dashboard/dashboard_en?currentView=dashboard`
-						});
+						const currentPages = getCurrentPages();
+            			const currentRoute = currentPages[currentPages.length - 1].route;
+						// console.log(currentRoute);
+						if(currentRoute === 'pages/landing/landing' || currentRoute === '') {
+							uni.navigateTo({
+								url: `/pages/dashboard/dashboard_en?currentView=dashboard`
+							});
+						}
 					}
 				}).catch((error) => {
 					console.error('Error fetching homepage data:', error);
