@@ -31,7 +31,7 @@
       v-if="showToolTips && isTooltipVisible && showTaskTooltip"
       class="taskTooltip"
     >
-      查看任务清单
+      Review all tasks
     </view>
 
     <view class="npc-group" :class="{ shadowed: shouldShadow }">
@@ -148,7 +148,7 @@
       "
       class="recordTooltip"
     >
-      长按开始录音
+      Hold to record
     </view>
     <!-- #endif -->
 
@@ -162,7 +162,7 @@
       "
       class="keyboardToolTip"
     >
-      输入您的回复
+      Enter your reply
     </view>
     <!-- #endif -->
     <!-- tooltip for hint -->
@@ -175,7 +175,7 @@
       "
       class="hintTooltip"
     >
-      需要帮助吗？选择锦囊卡片
+		Need help? Here's your advice packet
     </view>
     <view class="player-action-container" :class="{ shadowed: shouldShadow }">
       <view class="action-item" v-if="!isRecording" @click="handleClickInput()">
@@ -219,7 +219,7 @@
       <view class="input-container" @click.stop>
         <!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
         <textarea
-          placeholder="请输入文字"
+          placeholder="Enter here.."
           v-model="inputContent"
           auto-height
           @blur="inputRecordingBlur"
@@ -391,7 +391,7 @@ export default {
     console.log("state userid", state.userId);
     // 动态添加任务到 taskList
     this.taskList.addTask(
-      new Task(0, "一句话让同事们赞不绝口", async (judgeResult) => {
+      new Task(0, "Cheer up Sam while avoiding further infuriating Jason", async (judgeResult) => {
         const allPositive = judgeResult.moods.every(
           (item) => parseInt(item.mood, 10) > 0
         );
@@ -406,7 +406,7 @@ export default {
       })
     );
     this.taskList.addTask(
-      new Task(1, "让老板对你点的菜很满意", async (judgeResult) => {
+      new Task(1, "Facilitate team input and ensure at least one colleague supports your approach", async (judgeResult) => {
         let res = "";
 
         judgeResult.moods.filter((mood) => {
@@ -1019,12 +1019,12 @@ export default {
                 this.taskList.doneTaskLength++;
                 this.judgeTitle =
                   `(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-                  " 任务达成";
+                  " Goals achieved!";
                 if (this.taskList.doneTaskLength >= totalTaskLength) {
                   this.task1Finished = true;
                 }
               } else {
-                this.judgeTitle = "任务达成";
+                this.judgeTitle = "Goal achieved";
                 this.isCompleteTask = true;
               }
             } else {
@@ -1033,14 +1033,11 @@ export default {
             }
           } else {
             this.state = "judge";
-            this.judgeTitle = "做的好";
+            this.judgeTitle = "Well done";
             this.isCompleteTask = false;
           }
         } else {
-          console.log("回答评估开始2");
           if (this.answerNotGoodNum < 2) {
-            console.log("回答评估开始3");
-            console.log("this.answerNotGoodNum数量", this.answerNotGoodNum);
             this.answerNotGoodNum++;
             this.isGoodReply = true;
             this.state = "userTalk";
@@ -1051,7 +1048,6 @@ export default {
               await this.gotoNextRound();
             }, 3000);
           } else {
-            console.log("回答评估开始4");
             this.isGoodReply = false;
             this.isTooltipVisible = true;
             // this.showHintTooltip = true;
@@ -1061,7 +1057,7 @@ export default {
               this.showHintTooltip = false;
             }
             console.log("tooltip for hint", this.isTooltipVisible);
-            this.judgeTitle = "还有提升空间";
+            this.judgeTitle = "You can make it better!";
             this.isCompleteTask = false;
             this.judgeContent = judgeResult.comments;
             this.state = "judgeTry";
@@ -1074,12 +1070,11 @@ export default {
     async checkBossComplimentTask2(dialog) {
       let taskCompleted = false;
       if (!this.task1Finished && !this.taskList.getTask(1).one) {
-        const bossCompliment = "你点的菜真不错";
+        const goalKeyword = "I agree with you";
         // console.log("dialog":this.dialog);
         for (let chat of dialog) {
-          if (chat.role === "Jason" && chat.content.includes(bossCompliment)) {
+          if (chat.content.includes(goalKeyword)) {
             if (this.taskList && this.taskList.getTask(1)) {
-              console.log("task2 is true");
               this.isGoodReply = true;
               this.state = "judge";
               const task2 = this.taskList.getTask(1);
@@ -1094,11 +1089,10 @@ export default {
                   await this.taskList.getTotalTaskLength();
                 this.judgeTitle =
                   `(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-                  " 任务达成";
-                console.log("Task 2 completed");
+                  " Goals achieved";
                 taskCompleted = false;
               } else {
-                this.judgeTitle = "任务达成";
+                this.judgeTitle = "Goal achieved";
                 this.isCompleteTask = true;
                 taskCompleted = true;
               }
@@ -1110,7 +1104,6 @@ export default {
         }
         const totalTaskLength = await this.taskList.getTotalTaskLength();
         if (this.taskList.doneTaskLength >= totalTaskLength) {
-          console.log("Task 222 completed");
           this.task1Finished = true;
           this.isPass = true;
           await this.Pass();
