@@ -2,7 +2,6 @@
 	<view class="container">
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
-		<!-- <image class="background-image" src="/static/bg1.png" mode="aspectFill" /> -->
 
 		<view class="progress-container">
 			<view class="progress-bar">
