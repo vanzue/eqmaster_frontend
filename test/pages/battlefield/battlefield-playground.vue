@@ -241,19 +241,11 @@
       ></judge>
     </view>
 
-    <!-- 精囊卡片 -->
-    <view
-      v-if="showCardPopup"
-      class="popup-overlay"
-      @click="showCardPopup = false"
-    >
-      <CueCardsVue
-        @closeCueCard="closeCueCard"
-        @exchangeClick="exchangeClick"
-        :cardButtonLoading="cardButtonLoading"
-        :jobId="jobId"
-      />
-    </view>
+		<!-- 精囊卡片 -->
+		<view v-if="showCardPopup" class="popup-overlay" @click="showCardPopup = false">
+			<CueCardsVue @closeCueCard="closeCueCard" @exchangeClick="exchangeClick"
+				:cardButtonLoading="cardButtonLoading" />
+		</view>
 
     <view v-if="missionShow" class="judge-mission-container">
       <MissionList
@@ -305,7 +297,7 @@ export default {
   },
   data() {
     return {
-      userId: state.userId,
+      // userId: state.userId,
       judgeTitle: "",
       judgeContent: "",
       userJudgeContent: "",
@@ -377,7 +369,7 @@ export default {
         loading: false,
         text: "",
       },
-      jobId: "",
+      // jobId: "",
       answerNotGoodNum: 0,
       totalTaskNum: 1,
       completedTaskNum: 1,
@@ -882,29 +874,30 @@ export default {
               });
             });
 
-            const validChatsRepy = filterChatHistory(this.allHistory);
-            const judgeResultRepy = await reply(validChatsRepy);
-            await this.handleRecorderReply(judgeResultRepy);
-          }
-        }
-        if (selectedCard == 2) {
-          this.anasLoadingObj = {
-            loading: true,
-            text: "生成中",
-          };
-          judgeResult = await hint(validChats);
-          // console.log(judgeResult.tips);
-          if (judgeResult.tips) {
-            this.showCardPopup = false;
-            const newMessage2 = {
-              role: "tipping",
-              content: judgeResult.tips,
-              shouldAnimate: false,
-            };
-            this.chattingHistory.push(newMessage2);
-            this.$nextTick(() => {
-              // Force a repaint to trigger the animation
-              void this.$el.offsetWidth;
+							const validChatsRepy = filterChatHistory(this.allHistory);
+							const judgeResultRepy = await reply(validChatsRepy);
+							await this.handleRecorderReply(judgeResultRepy);
+							this.$store.dispatch('fetchHomepageData');
+						}
+					}
+					if (selectedCard == 2) {
+						this.anasLoadingObj = {
+							loading: true,
+							text: "生成中",
+						};
+						judgeResult = await hint(validChats);
+						// console.log(judgeResult.tips);
+						if (judgeResult.tips) {
+							this.showCardPopup = false;
+							const newMessage2 = {
+								role: "tipping",
+								content: judgeResult.tips,
+								shouldAnimate: false,
+							};
+							this.chattingHistory.push(newMessage2);
+							this.$nextTick(() => {
+								// Force a repaint to trigger the animation
+								void this.$el.offsetWidth;
 
               newMessage2.shouldAnimate = true;
               this.anasLoadingObj.text = "分析中";
@@ -1184,6 +1177,12 @@ export default {
     },
   },
   computed: {
+    userId() {
+      return this.$store.getters.getUserId;
+    },
+    jobId() {
+      return this.$store.getters.getJobId;
+    },
     shouldShadow() {
       return (
         this.state === "NpcTalk" || this.isRecording || this.showTippingCard

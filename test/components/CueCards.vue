@@ -9,7 +9,7 @@
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
 					<view class="jewelry-num">
-						{{ Math.round(homepageData?.response?.eq_scores?.score || 0) }}
+						{{ homepageData?.response?.personal_info?.num_diamond || 0 }}
 					</view>
 				</view>
 			</view>
@@ -62,10 +62,6 @@
 				type: Boolean,
 				default: false
 			},
-			jobId: {
-				type: String,
-				default: '',
-			}
 		},
 		data() {
 			return {
@@ -91,6 +87,9 @@
 			console.log(option);
 		},
 		computed: {
+			userId() {
+				return this.$store.getters.getUserId;
+			},
 			eqScoresNum() {
 				if(Math.round(this.homepageData?.response?.eq_scores?.score || 0) <= 0) {
 					return false;
@@ -109,9 +108,9 @@
 				try {
 					this.isLoading = true;
 					this.error = null;
-					console.log('Fetching homepage data with jobId:', this.jobId);
+					console.log('Fetching homepage data with userId:', this.userId);
 			
-					const data = await apiService.getHomepageData(this.jobId);
+					const data = await apiService.getHomepageData(this.userId);
 					this.homepageData = data;
 					console.log('Homepage data received:', this.homepageData);
 			

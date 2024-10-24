@@ -229,7 +229,7 @@ export default {
 			});
 
 			if (response.statusCode === 200) {
-				console.error('response:', response);
+				console.log('response:', response);
 				return response.data;
 			} else {
 				throw new Error(`Failed to start scenario: ${response.statusCode}`);
