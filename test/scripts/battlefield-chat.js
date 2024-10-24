@@ -1,7 +1,10 @@
 // 定义常量URL
-const BASE_URL = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/chat/battlefield_agent';
-const EVAL_URL = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield';
-const TOOLTIP_URL = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/course_exists';
+const BASE_URL =
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/chat/battlefield_agent";
+const EVAL_URL =
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield";
+const TOOLTIP_URL =
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/course_exists";
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
 function sendRequest(
   person_id,
@@ -55,7 +58,9 @@ function formatChatContent(chat_content) {
   };
 
   chat_content.forEach((chat) => {
-    if (["领导", "同事A", "同事B", "Jason", "Sam", "Anna"].includes(chat.role)) {
+    if (
+      ["领导", "同事A", "同事B", "Jason", "Sam", "Anna"].includes(chat.role)
+    ) {
       // If the role is one of the NPCs, add it to the assistant's dialog
       assistantDialog.content[0].text.dialog.push({
         role: chat.role,
@@ -106,7 +111,6 @@ function formatChatContent(chat_content) {
 
         // Add the user's dialogue to formattedChatContent
         formattedChatContent.push(userDialog);
-
       }
     }
   });
