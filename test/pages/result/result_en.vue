@@ -32,7 +32,7 @@
 								<text class="card-title">{{ illustrationSrc.weakness }}</text>
 								<text class="card-description">{{ illustrationSrc.characteristics }}</text>
 							</view>
-						</view>
+						</view> 
 					</view>
 				</view>
 
@@ -215,7 +215,7 @@
 					</view>
 				</view>
 				<view class="guide-button-container">
-					<button class="guide-button" @click="navigateToGuide">My customized courses</button>
+					<button class="guide-button" @click="navigateToGuide">My personalized courses</button>
 				</view>
 			</view>
 		</scroll-view>
@@ -231,44 +231,56 @@
 			return {
 				score: 28, // 示例分数，可根据需要动态更改
 				maxScore: 100, // 假设最大分数为100
-				userId: '',
-				username: '',
+				// userId: '',
+				// username: '',
 				gender: '',
 				birthday: null,
-				homepageData: {
-					response: {
-						personal_info: {
-							name: '',
-							tag: '',
-							tag_description: '',
-							job_id: ''
-						},
-						eq_scores: {
-							score: 0,
-							dimension1_score: 0,
-							dimension1_detail: '',
-							dimension2_score: 0,
-							dimension2_detail: '',
-							dimension3_score: 0,
-							dimension3_detail: '',
-							dimension4_score: 0,
-							dimension4_detail: '',
-							dimension5_score: 0,
-							dimension5_detail: '',
-							summary: '',
-							detail: '',
-							overall_suggestion: '',
-							detail_summary: ''
-						},
-						contacts: []
-					}
-				},
+				// homepageData: {
+				// 	response: {
+				// 		personal_info: {
+				// 			name: '',
+				// 			tag: '',
+				// 			tag_description: '',
+				// 			job_id: ''
+				// 		},
+				// 		eq_scores: {
+				// 			score: 0,
+				// 			dimension1_score: 0,
+				// 			dimension1_detail: '',
+				// 			dimension2_score: 0,
+				// 			dimension2_detail: '',
+				// 			dimension3_score: 0,
+				// 			dimension3_detail: '',
+				// 			dimension4_score: 0,
+				// 			dimension4_detail: '',
+				// 			dimension5_score: 0,
+				// 			dimension5_detail: '',
+				// 			summary: '',
+				// 			detail: '',
+				// 			overall_suggestion: '',
+				// 			detail_summary: ''
+				// 		},
+				// 		contacts: []
+				// 	}
+				// },
 				progress: 0,
 				imageWidth: 2000,
 				isExpanded: false, // 默认收起状态
 			};
 		},
 		computed: {
+			homepageData() {
+				return this.$store.getters.getHomepageData;
+			},
+			userId() {
+				return this.$store.getters.getUserId;
+			},
+			username() {
+				return this.$store.getters.getUsername;
+			},
+			homepageData() {
+				return this.$store.getters.getHomepageData;
+			},
 			formattedBirthday() {
 				if (this.birthday) {
 					const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
@@ -277,10 +289,6 @@
 				return '未设置';
 			},
 			illustrationSrc() {
-				const scores = this.homepageData.response.eq_scores;
-				const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores
-					.dimension4_score, scores.dimension5_score);
-				
 				let returnObj = {
 					animal_name: 'Capypara',
 					animal_icon: '/static/resulten/monkey.png',
@@ -288,89 +296,110 @@
 					weakness: 'Weakness',
 					characteristics: '',
 				}
+				if(this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
+					const scores = this.homepageData.response.eq_scores;
+					const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores
+						.dimension4_score, scores.dimension5_score);
+					
 
-				// 根据最低分选择图片
-				if (minScore === scores.dimension1_score) { //Capypara 水豚
-					console.log("illustration src:", '1')
-					returnObj = {
-						animal_name: 'Capypara',
-						animal_icon: '/static/resulten/capybara.png',
-						animal_name_bg: '/static/resulten/animal-name-1.png',
-						weakness: 'Motivation',
-						characteristics: 'The capybara reflects a laid-back nature, symbolizing challenges in motivation.',
-					}
-					// return '/static/aniimals/kapibala.png';
-				} else if (minScore === scores.dimension2_score) {//hedgehog 刺猬
-					console.log("illustration src:", '2')
-					returnObj = {
-						animal_name: 'hedgehog',
-						animal_icon: '/static/resulten/hedgehog.png',
-						animal_name_bg: '/static/resulten/animal-name-1.png',
-						weakness: 'Empathy',
-						characteristics: 'The hedgehog represents self-protection, symbolizing difficulty perceiving emotions.',
-					}
-				} else if (minScore === scores.dimension3_score) {//Coyote 狼
-					console.log("illustration src:", '3')
-					returnObj = {
-						animal_name: 'Coyote',
-						animal_icon: '/static/resulten/coyote.png',
-						animal_name_bg: '/static/resulten/animal-name-1.png',
-						weakness: 'Social Skill',
-						characteristics: 'The coyote reflects independence, symbolizing challenges in social connections.',
-					}
-				} else if (minScore === scores.dimension4_score) {//Ostrich 鸵鸟
-					console.log("illustration src:", '4')
-					returnObj = {
-						animal_name: 'Ostrich',
-						animal_icon: '/static/resulten/ostrich.png',
-						animal_name_bg: '/static/resulten/animal-name-1.png',
-						weakness: 'Perception',
-						characteristics: 'The ostrich reflects avoidance, symbolizing difficulty recognizing emotions.',
-					}
-				} else if (minScore === scores.dimension5_score) {//Monkey 猴子
-					console.log("illustration src:", '5')
-					returnObj = {
-						animal_name: 'Monkey',
-						animal_icon: '/static/resulten/monkey.png',
-						animal_name_bg: '/static/resulten/animal-name-1.png',
-						weakness: 'Self-regulation',
-						characteristics: 'The monkey represents impulsiveness, symbolizing difficulty controlling emotions.',
+					// 根据最低分选择图片
+					if (minScore === scores.dimension1_score) { //Capypara 水豚
+						console.log("illustration src:", '1')
+						returnObj = {
+							animal_name: 'Capypara',
+							animal_icon: '/static/resulten/capybara.png',
+							animal_name_bg: '/static/resulten/animal-name-1.png',
+							weakness: 'Motivation',
+							characteristics: 'The capybara reflects a laid-back nature, symbolizing challenges in motivation.',
+						}
+						// return '/static/aniimals/kapibala.png';
+					} else if (minScore === scores.dimension2_score) {//hedgehog 刺猬
+						console.log("illustration src:", '2')
+						returnObj = {
+							animal_name: 'hedgehog',
+							animal_icon: '/static/resulten/hedgehog.png',
+							animal_name_bg: '/static/resulten/animal-name-1.png',
+							weakness: 'Empathy',
+							characteristics: 'The hedgehog represents self-protection, symbolizing difficulty perceiving emotions.',
+						}
+					} else if (minScore === scores.dimension3_score) {//Coyote 狼
+						console.log("illustration src:", '3')
+						returnObj = {
+							animal_name: 'Coyote',
+							animal_icon: '/static/resulten/coyote.png',
+							animal_name_bg: '/static/resulten/animal-name-1.png',
+							weakness: 'Social Skill',
+							characteristics: 'The coyote reflects independence, symbolizing challenges in social connections.',
+						}
+					} else if (minScore === scores.dimension4_score) {//Ostrich 鸵鸟
+						console.log("illustration src:", '4')
+						returnObj = {
+							animal_name: 'Ostrich',
+							animal_icon: '/static/resulten/ostrich.png',
+							animal_name_bg: '/static/resulten/animal-name-1.png',
+							weakness: 'Perception',
+							characteristics: 'The ostrich reflects avoidance, symbolizing difficulty recognizing emotions.',
+						}
+					} else if (minScore === scores.dimension5_score) {//Monkey 猴子
+						console.log("illustration src:", '5')
+						returnObj = {
+							animal_name: 'Monkey',
+							animal_icon: '/static/resulten/monkey.png',
+							animal_name_bg: '/static/resulten/animal-name-1.png',
+							weakness: 'Self-regulation',
+							characteristics: 'The monkey represents impulsiveness, symbolizing difficulty controlling emotions.',
+						}
 					}
 				}
 				return returnObj;
-			},
+			}
+		},
+		watch: {
+			homepageData: {
+				immediate: true,
+				async handler(val) {
+					// console.log(val)
+					if (val && val.response) {
+						this.drawRadar()
+					}
+				},
+			// deep: true,
+			}
+		},
+		created() {
+			// this.$store.dispatch('fetchHomepageData')
 		},
 		onLoad(option) {
 			console.log('option', option);
 			// 接收上一个页面传递的数据
-			this.userId = option.userId || '';
-			this.username = decodeURIComponent(option.username || '');
-			try {
-				uni.getStorage({
-					key: 'response',
-					success: (res) => {
-						console.log('########successfully retrieved data', res);
-						this.homepageData = res.data;
-						console.log('begin to draw radar');
-						this.drawRadar();
-					}
-				});
-			} catch (e) {
-				console.log('something error happened', e)
-			}
-			// 确保数据已经准备好
-			if (!this.username) {
-				uni.getStorage({
-					key: 'username',
-					success: (res) => {
-						this.username = res.data;
-						console.log('Username from storage:', this.username);
-					},
-					fail: () => {
-						console.error('Failed to get username from storage');
-					}
-				});
-			}
+			// this.userId = option.userId || '';
+			// this.username = decodeURIComponent(option.username || '');
+			// try {
+			// 	uni.getStorage({
+			// 		key: 'response',
+			// 		success: (res) => {
+			// 			console.log('########successfully retrieved data', res);
+			// 			this.homepageData = res.data;
+			// 			console.log('begin to draw radar');
+			// 			this.drawRadar();
+			// 		}
+			// 	});
+			// } catch (e) {
+			// 	console.log('something error happened', e)
+			// }
+			// // 确保数据已经准备好
+			// if (!this.username) {
+			// 	uni.getStorage({
+			// 		key: 'username',
+			// 		success: (res) => {
+			// 			this.username = res.data;
+			// 			console.log('Username from storage:', this.username);
+			// 		},
+			// 		fail: () => {
+			// 			console.error('Failed to get username from storage');
+			// 		}
+			// 	});
+			// }
 		},
 		onUnload() {
 		},
@@ -435,8 +464,11 @@
 					username: this.username,
 					jobId: this.homepageData.response.personal_info.job_id
 				});
+				// uni.navigateTo({
+				// 	url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
+				// });
 				uni.navigateTo({
-					url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
+					url: `/pages/dashboard/dashboard_en`
 				});
 			},
 			expand() {

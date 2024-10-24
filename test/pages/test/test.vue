@@ -2,6 +2,7 @@
 	<view class="container">
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
+		<!-- <image class="background-image" src="/static/bg1.png" mode="aspectFill" /> -->
 
 		<view class="progress-container">
 			<view class="progress-bar">
@@ -21,7 +22,7 @@
 			<view class="banner-container">
 				<image class="logo" src="/static/signa.png" mode="aspectFit" />
 				<view class="test">
-					<text class="room-text">{{ scenarioData.location }}</text>
+					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
 			</view>
 			<view class="text-box" @tap="navigateToTest1" :class="{ 'disabled': isLoading }">
@@ -62,7 +63,7 @@
 			<view class="banner-container">
 				<image class="logo" src="/static/signa.png" mode="aspectFit" />
 				<view class="test">
-					<text class="room-text">{{ scenarioData.location }}</text>
+					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
 			</view>
 			<view class="text-box" @tap="navigateToTest4" :class="{ 'disabled': isLoading }">
@@ -122,7 +123,7 @@
 				selectedOptions: [],
 				birthday: null,
 				scenarioData: null,
-				background: "请点击下方箭头继续",
+				background: "Please click the arrow below to continue",
 				jobId: "",
 				npcName: "",
 				npcAvatar: "",
@@ -138,65 +139,105 @@
 				scenarioId: 1, // Add this new property
 				isLoading: false,
 				chatHistory: [], // Keep this new property
+				backgroundImageSrc: '/static/bg1.png',
 			};
 		},
 		onLoad(option) {
 			console.log("Received options:", option);
-			this.initializeData(option);
-			this.initializeScenario();
 			// this.sendDataToBackend();
 		},
-		methods: {
-			initializeData(option) {
-				this.userId = option.userId || "";
-				this.username = decodeURIComponent(option.username || "");
-				this.gender = option.gender || "";
-				this.jobId = option.jobId || "";
-				console.log("jobID:", this.jobId);
-				this.background = option.background || "";
-				this.scenarioId = option.scenarioId || this.scenarioId;
-
-				if (option.options) {
-					try {
-						this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
-					} catch (e) {
-						console.error("Error parsing options:", e);
-						this.selectedOptions = [];
-					}
-				}
-
-				if (option.birthday) {
-					try {
-						this.birthday = JSON.parse(decodeURIComponent(option.birthday));
-					} catch (e) {
-						console.error("Error parsing birthday:", e);
-						this.birthday = null;
-					}
-				}
-
-				console.log("Parsed data:", {
-					userId: this.userId,
-					username: this.username,
-					gender: this.gender,
-					selectedOptions: this.selectedOptions,
-					birthday: this.birthday,
-					jobId: this.jobId,
+		async created() {
+			try {
+				await this.initializeData();
+				await this.getScenarioId();
+				await this.getScenarioData();
+			} catch (error) {
+				console.error("Error during created lifecycle:", error);
+				uni.showToast({
+					title: "初始化失败",
+					icon: "none",
 				});
+			}
+		},
+		methods: {
+			initializeData() {
+				const userId = uni.getStorageSync('userId');
+				const jobId = uni.getStorageSync('jobId');
+				if (!userId || !jobId) {
+					uni.navigateTo({ url: '/pages/landing/experience' });
+					return;
+				}
+				this.userId = userId || "";
+				const username = uni.getStorageSync('username');
+				if (!username) {
+					uni.navigateTo({ url: '/pages/landing/experience' });
+					return;
+				}
+				this.username = username;
+				// this.gender = option.gender || "";
+				this.jobId = jobId || "";
+				// console.log("jobID:", this.jobId);
+				// this.userId = option.userId || "";
+				// this.username = decodeURIComponent(option.username || "");
+				// this.gender = option.gender || "";
+				// this.jobId = option.jobId || "";
+				// console.log("jobID:", this.jobId);
+				// this.background = option.background || "";
+				// this.scenarioId = option.scenarioId || this.scenarioId;
+
+				// if (option.options) {
+				// 	try {
+				// 		this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
+				// 	} catch (e) {
+				// 		console.error("Error parsing options:", e);
+				// 		this.selectedOptions = [];
+				// 	}
+				// }
+
+				// if (option.birthday) {
+				// 	try {
+				// 		this.birthday = JSON.parse(decodeURIComponent(option.birthday));
+				// 	} catch (e) {
+				// 		console.error("Error parsing birthday:", e);
+				// 		this.birthday = null;
+				// 	}
+				// }
+
+				// console.log("Parsed data:", {
+				// 	userId: this.userId,
+				// 	username: this.username,
+				// 	gender: this.gender,
+				// 	selectedOptions: this.selectedOptions,
+				// 	birthday: this.birthday,
+				// 	jobId: this.jobId,
+				// });
 			},
-			async initializeScenario() {
+			async getScenarioId() {
 				try {
-					this.backgroundImageSrc = `/static/bg${this.scenarioId}.png`;
-					console.log("this scenario id:", this.scenarioId);
-					await this.getScenarioData();
+					const scenarioId = (() => {
+						const indexes = this.username.split("##");
+						const id = parseInt(indexes[1], 10);
+						return !isNaN(id) ? id : undefined;
+					})();
+
+					console.log("####scenario id:############", scenarioId);
+					const scenarioResponse = scenarioId !== undefined
+						? await apiService.startScenarioWithId(this.jobId, scenarioId)
+						: await apiService.startScenario(this.jobId);
+
+					console.log("#####################fetched scenario: ", scenarioResponse);
+
+					// Get scenarioId
+					this.scenarioId = scenarioResponse.scenario_id || 1;
+					this.backgroundImageSrc = `/static/bg${scenarioResponse.scenario_id}.png`;
 				} catch (error) {
-					console.error("Error initializing scenario:", error);
+					console.error("Error fetching scenarioId:", error);
 					uni.showToast({
-						title: "初始化失败",
+						title: "获取场景ID失败",
 						icon: "none",
 					});
 				}
 			},
-
 			getScenarioIdFromStorage() {
 				return new Promise((resolve) => {
 					uni.getStorage({
@@ -233,8 +274,8 @@
 			},
 			handleScenarioData() {
 				if (this.scenarioData) {
-					this.description = this.scenarioData.description || "无法获取背景信息";
-					this.background = this.scenarioData.background || "请点击下方箭头继续";
+					this.description = this.scenarioData.description || "Unable to retrieve background information";
+					this.background = this.scenarioData.background || "Please click the arrow below to continue";
 
 					// 如果有选项，重置选项的文字颜色
 					if (this.scenarioData.options) {
@@ -392,7 +433,7 @@
 			nextPage() {
 				if (this.num === null) {
 					uni.showToast({
-						title: "请选择一个选项",
+						title: "Please select an option",
 						icon: "none",
 					});
 					return;
@@ -455,16 +496,16 @@
 				}
 			},
 			navigateToLoading() {
-				const loadingPageUrl = `/pages/result/loading?jobId=${
-        this.jobId
-      }&userId=${this.userId}&username=${encodeURIComponent(
-        this.username
-      )}&gender=${this.gender}&birthday=${encodeURIComponent(
-        JSON.stringify(this.birthday)
-      )}&options=${encodeURIComponent(
-        JSON.stringify(this.selectedOptions)
-      )}&num=${this.num}`;
-
+	// 			const loadingPageUrl = `/pages/result/loading?jobId=${
+    //     this.jobId
+    //   }&userId=${this.userId}&username=${encodeURIComponent(
+    //     this.username
+    //   )}&gender=${this.gender}&birthday=${encodeURIComponent(
+    //     JSON.stringify(this.birthday)
+    //   )}&options=${encodeURIComponent(
+    //     JSON.stringify(this.selectedOptions)
+    //   )}&num=${this.num}`;
+				const loadingPageUrl = `/pages/result/loading`;
 				uni.navigateTo({
 					url: loadingPageUrl,
 					fail: (err) => {

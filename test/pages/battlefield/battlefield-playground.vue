@@ -142,7 +142,7 @@
 		<!-- 精囊卡片 -->
 		<view v-if="showCardPopup" class="popup-overlay" @click="showCardPopup = false">
 			<CueCardsVue @closeCueCard="closeCueCard" @exchangeClick="exchangeClick"
-				:cardButtonLoading="cardButtonLoading" :jobId="jobId" />
+				:cardButtonLoading="cardButtonLoading" />
 		</view>
 
 		<view v-if="missionShow" class="judge-mission-container">
@@ -197,7 +197,7 @@
 		},
 		data() {
 			return {
-				userId: state.userId,
+				// userId: state.userId,
 				judgeTitle: "",
 				judgeContent: "",
 				userJudgeContent: "",
@@ -267,7 +267,7 @@
 					loading: false,
 					text: "",
 				},
-				jobId: "",
+				// jobId: "",
 				answerNotGoodNum: 0,
 				totalTaskNum: 1,
 				completedTaskNum: 1,
@@ -769,6 +769,7 @@
 							const validChatsRepy = filterChatHistory(this.allHistory);
 							const judgeResultRepy = await reply(validChatsRepy);
 							await this.handleRecorderReply(judgeResultRepy);
+							this.$store.dispatch('fetchHomepageData');
 						}
 					}
 					if (selectedCard == 2) {
@@ -1028,7 +1029,7 @@
 					this.allHistory = JSON.parse(JSON.stringify(this.chattingHistory));
 				},
 			});
-			this.jobId = option.jobId || "154ee592-287b-4675-b8bd-8f88de348476";
+			// this.jobId = option.jobId || "154ee592-287b-4675-b8bd-8f88de348476";
 			this.initRecorderManager();
 			uni.getSystemInfo({
 				success: (res) => {
@@ -1064,6 +1065,12 @@
 			},
 		},
 		computed: {
+			userId() {
+				return this.$store.getters.getUserId;
+			},
+			jobId() {
+				return this.$store.getters.getJobId;
+			},
 			shouldShadow() {
 				return (
 					this.state === "NpcTalk" || this.isRecording || this.showTippingCard

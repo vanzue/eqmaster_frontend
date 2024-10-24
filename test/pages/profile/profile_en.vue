@@ -128,35 +128,44 @@ export default {
       progressInterval: null,
       isLoading: true,
       error: null,
-      homepageData: {
-        response: {
-          personal_info: {
-            name: ''
-          },
-          eq_scores: {
-            score: 0,
-            overall_suggestion: ''
-          },
-          contacts: []
-        }
-      },
+      // homepageData: {
+      //   response: {
+      //     personal_info: {
+      //       name: ''
+      //     },
+      //     eq_scores: {
+      //       score: 0,
+      //       overall_suggestion: ''
+      //     },
+      //     contacts: []
+      //   }
+      // },
       isDelEqoashBot: false,
     };
   },
   computed: {
+    homepageData() {
+      return this.$store.getters.getHomepageData;
+    },
+    userId() {
+      return this.$store.getters.getUserId;
+    },
+    username() {
+      return this.$store.getters.getUsername;
+    },
   },
   onLoad(option) {
     console.log('Received options:', option);
 
     // 接收上一个页面传递的数据
-    this.userId = option.userId || '';
-    this.username = decodeURIComponent(option.username || '');
+    // this.userId = option.userId || '';
+    // this.username = decodeURIComponent(option.username || '');
     // this.gender = option.gender || '';
     // this.jobId = option.jobId || '';
     // this.num = option.num || '';
 
     // 立即调用一次
-    this.getHomepageData(this.userId);
+    // this.getHomepageData(this.userId);
 
     // 新增：接收个人名称
     // this.personalName = decodeURIComponent(option.personal_name || '');
@@ -167,10 +176,10 @@ export default {
     // this.contactId = option.contactId || '';
 
     // 设置定时调用
-    this.intervalId = setInterval(() => {
-      console.log('this.userId:', this.userId);
-      this.getHomepageData(this.userId);
-    }, 50000); // 每50秒调用一次
+    // this.intervalId = setInterval(() => {
+    //   console.log('this.userId:', this.userId);
+    //   this.getHomepageData(this.userId);
+    // }, 50000); // 每50秒调用一次
 
   },
   onUnload() {
@@ -292,13 +301,23 @@ export default {
       }
       this.saveqrcodeLoding = false;
     },
-    logOutClick() {
+    async logOutClick() {
       console.log("logOutClick");
       this.logoutShow = false;
+      await this.clearLocalUserId();
       uni.navigateTo({
-        url: `/`
-      });
-    }
+        url: `/pages/landing/landing`
+      });      
+    },
+    async clearLocalUserId() {
+      try {
+        uni.removeStorageSync('userId');
+        this.$store.dispatch('clearAllState');
+        console.log('Local userId cache cleared');
+      } catch (e) {
+        console.error('Error clearing local userId cache:', e);
+      }
+    },
   },
   mounted() {
     // this.startProgress(); // 开始进度条
@@ -414,7 +433,7 @@ export default {
 .day-content {
   position: relative;
   display: flex;
-  width: 302rpx;
+  /* width: 302rpx; */
   height: 136rpx;
   justify-content: left;
   align-items: center;
@@ -427,12 +446,13 @@ export default {
 }
 
 .day-text-days {
-  position: absolute;
+  /* position: absolute; */
   font-size: 30rpx;
   color: #E8FFC4;
   font-weight: 400;
-  bottom: 0;
-  right: 0;
+  margin-top: 100rpx;
+  /* bottom: 0;
+  right: 0; */
 }
 
 .diamonds-stars {

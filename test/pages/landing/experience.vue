@@ -45,6 +45,7 @@
 					// const userId = 'fixedUserId12345'; // 使用固定的用户ID
 					// 保存用户名和ID
 					uni.setStorageSync('username', this.username);
+					this.$store.commit('setUsername', this.username);
 					// uni.setStorageSync('userId', userId);
 					// 导航到下一页，并传递参数
 					uni.navigateTo({

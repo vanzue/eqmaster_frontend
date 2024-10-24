@@ -36,7 +36,7 @@ export default defineComponent({
   data() {
     return {
       scenarioText: "",
-      userId: state.userId,
+      userId: 0,
       username: "",
       gender: "",
       // 显式指定 `birthday` 的类型
@@ -165,9 +165,13 @@ export default defineComponent({
         // Save jobId
         this.jobId = response.job_id;
         this.userId = response.user_id;
+        uni.setStorageSync('userId', response.user_id);
+        uni.setStorageSync('jobId', response.job_id);
+        this.$store.commit('setUserId', response.user_id);
+        this.$store.commit('setJobId', response.jobId);
 
-        state.userId = response.user_id;
-        console.log("state userid", state.userId);
+        // state.userId = response.user_id;
+        // console.log("state userid", state.userId);
         const indexes = this.username.split("##");
         const scenarioId =
           indexes[1] !== undefined && !isNaN(parseInt(indexes[1], 10))

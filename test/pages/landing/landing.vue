@@ -43,6 +43,25 @@
 				username: '' // 用于存储从上一页接收的用户名
 			};
 		},
+		computed: {
+			homepageData() {
+				return this.$store.getters.getHomepageData;
+			},
+		},
+		watch: {
+			homepageData: {
+				immediate: true,
+				async handler(val) {
+					// console.log(val)
+					if (val.response && val.response.eq_scores) {
+						uni.navigateTo({
+							url: `/pages/dashboard/dashboard_en?currentView=dashboard`
+						});
+					}
+				},
+				// deep: true,
+			}
+		},
 		methods: {
 			startQuiz() {
 				// 生成随机用户名
