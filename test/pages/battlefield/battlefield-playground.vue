@@ -63,7 +63,7 @@
         >
           <npc-chat-box
             v-if="
-              ['领导', '同事A', '同事B', 'Jason', 'Sam', 'Anna'].includes(
+              ['Jason', 'Sam', 'Anna'].includes(
                 chat.role
               )
             "
@@ -127,7 +127,7 @@
         <view class="wave"></view>
       </view>
 
-      <text class="cancel-text">松开发送，上滑取消</text>
+      <text class="cancel-text">Release to send, slide up to cancel</text>
     </view>
 
     <view
@@ -392,12 +392,13 @@ export default {
     // 动态添加任务到 taskList
     this.taskList.addTask(
       new Task(0, "Cheer up Sam while avoiding further infuriating Jason", async (judgeResult) => {
-        const allPositive = judgeResult.moods.every(
-          (item) => parseInt(item.mood, 10) > 0
-        );
+		const samMood = judgeResult.find(item => item.role === "Sam")?.mood;
+		const jasonMood = judgeResult.find(item => item.role === "Jason")?.mood;
+
+		const taskResult = parseInt(samMood, 10) > 0 && parseInt(jasonMood, 10) >= 0;
         // const allPositive = judgeResult.moods.some((item) => parseInt(item.mood, 10) > 0);
-        if (allPositive && !this.taskList.getTask(0).once) {
-          this.judgeTitle = `做得好！ ${this.taskList.getTask(0).title} (${
+        if (taskResult && !this.taskList.getTask(0).once) {
+          this.judgeTitle = `Well done！ ${this.taskList.getTask(0).title} (${
             this.taskList.doneTaskLength + 1
           }/${this.taskList.taskLength})`;
           return true;
@@ -414,7 +415,7 @@ export default {
         });
         const bMood = parseInt(res ? res : 0, 10);
         if (bMood < 0 && !this.taskList.getTask(1).once) {
-          this.judgeTitle = `做得好！ ${this.taskList.getTask(1).title} (${
+          this.judgeTitle = `Well done！ ${this.taskList.getTask(1).title} (${
             this.taskList.doneTaskLength + 1
           }/${this.taskList.taskLength})`;
           return true;
@@ -497,7 +498,6 @@ export default {
       clearInterval(this.countdownInterval);
     },
     hideTooltip() {
-      // 隐藏工具提示
       this.isTooltipVisible = false;
       this.showRecordTooltip = false;
       this.showHintTooltip = false;
@@ -564,7 +564,6 @@ export default {
       };
       recorderManager.start(options);
       this.userJudgeContent = "";
-      console.log("开始录音");
     },
     handleRecordingDone() {
       // console.log('Released');
@@ -615,12 +614,10 @@ export default {
           },
         });
 
-        console.log("文件上传成功:", response);
         const resData = JSON.parse(response.data); // 解析返回的 JSON 数据
         const transcript = resData.transcript; // 获取返回的识别文本
         return transcript; // 成功返回识别结果
       } catch (error) {
-        console.error("文件上传失败:", error);
         throw error;
       }
     },
@@ -757,7 +754,7 @@ export default {
             console.log("record is none, canceling...");
             this.resetRecording(); // 重置录音状态
             uni.showToast({
-              title: "好像没有听清哦～",
+              title: "Did not hear clearly",
               icon: "none",
             });
             this.anasLoadingObj.loading = false;
@@ -773,18 +770,15 @@ export default {
           this.$nextTick(() => {
             setTimeout(() => {
               newMessage.shouldAnimate = true;
-              this.anasLoadingObj.text = "分析中";
+              this.anasLoadingObj.text = "Analyzing";
             }, 50);
           });
           const validChats = filterChatHistory(this.allHistory);
-          console.error("初始输出", judgeResult);
           const judgeResult = await reply(validChats);
-          console.error("初始输出", judgeResult);
 
           await this.handleRecorderReply(judgeResult);
           this.anasLoadingObj.loading = false;
         } catch (error) {
-          console.error("在用户说话反馈过程中有错发生哦：", error);
           this.anasLoadingObj.loading = false;
           if (this.chattingHistory.length > 0) {
             this.chattingHistory.pop();
@@ -794,7 +788,6 @@ export default {
     },
     async inputRecordingBlur() {
       this.showInput = false;
-      console.log("输入结果:", this.inputContent);
       console.log(this.taskList);
       if (this.inputContent !== "") {
         this.anasLoadingObj = {
@@ -807,16 +800,14 @@ export default {
           content: this.inputContent,
           shouldAnimate: false,
         };
-        console.log("输入结果:", newMessage);
         this.chattingHistory.push(newMessage);
         this.allHistory.push(newMessage);
-        console.log("历史记录:", this.allHistory);
         this.$nextTick(() => {
           // Force a repaint to trigger the animation
           void this.$el.offsetWidth;
 
           newMessage.shouldAnimate = true;
-          this.anasLoadingObj.text = "分析中";
+          this.anasLoadingObj.text = "Analyzing";
 
           // 使用 requestAnimationFrame 确保动画在下一帧开始
           requestAnimationFrame(() => {
@@ -834,7 +825,6 @@ export default {
           this.inputContent = "";
           this.anasLoadingObj.loading = false;
         } catch (error) {
-          console.error("在用户说话反馈过程中有错发生哦：", error);
           this.anasLoadingObj.loading = false;
           if (this.chattingHistory.length > 0) {
             this.chattingHistory.pop();
@@ -854,7 +844,7 @@ export default {
         if (selectedCard == 1) {
           this.anasLoadingObj = {
             loading: true,
-            text: "生成中",
+            text: "Generating",
           };
           judgeResult = await helpReply(validChats);
           // console.log(judgeResult.responsive);
@@ -872,7 +862,7 @@ export default {
               void this.$el.offsetWidth;
 
               newMessage.shouldAnimate = true;
-              this.anasLoadingObj.text = "分析中";
+              this.anasLoadingObj.text = "Analyzing";
 
               // 使用 requestAnimationFrame 确保动画在下一帧开始
               requestAnimationFrame(() => {
@@ -890,7 +880,7 @@ export default {
         if (selectedCard == 2) {
           this.anasLoadingObj = {
             loading: true,
-            text: "生成中",
+            text: "Generating",
           };
           judgeResult = await hint(validChats);
           // console.log(judgeResult.tips);
@@ -907,7 +897,7 @@ export default {
               void this.$el.offsetWidth;
 
               newMessage2.shouldAnimate = true;
-              this.anasLoadingObj.text = "分析中";
+              this.anasLoadingObj.text = "Analyzing";
 
               // 使用 requestAnimationFrame 确保动画在下一帧开始
               requestAnimationFrame(() => {
@@ -921,17 +911,13 @@ export default {
         this.cardButtonLoading = false;
         this.anasLoadingObj.loading = false;
       } catch (error) {
-        console.error("在用户说话反馈过程中有错发生哦：", error);
         this.anasLoadingObj.loading = false;
       }
     },
     async handleRecorderReply(judgeResult) {
       try {
         if (judgeResult) {
-          console.log("judge Result1111:", judgeResult);
-
           await this.checkBossComplimentTask1(judgeResult);
-          console.log("judge Result22222:", judgeResult);
 
           this.updateScrollIntoView();
 
@@ -974,9 +960,8 @@ export default {
           throw new Error("judgeResult is undefined or null");
         }
       } catch (error) {
-        console.error("处理回复时出错:", error);
         uni.showToast({
-          title: "处理回复时出错，请重试",
+          title: "Something error happened",
           icon: "none",
           duration: 2000,
         });
@@ -991,8 +976,6 @@ export default {
         const hasNegativeMood = judgeResult.moods.some(
           (item) => parseInt(item.mood, 10) < 0
         );
-        console.log("回答评估开始了");
-
         // if (totalScore > 0) {
         if (!hasNegativeMood) {
           this.isGoodReply = true;
@@ -1028,7 +1011,6 @@ export default {
                 this.isCompleteTask = true;
               }
             } else {
-              console.log("下一轮");
               await this.gotoNextRound();
             }
           } else {
