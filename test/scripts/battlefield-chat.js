@@ -1,8 +1,11 @@
 // 定义常量URL
-const BASE_URL = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/chat/battlefield_agent';
-const EVAL_URL = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield';
-const TOOLTIP_URL = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/course_exists';
-//return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL);
+const BASE_URL =
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/chat/battlefield_agent";
+const EVAL_URL =
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield";
+const TOOLTIP_URL =
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/course_exists";
+//return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
 function sendRequest(
   person_id,
   course_id,
@@ -55,7 +58,9 @@ function formatChatContent(chat_content) {
   };
 
   chat_content.forEach((chat) => {
-    if (["领导", "同事A", "同事B", "Jason", "Sam", "Anna"].includes(chat.role)) {
+    if (
+      ["领导", "同事A", "同事B", "Jason", "Sam", "Anna"].includes(chat.role)
+    ) {
       // If the role is one of the NPCs, add it to the assistant's dialog
       assistantDialog.content[0].text.dialog.push({
         role: chat.role,
@@ -106,7 +111,6 @@ function formatChatContent(chat_content) {
 
         // Add the user's dialogue to formattedChatContent
         formattedChatContent.push(userDialog);
-
       }
     }
   });
@@ -247,7 +251,7 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
   // 在 body 中添加 isPass, gemCount, diamonds
   const body = {
     person_id: chatHistory.person_id || Math.floor(Math.random() * 500),
-    course_id: chatHistory.course_id || 1,
+    course_id: chatHistory.course_id || 2,
     chat_content: JSON.stringify(chatHistory),
     status: isPass ? "completed" : "incompleted", // 添加 isPass
     result: gemCount, // 添加 gemCount
@@ -282,16 +286,15 @@ export function filterChatHistory(chatHistory) {
 }
 
 export function getNpcIndex(role) {
-	console.log("role： ", role)
-	if (role == '老板') {
-		return 0;
-	}
-	if (role == "同事A") {
-		return 1;
-	}
-	if (role == "同事B") {
-		return 2;
-	}
+  if (role == "Jason") {
+    return 0;
+  }
+  if (role == "Sam") {
+    return 1;
+  }
+  if (role == "Anna") {
+    return 2;
+  }
 
   return -1;
 }
