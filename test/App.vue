@@ -6,16 +6,18 @@
 			const userId = uni.getStorageSync('userId');
 			if (userId) {
 				this.$store.commit('setUserId', userId);
-				this.$store.dispatch('fetchHomepageData');
-				// this.$store.dispatch('fetchHomepageData').then(() => {
-					// const homepageData = this.$store.getters.getHomepageData;
-					// console.log(homepageData);
-					// if (homepageData.response && homepageData.response.eq_scores) {
-					// 	uni.navigateTo({
-					// 		url: `/pages/dashboard/dashboard_en?currentView=dashboard`
-					// 	});
-					// }
-				// });
+				// this.$store.dispatch('fetchHomepageData');
+				this.$store.dispatch('fetchHomepageData').then(() => {
+					const homepageData = this.$store.getters.getHomepageData;
+					console.log(homepageData);
+					if (homepageData.response && homepageData.response.eq_scores) {
+						uni.navigateTo({
+							url: `/pages/dashboard/dashboard_en?currentView=dashboard`
+						});
+					}
+				}).catch((error) => {
+					console.error('Error fetching homepage data:', error);
+				});
 			}
 			const username = uni.getStorageSync('username');
 			if (username) {

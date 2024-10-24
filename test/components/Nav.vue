@@ -69,7 +69,7 @@ export default {
             }
             if(val === 'Profile') {
                 uni.navigateTo({
-                    url: `/pages/profile/profile_en` // 添加查询参数
+                    url: `/pages/profile/profile_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
                 });
             }
         }

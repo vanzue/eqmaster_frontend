@@ -104,7 +104,7 @@
 				<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
 
 				<view class="dashboard2-card1">
-					<text class="dashboard2-score-value-large1">{{ homepageData.response?.personal_info?.tag }}</text>
+					<text class="dashboard2-score-value-large1">{{ homepageData?.response?.personal_info?.tag }}</text>
 					<!-- <text class="dashboard2-score-value-large1">{{homepageData }}</text> -->
 					<view class="dashboard2-level-badge">
 						<text class="dashboard2-score-title1">Lv1小试牛刀</text>

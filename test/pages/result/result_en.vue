@@ -32,7 +32,7 @@
 								<text class="card-title">{{ illustrationSrc.weakness }}</text>
 								<text class="card-description">{{ illustrationSrc.characteristics }}</text>
 							</view>
-						</view> 
+						</view>
 					</view>
 				</view>
 
@@ -278,9 +278,6 @@
 			username() {
 				return this.$store.getters.getUsername;
 			},
-			homepageData() {
-				return this.$store.getters.getHomepageData;
-			},
 			formattedBirthday() {
 				if (this.birthday) {
 					const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
@@ -358,7 +355,7 @@
 			homepageData: {
 				immediate: true,
 				async handler(val) {
-					// console.log(val)
+					console.log(val)
 					if (val && val.response) {
 						this.drawRadar()
 					}
@@ -467,6 +464,7 @@
 				// uni.navigateTo({
 				// 	url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				// });
+				this.$store.commit('setHomeNavName', 'dashboard');
 				uni.navigateTo({
 					url: `/pages/dashboard/dashboard_en`
 				});

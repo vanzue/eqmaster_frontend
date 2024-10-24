@@ -52,12 +52,7 @@
 			homepageData: {
 				immediate: true,
 				async handler(val) {
-					// console.log(val)
-					if (val.response && val.response.eq_scores) {
-						uni.navigateTo({
-							url: `/pages/dashboard/dashboard_en?currentView=dashboard`
-						});
-					}
+					console.log(val)
 				},
 				// deep: true,
 			}
