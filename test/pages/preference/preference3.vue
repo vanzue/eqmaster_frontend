@@ -42,56 +42,74 @@ export default defineComponent({
       // 显式指定 `birthday` 的类型
       birthday: null as BirthdayType | null,
       // 显式指定 `selectedOptions` 为字符串数组
-      selectedOptions: [] as string[],
+      // selectedOptions: [] as string[],
       isLoading: false,
     };
   },
+  computed: {
+    selectedOptions() {
+      return this.$store.getters.getSelectedOptions;
+    },
+  },
+  watch: {
+    selectedOptions: {
+      immediate: true,
+      async handler(val) {
+        if (Object.keys(val).length === 0) {
+          uni.navigateTo({
+            url: '/pages/preference/preference2'
+          });
+        }
+      },
+      // deep: true,
+    }
+  },
   onLoad(options: any) {
-    console.log("Raw options received in preference3:", options);
+    // console.log("Raw options received in preference3:", options);
 
-    this.userId = options.userId || "";
-    this.username = decodeURIComponent(options.username || "");
-    this.gender = options.gender || "";
+    // this.userId = options.userId || "";
+    // this.username = decodeURIComponent(options.username || "");
+    // this.gender = options.gender || "";
 
-    console.log("Parsed basic data in preference3:", {
-      userId: this.userId,
-      username: this.username,
-      gender: this.gender,
-    });
+    // console.log("Parsed basic data in preference3:", {
+    //   userId: this.userId,
+    //   username: this.username,
+    //   gender: this.gender,
+    // });
 
-    // 解析 birthday
-    try {
-      this.birthday = options.birthday
-        ? JSON.parse(decodeURIComponent(options.birthday))
-        : null;
-      console.log("Parsed birthday in preference3:", this.birthday);
-    } catch (e) {
-      console.error("Error parsing birthday in preference3:", e);
-      console.log("Raw birthday data in preference3:", options.birthday);
-      this.birthday = null;
-    }
+    // // 解析 birthday
+    // try {
+    //   this.birthday = options.birthday
+    //     ? JSON.parse(decodeURIComponent(options.birthday))
+    //     : null;
+    //   console.log("Parsed birthday in preference3:", this.birthday);
+    // } catch (e) {
+    //   console.error("Error parsing birthday in preference3:", e);
+    //   console.log("Raw birthday data in preference3:", options.birthday);
+    //   this.birthday = null;
+    // }
 
-    // 解析 selectedOptions
-    try {
-      const parsedOptions = options.options
-        ? JSON.parse(decodeURIComponent(options.options))
-        : [];
-      console.log("Parsed options:", parsedOptions);
+    // // 解析 selectedOptions
+    // try {
+    //   const parsedOptions = options.options
+    //     ? JSON.parse(decodeURIComponent(options.options))
+    //     : [];
+    //   console.log("Parsed options:", parsedOptions);
 
-      // 使用显式类型赋值，避免类型错误
-      this.selectedOptions = Array.isArray(parsedOptions) ? parsedOptions : [];
+    //   // 使用显式类型赋值，避免类型错误
+    //   this.selectedOptions = Array.isArray(parsedOptions) ? parsedOptions : [];
 
-      console.log("Assigned selectedOptions:", this.selectedOptions);
-      console.log("selectedOptions length:", this.selectedOptions.length);
-      console.log(
-        "selectedOptions contents:",
-        JSON.stringify(this.selectedOptions)
-      );
-    } catch (e) {
-      console.error("Error parsing selectedOptions in preference3:", e);
-      console.log("Raw options data in preference3:", options.options);
-      this.selectedOptions = [];
-    }
+    //   console.log("Assigned selectedOptions:", this.selectedOptions);
+    //   console.log("selectedOptions length:", this.selectedOptions.length);
+    //   console.log(
+    //     "selectedOptions contents:",
+    //     JSON.stringify(this.selectedOptions)
+    //   );
+    // } catch (e) {
+    //   console.error("Error parsing selectedOptions in preference3:", e);
+    //   console.log("Raw options data in preference3:", options.options);
+    //   this.selectedOptions = [];
+    // }
 
     // 打印最终的数据状态
     // console.log('Final data state in preference3:', {
@@ -101,12 +119,26 @@ export default defineComponent({
     //   birthday: this.birthday,
     //   selectedOptions: this.selectedOptions
     // });
-
+    const username = uni.getStorageSync('username');
+    if (!username) {
+      uni.navigateTo({
+        url: '/pages/landing/experience',
+        fail: (err) => {
+          console.error('Navigation to experience page failed:', err);
+          uni.showToast({
+            title: 'Failed to navigate to experience page',
+            icon: 'none'
+          });
+        }
+      });
+      return;
+    }
+    this.username = username;
     if (
-      !this.userId ||
+      // !this.userId ||
       !this.username ||
-      !this.gender ||
-      !this.birthday ||
+      // !this.gender ||
+      // !this.birthday ||
       this.selectedOptions.length === 0
     ) {
       console.error("Some required data is missing or invalid in preference3");
@@ -157,15 +189,16 @@ export default defineComponent({
         const fetchedScenarioId = scenarioResponse.scenario_id || 1;
         console.log("Fetched scenarioId:", fetchedScenarioId);
 
-        const testPageUrl = `/pages/test/test?userId=${
-          this.userId
-        }&username=${encodeURIComponent(this.username)}&gender=${
-          this.gender
-        }&birthday=${encodeURIComponent(
-          JSON.stringify(this.birthday)
-        )}&options=${encodeURIComponent(
-          JSON.stringify(this.selectedOptions)
-        )}&jobId=${this.jobId}&scenarioId=${fetchedScenarioId}`;
+        // const testPageUrl = `/pages/test/test?userId=${
+        //   this.userId
+        // }&username=${encodeURIComponent(this.username)}&gender=${
+        //   this.gender
+        // }&birthday=${encodeURIComponent(
+        //   JSON.stringify(this.birthday)
+        // )}&options=${encodeURIComponent(
+        //   JSON.stringify(this.selectedOptions)
+        // )}&jobId=${this.jobId}&scenarioId=${fetchedScenarioId}`;
+        const testPageUrl = `/pages/test/test`;
 
         console.log("Navigating to:", testPageUrl);
 
