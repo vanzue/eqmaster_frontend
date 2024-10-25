@@ -14,7 +14,7 @@ export default {
     },
     totalComponents: {
       type: Number,
-      default: 6
+      default: 4
     },
     circleRadius: {
       type: Number,
@@ -510,7 +510,7 @@ export default {
 
 .progress-canvas {
   width: 100%; /* 将宽度设置为100% */
-  height: 1200rpx;
+  height: 1100rpx;
   margin: 45rpx;
   /* 移除transform属性 */
 }
