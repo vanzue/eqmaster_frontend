@@ -2,7 +2,7 @@
 const BASE_URL =
   "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/chat/battlefield_agent";
 const EVAL_URL =
-  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield";
+  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield_agent";
 const TOOLTIP_URL =
   "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/course_exists";
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
@@ -32,11 +32,9 @@ function sendRequest(
       },
       data: body,
       success: (res) => {
-        console.log("请求成功:", res);
         resolve(res.data);
       },
       fail: (err) => {
-        console.error("请求失败:", err);
         reject(err);
       },
     });
@@ -59,7 +57,7 @@ function formatChatContent(chat_content) {
 
   chat_content.forEach((chat) => {
     if (
-      ["领导", "同事A", "同事B", "Jason", "Sam", "Anna"].includes(chat.role)
+      ["Jason", "Sam", "Anna"].includes(chat.role)
     ) {
       // If the role is one of the NPCs, add it to the assistant's dialog
       assistantDialog.content[0].text.dialog.push({
@@ -137,7 +135,7 @@ export async function startField(person_id, course_id) {
       content: [
         {
           type: "text",
-          text: "开始测试",
+          text: "StartDialog",
         },
       ],
     },
@@ -162,7 +160,7 @@ export async function helpReply(chatHistory) {
     content: [
       {
         type: "text",
-        text: "帮我回答",
+        text: "HelpReply",
       },
     ],
   });
@@ -183,7 +181,7 @@ export async function hint(chatHistory) {
     content: [
       {
         type: "text",
-        text: "给我提示",
+        text: "GivemeHint",
       },
     ],
   });
@@ -204,7 +202,7 @@ export async function continueChat(chatHistory) {
     content: [
       {
         type: "text",
-        text: "继续",
+        text: "ContinueNextRound",
       },
     ],
   });
@@ -236,7 +234,6 @@ export async function checkShowToolTips(personId) {
         }
       },
       fail: (err) => {
-        console.error("请求失败:", err);
         reject(err);
       },
     });
@@ -271,16 +268,15 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 }
 
 export function filterChatHistory(chatHistory) {
-  const keywords = ["继续", "给我提示", "帮我回答", "开始测试"];
+  const keywords = ["StartDialog", "ContinueNextRound", "HelpReply", "GivemeHint"];
 
   return chatHistory.filter((chat) => {
     for (let keyword of keywords) {
       if (chat.content.includes(keyword)) {
-        return false; // 该条目被过滤掉
+        return false;
       }
     }
 
-    // 如果 role 不是 tipping 且不包含关键字，则保留该条目
     return true;
   });
 }
