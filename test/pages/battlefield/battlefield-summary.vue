@@ -12,7 +12,7 @@
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
-					{{ this.isPass ? "你真棒！" : "很遗憾..." }}
+					{{ this.isPass ? "Congrats!" : "Misson failed..." }}
 				</view>
 				<reward-bar :style="{ backgroundColor: 'transparent', width: '300rpx' }" :gemCount="this.gemCount"
 					gem-icon-width="40px" gem-icon-height="40px"></reward-bar>
@@ -25,7 +25,7 @@
 			</view>
 
 			<view class="card second-card">
-				<view class="score">
+				<!-- <view class="score">
 					<text class="summary-dimension">情绪平衡力</text>
 					<text class="course-score">+15</text>
 				</view>
@@ -35,19 +35,19 @@
 						</view>
 					</view>
 					<text class="score-title2">45%</text>
-				</view>
+				</view> -->
 				<view class="comments">
 					<view class="comment-header">
 						<view class="down-line"></view>
-						<text class="comment-title">互动评价</text>
+						<text class="comment-title">Let's recap</text>
 					</view>
 
 					<view class="sub-card">
-						<npc-comment :name="'领导'" :avatar="'/static/battlefield/boss.png'" :comment="comments[0]"
+						<npc-comment :name="'Jason'" :avatar="'/static/battlefield/Jason.png'" :comment="comments[0]"
 							:npcHealth="Number(npcHealthValues[0])"></npc-comment>
-						<npc-comment :name="'同事A'" :avatar="'/static/battlefield/xiaoA.png'" :comment="comments[1]"
+						<npc-comment :name="'Sam'" :avatar="'/static/battlefield/Sam.png'" :comment="comments[1]"
 							:npcHealth="npcHealthValues[1]"></npc-comment>
-						<npc-comment :name="'同事B'" :avatar="'/static/battlefield/xiaoB.png'" :comment="comments[2]"
+						<npc-comment :name="'Anna'" :avatar="'/static/battlefield/Anna.png'" :comment="comments[2]"
 							:npcHealth="npcHealthValues[2]"></npc-comment>
 					</view>
 
@@ -57,15 +57,20 @@
 			<view class="card third-card">
 				<view class="third-card-title">
 					<view class="down-line second-line"></view>
-					<text class="comment-title">本关情商技巧</text>
+					<text class="comment-title">Tips for you</text>
 				</view>
 				<view class="suggestion">
 					<text>{{ suggestion }}</text>
 				</view>
 			</view>
-			<button class="guide-button" @click="navigateToGuide">
-				开启高情商之旅
-			</button>
+			<view class="guide-button-container">
+				<image class="guide-icon" src="/static/battlefield/time.png" mode="aspectFill"></image>
+				<image class="guide-icon" src="/static/battlefield/flag.png" mode="aspectFill"></image>
+				<button class="guide-button" @click="navigateToGuide">
+					Continue
+				</button>
+			</view>
+
 		</scroll-view>
 	</view>
 </template>
@@ -86,7 +91,7 @@
 					"好好哈哈哈你看看哈哈哈你看看哈哈哈你看看哈哈哈你看看好我看看",
 					"嘿嘿哈哈哈你看看哈哈哈你看看哈哈哈你看看哈哈哈你看看哈哈哈你看看嘿",
 				],
-				suggestion: "注意倾听每个人的需求，及时回应对方的感受。",
+				suggestion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse finibus dolor et sagittis vehicula.。",
 				diamondAdd: 3,
 				gemCount: 0,
 				npcHealthValues: [],
@@ -186,7 +191,7 @@
 		width: 100%;
 		min-height: 100vh;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-			url("/static/battlefield/background.png");
+			url("/static/battlefield/background1.png");
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -201,7 +206,10 @@
 
 	.comment-title {
 		color: #fff;
-		font-weight: bold;
+		font-weight: 600;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 40rpx;
+		line-height: 50rpx;
 	}
 
 	.comment-header {
@@ -321,7 +329,7 @@
 		width: 18%;
 		bottom: 4px;
 		height: 3px;
-		background-color: rgba(242, 188, 116, 0.8);
+		background-color: #9EE44D;
 	}
 
 	.sub-card {
@@ -352,10 +360,29 @@
 		margin-bottom: 13vh;
 	}
 
-	.guide-button {
-		width: 80%;
+	.guide-button-container {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
 		height: 100rpx;
-		background-color: #9ee44d;
+		z-index: 1000;
+		position: fixed;
+		/* 固定定位 */
+		bottom: 40px;
+	}
+
+	.guide-icon {
+		width: 88rpx;
+		height: 88rpx;
+		background-color: transparent;
+		margin-left: 20rpx;
+		margin-right: 30rpx;
+	}
+
+	.guide-button {
+		width: 50%;
+		height: 100rpx;
+		background: linear-gradient(101.13deg, #EDFB8B 13.84%, #9EE44D 84.78%);
 		color: #252529;
 		font-size: 36rpx;
 		border-radius: 50rpx;
@@ -370,9 +397,9 @@
 		position: fixed;
 		/* 固定定位 */
 		bottom: 40px;
-		transform: translateX(-50%);
+		/* transform: translateX(-50%); */
 		/* 调整水平位置以居中 */
-		left: 50%;
+		right: 10%;
 		/* 水平居中 */
 	}
 </style>
