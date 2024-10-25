@@ -1,9 +1,6 @@
 <template>
 	<view style="background-color: #2f2f38;height: 100vh;width: 100vw;">
-		<view v-if="isLoading == true" class="loading">
-			<text>Loading</text>
-		</view>
-		<view v-else style="padding-top: 100rpx;padding-left: 40rpx;padding-right: 40rpx;">
+		<view style="padding-top: 100rpx;padding-left: 40rpx;padding-right: 40rpx;">
 			<view class="analysis-header">
 				<image class="back" 
 					src="../../static/dashboard/left-arrow.png"
@@ -69,7 +66,6 @@
 	export default {
 		data() {
 			return {
-				isLoading: false,
 				isModelOpen: false,
 				isDeleting: false,
 				isDeleteSuccess: false,
@@ -88,7 +84,7 @@
 						summary: {
 							summary: "summary"
 						},
-						suggustions: [
+						suggestions: [
 							{
 								point: ""
 							}
@@ -104,7 +100,6 @@
 				key: `analysis-${analysisId}`,
 				success: (res) => {
 					this.analysisResult = res.data;
-					console.log("analysis result", this.analysisResult);
 					// uni.removeStorage({
 					// 	key: `analysis-${analysisId}`,
 					// 	success: () => {
@@ -144,19 +139,6 @@
 </script>
 
 <style scoped>
-	.loading {
-		width: 100vw;
-		height: 100vh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: #fff;
-		background-color: #2f2f38;
-		font-weight: 700;
-		font-size: 28rpx;
-		line-height: 40rpx;
-	}
-
 	.analysis-header {
 		display: flex;
 		flex-direction: row;
