@@ -25,7 +25,7 @@
 			</view>
 
 			<view class="card second-card">
-				<!-- <view class="score">
+				<!-- <vtew class="score">
 					<text class="summary-dimension">情绪平衡力</text>
 					<text class="course-score">+15</text>
 				</view>
@@ -149,7 +149,7 @@
 						.sort() // 如果你想按照 comment1, comment2 的顺序排列
 						.map((key) => dbCourse[key]); // 提取这些键的值						;
 					this.comments = list;
-					// this.suggestion = res.data.eq_tips.join('\n');
+					this.suggestion = res.data.tips.join('\n');
 				},
 			});
 			uni.getStorage({
