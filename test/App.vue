@@ -3,6 +3,35 @@
 	export default {
 		onLaunch: function () {
 			console.log('App Launch')
+			const userId = uni.getStorageSync('userId');
+			if (userId) {
+				this.$store.commit('setUserId', userId);
+				// this.$store.dispatch('fetchHomepageData');
+				this.$store.dispatch('fetchHomepageData').then(() => {
+					const homepageData = this.$store.getters.getHomepageData;
+					console.log(homepageData);
+					if (homepageData.response && homepageData.response.eq_scores) {
+						const currentPages = getCurrentPages();
+            			const currentRoute = currentPages[currentPages.length - 1].route;
+						// console.log(currentRoute);
+						if(currentRoute === 'pages/landing/landing' || currentRoute === '') {
+							uni.navigateTo({
+								url: `/pages/dashboard/dashboard_en?currentView=dashboard`
+							});
+						}
+					}
+				}).catch((error) => {
+					console.error('Error fetching homepage data:', error);
+				});
+			}
+			const username = uni.getStorageSync('username');
+			if (username) {
+				this.$store.commit('setUsername', username);
+			}
+			const jobId = uni.getStorageSync('jobId');
+			if (jobId) {
+				this.$store.commit('setJobId', jobId);
+			}
 		},
 		onShow: function () {
 			console.log('App Show')
@@ -43,7 +72,7 @@
 	.uni-column {
 		flex-direction: column;
 	}
-
+	
 	body {
 		margin: 0;
 	}

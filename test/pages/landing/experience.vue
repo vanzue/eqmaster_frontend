@@ -36,18 +36,20 @@
 			};
 		},
 		mounted() {
-			this.username = "tester-" + uuidv4().slice(0, 6);
+			const cachedUsername = uni.getStorageSync('username');
+			this.username = cachedUsername ? cachedUsername : "tester-" + uuidv4().slice(0, 6);
 		},
 		methods: {
 			nextStep() {
 				if (this.username.trim()) {
-					const userId = 'fixedUserId12345'; // 使用固定的用户ID
+					// const userId = 'fixedUserId12345'; // 使用固定的用户ID
 					// 保存用户名和ID
 					uni.setStorageSync('username', this.username);
-					uni.setStorageSync('userId', userId);
+					this.$store.commit('setUsername', this.username);
+					// uni.setStorageSync('userId', userId);
 					// 导航到下一页，并传递参数
 					uni.navigateTo({
-						url: `/pages/preference/preference2?userId=${userId}&username=${encodeURIComponent(this.username)}`
+						url: `/pages/preference/preference2`
 					});
 				} else {
 					// 提示用户输入名字

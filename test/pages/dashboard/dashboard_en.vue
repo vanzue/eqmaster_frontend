@@ -14,23 +14,26 @@
 					<text class="score-title-head">hi, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
-                    <view class="character-view" @click="navigateToResult">
+					<view class="character-view" @click="navigateToResult">
 						<view style="display: flex;flex-direction: column;width: 308rpx;">
 							<view :class="['animal-tag', animal]">
-								<text>{{ animal }}</text>
+								<text>{{ animal }}1</text>
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
-								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">									Needs to improve
+								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;"> Needs
+									to improve
 								</text>
-								<text style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
+								<text
+									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
 									{{homepageData?.response?.personal_info?.tag}}
 								</text>
-								<text class="detail-summary">{{homepageData?.response?.eq_scores?.detail_summary}}</text>
+								<text
+									class="detail-summary">{{homepageData?.response?.eq_scores?.detail_summary}}</text>
 							</view>
 						</view>
 						<image class="character-image" :src="userCard" />
-                    </view>
-					
+					</view>
+
 					<view style="margin-top: 24rpx;">
 						<text class="card-title1">Daily Tip</text>
 						<view class="calendar">
@@ -39,9 +42,11 @@
 								<text style="font-size: 48rpx;font-weight: 600;">{{ currentDate }}</text>
 							</view>
 							<view class="right-calendar">
-								<text style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									The <text style="font-weight: bold;">FFC Praise Method</text> involves expressing your genuine feelings, providing specific facts,
-								and making comparisons to highlight influence.
+								<text
+									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
+									The <text style="font-weight: bold;">FFC Praise Method</text> involves expressing
+									your genuine feelings, providing specific facts,
+									and making comparisons to highlight influence.
 								</text>
 							</view>
 						</view>
@@ -51,29 +56,22 @@
 						<text class="card-title1">Moments</text>
 						<text class="card-title15">Upload your chats, receive personalized soft skill insights.</text>
 					</view>
-					
+
 					<view class="history-list">
 						<view>
-							<image class="import-button" 
-								src="../../static/dashboard/import-button.png" 
-								mode="widthFix"
-								@click="chooseImage"
-								>
+							<image class="import-button" src="../../static/dashboard/import-button.png" mode="widthFix"
+								@click="chooseImage">
 							</image>
 							<view class="left-history-container">
-								<ChatHistory v-for="(item, index) in leftList" 
-									:key="index" 
-									:title="item.analysis.summary.summary"
-									:details="item.analysis.suggestions"
+								<ChatHistory v-for="(item, index) in leftList" :key="index"
+									:title="item.analysis.summary.summary" :details="item.analysis.suggestions"
 									@click="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container">
-							<ChatHistory v-for="(item, index) in rightList"
-								:key="index"
-								:title="item.analysis.summary.summary"
-								:details="item.analysis.suggestions"
+							<ChatHistory v-for="(item, index) in rightList" :key="index"
+								:title="item.analysis.summary.summary" :details="item.analysis.suggestions"
 								@click="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -96,18 +94,19 @@
 					<view class="dashboard2-card">
 						<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
 						<text
-							class="dashboard2-score-value-large-y">{{ Math.round(homepageData?.response?.eq_scores?.score || 0) }}</text>
+							class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 					</view>
 					<view class="dashboard2-card">
 						<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
 						</image>
-						<text class="dashboard2-score-value-large-g">{{ Math.round(5) }}</text>
+						<text
+							class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
 					</view>
 				</view>
 				<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
 
 				<view class="dashboard2-card1">
-					<text class="dashboard2-score-value-large1">{{ homepageData.response.personal_info.tag }}</text>
+					<text class="dashboard2-score-value-large1">{{ homepageData?.response?.personal_info?.tag }}</text>
 					<!-- <text class="dashboard2-score-value-large1">{{homepageData }}</text> -->
 					<view class="dashboard2-level-badge">
 						<text class="dashboard2-score-title1">Lv1小试牛刀</text>
@@ -123,20 +122,16 @@
 						</view>
 					</view>
 				</view>
-				
+
 				<!-- <view class="dashboard2-card1-container">
 					
 				</view> -->
 
 				<view class="dashboard2-card-o">
 					<!-- 调用进度条组件 -->
-					
-					<SProgressBar 
-					  v-if="courseData && courseData.courses"
-					  :finishComponents="courseData.courses.length"
-					  :starRatings="courseData.courses.map(course => course.result)"
-					  :totalComponents="6"
-					/>
+
+					<SProgressBar v-if="courseData && courseData.courses" :finishComponents="courseData.courses.length"
+						:starRatings="courseData.courses.map(course => course.result)" :totalComponents="6" />
 				</view>
 
 
@@ -150,7 +145,8 @@
 				</view> -->
 			</view>
 		</scroll-view>
-		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView" :userId="userId" :username="username" :jobId="jobId" />
+		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
+			:userId="userId" :username="username" :jobId="jobId" />
 	</view>
 </template>
 
@@ -165,11 +161,11 @@
 
 		data() {
 			return {
-				currentView: 'dashboard2',
+				// currentView: 'dashboard2',
 				score: 28, // 示例分数，可根据需要动态改
 				maxScore: 100, // 假设最大分数为100
-				userId: '',
-				username: '',
+				// userId: '',
+				// username: '',
 				gender: '',
 				birthday: null,
 				selectedOptions: [],
@@ -179,20 +175,19 @@
 				totalComponents: 5,
 				isLoading: true,
 				error: null,
-				homepageData: {
-					response: {
-						personal_info: {
-							name: ''
-						},
-						eq_scores: {
-							score: 0,
-							overall_suggestion: ''
-						},
-						contacts: []
-					}
-				},
-				analysisList: [
-					{
+				// homepageData: {
+				// 	response: {
+				// 		personal_info: {
+				// 			name: ''
+				// 		},
+				// 		eq_scores: {
+				// 			score: 0,
+				// 			overall_suggestion: ''
+				// 		},
+				// 		contacts: []
+				// 	}
+				// },
+				analysisList: [{
 						id: 1,
 						chatHistory: {
 							messages: [
@@ -211,7 +206,9 @@
 							]
 						},
 						analysis: {
-							summary: [{"summary": "ssdf"}],
+							summary: [{
+								"summary": "ssdf"
+							}],
 							suggestions: [
 								"1Import chat history to figure out what she shaid ajshdfkahdf"
 							]
@@ -220,23 +217,21 @@
 					{
 						id: 2,
 						chat_history: {
-							messages: [
-								{
-									user: "",
-									message: "",
-								}
-							]
+							messages: [{
+								user: "",
+								message: "",
+							}]
 						},
 						analysis: {
 							title: "2Trying to respond more sdfa fliasdf   xxxxxx xxxx",
 							details: [
-								"1Import chat history to figure out what she shaid ajshdfkahdf"
+								"1Import chat history to figure out what she shaid ajshdfkahdf",
 							]
 						}
 					}
 				],
 				animal: '',
-				courseData:null,
+				courseData: null,
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -272,6 +267,18 @@
 			};
 		},
 		computed: {
+			homepageData() {
+				return this.$store.getters.getHomepageData;
+			},
+			currentView() {
+				return this.$store.getters.getHomeNavName;
+			},
+			userId() {
+				return this.$store.getters.getUserId;
+			},
+			username() {
+				return this.$store.getters.getUsername;
+			},
 			formattedBirthday() {
 				if (this.birthday) {
 					const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
@@ -287,7 +294,9 @@
 				return monthFormatter.format(this.currentDate).toUpperCase();
 			},
 			currentDate() {
-				const dayFormatter = new Intl.DateTimeFormat('en-US', { day: '2-digit' });
+				const dayFormatter = new Intl.DateTimeFormat('en-US', {
+					day: '2-digit'
+				});
 				return dayFormatter.format(this.currentDate);
 			},
 			leftList() {
@@ -343,9 +352,19 @@
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
 			},
 			safeStarRatings() {
-				return this.courseData && this.courseData.courses
-					? this.courseData.courses.map(course => course.result)
-					: [];
+				return this.courseData && this.courseData.courses ?
+					this.courseData.courses.map(course => course.result) : [];
+			}
+		},
+		watch: {
+			homepageData: {
+				immediate: true,
+				async handler(val) {
+					if (val && val.response) {
+						this.isLoading = false;
+					}
+				},
+				// deep: true,
 			}
 		},
 		components: {
@@ -353,36 +372,45 @@
 			ChatHistory,
 			Nav
 		},
+		created() {
+			this.getBattlefield();
+		},
 		onLoad(option) {
 			console.log('Received options:', option);
 
 			// 接收上一个页面传递的数据
-			this.userId = option.userId || '717';
-			this.username = decodeURIComponent(option.username || 'Dgidegfiugrwi');
+			// this.userId = option.userId || '717';
+			// this.username = decodeURIComponent(option.username || 'Dgidegfiugrwi');
 
-			this.jobId = option.jobId || '154ee592-287b-4675-b8bd-8f88de348476';
-			this.currentView = option.currentView ? option.currentView : 'dashboard'
+			// this.jobId = option.jobId || '154ee592-287b-4675-b8bd-8f88de348476';
+			// this.currentView = option.currentView ? option.currentView : 'dashboard'
 
 			// 立即调用一次
-			this.getHomepageData(this.userId);
-			this.getAnalysisList();
-			this.getBattlefield(1);
+			// this.getHomepageData(this.userId);
+			// this.getBattlefield(1);
 			// this.username = this.homepageData.response.personal_info.name || '';
 
-			console.log('Parsed data:', {
-				userId: this.userId,
-				username: this.username,
-				jobId: this.jobId
-			});
+			// console.log('Parsed data:', {
+			// 	userId: this.userId,
+			// 	username: this.username,
+			// 	jobId: this.jobId
+			// });
 
-			console.log('Received options:', option);
+			// console.log('Received options:', option);
 
 			// 接收 currentView 参数并更新
-			if (option.currentView) {
-				this.currentView = option.currentView;
-			}
+			// if (option.currentView) {
+			// 	this.currentView = option.currentView;
+			// }
 
-			console.log('Current View:', this.currentView);
+			// console.log('Current View:', this.currentView);
+
+
+			// 设置定时调用
+			// this.intervalId = setInterval(() => {
+			// 	console.log('this.userId:', this.userId);
+			// 	this.getHomepageData(this.userId);
+			// }, 50000); // 每50秒调用一次
 		},
 		onUnload() {
 
@@ -422,16 +450,17 @@
 			},
 			async chooseImage() {
 				try {
-				  const res = await uni.chooseImage({
-				    count: 1,
-				    sizeType: ['original', 'compressed'],
-				    sourceType: ['album', 'camera']
-				  });
-				  const tempFilePaths = res.tempFilePaths;
-				  console.log(tempFilePaths);
-				  await this.uploadImage(tempFilePaths[0]);
+					return;
+					const res = await uni.chooseImage({
+						count: 1,
+						sizeType: ['original', 'compressed'],
+						sourceType: ['album', 'camera']
+					});
+					const tempFilePaths = res.tempFilePaths;
+					console.log(tempFilePaths);
+					await this.uploadImage(tempFilePaths[0]);
 				} catch (error) {
-				  console.error('Error choosing image:', error);
+					console.error('Error choosing image:', error);
 				}
 			},
 			async uploadImage(filePath) {
@@ -459,9 +488,9 @@
 					this.homepageData = data;
 					console.log('Homepage data received:', this.homepageData);
 
-					this.$nextTick(() => {
-						this.drawRadar();
-					});
+					// this.$nextTick(() => {
+					// 	this.drawRadar();
+					// });
 				} catch (error) {
 					this.error = 'Error fetching homepage data';
 					console.error(this.error, error);
@@ -479,27 +508,27 @@
 						item.chatHistory = JSON.parse(item.chatHistory);
 					});
 					this.analysisList = data;
-				} catch(error) {
+				} catch (error) {
 					// this.error = 'Error fetching analysis data';
 					console.error(this.error, error);
 				} finally {
 
 				}
 			},
-			
+
 			async getBattlefield() {
 				try {
 
-					this.userId
+					// this.userId
 					console.log('Fetching homepage data with jobId:', this.userId);
-			
-					const data = await apiService.getBattlefield(1);
+
+					const data = await apiService.getBattlefield(this.userId);
 					this.courseData = data;
 					console.log('Homepage data received:', this.courseData);
-			
-					this.$nextTick(() => {
-						this.drawRadar();
-					});
+
+					// this.$nextTick(() => {
+					// 	this.drawRadar();
+					// });
 				} catch (error) {
 					this.error = 'Error fetching homepage data';
 					console.error(this.error, error);
@@ -507,7 +536,7 @@
 					// this.isLoading = false;
 				}
 			},
-			
+
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
 			},
@@ -636,7 +665,7 @@
 			},
 			navigateToResult() {
 				uni.navigateTo({
-					url: `/pages/result/result_en?userId=${this.userId}`
+					url: `/pages/result/result_en`
 				});
 			},
 			openWeChat() {
@@ -752,13 +781,13 @@
 
     .character-view {
 		margin-top: 16rpx;
-        width: 668rpx;
-        height: 420rpx;
-        color: #373742;
+		width: 668rpx;
+		height: 420rpx;
+		color: #373742;
 		display: flex;
 		background-color: #373742;
 		border-radius: 32rpx;
-    }
+	}
 
 	.animal-tag {
 		width: 318rpx;
@@ -801,7 +830,7 @@
 
 	.detail-summary {
 		display: -webkit-box;
-		font-size:24rpx;
+		font-size: 24rpx;
 		font-weight: 400;
 		line-height: 32rpx;
 		color: #ffffff;
@@ -810,7 +839,7 @@
 		height: 160rpx;
 		text-overflow: ellipsis;
 		-webkit-box-orient: vertical;
-  		-webkit-line-clamp: 5;
+		-webkit-line-clamp: 5;
 	}
 
 	.calendar {
@@ -873,7 +902,7 @@
 		gap: 24rpx;
 		padding-bottom: 24rpx;
 	}
-	
+
 	.container {
 		position: relative;
 		background-color: #2F2F38;
@@ -2050,37 +2079,43 @@
 
 	.floating-image {
 		position: absolute;
-		width: 320rpx; /* 调整图片大小 */
+		width: 320rpx;
+		/* 调整图片大小 */
 		height: auto;
-		top: 110rpx; /* 调整垂直位置，使图片漂浮在进度条上方 */
-		right: 105rpx; /* 调整水平位置 */
-		z-index: 10; /* 确保图片在进度条上方 */
+		top: 110rpx;
+		/* 调整垂直位置，使图片漂浮在进度条上方 */
+		right: 105rpx;
+		/* 调整水平位置 */
+		z-index: 10;
+		/* 确保图片在进度条上方 */
 	}
-	
+
 	.container-sprogress {
-	  width: 100%;
-	  overflow-x: hidden; /* Hide horizontal overflow */
-	  display: flex;
-	  justify-content: flex-start;
-	  align-items: center;
-	  flex-direction: column;
-	  background-color: #2F2F38;
-	  margin-right: 3rpx;
+		width: 100%;
+		overflow-x: hidden;
+		/* Hide horizontal overflow */
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
+		background-color: #2F2F38;
+		margin-right: 3rpx;
 	}
-	
+
 	.progress-canvas {
-	  width: 150%; /* Increase canvas width */
-	  height: 2000rpx;
-	  margin: 45rpx;
-	  transform: translateX(-20%); /* Move canvas to the left */
+		width: 150%;
+		/* Increase canvas width */
+		height: 2000rpx;
+		margin: 45rpx;
+		transform: translateX(-20%);
+		/* Move canvas to the left */
 	}
 
 	.tear-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 134px;
-  padding-top: 0px;
-}
-	
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		height: 134px;
+		padding-top: 0px;
+	}
 </style>
