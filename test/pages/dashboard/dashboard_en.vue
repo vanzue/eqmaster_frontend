@@ -450,7 +450,6 @@
 			},
 			async chooseImage() {
 				try {
-					return;
 					const res = await uni.chooseImage({
 						count: 1,
 						sizeType: ['original', 'compressed'],
