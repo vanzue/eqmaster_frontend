@@ -86,7 +86,9 @@
 			try {
 				const userId = uni.getStorageSync('userId');
 				if (!userId) {
-					uni.navigateTo({ url: '/pages/landing/experience' });
+					uni.navigateTo({
+						url: '/pages/landing/experience'
+					});
 					return;
 				}
 				this.userId = userId || "";
@@ -309,6 +311,7 @@
 		top: 20%;
 		position: absolute;
 		margin-bottom: 20rpx;
+		margin-left: 55rpx;
 		/* 添加文本和图像之间的空间 */
 		line-height: 60rpx;
 		/* 调整高以提高可读性 */
