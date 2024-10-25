@@ -418,7 +418,7 @@
 				if (this.task1Finished) {
 					await this.Pass();
 				}
-				const nextRound = await continueChat(this.allHistory);
+				const nextRound = await continueChat(this.allHistory, "4");
 				console.log("next round data", nextRound);
 				nextRound.dialog = nextRound.dialog.map((item) => ({
 					role: item.role,
@@ -428,13 +428,14 @@
 				this.chattingHistory = nextRound.dialog;
 				this.allHistory = this.allHistory.concat(nextRound.dialog);
 				console.log("after concat, chatting history:", this.chattingHistory);
+				await checkBossComplimentTask2();
 				// let someoneTalked = false;
 				this.displayedNpcChatIndex = 0;
 				this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
 
 				this.state = "NpcTalk";
 				const isTask2 = await this.checkBossComplimentTask2(nextRound.dialog);
-        this.isLoadingShow = false;
+				this.isLoadingShow = false;
 				// console.log(isTask2);
 				// if(isTask2) {
 				// }
@@ -692,7 +693,7 @@
 							}, 50);
 						});
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats);
+						const judgeResult = await reply(validChats, "4");
 
 
 						await this.handleRecorderReply(judgeResult);
@@ -737,7 +738,7 @@
 					});
 					try {
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats);
+						const judgeResult = await reply(validChats, "4");
 						// console.log("validChat:", validChat);
 						console.log("judge Result:", judgeResult);
 						this.gemCount = this.calculateStars();
@@ -767,7 +768,7 @@
 							loading: true,
 							text: "Generating",
 						};
-						judgeResult = await helpReply(validChats);
+						judgeResult = await helpReply(validChats, "4");
 						// console.log(judgeResult.responsive);
 						if (judgeResult.responsive) {
 							this.showCardPopup = false;
@@ -794,7 +795,7 @@
 							});
 
 							const validChatsRepy = filterChatHistory(this.allHistory);
-							const judgeResultRepy = await reply(validChatsRepy);
+							const judgeResultRepy = await reply(validChatsRepy, "4");
 							await this.handleRecorderReply(judgeResultRepy);
 							this.$store.dispatch('fetchHomepageData');
 						}
@@ -804,7 +805,7 @@
 							loading: true,
 							text: "Generating",
 						};
-						judgeResult = await hint(validChats);
+						judgeResult = await hint(validChats, "4");
 						// console.log(judgeResult.tips);
 						if (judgeResult.tips) {
 							this.showCardPopup = false;
@@ -975,7 +976,6 @@
 				let taskCompleted = false;
 				if (!this.task1Finished && !this.taskList.getTask(1).one) {
 					const goalKeyword = "I agree with you";
-					// console.log("dialog":this.dialog);
 					for (let chat of dialog) {
 						if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
@@ -990,7 +990,7 @@
 									task2.one = true;
 									this.taskList.doneTaskLength++;
 									const totalTaskLength =
-										await this.taskList.getTotalTaskLength();
+										this.taskList.getTotalTaskLength();
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved";
@@ -1006,7 +1006,7 @@
 							taskCompleted = true;
 						}
 					}
-					const totalTaskLength = await this.taskList.getTotalTaskLength();
+					const totalTaskLength = this.taskList.getTotalTaskLength();
 					if (this.taskList.doneTaskLength >= totalTaskLength) {
 						this.task1Finished = true;
 						this.isPass = true;
