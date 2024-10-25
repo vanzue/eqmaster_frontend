@@ -138,7 +138,7 @@
 				scenarioId: 1, // Add this new property
 				isLoading: false,
 				chatHistory: [], // Keep this new property
-				backgroundImageSrc: '/static/bg1.png',
+				backgroundImageSrc: '/static/onboarding/bg1.png',
 			};
 		},
 		onLoad(option) {
@@ -228,7 +228,7 @@
 
 					// Get scenarioId
 					this.scenarioId = scenarioResponse.scenario_id || 1;
-					this.backgroundImageSrc = `/static/bg${scenarioResponse.scenario_id}.png`;
+					this.backgroundImageSrc = `/static/onboarding/bg${scenarioResponse.scenario_id}.png`;
 				} catch (error) {
 					console.error("Error fetching scenarioId:", error);
 					uni.showToast({
