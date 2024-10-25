@@ -35,7 +35,8 @@
 		<!-- Test1 page content -->
 		<template v-else-if="currentPage === 'test1'">
 			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="npcAvatar" @tap="navigateToTest2"
-				:description="description" :class="{ 'disabled': isLoading }"></onboarding-chat-bubble>
+				:description="description" :class="{ 'disabled': isLoading }"
+				:requestCount="requestCount"></onboarding-chat-bubble>
 		</template>
 
 		<!-- Test2 page content -->
@@ -76,8 +77,8 @@
 		<!-- Test4 page content -->
 		<template v-else-if="currentPage === 'test4'">
 			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="'/static/npc1.png'"
-				:dismiss="navigateToTest5" :description="description"
-				:class="{ 'disabled': isLoading }"></onboarding-chat-bubble>
+				:dismiss="navigateToTest5" :description="description" :class="{ 'disabled': isLoading }"
+				:requestCount="requestCount"></onboarding-chat-bubble>
 		</template>
 
 		<!-- Test5 page content -->
@@ -139,6 +140,7 @@
 				isLoading: false,
 				chatHistory: [], // Keep this new property
 				backgroundImageSrc: '/static/onboarding/bg1.png',
+				requestCount: 0,
 			};
 		},
 		onLoad(option) {
@@ -163,13 +165,17 @@
 				const userId = uni.getStorageSync('userId');
 				const jobId = uni.getStorageSync('jobId');
 				if (!userId || !jobId) {
-					uni.navigateTo({ url: '/pages/landing/experience' });
+					uni.navigateTo({
+						url: '/pages/landing/experience'
+					});
 					return;
 				}
 				this.userId = userId || "";
 				const username = uni.getStorageSync('username');
 				if (!username) {
-					uni.navigateTo({ url: '/pages/landing/experience' });
+					uni.navigateTo({
+						url: '/pages/landing/experience'
+					});
 					return;
 				}
 				this.username = username;
@@ -220,9 +226,9 @@
 					})();
 
 					console.log("####scenario id:############", scenarioId);
-					const scenarioResponse = scenarioId !== undefined
-						? await apiService.startScenarioWithId(this.jobId, scenarioId)
-						: await apiService.startScenario(this.jobId);
+					const scenarioResponse = scenarioId !== undefined ?
+						await apiService.startScenarioWithId(this.jobId, scenarioId) :
+						await apiService.startScenario(this.jobId);
 
 					console.log("#####################fetched scenario: ", scenarioResponse);
 
@@ -457,7 +463,9 @@
 					.chooseScenario(this.num, this.jobId)
 					.then((result) => {
 						console.log("Response data:", result);
-
+						// 增加请求计数
+						this.requestCount++;
+						console.log("API 请求次数:", this.requestCount)
 						if (
 							result.message ===
 							"Final choice made. Processing data in background."
@@ -495,15 +503,15 @@
 				}
 			},
 			navigateToLoading() {
-	// 			const loadingPageUrl = `/pages/result/loading?jobId=${
-    //     this.jobId
-    //   }&userId=${this.userId}&username=${encodeURIComponent(
-    //     this.username
-    //   )}&gender=${this.gender}&birthday=${encodeURIComponent(
-    //     JSON.stringify(this.birthday)
-    //   )}&options=${encodeURIComponent(
-    //     JSON.stringify(this.selectedOptions)
-    //   )}&num=${this.num}`;
+				// 			const loadingPageUrl = `/pages/result/loading?jobId=${
+				//     this.jobId
+				//   }&userId=${this.userId}&username=${encodeURIComponent(
+				//     this.username
+				//   )}&gender=${this.gender}&birthday=${encodeURIComponent(
+				//     JSON.stringify(this.birthday)
+				//   )}&options=${encodeURIComponent(
+				//     JSON.stringify(this.selectedOptions)
+				//   )}&num=${this.num}`;
 				const loadingPageUrl = `/pages/result/loading`;
 				uni.navigateTo({
 					url: loadingPageUrl,
