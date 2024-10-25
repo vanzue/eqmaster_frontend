@@ -3,15 +3,18 @@
 		<text class="content">
 			<view class="card-header">
 				<view class="title">
-					本关任务
-					<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode="" @click="closeCardBox"></image>
+					Tasks
+					<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode=""
+						@click="closeCardBox"></image>
 				</view>
 			</view>
 			<view class="list">
 				<view class="item" v-for="(item,index) in listData">
 					<view class="left">
-						<image class="radiocheck-image" src="/static/battlefield/radiocheck.png" mode="" v-if="item._status"></image>
-						<image class="radiocheck-image" src="/static/battlefield/radiocheck-disabled.png" mode="" v-else></image>
+						<image class="radiocheck-image" src="/static/battlefield/radiocheck.png" mode=""
+							v-if="item._status"></image>
+						<image class="radiocheck-image" src="/static/battlefield/radiocheck-disabled.png" mode=""
+							v-else></image>
 					</view>
 					<view class="right">
 						<view class="top">
@@ -44,7 +47,7 @@
 		props: {
 			listData: {
 				type: Array,
-      			default: () => []
+				default: () => []
 			}
 		},
 		data() {
@@ -85,7 +88,7 @@
 				this.taskList = new TaskList(newListData);
 			},
 			deep: true
-    	}
+		}
 	}
 </script>
 
@@ -98,7 +101,7 @@
 		position: absolute;
 		height: 732rpx;
 		bottom: 0px;
-		background-color: #FDEDC8;
+		background-color: #D6FCF6;
 		display: flex;
 		flex-direction: column;
 	}
@@ -107,25 +110,30 @@
 		/* display: flex; */
 		padding: 40rpx 36rpx 96rpx 32rpx;
 	}
+
 	.card-header {
 		display: block;
 	}
+
 	.title {
 		width: 100%;
 		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 48rpx;
+		font-size: 40rpx;
 		font-weight: 700;
-		color: #8C5225;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #2D6985;
 	}
+
 	.card-close-image {
 		position: absolute;
 		right: 0;
 		width: 48rpx;
 		height: 48rpx;
 	}
+
 	.list {
 		display: block;
 		text-align: center;
@@ -134,11 +142,12 @@
 		gap: 16rpx;
 		opacity: 0px;
 		margin-top: 40rpx;
-		color: #8C5225;
+		color: #2D6985;
 	}
+
 	.item {
 		display: flex;
-/* 				height: 156rpx; */
+		/* 				height: 156rpx; */
 		align-items: center;
 		background-color: #FFFFFF;
 		margin-bottom: 16rpx;
@@ -146,10 +155,20 @@
 		border-radius: 24rpx;
 		gap: 32rpx;
 	}
+
+	.top {
+		font-size: 30rpx;
+		line-height: 40rpx;
+		font-weight: 600;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #2D6985;
+	}
+
 	.radiocheck-image {
 		width: 53.34rpx;
 		height: 53.34rpx;
 	}
+
 	.right {
 		text-align: left;
 		display: block;
@@ -164,7 +183,7 @@
 		/* flex-direction: column; */
 		align-items: center;
 	}
-	
+
 	.health-bar-container {
 		width: 436rpx;
 		height: 20rpx;
@@ -172,7 +191,7 @@
 		position: relative;
 		overflow: visible;
 	}
-	
+
 	.health-bar-background {
 		display: flex;
 		align-items: center;
@@ -184,7 +203,7 @@
 		overflow: visible;
 		z-index: 3;
 	}
-	
+
 	.health-bar-foreground {
 		margin-top: 2rpx;
 		height: 16rpx;
@@ -196,7 +215,7 @@
 		overflow: visible;
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
 	}
-	
+
 	.health-bar-line {
 		position: absolute;
 		left: 50%;
@@ -206,6 +225,7 @@
 		z-index: 3;
 		/* 中间的白线 */
 	}
+
 	.right {
 		text-align: left;
 		display: block;
@@ -221,7 +241,7 @@
 		/* flex-direction: column; */
 		align-items: center;
 	}
-	
+
 	.health-bar-container {
 		width: 436rpx;
 		height: 20rpx;
@@ -229,7 +249,7 @@
 		position: relative;
 		overflow: visible;
 	}
-	
+
 	.health-bar-background {
 		display: flex;
 		align-items: center;
@@ -241,7 +261,7 @@
 		overflow: visible;
 		z-index: 3;
 	}
-	
+
 	.health-bar-foreground {
 		margin-top: 2rpx;
 		height: 16rpx;
@@ -253,7 +273,7 @@
 		overflow: visible;
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
 	}
-	
+
 	.health-bar-line {
 		position: absolute;
 		left: 50%;

@@ -42,11 +42,15 @@ export default {
     },
     starRatings: {
       type: Array,
-      default: () => [2, 2, 1, 0, 0]
+      default: () => [2, 2, 1,]
     },
     levelNames: {
       type: Array,
-      default: () => ['老板肚子里的蛔虫', '被老板刁难', '遇到无礼同事', '高级试炼场', '精英赛场']
+      default: () => [
+        'Handling tension in a meeting',
+        'Staying calm in team setbacks',
+        'Reading the room to resolve conflicts'
+      ]
     }
   },
   data() {
@@ -180,9 +184,18 @@ export default {
 
         ctx.lineTo(endPoint.x, endPoint.y + yOffset);
 
-        ctx.lineWidth = 12;
+        ctx.lineWidth = 10;
         ctx.strokeStyle = i < this.finishComponents ? '#EDFB8B' : '#3B413B';
+        
+        // 修改这里：为未完成的路径设置虚线样式
+        if (i >= this.finishComponents) {
+          ctx.setLineDash([30, 30]); // 设置虚线样式，10像素实线，10像素空白
+        } else {
+          ctx.setLineDash([]); // 实线
+        }
+        
         ctx.stroke();
+        ctx.setLineDash([]); // 重置为实线，避免影响其他绘制
 
         // 在初始线的右边添加绿色线段
         if (i === 0) {
@@ -200,15 +213,41 @@ export default {
           ctx.beginPath();
           ctx.moveTo(lineStartX - 120, lineY);
           ctx.lineTo(lineStartX - 2600, lineY);
-          ctx.lineWidth = 12;
+          ctx.lineWidth = 10;
           ctx.strokeStyle = '#EDFB8B'; // 绿色
           ctx.stroke();
+        }
+
+        // 恢复 LEVEL 2 的特殊标记
+        if (i === 3) {
+          const lineStartX = points[points.length / 2].x + 20; // Text left starting point
+          const lineY = points[points.length / 2].y + yOffset;
+
+          // Draw green line segment
+          ctx.beginPath();
+          ctx.moveTo(lineStartX - 10, lineY);
+          ctx.lineTo(lineStartX + 100, lineY);
+          ctx.lineWidth = 10;
+          ctx.strokeStyle = '#2F2F38';
+          ctx.stroke();
+
+          // Draw logo
+          const logoSize = 30; // Adjust size as needed
+          const logoPath = '/static/lock.png'; // Replace with your logo path
+          ctx.drawImage(logoPath, lineStartX -15 , lineY - logoSize /1.7, logoSize, logoSize);
+
+          // Draw "LEVEL 2" text
+          ctx.font = 'bold 20px Arial';
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('LEVEL 2', lineStartX +20 , lineY); // Adjust text position
         }
       }
 
       // 定义完成和未完成的图片路径数组
       const completedImages = [
-        '/static/level1completed.png',
+        '/static/level1completed1.png',
         '/static/level2completed.png',
         '/static/level3completed.png',
         '/static/level4completed.png',
@@ -216,8 +255,8 @@ export default {
       ];
       const incompleteImages = [
         '/static/level1incomplete.png',
-        '/static/level2incomplete.png',
-        '/static/level3incomplete.png',
+        '/static/level2incomplete1.png',
+        '/static/level3incomplete1.png',
         '/static/level4incomplete.png',
         '/static/level5incomplete.png'
       ];
@@ -270,20 +309,11 @@ export default {
 
           // 只在激活（已完成）的关卡上添加红色实体六边形
           if (isCompleted) {
-            // 存储六边形的中心点和大小，用于后续的点击检测
             this.hexagons[i] = {
               centerX: imageX + imageSize / 2,
               centerY: imageY + imageSize / 2,
               size: imageSize / 2
             };
-
-            // 绘制红色实体六边形
-            // ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'; // 半透明红色
-            // ctx.strokeStyle = 'rgba(255, 0, 0, 1)'; // 实线红色边框
-            // ctx.lineWidth = 2;
-            // this.drawHexagon(ctx, imageX + imageSize / 2, imageY + imageSize / 2, imageSize / 2, Math.PI / 6);
-            // ctx.fill(); // 填充六边形
-            // ctx.stroke(); // 绘制边框
           }
         } catch (error) {
           console.error(`Error drawing image for level ${i + 1}:`, error);
@@ -303,13 +333,13 @@ export default {
         const cornerRadius = 10; // 圆角半径
 
         // 计算背景的尺寸
-        const textMetrics = ctx.measureText(`关卡${this.numberToChineseCharacter(i + 1)}`);
+        const textMetrics = ctx.measureText(`Unit${this.numberToChineseCharacter(i + 1)}`);
         const bgWidth = textMetrics.width + padding * 2;
         const bgHeight = 24; // 根据需要调整高度
 
         // 计算背景的位置
         const bgX = textContainerX + textContainerWidth / 2 - bgWidth / 2;
-        const bgY = textContainerY - 15 - bgHeight / 2;
+        const bgY = textContainerY - 15 - bgHeight / 1.5;
 
         // 绘制圆角矩形背景
         ctx.beginPath();
@@ -332,8 +362,9 @@ export default {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle'; // 确保文本垂直居中
-        const levelText = `关卡${this.numberToChineseCharacter(i + 1)}`;
-        ctx.fillText(levelText, textContainerX + textContainerWidth / 2, textContainerY - 15);
+        // const levelText = `Unit${this.numberToChineseCharacter(i + 1)}`;
+        const levelText = `Unit ${i + 1}`;
+        ctx.fillText(levelText, textContainerX + textContainerWidth / 2, textContainerY - 18);
 
         ctx.restore(); // 恢复之前保存的绘图状态
 
@@ -343,15 +374,43 @@ export default {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         const levelName = this.levelNames[i] || `Level ${i + 1}`;
-        ctx.fillText(levelName, textContainerX + textContainerWidth / 2, textContainerY + 15);
+        
+        // 添加文本换行逻辑
+        const maxWidth = textContainerWidth + 0; // 留一些边距
+        const words = levelName.split(' ');
+        let line = '';
+        const lines = [];
+        
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + ' ';
+          const metrics = ctx.measureText(testLine);
+          const testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            lines.push(line);
+            line = words[n] + ' ';
+          } else {
+            line = testLine;
+          }
+        }
+        lines.push(line);
 
-        // 添加星级评分（只为已完成的关卡显示）
-        if (isCompleted) {
+        // 绘制多行文本
+        const lineHeight = 18;
+        const totalHeight = lines.length * lineHeight;
+        // let startY = textContainerY + 15 - (totalHeight / 2) + (lineHeight / 2);
+        let startY = textContainerY + 10 ;
+
+        lines.forEach((line, index) => {
+          ctx.fillText(line.trim(), textContainerX + textContainerWidth / 2, startY + (index * lineHeight));
+        });
+
+        // 添加星级评分（只为已完成的关卡显示，且星星数量大于0）
+        if (isCompleted && this.starRatings[i] > 0) {
           const starSize = 30;
           const starSpacing = 5;
           const starContainerWidth = (starSize * 3) + (starSpacing * 2);
           const starContainerX = textContainerX + (textContainerWidth - starContainerWidth) / 2;
-          const starContainerY = textContainerY + 35; // 调整这个值来控制星星与关卡名称的距离
+          const starContainerY = textContainerY + 45; // 调整这个值来控制星星与关卡名称的距离
 
           for (let j = 0; j < 3; j++) {
             const starX = starContainerX + (j * (starSize + starSpacing));
@@ -451,11 +510,21 @@ export default {
 
 .progress-canvas {
   width: 100%; /* 将宽度设置为100% */
-  height: 2000rpx;
+  height: 1200rpx;
   margin: 45rpx;
   /* 移除transform属性 */
 }
 </style>
+
+
+
+
+
+
+
+
+
+
 
 
 
