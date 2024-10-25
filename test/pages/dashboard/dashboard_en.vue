@@ -1,33 +1,39 @@
 <template>
 	<view class="container">
-		<scroll-view scroll-y style="height: 100%;">
+		<view v-if="isLoading" class="loading">
+				Loading
+				<div></div>
+				<div></div>
+				<div></div>
+		</view>
+		<scroll-view v-else scroll-y style="height: calc(100vh - 150rpx)">
 			<view v-if="currentView === 'dashboard'" class="content">
-
-				<!-- 添加错误处理和加载状态 -->
-				<view v-if="isLoading">loading...</view>
-				<view v-else-if="error">{{ error }}</view>
+				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
 					<text class="score-title-head">hi, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
-                    <view class="character-view" @click="navigateToResult">
+					<view class="character-view" @click="navigateToResult">
 						<view style="display: flex;flex-direction: column;width: 308rpx;">
 							<view :class="['animal-tag', animal]">
 								<text>{{ animal }}1</text>
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
-								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">									Needs to improve
+								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;"> Needs
+									to improve
 								</text>
-								<text style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
+								<text
+									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
 									{{homepageData?.response?.personal_info?.tag}}
 								</text>
-								<text class="detail-summary">{{homepageData?.response?.eq_scores?.detail_summary}}</text>
+								<text
+									class="detail-summary">{{homepageData?.response?.eq_scores?.detail_summary}}</text>
 							</view>
 						</view>
 						<image class="character-image" :src="userCard" />
-                    </view>
-					
+					</view>
+
 					<view style="margin-top: 24rpx;">
 						<text class="card-title1">Daily Tip</text>
 						<view class="calendar">
@@ -36,9 +42,11 @@
 								<text style="font-size: 48rpx;font-weight: 600;">{{ currentDate }}</text>
 							</view>
 							<view class="right-calendar">
-								<text style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									The <text style="font-weight: bold;">FFC Praise Method</text> involves expressing your genuine feelings, providing specific facts,
-								and making comparisons to highlight influence.
+								<text
+									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
+									The <text style="font-weight: bold;">FFC Praise Method</text> involves expressing
+									your genuine feelings, providing specific facts,
+									and making comparisons to highlight influence.
 								</text>
 							</view>
 						</view>
@@ -48,14 +56,11 @@
 						<text class="card-title1">Moments</text>
 						<text class="card-title15">Upload your chats, receive personalized soft skill insights.</text>
 					</view>
-					
+
 					<view class="history-list">
 						<view>
-							<image class="import-button" 
-								src="../../static/dashboard/import-button.png" 
-								mode="widthFix"
-								@click="chooseImage"
-								>
+							<image class="import-button" src="../../static/dashboard/import-button.png" mode="widthFix"
+								@click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" 
@@ -98,7 +103,8 @@
 					<view class="dashboard2-card">
 						<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
 						</image>
-						<text class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
+						<text
+							class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
 					</view>
 				</view>
 				<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
@@ -120,20 +126,16 @@
 						</view>
 					</view>
 				</view>
-				
+
 				<!-- <view class="dashboard2-card1-container">
 					
 				</view> -->
 
 				<view class="dashboard2-card-o">
 					<!-- 调用进度条组件 -->
-					
-					<SProgressBar 
-					  v-if="courseData && courseData.courses"
-					  :finishComponents="courseData.courses.length"
-					  :starRatings="courseData.courses.map(course => course.result)"
-					  :totalComponents="6"
-					/>
+
+					<SProgressBar v-if="courseData && courseData.courses" :finishComponents="courseData.courses.length"
+						:starRatings="courseData.courses.map(course => course.result)" :totalComponents="6" />
 				</view>
 
 
@@ -147,7 +149,8 @@
 				</view> -->
 			</view>
 		</scroll-view>
-		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView" :userId="userId" :username="username" :jobId="jobId" />
+		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
+			:userId="userId" :username="username" :jobId="jobId" />
 	</view>
 </template>
 
@@ -188,10 +191,9 @@
 				// 		contacts: []
 				// 	}
 				// },
-				analysisList: [
-					{
+				analysisList: [{
 						id: 1,
-						chat_history: {
+						chatHistory: {
 							messages: [
 								{
 									user: "Ophelia",
@@ -208,7 +210,9 @@
 							]
 						},
 						analysis: {
-							summary: [{"summary": "ssdf"}],
+							summary: [{
+								"summary": "ssdf"
+							}],
 							suggestions: [
 								"1Import chat history to figure out what she shaid ajshdfkahdf"
 							]
@@ -217,23 +221,21 @@
 					{
 						id: 2,
 						chat_history: {
-							messages: [
-								{
-									user: "",
-									message: "",
-								}
-							]
+							messages: [{
+								user: "",
+								message: "",
+							}]
 						},
 						analysis: {
 							title: "2Trying to respond more sdfa fliasdf   xxxxxx xxxx",
 							details: [
-								"1Import chat history to figure out what she shaid ajshdfkahdf"
+								"1Import chat history to figure out what she shaid ajshdfkahdf",
 							]
 						}
 					}
 				],
 				animal: '',
-				courseData:null,
+				courseData: null,
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -296,7 +298,9 @@
 				return monthFormatter.format(this.currentDate).toUpperCase();
 			},
 			currentDate() {
-				const dayFormatter = new Intl.DateTimeFormat('en-US', { day: '2-digit' });
+				const dayFormatter = new Intl.DateTimeFormat('en-US', {
+					day: '2-digit'
+				});
 				return dayFormatter.format(this.currentDate);
 			},
 			leftList() {
@@ -352,9 +356,8 @@
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
 			},
 			safeStarRatings() {
-				return this.courseData && this.courseData.courses
-					? this.courseData.courses.map(course => course.result)
-					: [];
+				return this.courseData && this.courseData.courses ?
+					this.courseData.courses.map(course => course.result) : [];
 			}
 		},
 		watch: {
@@ -365,7 +368,7 @@
 						this.isLoading = false;
 					}
 				},
-			// deep: true,
+				// deep: true,
 			}
 		},
 		components: {
@@ -417,6 +420,9 @@
 		onUnload() {
 
 		},
+		onShow() {
+			this.getAnalysisList(this.userId);
+		},
 		methods: {
 			progressWidth(value) {
 				// 算进度条宽度百分比
@@ -449,29 +455,31 @@
 			},
 			async chooseImage() {
 				try {
-					return;
-				  const res = await uni.chooseImage({
-				    count: 1,
-				    sizeType: ['original', 'compressed'],
-				    sourceType: ['album', 'camera']
-				  });
-				  const tempFilePaths = res.tempFilePaths;
-				  console.log(tempFilePaths);
-				  await this.uploadImage(tempFilePaths[0]);
+					const res = await uni.chooseImage({
+						count: 1,
+						sizeType: ['original', 'compressed'],
+						sourceType: ['album', 'camera']
+					});
+					const tempFilePaths = res.tempFilePaths;
+					console.log(tempFilePaths);
+					await this.uploadImage(tempFilePaths[0]);
 				} catch (error) {
-				  console.error('Error choosing image:', error);
+					console.error('Error choosing image:', error);
 				}
 			},
 			async uploadImage(filePath) {
 			  try {
+				this.isLoading = true; 
 			    const result = await apiService.uploadChatHistory(filePath, this.userId);
-				result.analysis = JSON.parse(result.analysis);
-				result.chatHistory = JSON.parse(result.chatHistory);
-			    this.navigateToAnalysis(result);
+				const resultJson = JSON.parse(result);
+				resultJson.chatHistory = JSON.parse(resultJson.chatHistory);
+			    this.navigateToAnalysis(resultJson);
 			  } catch (error) {
 			    console.error('Upload failed:', error);
 			    // 处理上传失败的情况
-			  }
+			  } finally {
+					this.isLoading = false;
+				}
 			},
 			async getHomepageData() {
 				try {
@@ -505,24 +513,24 @@
 					});
 					console.log(data);
 					this.analysisList = data;
-				} catch(error) {
+				} catch (error) {
 					// this.error = 'Error fetching analysis data';
 					console.error(this.error, error);
 				} finally {
 
 				}
 			},
-			
+
 			async getBattlefield() {
 				try {
 
 					// this.userId
 					console.log('Fetching homepage data with jobId:', this.userId);
-			
+
 					const data = await apiService.getBattlefield(this.userId);
 					this.courseData = data;
 					console.log('Homepage data received:', this.courseData);
-			
+
 					// this.$nextTick(() => {
 					// 	this.drawRadar();
 					// });
@@ -533,7 +541,7 @@
 					// this.isLoading = false;
 				}
 			},
-			
+
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
 			},
@@ -721,16 +729,70 @@
 
 
 <style scoped>
+	
+	.loading {
+		width: 100vw;
+		height: 80vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		background-color: #2f2f38;
+		font-weight: 700;
+		font-size: 28rpx;
+		line-height: 40rpx;
+		overflow-y: hidden;
+	}
+
+	.loading > div {
+		position: relative;
+		box-sizing: border-box;
+	}
+
+	.loading.la-dark {
+		color: #333;
+	}
+
+	.loading > div {
+		display: inline-block;
+		float: none;
+		background-color: currentColor;
+		border: 0 solid currentColor;
+	}
+
+	.loading > div {
+		width: 6rpx;
+		height: 6rpx;
+		margin: 4px;
+		border-radius: 100%;
+		animation: ball-beat 0.7s -0.15s infinite linear;
+	}
+
+	.loading > div:nth-child(2n-1) {
+		animation-delay: -0.5s;
+	}
+
+	@keyframes ball-beat {
+		50% {
+			opacity: 0.2;
+			transform: scale(0.75);
+		}
+
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
 
     .character-view {
 		margin-top: 16rpx;
-        width: 668rpx;
-        height: 420rpx;
-        color: #373742;
+		width: 668rpx;
+		height: 420rpx;
+		color: #373742;
 		display: flex;
 		background-color: #373742;
 		border-radius: 32rpx;
-    }
+	}
 
 	.animal-tag {
 		width: 318rpx;
@@ -773,7 +835,7 @@
 
 	.detail-summary {
 		display: -webkit-box;
-		font-size:24rpx;
+		font-size: 24rpx;
 		font-weight: 400;
 		line-height: 32rpx;
 		color: #ffffff;
@@ -782,7 +844,7 @@
 		height: 160rpx;
 		text-overflow: ellipsis;
 		-webkit-box-orient: vertical;
-  		-webkit-line-clamp: 5;
+		-webkit-line-clamp: 5;
 	}
 
 	.calendar {
@@ -836,14 +898,16 @@
 		flex-direction: column;
 		gap: 24rpx;
 		margin-top: 24rpx;
+		padding-bottom: 24rpx;
 	}
 
 	.right-history-container {
 		display: flex;
 		flex-direction: column;
 		gap: 24rpx;
+		padding-bottom: 24rpx;
 	}
-	
+
 	.container {
 		position: relative;
 		background-color: #2F2F38;
@@ -2020,37 +2084,43 @@
 
 	.floating-image {
 		position: absolute;
-		width: 320rpx; /* 调整图片大小 */
+		width: 320rpx;
+		/* 调整图片大小 */
 		height: auto;
-		top: 110rpx; /* 调整垂直位置，使图片漂浮在进度条上方 */
-		right: 105rpx; /* 调整水平位置 */
-		z-index: 10; /* 确保图片在进度条上方 */
+		top: 110rpx;
+		/* 调整垂直位置，使图片漂浮在进度条上方 */
+		right: 105rpx;
+		/* 调整水平位置 */
+		z-index: 10;
+		/* 确保图片在进度条上方 */
 	}
-	
+
 	.container-sprogress {
-	  width: 100%;
-	  overflow-x: hidden; /* Hide horizontal overflow */
-	  display: flex;
-	  justify-content: flex-start;
-	  align-items: center;
-	  flex-direction: column;
-	  background-color: #2F2F38;
-	  margin-right: 3rpx;
+		width: 100%;
+		overflow-x: hidden;
+		/* Hide horizontal overflow */
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
+		background-color: #2F2F38;
+		margin-right: 3rpx;
 	}
-	
+
 	.progress-canvas {
-	  width: 150%; /* Increase canvas width */
-	  height: 2000rpx;
-	  margin: 45rpx;
-	  transform: translateX(-20%); /* Move canvas to the left */
+		width: 150%;
+		/* Increase canvas width */
+		height: 2000rpx;
+		margin: 45rpx;
+		transform: translateX(-20%);
+		/* Move canvas to the left */
 	}
 
 	.tear-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 134px;
-  padding-top: 0px;
-}
-	
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		height: 134px;
+		padding-top: 0px;
+	}
 </style>
