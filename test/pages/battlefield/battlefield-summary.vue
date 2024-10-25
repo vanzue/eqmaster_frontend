@@ -7,8 +7,8 @@
 			</view> -->
 			<image class="head-image" :src="
           this.isPass
-            ? '/static/battlefield/IP_Green.svg'
-            : '/static/battlefield/IP_Grey.svg'
+            ? '/static/battlefield/IP-green.png'
+            : '/static/battlefield/IP-grey.png'
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
@@ -67,7 +67,7 @@
 				<image class="guide-icon" src="/static/battlefield/time.png" mode="aspectFill"></image>
 				<image class="guide-icon" src="/static/battlefield/flag.png" mode="aspectFill"></image>
 				<button class="guide-button" @click="navigateToGuide">
-					Continue
+					{{ this.isPass ? "Continue" : "Try again" }}
 				</button>
 			</view>
 
@@ -192,6 +192,7 @@
 		min-height: 100vh;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
 			url("/static/battlefield/background1.png");
+		background-color: #373742;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -356,8 +357,8 @@
 	}
 
 	.third-card {
-		height: auto;
-		margin-bottom: 13vh;
+		height: 500rpx;
+		/* margin-bottom: 13vh; */
 	}
 
 	.guide-button-container {
@@ -384,7 +385,8 @@
 		height: 100rpx;
 		background: linear-gradient(101.13deg, #EDFB8B 13.84%, #9EE44D 84.78%);
 		color: #252529;
-		font-size: 36rpx;
+		font-size: 30rpx;
+		font-weight: 600;
 		border-radius: 50rpx;
 		text-align: center;
 		line-height: 100rpx;
@@ -401,5 +403,6 @@
 		/* 调整水平位置以居中 */
 		right: 10%;
 		/* 水平居中 */
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 </style>

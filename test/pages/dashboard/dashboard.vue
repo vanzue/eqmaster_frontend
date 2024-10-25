@@ -350,8 +350,7 @@
 			},
 			safeStarRatings() {
 				return this.courseData && this.courseData.courses ?
-					this.courseData.courses.map(course => course.result) :
-					[];
+					this.courseData.courses.map(course => course.result) : [];
 			}
 		},
 		components: {
@@ -1207,6 +1206,7 @@
 		/* 调整水平位置以居中 */
 		left: 50%;
 		/* 水平居中 */
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 
