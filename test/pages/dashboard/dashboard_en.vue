@@ -57,20 +57,20 @@
 								@click="chooseImage"
 								>
 							</image>
-							<view class="left-history-container">
+							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" 
 									:key="index" 
-									:title="item.analysis.summary.summary"
-									:details="item.analysis.suggestions"
+									:title="item.analysis?.summary?.summary || 'No summary available'"
+									:details="item?.analysis?.suggestions || []"
 									@click="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
-						<view class="right-history-container">
+						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList"
 								:key="index"
-								:title="item.analysis.summary.summary"
-								:details="item.analysis.suggestions"
+								:title="item.analysis?.summary?.summary || 'No summary available'"
+								:details="item?.analysis?.suggestions || []"
 								@click="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -373,8 +373,9 @@
 			ChatHistory,
 			Nav
 		},
-		created() {
-			this.getBattlefield();
+		async created() {
+			await this.getAnalysisList();
+			await this.getBattlefield();
 		},
 		onLoad(option) {
 			console.log('Received options:', option);
@@ -497,11 +498,12 @@
 			async getAnalysisList() {
 				try {
 					this.userId;
-					const data = await apiService.getAnalysisList(1);
+					const data = await apiService.getAnalysisList(this.userId);
 					data.forEach(item => {
 						item.analysis = JSON.parse(item.analysis);
 						item.chatHistory = JSON.parse(item.chatHistory);
 					});
+					console.log(data);
 					this.analysisList = data;
 				} catch(error) {
 					// this.error = 'Error fetching analysis data';

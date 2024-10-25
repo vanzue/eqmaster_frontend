@@ -22,7 +22,7 @@
 								EQ points
 							</view>
 							<view class="animal-score-desc" :style="{ backgroundImage: `url(/static/resulten/animal-name-3.png)` }">
-								{{homepageData.response.eq_scores.score}}/100
+								{{homepageData?.response?.eq_scores?.score}}/100
 							</view>
 						</view>
 						<view class="animal-desc" :style="{ backgroundImage: 'url(/static/resulten/quote.png)' }">
@@ -43,22 +43,22 @@
 							<image class="overview-content-icon" src="/static/resulten/pattern.svg"></image>
 							<view class="overview-content-item">
 								<view class="overview-content-title">
-									{{ homepageData.response.eq_scores.detail_summary }}
+									{{ homepageData?.response?.eq_scores?.detail_summary }}
 								</view>
 								<view class="overview-content-detail">
-									{{ homepageData.response.eq_scores.detail }}
+									{{ homepageData?.response?.eq_scores?.detail }}
 								</view>
 							</view>
 							<view class="speed-right">
 								<view class="speed-title">
-									self awareness
+									{{ caleOverviewScores[caleOverviewScores.length - 1].name }}
 								</view>
 								<view class="">
 									<view class="blood-container">
 										<view class="health-bar-container">
 											<view class="health-bar-line"></view>
 											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(homepageData.response.eq_scores.dimension1_score, 1)">
+												<view class="health-bar-foreground" :style="progressWidth(caleOverviewScores[caleOverviewScores.length - 1].score, 1)">
 												</view>
 											</view>
 										</view>
@@ -66,67 +66,18 @@
 								</view>
 							</view>
 
-							<view class="speed-right">
-								<view class="speed-title">
-									self regulation
-								</view>
-								<view class="">
-									<view class="blood-container">
-										<view class="health-bar-container">
-											<view class="health-bar-line"></view>
-											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(homepageData.response.eq_scores.dimension2_score)">
-												</view>
-											</view>
-										</view>
+							<view v-for="(score, index) in caleOverviewScores" :key="index" class="speed-right" >
+								<view v-if="index < caleOverviewScores.length - 1">
+									<view class="speed-title">
+										{{ score.name }}
 									</view>
-								</view>
-							</view>
-
-							<view class="speed-right">
-								<view class="speed-title">
-									social skill
-								</view>
-								<view class="">
-									<view class="blood-container">
-										<view class="health-bar-container">
-											<view class="health-bar-line"></view>
-											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(homepageData.response.eq_scores.dimension3_score)">
-												</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-
-							<view class="speed-right">
-								<view class="speed-title">
-									empathy
-								</view>
-								<view class="">
-									<view class="blood-container">
-										<view class="health-bar-container">
-											<view class="health-bar-line"></view>
-											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(homepageData.response.eq_scores.dimension4_score)">
-												</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-
-							<view class="speed-right">
-								<view class="speed-title">
-									motivation
-								</view>
-								<view class="">
-									<view class="blood-container">
-										<view class="health-bar-container">
-											<view class="health-bar-line"></view>
-											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(homepageData.response.eq_scores.dimension5_score)">
+									<view class="">
+										<view class="blood-container">
+											<view class="health-bar-container">
+												<view class="health-bar-line"></view>
+												<view class="health-bar-background">
+													<view class="health-bar-foreground" :style="progressWidth(score.score)">
+													</view>
 												</view>
 											</view>
 										</view>
@@ -144,10 +95,10 @@
 							<view class="improved-content-item">
 								<view class="improved-content-title">
 									<image class="improved-show-icon" src="/static/resulten/awareness1.svg"></image>
-									{{ homepageData.response.eq_scores.summary }}
+									{{ homepageData?.response?.eq_scores?.summary }}
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response.eq_scores.overall_suggestion }}
+									{{ homepageData.response?.eq_scores?.overall_suggestion }}
 								</view>
 							</view>
 						</view>
@@ -160,7 +111,7 @@
 									Self perception
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response.eq_scores.dimension1_detail }}
+									{{ homepageData?.response?.eq_scores?.dimension1_detail }}
 								</view>
 							</view>
 						</view>
@@ -172,7 +123,7 @@
 									Self regulation
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response.eq_scores.dimension2_detail }}
+									{{ homepageData?.response?.eq_scores?.dimension2_detail }}
 								</view>
 							</view>
 						</view>
@@ -184,7 +135,7 @@
 									Empathy
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response.eq_scores.dimension3_detail }}
+									{{ homepageData.response?.eq_scores?.dimension3_detail }}
 								</view>
 							</view>
 						</view>
@@ -196,7 +147,7 @@
 									Social Skill
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response.eq_scores.dimension4_detail }}
+									{{ homepageData?.response?.eq_scores?.dimension4_detail }}
 								</view>
 							</view>
 						</view>
@@ -208,7 +159,7 @@
 									Motivation
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response.eq_scores.dimension5_detail }}
+									{{ homepageData?.response?.eq_scores?.dimension5_detail }}
 								</view>
 							</view>
 						</view>
@@ -223,46 +174,13 @@
 </template>
 
 <script>
-	import {
-		drawRadar
-	} from '../../scripts/draw_radar';
 	export default {
 		data() {
 			return {
 				score: 28, // 示例分数，可根据需要动态更改
 				maxScore: 100, // 假设最大分数为100
-				// userId: '',
-				// username: '',
 				gender: '',
 				birthday: null,
-				// homepageData: {
-				// 	response: {
-				// 		personal_info: {
-				// 			name: '',
-				// 			tag: '',
-				// 			tag_description: '',
-				// 			job_id: ''
-				// 		},
-				// 		eq_scores: {
-				// 			score: 0,
-				// 			dimension1_score: 0,
-				// 			dimension1_detail: '',
-				// 			dimension2_score: 0,
-				// 			dimension2_detail: '',
-				// 			dimension3_score: 0,
-				// 			dimension3_detail: '',
-				// 			dimension4_score: 0,
-				// 			dimension4_detail: '',
-				// 			dimension5_score: 0,
-				// 			dimension5_detail: '',
-				// 			summary: '',
-				// 			detail: '',
-				// 			overall_suggestion: '',
-				// 			detail_summary: ''
-				// 		},
-				// 		contacts: []
-				// 	}
-				// },
 				progress: 0,
 				imageWidth: 2000,
 				isExpanded: false, // 默认收起状态
@@ -349,66 +267,50 @@
 					}
 				}
 				return returnObj;
+			},
+			caleOverviewScores() {
+				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
+					const scores = [
+						{ name: 'Perception', score: this.homepageData.response.eq_scores.dimension1_score },
+						{ name: 'self regulation', score: this.homepageData.response.eq_scores.dimension2_score },
+						{ name: 'social skill', score: this.homepageData.response.eq_scores.dimension3_score },
+						{ name: 'empathy', score: this.homepageData.response.eq_scores.dimension4_score },
+						{ name: 'motivation', score: this.homepageData.response.eq_scores.dimension5_score }
+					];
+
+					// Sort scores in descending order
+					scores.sort((a, b) => b.score - a.score);
+					console.log(scores);
+					return scores;
+				}
+				return [];
 			}
 		},
 		watch: {
 			homepageData: {
 				immediate: true,
 				async handler(val) {
-					console.log(val)
-					if (val && val.response) {
-						this.drawRadar()
-					}
+					// console.log(val)
 				},
-			// deep: true,
+				// deep: true,
 			}
 		},
 		created() {
 			// this.$store.dispatch('fetchHomepageData')
 		},
-		onLoad(option) {
-			console.log('option', option);
-			// 接收上一个页面传递的数据
-			// this.userId = option.userId || '';
-			// this.username = decodeURIComponent(option.username || '');
-			// try {
-			// 	uni.getStorage({
-			// 		key: 'response',
-			// 		success: (res) => {
-			// 			console.log('########successfully retrieved data', res);
-			// 			this.homepageData = res.data;
-			// 			console.log('begin to draw radar');
-			// 			this.drawRadar();
-			// 		}
-			// 	});
-			// } catch (e) {
-			// 	console.log('something error happened', e)
-			// }
-			// // 确保数据已经准备好
-			// if (!this.username) {
-			// 	uni.getStorage({
-			// 		key: 'username',
-			// 		success: (res) => {
-			// 			this.username = res.data;
-			// 			console.log('Username from storage:', this.username);
-			// 		},
-			// 		fail: () => {
-			// 			console.error('Failed to get username from storage');
-			// 		}
-			// 	});
-			// }
-		},
 		onUnload() {
 		},
 		onReady(option) {
-			console.log('option', option);
+			// console.log('option', option);
 		},
 		methods: {
 			progressWidth(value, isOne) {
-				console.log(value);
+				if (!value) return {};
+
 				const percentage = value;
 				const color = isOne ? '#EA833D' : '#23A06B';
 				const width = `${percentage}%`;
+
 				return {
 					width,
 					backgroundColor: color,
@@ -421,39 +323,6 @@
 				const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的实际宽度
 				console.log(percentage1)
 				return (percentage1 / 100) * progressBarWidth;
-			},
-
-			drawRadar() {
-				console.log('======begin to draw radar chart, data:', this.homepageData.response);
-				const data = [{
-						subject: '维度1',
-						A: this.homepageData.response.eq_scores.dimension1_score || 0,
-						fullMark: 100
-					},
-					{
-						subject: '维度2',
-						A: this.homepageData.response.eq_scores.dimension2_score || 0,
-						fullMark: 100
-					},
-					{
-						subject: '维度3',
-						A: this.homepageData.response.eq_scores.dimension3_score || 0,
-						fullMark: 100
-					},
-					{
-						subject: '维度4',
-						A: this.homepageData.response.eq_scores.dimension4_score || 0,
-						fullMark: 100
-					},
-					{
-						subject: '维度5',
-						A: this.homepageData.response.eq_scores.dimension5_score || 0,
-						fullMark: 100
-					}
-				];
-				console.log("Draw radar started");
-				drawRadar('radarCanvas', data);
-				console.log("Draw radar stopped");
 			},
 			navigateToGuide() {
 				console.log('Navigating to guide with data:', {
