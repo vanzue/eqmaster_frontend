@@ -428,7 +428,6 @@
 				this.chattingHistory = nextRound.dialog;
 				this.allHistory = this.allHistory.concat(nextRound.dialog);
 				console.log("after concat, chatting history:", this.chattingHistory);
-				await checkBossComplimentTask2();
 				// let someoneTalked = false;
 				this.displayedNpcChatIndex = 0;
 				this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
@@ -937,9 +936,9 @@
 								await this.gotoNextRound();
 							}
 						} else {
-							this.state = "judge";
-							this.judgeTitle = "Well done";
-							this.isCompleteTask = false;
+							// this.state = "judge";
+							// this.judgeTitle = "Well done";
+							// this.isCompleteTask = false;
 						}
 					} else {
 						if (this.answerNotGoodNum < 2) {
