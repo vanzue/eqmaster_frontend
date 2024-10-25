@@ -12,11 +12,22 @@
 		<!-- Content -->
 		<view class="content">
 			<text class="title content-item">UNIT 1</text>
-			<text class="subtitle content-item">A Dilema in a Team Meeting</text>
+			<text class="subtitle content-item">Managing Tensions in a Meeting</text>
 			<text class="time-info content-item">3-4min</text>
-			<text class="description content-item">
-				Jason joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as Sam feels uneasy, and Anna stays calm. How will you respond to ease the situation?
-			</text>
+			<view class="description content-item">
+				<text class="npc-name">
+					<image :src="npcs[0].avatar" class="npc-avatar"></image> Jason
+				</text>
+				&nbsp;joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as 
+				<text class="npc-name">
+					<image :src="npcs[1].avatar" class="npc-avatar"></image> Sam
+				</text>
+				&nbsp;feels uneasy, and 
+				<text class="npc-name">
+					<image :src="npcs[2].avatar" class="npc-avatar"></image> Anna
+				</text>
+				&nbsp;stays calm. How will you respond to ease the situation?
+			</view>
 		</view>
 		<view class="continue-button-container">
 			<button class="continue-btn" @click="navigateToNextPage">Continue</button>
@@ -29,6 +40,15 @@
 	export default {
 		components: {
 			ProgressBar, // 注册组件
+		},
+		data() {
+			return {
+			};
+		},
+		computed: {
+			npcs() {
+				return this.$store.getters.getNpcs;
+			},
 		},
 		methods: {
 			navigateToNextPage() {
@@ -72,14 +92,14 @@
 	}
 
 	.content {
-		padding: 20px;
+		padding: 40rpx;
 		text-align: center;
 		z-index: 3;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin-top: 200rpx;
+		margin-top: 160rpx;
 		/* 确保页面内容在叠加层之上 */
 	}
 
@@ -114,6 +134,32 @@
 	}
 
 	.content-item {
-		margin-top: 30rpx;
+		/* margin-top: 30rpx; */
+	}
+	.npc-name {
+		width: max-content;
+		height: 52rpx;
+		background-color: #2D6985;
+		font-size: 34rpx;
+		font-weight: 400;
+		white-space: nowrap; /* 强制不换行 */
+		padding: 4rpx 12rpx;
+		line-height: 52rpx; /* 上下居中 */
+		position: relative;
+		border-radius: 26rpx;
+	}
+	.npc-avatar {
+		width: 40rpx;
+		height: 40rpx;
+		border-radius: 50%;
+		background-color: #fff;
+		margin-top: 10px;
+		position: relative;
+		top: 8rpx;
+		/* position: absolute;
+		top: 50%;
+		transform: translateY(-50%); */
+	}
+	.description-text {
 	}
 </style>

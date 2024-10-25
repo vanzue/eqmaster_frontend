@@ -7,7 +7,7 @@
 				<!-- <text>homepageData: {{ JSON.stringify(homepageData) }}</text> -->
 				<!-- </view> -->
 				<view class="header">
-					<image class="header-icon" src="/static/back.png"></image>
+					<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
 					<text class="score-title-head">My career personality type</text>
 					<image class="header-icon" src="/static/battlefield/share.png"></image>
 				</view>
@@ -51,14 +51,14 @@
 							</view>
 							<view class="speed-right">
 								<view class="speed-title">
-									{{ caleOverviewScores[caleOverviewScores.length - 1].name }}
+									{{ caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].name : '' }}
 								</view>
 								<view class="">
 									<view class="blood-container">
 										<view class="health-bar-container">
 											<view class="health-bar-line"></view>
 											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(caleOverviewScores[caleOverviewScores.length - 1].score, 1)">
+												<view class="health-bar-foreground" :style="progressWidth(caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].score : 0, 1)">
 												</view>
 											</view>
 										</view>
@@ -341,6 +341,11 @@
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
 			},
+			navigateToHome() {
+				uni.navigateTo({
+					url: `/pages/dashboard/dashboard_en`
+				});
+			}
 		},
 	};
 </script>

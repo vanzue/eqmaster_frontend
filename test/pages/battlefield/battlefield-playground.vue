@@ -1,157 +1,162 @@
 <template>
-	<view class="container" @click="handleContainerClick">
-		<image class="background-image" src="/static/battlefield/background1.png" mode="aspectFill" />
-		<view class="overlay"></view>
-
-		<view class="navbar" :class="{ shadowed: shouldShadow }">
-			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
-			<reward-bar :gemCount="gemCount"></reward-bar>
-			<view class="setting-group">
-				<!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
-				<image class="setting-item" src="/static/battlefield/copy.png" @click="handleClickTaskList"></image>
-				<image class="setting-item" src="/static/battlefield/setting.png"></image>
-			</view>
-		</view>
-		<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-			Review all tasks
-		</view>
-
-		<view class="npc-group" :class="{ shadowed: shouldShadow }">
-			<npc-status v-for="npc in npcs" :key="npc.characterName" :health="npc.health" :avatar="npc.avatar"
-				:characterName="npc.characterName"></npc-status>
-		</view>
-
-		<view class="chat-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
-			<scroll-view class="chat-history-container" scroll-y :scroll-top="scrollTop" ref="chatHistoryContainer"
-				:scroll-into-view="scrollIntoViewId">
-				<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
-					<npc-chat-box v-if="
-              ['Jason', 'Sam', 'Anna'].includes(
-                chat.role
-              )
-            " :key="'npc-' + index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
-						:dialog="chat.content"></npc-chat-box>
-					<view v-else-if="chat.role === 'user'"
-						:class="['message-wrapper', { animate: chat.shouldAnimate }]">
-						<self-chat-box :key="'user' + index" :wording="chat.content" :commit="userJudgeContent"
-							:isLastElement="index === displayedMessages.length - 1"></self-chat-box>
-					</view>
-					<view v-else-if="chat.role === 'tipping'"
-						:class="['message-wrapper', { animate: chat.shouldAnimate }]">
-						<tipping-chat-box :key="'tipping' + index" :tip="chat.content"></tipping-chat-box>
-					</view>
-				</view>
-				<view class="loading-container" v-if="anasLoadingObj.loading">
-					<image class="loading-icon" src="/static/battlefield/loading.png"></image>
-					<span v-if="anasLoadingObj.text !== ''">{{
-            anasLoadingObj.text
-          }}</span>
-				</view>
-			</scroll-view>
-		</view>
-
-		<view v-if="state === 'NpcTalk'" class="npc-talk-container">
-			<large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
-				:wording="chattingHistory[displayedNpcChatIndex].content">
-			</large-avatar-bubble>
-		</view>
-
-		<!-- 录音弹框 -->
-		<!-- avoid opacity inheriting -->
-		<view v-if="isRecording" class="recording-box">
-			<text class="timer">{{ remainingTime }}''</text>
-			<view class="waveform">
-				<!-- 声波动画 -->
-				<view class="wave"></view>
-				<view class="wave"></view>
-				<view class="wave"></view>
-				<view class="wave"></view>
-				<view class="wave"></view>
-			</view>
-
-			<text class="cancel-text">Release to send, slide up to cancel</text>
-		</view>
-
-		<view v-if="state === 'userTalk' && showToolTips && isTooltipVisible" class="tooltipOverlay"
-			@click="hideTooltip">
-		</view>
-		<!-- tooltip -->
-		<!-- tooltip for record -->
-		<!-- #ifndef H5 -->
-		<view v-if="
-        state === 'userTalk' &&
-        showToolTips &&
-        isTooltipVisible &&
-        showRecordTooltip
-      " class="recordTooltip">
-			Hold to record
-		</view>
-		<!-- #endif -->
-
-		<!-- #ifdef H5 -->
-		<view v-if="
-        state === 'userTalk' &&
-        showToolTips &&
-        isTooltipVisible &&
-        showRecordTooltip
-      " class="keyboardToolTip">
-			Enter your reply
-		</view>
-		<!-- #endif -->
-		<!-- tooltip for hint -->
-		<view v-if="
-        state === 'userTalk' &&
-        showToolTips &&
-        isTooltipVisible &&
-        showHintTooltip
-      " class="hintTooltip">
-			Need help? Here's your advice packet
-		</view>
-		<view class="player-action-container" :class="{ shadowed: shouldShadow }">
-			<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
-				<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
-			</view>
-
-			<!-- #ifndef H5 -->
-			<view class="middle-container">
-				<view class="action-item action-item-middle" @touchstart="handleClickRecording"
-					@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
-					<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
-				</view>
-			</view>
-			<!-- #endif -->
-			<view class="action-item" v-if="!isRecording">
-				<image class="action-icon" src="/static/battlefield/light.svg" @click="clickHintButton">
-				</image>
-			</view>
-		</view>
-
-		<view v-if="showTippingCard" class="tipping-card">
-			<tipping :quit="handleTippingQuit" :hint="hint" :help="help"></tipping>
-		</view>
-
-		<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-			<view class="input-container" @click.stop>
-				<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-				<textarea placeholder="Enter here.." v-model="inputContent" auto-height @blur="inputRecordingBlur" />
-			</view>
-		</view>
-
-		<view class="judge-container" v-if="state === 'judge' || state === 'judgeTry'">
-			<judge :title="judgeTitle" :wording="judgeContent" @judge="gotoNextRound" :good-judge="isGoodReply"
-				:isCompleteTask="isCompleteTask" :currentTask="currentTask"></judge>
-		</view>
-
-		<!-- 精囊卡片 -->
-		<view v-if="showCardPopup" class="popup-overlay" @click="showCardPopup = false">
-			<CueCardsVue @closeCueCard="closeCueCard" @exchangeClick="exchangeClick"
-				:cardButtonLoading="cardButtonLoading" />
-		</view>
-
-		<view v-if="missionShow" class="judge-mission-container">
-			<MissionList :listData="taskList.taskList" @closeMissionCard="closeMissionCard" />
-		</view>
-	</view>
+  <view>
+    <view class="container" @click="handleContainerClick">
+      <image class="background-image" src="/static/battlefield/background1.png" mode="aspectFill" />
+      <view class="overlay"></view>
+  
+      <view class="navbar" :class="{ shadowed: shouldShadow }">
+        <image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
+        <reward-bar :gemCount="gemCount"></reward-bar>
+        <view class="setting-group">
+          <!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
+          <image class="setting-item" src="/static/battlefield/copy.png" @click="handleClickTaskList"></image>
+          <image class="setting-item" src="/static/battlefield/setting.png"></image>
+        </view>
+      </view>
+      <view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
+        Review all tasks
+      </view>
+  
+      <view class="npc-group" :class="{ shadowed: shouldShadow }">
+        <npc-status v-for="npc in npcs" :key="npc.characterName" :health="npc.health" :avatar="npc.avatar"
+          :characterName="npc.characterName"></npc-status>
+      </view>
+  
+      <view class="chat-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
+        <scroll-view class="chat-history-container" scroll-y :scroll-top="scrollTop" ref="chatHistoryContainer"
+          :scroll-into-view="scrollIntoViewId">
+          <view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
+            <npc-chat-box v-if="
+                ['Jason', 'Sam', 'Anna'].includes(
+                  chat.role
+                )
+              " :key="'npc-' + index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
+              :dialog="chat.content" :isLastElement="index === displayedMessages.length - 1"></npc-chat-box>
+            <view v-else-if="chat.role === 'user'"
+              :class="['message-wrapper', { animate: chat.shouldAnimate }]">
+              <self-chat-box :key="'user' + index" :wording="chat.content" :commit="userJudgeContent"
+                :isLastElement="index === displayedMessages.length - 1"></self-chat-box>
+            </view>
+            <view v-else-if="chat.role === 'tipping'"
+              :class="['message-wrapper', { animate: chat.shouldAnimate }]">
+              <tipping-chat-box :key="'tipping' + index" :tip="chat.content"></tipping-chat-box>
+            </view>
+          </view>
+          <view class="loading-container" v-if="anasLoadingObj.loading">
+            <image class="loading-icon" src="/static/battlefield/loading.png"></image>
+            <span v-if="anasLoadingObj.text !== ''">{{
+              anasLoadingObj.text
+            }}</span>
+          </view>
+        </scroll-view>
+      </view>
+  
+      <view v-if="state === 'NpcTalk'" class="npc-talk-container">
+        <large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
+          :wording="chattingHistory[displayedNpcChatIndex].content">
+        </large-avatar-bubble>
+      </view>
+  
+      <!-- 录音弹框 -->
+      <!-- avoid opacity inheriting -->
+      <view v-if="isRecording" class="recording-box">
+        <text class="timer">{{ remainingTime }}''</text>
+        <view class="waveform">
+          <!-- 声波动画 -->
+          <view class="wave"></view>
+          <view class="wave"></view>
+          <view class="wave"></view>
+          <view class="wave"></view>
+          <view class="wave"></view>
+        </view>
+  
+        <text class="cancel-text">Release to send, slide up to cancel</text>
+      </view>
+  
+      <view v-if="state === 'userTalk' && showToolTips && isTooltipVisible" class="tooltipOverlay"
+        @click="hideTooltip">
+      </view>
+      <!-- tooltip -->
+      <!-- tooltip for record -->
+      <!-- #ifndef H5 -->
+      <view v-if="
+          state === 'userTalk' &&
+          showToolTips &&
+          isTooltipVisible &&
+          showRecordTooltip
+        " class="recordTooltip">
+        Hold to record
+      </view>
+      <!-- #endif -->
+  
+      <!-- #ifdef H5 -->
+      <view v-if="
+          state === 'userTalk' &&
+          showToolTips &&
+          isTooltipVisible &&
+          showRecordTooltip
+        " class="keyboardToolTip">
+        Enter your reply
+      </view>
+      <!-- #endif -->
+      <!-- tooltip for hint -->
+      <view v-if="
+          state === 'userTalk' &&
+          showToolTips &&
+          isTooltipVisible &&
+          showHintTooltip
+        " class="hintTooltip">
+        Need help? Here's your advice packet
+      </view>
+      <view class="player-action-container" :class="{ shadowed: shouldShadow }">
+        <view class="action-item" v-if="!isRecording" @click="handleClickInput()">
+          <image class="action-icon" src="/static/battlefield/keyboard.png"></image>
+        </view>
+  
+        <!-- #ifndef H5 -->
+        <view class="middle-container">
+          <view class="action-item action-item-middle" @touchstart="handleClickRecording"
+            @touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
+            <image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
+          </view>
+        </view>
+        <!-- #endif -->
+        <view class="action-item" v-if="!isRecording">
+          <image class="action-icon" src="/static/battlefield/light.svg" @click="clickHintButton">
+          </image>
+        </view>
+      </view>
+  
+      <view v-if="showTippingCard" class="tipping-card">
+        <tipping :quit="handleTippingQuit" :hint="hint" :help="help"></tipping>
+      </view>
+  
+      <view class="popup-overlay" v-if="showInput" @click="showInput = false">
+        <view class="input-container" @click.stop>
+          <!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
+          <textarea placeholder="Enter here.." v-model="inputContent" auto-height @blur="inputRecordingBlur" />
+        </view>
+      </view>
+  
+      <view class="judge-container" v-if="state === 'judge' || state === 'judgeTry'">
+        <judge :title="judgeTitle" :wording="judgeContent" @judge="gotoNextRound" :good-judge="isGoodReply"
+          :isCompleteTask="isCompleteTask" :currentTask="currentTask" @setIsLoadingShow="setIsLoadingShow"></judge>
+      </view>
+  
+      <!-- 精囊卡片 -->
+      <view v-if="showCardPopup" class="popup-overlay" @click="showCardPopup = false">
+        <CueCardsVue @closeCueCard="closeCueCard" @exchangeClick="exchangeClick"
+          :cardButtonLoading="cardButtonLoading" />
+      </view>
+  
+      <view v-if="missionShow" class="judge-mission-container">
+        <MissionList :listData="taskList.taskList" @closeMissionCard="closeMissionCard" />
+      </view>
+    </view>
+    <view v-if="isLoadingShow" class="judge-loading-container">
+      <view class="loading-spinner"></view>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -223,22 +228,22 @@
 				allHistory: [],
 				showInput: false,
 				focusInput: false,
-				npcs: [{
-						characterName: "Jason",
-						health: 10,
-						avatar: "/static/battlefield/boss11.png",
-					},
-					{
-						characterName: "Sam",
-						health: 10,
-						avatar: "/static/battlefield/xiaoA1.png",
-					},
-					{
-						characterName: "Anna",
-						health: 10,
-						avatar: "/static/battlefield/xiaoB1.png",
-					},
-				],
+				// npcs: [{
+				// 		characterName: "Jason",
+				// 		health: 10,
+				// 		avatar: "/static/battlefield/boss11.png",
+				// 	},
+				// 	{
+				// 		characterName: "Sam",
+				// 		health: 10,
+				// 		avatar: "/static/battlefield/xiaoA1.png",
+				// 	},
+				// 	{
+				// 		characterName: "Anna",
+				// 		health: 10,
+				// 		avatar: "/static/battlefield/xiaoB1.png",
+				// 	},
+				// ],
 				gemCount: 2,
 				isPass: false, // 初始化 isPass 值，可以是 true 或 false
 				diamonds: 0,
@@ -277,6 +282,7 @@
 				scrollIntoViewId: "",
 				isCompleteTask: false,
 				currentTask: null,
+        isLoadingShow: false,
 			};
 		},
 		created() {
@@ -319,9 +325,12 @@
 			);
 		},
 		methods: {
+      setIsLoadingShow(value) {
+        this.isLoadingShow = value;
+      },
 			goToDashboard() {
 				uni.navigateTo({
-					url: "/pages/dashboard/dashboard?currentView=dashboard2",
+					url: "/pages/dashboard/dashboard",
 				});
 			},
 			handleClickTaskList() {
@@ -401,6 +410,7 @@
 				console.log("go next round");
 				if (!this.isGoodReply) {
 					this.retry();
+          this.isLoadingShow = false;
 					return;
 				}
 				// this.answerNotGoodNum = 0;
@@ -424,6 +434,7 @@
 
 				this.state = "NpcTalk";
 				const isTask2 = await this.checkBossComplimentTask2(nextRound.dialog);
+        this.isLoadingShow = false;
 				// console.log(isTask2);
 				// if(isTask2) {
 				// }
@@ -480,6 +491,7 @@
 			},
 			// showInput = true; focusInput = true;
 			handleClickInput() {
+        console.log(555);
 				this.showInput = true;
 				this.focusInput = true;
 				this.inputContent = "";
@@ -1075,6 +1087,9 @@
 			jobId() {
 				return this.$store.getters.getJobId;
 			},
+      npcs() {
+      return this.$store.getters.getNpcs;
+    },
 			shouldShadow() {
 				return (
 					this.state === "NpcTalk" || this.isRecording || this.showTippingCard
@@ -1478,31 +1493,27 @@
 		bottom: 0px;
 	}
 
-	.tipping-card {
-		z-index: 3;
-	}
+  .chat-container {
+    z-index: 3;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
+    height: calc(100vh - 370px);
+    /* 使父容器高度占满整个视口高度 */
+  }
 
-	.chat-container {
-		z-index: 3;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		/* 水平居中 */
-		align-items: center;
-		/* 垂直居中 */
-		height: 100vh;
-		/* 使父容器高度占满整个视口高度 */
-	}
-
-	.chat-history-container {
-		z-index: 3;
-		width: 654rpx;
-		height: 70%;
-		margin: auto;
-		overflow-y: auto;
-		overflow-x: hidden;
-		margin-top: 20rpx;
-	}
+  .chat-history-container {
+    z-index: 3;
+    width: 654rpx;
+    height: 100%;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 20rpx;
+  }
 
 	/* 消息动效 */
 	.message-wrapper {
@@ -1578,7 +1589,7 @@
 		opacity: 0.5;
 	}
 
-	.popup-overlay {
+  .popup-overlay {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -1592,7 +1603,6 @@
 		z-index: 1000;
 		padding: 10rpx;
 	}
-
 	.judge-mission-container {
 		position: fixed;
 		top: 0;
@@ -1606,4 +1616,34 @@
 		flex-direction: column;
 		z-index: 1000;
 	}
+
+.judge-loading-container,
+.judge-mission-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  width: 70rpx;
+  height: 70rpx;
+  border: 2px solid #fff;
+  /* border-top: 3px solid #007AFF; */
+  border-right: 2px solid transparent; /* Create a gap */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
