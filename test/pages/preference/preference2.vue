@@ -61,31 +61,47 @@
 			};
 		},
 		onLoad(options) {
-			// 接收上一页传递的参数
-			this.userId = options.userId;
-			this.username = decodeURIComponent(options.username);
-			this.gender = options.gender;
-			const defaultBirthday = {
-				year: 2000,
-				month: 1,
-				day: 1
-			}; // 设置默认值
-			if (options.birthday) {
-				try {
-					this.birthday = JSON.parse(decodeURIComponent(options.birthday));
-				} catch (e) {
-					console.error('JSON 解析错误:', e);
-					this.birthday = defaultBirthday; // 解析错误时使用默认生日
-				}
-			} else {
-				this.birthday = defaultBirthday; // 如果 birthday 为空，设置默认值
+			// this.userId = options.userId;
+			const username = uni.getStorageSync('username');
+			if (!username) {
+				uni.navigateTo({
+					url: '/pages/landing/experience',
+					fail: (err) => {
+						console.error('Navigation to experience page failed:', err);
+						uni.showToast({
+							title: 'Failed to navigate to experience page',
+							icon: 'none'
+						});
+					}
+				});
+				return;
 			}
-			console.log('Received data:', {
-				userId: this.userId,
-				username: this.username,
-				gender: this.gender,
-				birthday: this.birthday
-			});
+			this.username = username;
+			// 接收上一页传递的参数
+			// this.userId = options.userId;
+			// this.username = decodeURIComponent(options.username);
+			// this.gender = options.gender;
+			// const defaultBirthday = {
+			// 	year: 2000,
+			// 	month: 1,
+			// 	day: 1
+			// }; // 设置默认值
+			// if (options.birthday) {
+			// 	try {
+			// 		this.birthday = JSON.parse(decodeURIComponent(options.birthday));
+			// 	} catch (e) {
+			// 		console.error('JSON 解析错误:', e);
+			// 		this.birthday = defaultBirthday; // 解析错误时使用默认生日
+			// 	}
+			// } else {
+			// 	this.birthday = defaultBirthday; // 如果 birthday 为空，设置默认值
+			// }
+			// console.log('Received data:', {
+			// 	userId: this.userId,
+			// 	username: this.username,
+			// 	gender: this.gender,
+			// 	birthday: this.birthday
+			// });
 		},
 		methods: {
 			toggleOption(option) {
@@ -99,10 +115,10 @@
 			},
 			goToNextPage() {
 				if (this.selectedOptions.length > 0) {
+					this.$store.commit('setSelectedOptions', this.selectedOptions);
 					// 构建包含所有信息的URL
-					const url =
-						`/pages/preference/preference3?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
-
+					// const url = `/pages/preference/preference3?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+					const url = `/pages/preference/preference3`;
 					console.log('Navigating to:', url);
 					uni.navigateTo({
 						url: url,

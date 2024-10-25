@@ -50,24 +50,26 @@ export default {
             if(val === 'Home') {
                 if (currentRoute !== 'pages/dashboard/dashboard_en') {
                     uni.navigateTo({
-                        url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}&currentView=dashboard` // 添加查询参数
+                        url: `/pages/dashboard/dashboard_en` // 添加查询参数
                     });
-                } else {
-                    this.$emit('switchHomeView', "dashboard");
                 }
+                this.$store.commit('setHomeNavName', 'dashboard');
+                // this.$emit('switchHomeView', "dashboard");
+                
             }
             if(val === 'Battlefield') {
                 if (currentRoute !== 'pages/dashboard/dashboard_en') {
                     uni.navigateTo({
-                        url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}&currentView=dashboard2` // 添加查询参数
+                        url: `/pages/dashboard/dashboard_en` // 添加查询参数
                     });
-                } else {
-                    this.$emit('switchHomeView', "dashboard2");
-                }
+                } 
+                this.$store.commit('setHomeNavName', 'dashboard2');
+                // this.$emit('switchHomeView', "dashboard2");
+                
             }
             if(val === 'Profile') {
                 uni.navigateTo({
-                    url: `/pages/profile/profile_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
+                    url: `/pages/profile/profile_en` // 添加查询参数
                 });
             }
         }

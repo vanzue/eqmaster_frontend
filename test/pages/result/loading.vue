@@ -84,39 +84,45 @@
 		onLoad(option) {
 			// 接收上一个页面传递的数据
 			try {
-				this.userId = option.userId || '';
-				this.username = decodeURIComponent(option.username || '');
-				this.gender = option.gender || '';
-				this.jobId = option.jobId || '';
-				this.num = option.num || '';
-
-				if (option.options) {
-					try {
-						this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
-					} catch (e) {
-						console.error('Error parsing options:', e);
-						this.selectedOptions = [];
-					}
+				const userId = uni.getStorageSync('userId');
+				if (!userId) {
+					uni.navigateTo({ url: '/pages/landing/experience' });
+					return;
 				}
+				this.userId = userId || "";
+				// this.userId = option.userId || '';
+				// this.username = decodeURIComponent(option.username || '');
+				// this.gender = option.gender || '';
+				// this.jobId = option.jobId || '';
+				// this.num = option.num || '';
 
-				if (option.birthday) {
-					try {
-						this.birthday = JSON.parse(decodeURIComponent(option.birthday));
-					} catch (e) {
-						console.error('Error parsing birthday:', e);
-						this.birthday = null;
-					}
-				}
+				// if (option.options) {
+				// 	try {
+				// 		this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
+				// 	} catch (e) {
+				// 		console.error('Error parsing options:', e);
+				// 		this.selectedOptions = [];
+				// 	}
+				// }
 
-				console.log('Parsed data:', {
-					userId: this.userId,
-					username: this.username,
-					gender: this.gender,
-					selectedOptions: this.selectedOptions,
-					birthday: this.birthday,
-					jobId: this.jobId,
-					num: this.num,
-				});
+				// if (option.birthday) {
+				// 	try {
+				// 		this.birthday = JSON.parse(decodeURIComponent(option.birthday));
+				// 	} catch (e) {
+				// 		console.error('Error parsing birthday:', e);
+				// 		this.birthday = null;
+				// 	}
+				// }
+
+				// console.log('Parsed data:', {
+				// 	userId: this.userId,
+				// 	username: this.username,
+				// 	gender: this.gender,
+				// 	selectedOptions: this.selectedOptions,
+				// 	birthday: this.birthday,
+				// 	jobId: this.jobId,
+				// 	num: this.num,
+				// });
 			} catch (e) {
 				console.log("something error happened", e);
 			}
@@ -150,47 +156,9 @@
 			},
 			getHomepageData() {
 				// 不再需要 const that = this;
-				uni.request({
-					url: `https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/get_homepage/${this.userId}`,
-					method: 'POST',
-					success: (response) => {
-						let result = {}
-						if (response.statusCode === 200) {
-							result = response.data;
-							console.log('Homepage data received:', result);
-						} else {
-							let mock = {
-								"response": {
-									"personal_info": {
-										"name": "John Doe",
-										"tag": "Engineer",
-										"tag_description": "A detail-oriented engineer with a passion for problem-solving.",
-										"job_id": "12345"
-									},
-									"eq_scores": {
-										"score": 46,
-										"dimension1_score": 54,
-										"dimension1_detail": "Shows excellent emotional regulation in stressful situations.",
-										"dimension2_score": 26,
-										"dimension2_detail": "Displays strong empathy towards others' feelings.",
-										"dimension3_score": 42,
-										"dimension3_detail": "Able to make decisions without letting emotions interfere.",
-										"dimension4_score": 50,
-										"dimension4_detail": "Communicates emotions clearly and effectively.",
-										"dimension5_score": 44,
-										"dimension5_detail": "Manages interpersonal relationships with ease.",
-										"summary": "Overall, emotionally intelligent and adaptive.",
-										"detail": "John demonstrates balanced emotional intelligence across all areas.",
-										"overall_suggestion": "Continue to enhance emotional regulation and interpersonal communication.",
-										"detail_summary": "A well-rounded emotional intelligence profile with strong interpersonal skills."
-									},
-								}
-							};
-							result = response.data;
-
-							console.error('Failed to fetch homepage data:', response.statusCode);
-						}
-
+				this.$store.dispatch('fetchHomepageData')
+					.then(() => {
+						console.log('Homepage data fetched successfully');
 						if (this.interval) {
 							clearInterval(this.interval);
 							this.interval = null;
@@ -204,29 +172,7 @@
 							this.timeoutInterval = null;
 						}
 
-						// 在构建 nextPageUrl 之前添加日志
-						console.log('Preparing to navigate with data:', {
-							jobId: this.jobId,
-							userId: this.userId,
-							username: this.username,
-							gender: this.gender,
-							birthday: this.birthday,
-							selectedOptions: this.selectedOptions,
-							num: this.num
-						});
-
-						const nextPageUrl =
-							`/pages/result/result_en?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}&num=${this.num}`;
-
-						// 在构建 URL 后再添加一个日志
-						console.log('Navigating to URL:', nextPageUrl);
-
-						uni.setStorage({
-							key: 'response',
-							data: result
-						});
-
-						console.log("begin to navigate");
+						const nextPageUrl = `/pages/result/result_en`;
 						uni.navigateTo({
 							url: nextPageUrl,
 							success: () => {
@@ -240,11 +186,10 @@
 								});
 							}
 						});
-					},
-					fail: (error) => {
+					})
+					.catch((error) => {
 						console.error('Error fetching homepage data:', error);
-					},
-				});
+					});
 			},
 			startProgress() {
 				const totalDuration = 30000; // 30秒
