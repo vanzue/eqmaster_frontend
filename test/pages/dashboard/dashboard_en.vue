@@ -62,16 +62,20 @@
 							<image class="import-button" src="../../static/dashboard/import-button.png" mode="widthFix"
 								@click="chooseImage">
 							</image>
-							<view class="left-history-container">
-								<ChatHistory v-for="(item, index) in leftList" :key="index"
-									:title="item.analysis.summary.summary" :details="item.analysis.suggestions"
+							<view class="left-history-container" v-if="leftList.length > 0">
+								<ChatHistory v-for="(item, index) in leftList" 
+									:key="index" 
+									:title="item.analysis?.summary?.summary || 'No summary available'"
+									:details="item?.analysis?.suggestions || []"
 									@click="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
-						<view class="right-history-container">
-							<ChatHistory v-for="(item, index) in rightList" :key="index"
-								:title="item.analysis.summary.summary" :details="item.analysis.suggestions"
+						<view class="right-history-container" v-if="rightList.length > 0">
+							<ChatHistory v-for="(item, index) in rightList"
+								:key="index"
+								:title="item.analysis?.summary?.summary || 'No summary available'"
+								:details="item?.analysis?.suggestions || []"
 								@click="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -372,8 +376,9 @@
 			ChatHistory,
 			Nav
 		},
-		created() {
-			this.getBattlefield();
+		async created() {
+			await this.getAnalysisList();
+			await this.getBattlefield();
 		},
 		onLoad(option) {
 			console.log('Received options:', option);
@@ -506,6 +511,7 @@
 						item.analysis = JSON.parse(item.analysis);
 						item.chatHistory = JSON.parse(item.chatHistory);
 					});
+					console.log(data);
 					this.analysisList = data;
 				} catch (error) {
 					// this.error = 'Error fetching analysis data';

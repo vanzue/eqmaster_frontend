@@ -4,7 +4,8 @@
         <view class="item-container">
             <view class="title">{{title}}</view>
             <view class="line"></view>
-            <view class="detail">{{details[0].point}}</view>
+            <view class="detail" v-if="details.length > 0">{{details[0].point}}</view>
+            <view class="detail" v-else>No details available</view>
         </view>
     </view>
 </template>
