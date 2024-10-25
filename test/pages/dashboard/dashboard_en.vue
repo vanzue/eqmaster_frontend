@@ -65,8 +65,8 @@
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" 
 									:key="index" 
-									:title="item.analysis?.summary?.summary || 'No summary available'"
-									:details="item?.analysis?.suggestions || []"
+									:title="item.low_dim || 'No summary available'"
+									:details="item?.summary || ''"
 									@click="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
@@ -74,8 +74,8 @@
 						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList"
 								:key="index"
-								:title="item.analysis?.summary?.summary || 'No summary available'"
-								:details="item?.analysis?.suggestions || []"
+								:title="item.low_dim || 'No summary available'"
+								:details="item?.summary || ''"
 								@click="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -496,7 +496,6 @@
 				this.isLoading = true; 
 			    const result = await apiService.uploadChatHistory(filePath, this.userId);
 				const resultJson = JSON.parse(result);
-				resultJson.chatHistory = JSON.parse(resultJson.chatHistory);
 			    this.navigateToAnalysis(resultJson);
 			  } catch (error) {
 			    console.error('Upload failed:', error);
