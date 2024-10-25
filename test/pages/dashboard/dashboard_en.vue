@@ -1906,7 +1906,7 @@
 	/* Styles for the second view */
 	.dashboard2-content {
 		position: relative;
-		height: 100vh;
+		/* height: 100vh; */
 		overflow-y: auto;
 	}
 
@@ -2139,14 +2139,14 @@
 
 	.container-sprogress {
 		width: 100%;
-		overflow-x: hidden;
+		/* overflow-x: hidden; */
 		/* Hide horizontal overflow */
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
 		flex-direction: column;
 		background-color: #2F2F38;
-		margin-right: 3rpx;
+		/* margin-right: 3rpx; */
 	}
 
 	.progress-canvas {
