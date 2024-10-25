@@ -1,11 +1,14 @@
 <template>
 	<view class="container">
-		<scroll-view scroll-y style="height: 100%;">
+		<view v-if="isLoading" class="loading">
+				Loading
+				<div></div>
+				<div></div>
+				<div></div>
+		</view>
+		<scroll-view v-else scroll-y style="height: calc(100vh - 150rpx)">
 			<view v-if="currentView === 'dashboard'" class="content">
-
-				<!-- 添加错误处理和加载状态 -->
-				<view v-if="isLoading">loading...</view>
-				<view v-else-if="error">{{ error }}</view>
+				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
 					<text class="score-title-head">hi, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
@@ -191,7 +194,7 @@
 				analysisList: [
 					{
 						id: 1,
-						chat_history: {
+						chatHistory: {
 							messages: [
 								{
 									user: "Ophelia",
@@ -384,6 +387,9 @@
 		onUnload() {
 
 		},
+		onShow() {
+			this.getAnalysisList(this.userId);
+		},
 		methods: {
 			progressWidth(value) {
 				// 算进度条宽度百分比
@@ -416,7 +422,6 @@
 			},
 			async chooseImage() {
 				try {
-					return;
 				  const res = await uni.chooseImage({
 				    count: 1,
 				    sizeType: ['original', 'compressed'],
@@ -431,14 +436,17 @@
 			},
 			async uploadImage(filePath) {
 			  try {
+				this.isLoading = true; 
 			    const result = await apiService.uploadChatHistory(filePath, this.userId);
-				result.analysis = JSON.parse(result.analysis);
-				result.chatHistory = JSON.parse(result.chatHistory);
-			    this.navigateToAnalysis(result);
+				const resultJson = JSON.parse(result);
+				resultJson.chatHistory = JSON.parse(resultJson.chatHistory);
+			    this.navigateToAnalysis(resultJson);
 			  } catch (error) {
 			    console.error('Upload failed:', error);
 			    // 处理上传失败的情况
-			  }
+			  } finally {
+					this.isLoading = false;
+				}
 			},
 			async getHomepageData() {
 				try {
@@ -465,7 +473,7 @@
 			async getAnalysisList() {
 				try {
 					this.userId;
-					const data = await apiService.getAnalysisList(1);
+					const data = await apiService.getAnalysisList(this.userId);
 					data.forEach(item => {
 						item.analysis = JSON.parse(item.analysis);
 						item.chatHistory = JSON.parse(item.chatHistory);
@@ -687,6 +695,60 @@
 
 
 <style scoped>
+	
+	.loading {
+		width: 100vw;
+		height: 80vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		background-color: #2f2f38;
+		font-weight: 700;
+		font-size: 28rpx;
+		line-height: 40rpx;
+		overflow-y: hidden;
+	}
+
+	.loading > div {
+		position: relative;
+		box-sizing: border-box;
+	}
+
+	.loading.la-dark {
+		color: #333;
+	}
+
+	.loading > div {
+		display: inline-block;
+		float: none;
+		background-color: currentColor;
+		border: 0 solid currentColor;
+	}
+
+	.loading > div {
+		width: 6rpx;
+		height: 6rpx;
+		margin: 4px;
+		border-radius: 100%;
+		animation: ball-beat 0.7s -0.15s infinite linear;
+	}
+
+	.loading > div:nth-child(2n-1) {
+		animation-delay: -0.5s;
+	}
+
+	@keyframes ball-beat {
+		50% {
+			opacity: 0.2;
+			transform: scale(0.75);
+		}
+
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
 
     .character-view {
 		margin-top: 16rpx;
@@ -802,12 +864,14 @@
 		flex-direction: column;
 		gap: 24rpx;
 		margin-top: 24rpx;
+		padding-bottom: 24rpx;
 	}
 
 	.right-history-container {
 		display: flex;
 		flex-direction: column;
 		gap: 24rpx;
+		padding-bottom: 24rpx;
 	}
 	
 	.container {
