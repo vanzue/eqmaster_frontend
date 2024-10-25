@@ -91,5 +91,6 @@
 		font-size: 14px;
 		font-weight: 400;
 		margin-top: 5px;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 </style>
