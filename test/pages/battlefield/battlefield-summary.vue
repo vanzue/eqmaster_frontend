@@ -149,7 +149,7 @@
 						.sort() // 如果你想按照 comment1, comment2 的顺序排列
 						.map((key) => dbCourse[key]); // 提取这些键的值						;
 					this.comments = list;
-					this.suggestion = res.data.tips.join('\n');
+					this.suggestion = res.data.db_course.tips.join('\n');
 				},
 			});
 			uni.getStorage({
