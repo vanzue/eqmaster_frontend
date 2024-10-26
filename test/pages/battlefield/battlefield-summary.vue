@@ -38,7 +38,7 @@
 				</view> -->
 				<view class="comments">
 					<view class="comment-header">
-						<view class="down-line"></view>
+						<!-- <view class="down-line"></view> -->
 						<text class="comment-title">Let's recap</text>
 					</view>
 
@@ -56,8 +56,8 @@
 
 			<view class="card third-card">
 				<view class="third-card-title">
-					<view class="down-line second-line"></view>
 					<text class="comment-title">Tips for you</text>
+					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
 					<text>{{ suggestion }}</text>
@@ -111,7 +111,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.navigateTo({
-					url: `/pages/dashboard/dashboard?userId=${this.userId}`,
+					url: `/pages/dashboard/dashboard_en`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -211,6 +211,12 @@
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 40rpx;
 		line-height: 50rpx;
+		text-decoration: underline;
+		text-decoration-thickness: 6rpx;
+		text-decoration-color: #9EE44D;
+		text-underline-offset: 8rpx;
+		border-radius: 10rpx;
+		/* box-shadow: inset 0 -3px 0 0 #9EE44D, inset 0 -3px 0 0 #9EE44D; */
 	}
 
 	.comment-header {
@@ -348,7 +354,7 @@
 	}
 
 	.second-line {
-		width: 28%;
+		width: 30%;
 	}
 
 	.suggestion {
