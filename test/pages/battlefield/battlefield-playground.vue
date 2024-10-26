@@ -916,6 +916,7 @@
 						const allPositive = judgeResult.moods.every(
 							(item) => parseInt(item.mood, 10) > 0
 						);
+            // console.log(allPositive);
 						if (allPositive) {
 							if (!this.task1Finished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
@@ -946,6 +947,10 @@
 								await this.gotoNextRound();
 							}
 						} else {
+              const allZero = judgeResult.moods.every((item) => parseInt(item.mood, 10) == 0);   
+              if(allZero) {
+                await this.gotoNextRound();
+              }           
 							// this.state = "judge";
 							// this.judgeTitle = "Well done";
 							// this.isCompleteTask = false;

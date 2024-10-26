@@ -2,7 +2,7 @@
   <view class="container">
     <view class="text-content">
       <text class="question">{{
-        scenarioText || "Next, let's find out your workplace personality type!"
+        scenarioText || "Now, begin the journey to explore EQ!"
       }}</text>
       <!-- <text class="question1">个性化偏好</text> -->
     </view>
