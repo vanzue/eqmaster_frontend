@@ -316,27 +316,27 @@
 				const scores = this.homepageData?.response?.eq_scores;
 				console.log('jobid:', this.jobId);
 				console.log('results for backgrounds:', scores);
-				const minScore = Math.min(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
+				const maxScore = Math.max(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
 					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
 
 				// 根据最低分选择图片
-				if (minScore === scores?.dimension1_score) {
+				if (maxScore === scores?.dimension1_score) {
 					console.log("usercard src:", '水豚')
 					this.animal = "capybara";
 					return '/static/dashboard/en/capybara.png';
-				} else if (minScore === scores?.dimension2_score) {
+				} else if (maxScore === scores?.dimension2_score) {
 					console.log("usercard src:", '刺猬')
 					this.animal = "hedgehog";
 					return '/static/dashboard/en/hedgehog.png';
-				} else if (minScore === scores?.dimension3_score) {
+				} else if (maxScore === scores?.dimension3_score) {
 					console.log("usercard src:", '狼')
 					this.animal = "coyote";
 					return '/static/dashboard/en/coyote.png';
-				} else if (minScore === scores?.dimension4_score) {
+				} else if (maxScore === scores?.dimension4_score) {
 					console.log("usercard src:", '鸵鸟')
 					this.animal = "ostrich";
 					return '/static/dashboard/en/ostrich.png';
-				} else if (minScore === scores?.dimension5_score) {
+				} else if (maxScore === scores?.dimension5_score) {
 					console.log("usercard src:", '猴子')
 					this.animal = "monkey";
 					return '/static/dashboard/en/monkey.png';
