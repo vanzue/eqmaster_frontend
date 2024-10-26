@@ -461,11 +461,6 @@
 				console.log(percentage1)
 				return (percentage1 / 100) * progressBarWidth;
 			},
-			navigateToGuide() {
-				uni.navigateTo({
-					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
-				});
-			},
 			navigateToAnalysis(analysis) {
 				uni.setStorage({
 					key: `analysis-${analysis.id}`,

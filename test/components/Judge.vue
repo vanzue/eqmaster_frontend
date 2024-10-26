@@ -145,6 +145,12 @@
 		overflow-y: auto;
 	}
 
+	.wording-icon {
+		width: 48rpx;
+		height: 48rpx;
+		margin-bottom: -10rpx;
+	}
+
 	.judge-button-container {
 		display: flex;
 		justify-content: center;

@@ -107,6 +107,9 @@ export default createStore({
       commit('setSelectedOptions', []);
       commit('setHomepageData', {});
       commit('setHomeNavName', '');
+      const username = uni.getStorageSync('username');
+      localStorage.clear();
+      uni.setStorageSync('username', username);
     }
   }
 })

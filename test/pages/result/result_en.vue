@@ -95,10 +95,10 @@
 							<view class="improved-content-item">
 								<view class="improved-content-title">
 									<image class="improved-show-icon" src="/static/resulten/awareness1.svg"></image>
-									{{ homepageData?.response?.eq_scores?.summary }}
+									{{ homepageData?.response?.eq_scores?.detail_summary }}
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response?.eq_scores?.overall_suggestion }}
+									{{ homepageData.response?.eq_scores?.summary }}
 								</view>
 							</view>
 						</view>
@@ -307,7 +307,8 @@
 			progressWidth(value, isOne) {
 				if (!value) return {};
 
-				const percentage = value;
+				const maxScore = 20;
+				const percentage = (value / maxScore) * 100;
 				const color = isOne ? '#EA833D' : '#23A06B';
 				const width = `${percentage}%`;
 
