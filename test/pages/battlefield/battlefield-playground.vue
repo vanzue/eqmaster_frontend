@@ -287,6 +287,7 @@
 				currentTask: null,
 				isLoadingShow: false,
         task2CompletedStatusOne: false,
+        taskFinished: false,
 			};
 		},
 		created() {
@@ -419,7 +420,7 @@
 				}
 				// this.answerNotGoodNum = 0;
 
-				if (this.task1Finished) {
+				if (this.taskFinished) {
 					await this.Pass();
 				}
 
@@ -611,7 +612,7 @@
 						console.error("设置 NPC health 失败:", err);
 					},
 				});
-				// if (this.task1Finished) {
+				// if (this.taskFinished) {
 				// 	uni.setStorage({
 				// 		key: 'isPass',
 				// 		data: true,
@@ -884,7 +885,7 @@
 							await this.Pass();
 						}
 
-						// if (this.task1Finished) {
+						// if (this.taskFinished) {
 						// 	await this.Pass();
 						// }
 						return true; // 添加返回值，表示处理成功
@@ -918,7 +919,7 @@
 						);
             // console.log(allPositive);
 						if (allPositive) {
-							if (!this.task1Finished && !this.taskList.getTask(0).one) {
+							if (!this.taskFinished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
 								console.log("allPositive:", allPositive);
 								this.currentTask = this.taskList.getTask(0);
@@ -937,7 +938,7 @@
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved!";
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
-										this.task1Finished = true;
+										this.taskFinished = true;
 									}
 								} else {
 									this.judgeTitle = "Goal achieved";
@@ -988,7 +989,7 @@
 			},
 			async checkBossComplimentTask2(dialog) {
 				let taskCompleted = false;
-				if (!this.task1Finished && !this.taskList.getTask(1).one) {
+				if (!this.taskFinished && !this.taskList.getTask(1).one) {
 					const goalKeyword = "I agree with you";
 					// for (let chat of dialog) {
           // console.log(dialog.content);
@@ -1024,7 +1025,7 @@
 					// }
 					const totalTaskLength = this.taskList.getTotalTaskLength();
 					if (this.taskList.doneTaskLength >= totalTaskLength) {
-						this.task1Finished = true;
+						this.taskFinished = true;
 						this.isPass = true;
 						// await this.Pass();
 						taskCompleted = false;
