@@ -76,8 +76,8 @@
 
 		<!-- Test4 page content -->
 		<template v-else-if="currentPage === 'test4'">
-			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="'/static/npc1.png'"
-				:dismiss="navigateToTest5" :description="description" :class="{ 'disabled': isLoading }"
+			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="npcAvatar" :dismiss="navigateToTest5"
+				:description="description" :class="{ 'disabled': isLoading }"
 				:requestCount="requestCount"></onboarding-chat-bubble>
 		</template>
 
@@ -267,6 +267,9 @@
 					.then((res) => {
 						console.log("get current Scenario data:", res.scenario_id);
 						this.scenarioData = res.scene.scenes || res;
+						console.log("current npc name is --------", this.scenarioData.role);
+						this.npcAvatar = getAvatar(this.scenarioData.role);
+						console.log("src of npc avatar:", this.npcAvatar);
 						// this.scenarioId = res.scenario_id || 1;
 						this.handleScenarioData();
 						this.updateProgress();
@@ -276,6 +279,7 @@
 						console.error("Error getting scenario data:", err);
 						throw err; // Re-throw the error to be caught in navigateToTest3
 					});
+
 			},
 			handleScenarioData() {
 				if (this.scenarioData) {
@@ -419,6 +423,7 @@
 			analyzeBackground() {
 				if (this.background) {
 					this.npcName = findLastName(this.background);
+					console.log("Now npc name is:", this.npcName);
 					this.npcAvatar = getAvatar(this.npcName);
 				}
 			},
