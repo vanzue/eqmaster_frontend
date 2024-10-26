@@ -2,10 +2,6 @@
 	<view class="container">
 		<scroll-view scroll-y style="height: 100%;">
 			<view class="content">
-				<!-- <view class="debug-info"> -->
-				<!-- 如需调试信息，可取消注释以下行 -->
-				<!-- <text>homepageData: {{ JSON.stringify(homepageData) }}</text> -->
-				<!-- </view> -->
 				<view class="header">
 					<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
 					<text class="score-title-head">My career personality type</text>
@@ -95,71 +91,26 @@
 							<view class="improved-content-item">
 								<view class="improved-content-title">
 									<image class="improved-show-icon" src="/static/resulten/awareness1.svg"></image>
-									{{ homepageData?.response?.eq_scores?.detail_summary }}
+									{{ caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].name : '' }}
 								</view>
 								<view class="improved-content-description">
-									{{ homepageData.response?.eq_scores?.summary }}
+									{{ caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].detail : '' }}
 								</view>
 							</view>
 						</view>
+
 						<view class="improved-title key-strength-title">key strength:</view>
-						<view class="improved-content key-strength-content">
-							<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
-							<view class="improved-content-item">
-								<view class="improved-content-title key-strength-content-title">
-									<image class="improved-show-icon" src="/static/resulten/awareness0.svg"></image>
-									Self perception
-								</view>
-								<view class="improved-content-description">
-									{{ homepageData?.response?.eq_scores?.dimension1_detail }}
-								</view>
-							</view>
-						</view>
-						<view class="improved-content key-strength-content">
-							<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
-							<view class="improved-content-item">
-								<view class="improved-content-title key-strength-content-title">
-									<image class="improved-show-icon" src="/static/resulten/regulation0.svg"></image>
-									Self regulation
-								</view>
-								<view class="improved-content-description">
-									{{ homepageData?.response?.eq_scores?.dimension2_detail }}
-								</view>
-							</view>
-						</view>
-						<view class="improved-content key-strength-content">
-							<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
-							<view class="improved-content-item">
-								<view class="improved-content-title key-strength-content-title">
-									<image class="improved-show-icon" src="/static/resulten/empathy0.svg"></image>
-									Empathy
-								</view>
-								<view class="improved-content-description">
-									{{ homepageData.response?.eq_scores?.dimension3_detail }}
-								</view>
-							</view>
-						</view>
-						<view class="improved-content key-strength-content">
-							<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
-							<view class="improved-content-item">
-								<view class="improved-content-title key-strength-content-title">
-									<image class="improved-show-icon" src="/static/resulten/socialskill0.svg"></image>
-									Social Skill
-								</view>
-								<view class="improved-content-description">
-									{{ homepageData?.response?.eq_scores?.dimension4_detail }}
-								</view>
-							</view>
-						</view>
-						<view class="improved-content key-strength-content">
-							<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
-							<view class="improved-content-item">
-								<view class="improved-content-title key-strength-content-title">
-									<image class="improved-show-icon" src="/static/resulten/motivation0.svg"></image>
-									Motivation
-								</view>
-								<view class="improved-content-description">
-									{{ homepageData?.response?.eq_scores?.dimension5_detail }}
+						<view v-for="(score, index) in caleOverviewScores" :key="index" class="improved-content key-strength-content">
+							<view v-if="index < caleOverviewScores.length - 1">
+								<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
+								<view class="improved-content-item">
+									<view class="improved-content-title key-strength-content-title">
+										<image class="improved-show-icon" :src="score.icon"></image>
+										{{ score.name }}
+									</view>
+									<view class="improved-content-description">
+										{{ score.detail }}
+									</view>
 								</view>
 							</view>
 						</view>
@@ -271,11 +222,11 @@
 			caleOverviewScores() {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = [
-						{ name: 'Perception', score: this.homepageData.response.eq_scores.dimension1_score },
-						{ name: 'self regulation', score: this.homepageData.response.eq_scores.dimension2_score },
-						{ name: 'social skill', score: this.homepageData.response.eq_scores.dimension3_score },
-						{ name: 'empathy', score: this.homepageData.response.eq_scores.dimension4_score },
-						{ name: 'motivation', score: this.homepageData.response.eq_scores.dimension5_score }
+						{ name: 'Perception', score: this.homepageData.response.eq_scores.dimension1_score, detail: this.homepageData.response.eq_scores.dimension1_detail, 'icon': '/static/resulten/awareness0.svg' },
+						{ name: 'self regulation', score: this.homepageData.response.eq_scores.dimension2_score, detail: this.homepageData.response.eq_scores.dimension2_detail, 'icon': '/static/resulten/regulation0.svg'},
+						{ name: 'social skill', score: this.homepageData.response.eq_scores.dimension3_score, detail: this.homepageData.response.eq_scores.dimension3_detail, 'icon': '/static/resulten/socialskill0.svg'},
+						{ name: 'empathy', score: this.homepageData.response.eq_scores.dimension4_score, detail: this.homepageData.response.eq_scores.dimension4_detail, 'icon': '/static/resulten/empathy0.svg'},
+						{ name: 'motivation', score: this.homepageData.response.eq_scores.dimension5_score, detail: this.homepageData.response.eq_scores.dimension5_detail, 'icon': '/static/resulten/motivation0.svg'}
 					];
 
 					// Sort scores in descending order
