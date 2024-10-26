@@ -14,7 +14,7 @@
         @click="startTest"
         :class="{ 'is-loading': isLoading }"
       >
-        <text v-if="!isLoading" class="arrow">Start testing ↗</text>
+        <text v-if="!isLoading" class="arrow">Start ↗</text>
         <view v-else class="loader"></view>
       </button>
     </view>

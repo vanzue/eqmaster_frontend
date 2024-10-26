@@ -9,8 +9,13 @@
 				</view>
 				<view class="background-curve">
 					<view class="animal-box">
+						<view class="animal-my-eq-type">
+							My EQ companion
+						</view>
 						<view class="animal-name" :style="{ backgroundImage: `url(${illustrationSrc.animal_name_bg})` }">
-							{{ illustrationSrc.animal_name }}
+							<view class="animal-score-desc">
+								{{ illustrationSrc.animal_name }}
+							</view>
 						</view>
 						<image class="animal-icon" :src="illustrationSrc.animal_icon"></image>
 						<view class="animal-score">
@@ -372,6 +377,19 @@
 
 	.animal-box {
 		display: flex;
+	}
+	.animal-my-eq-type {
+		position: absolute;
+		display: flex;
+		justify-content: left;
+		align-items: center;
+		width: 125.57px;
+		height: 31px;
+		top: 200rpx;
+		left: 52rpx;
+		color: #D7D8E0;
+		font-size: 26rpx;
+		font-weight: 400;
 	}
 	.animal-name {
 		position: absolute;
