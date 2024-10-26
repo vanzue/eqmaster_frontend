@@ -2,9 +2,9 @@
 	<view class="container">
 		<scroll-view scroll-y style="height: 100%">
 			<!-- <view class="debug-info">
-				如需调试信息，可取消注释以下行
-				<text>homepageData: {{ JSON.stringify(homepageData) }}</text>
-			</view> -->
+    如需调试信息，可取消注释以下行
+    <text>homepageData: {{ JSON.stringify(homepageData) }}</text>
+   </view> -->
 			<image class="head-image" :src="
           this.isPass
             ? '/static/battlefield/IP-green.png'
@@ -26,16 +26,16 @@
 
 			<view class="card second-card">
 				<!-- <vtew class="score">
-					<text class="summary-dimension">情绪平衡力</text>
-					<text class="course-score">+15</text>
-				</view>
-				<view class="progress-container">
-					<view class="progress-bar1">
-						<view class="progress" :style="{ width: progressWidth(45) }">
-						</view>
-					</view>
-					<text class="score-title2">45%</text>
-				</view> -->
+     <text class="summary-dimension">情绪平衡力</text>
+     <text class="course-score">+15</text>
+    </view>
+    <view class="progress-container">
+     <view class="progress-bar1">
+      <view class="progress" :style="{ width: progressWidth(45) }">
+      </view>
+     </view>
+     <text class="score-title2">45%</text>
+    </view> -->
 				<view class="comments">
 					<view class="comment-header">
 						<!-- <view class="down-line"></view> -->
@@ -56,7 +56,8 @@
 
 			<view class="card third-card">
 				<view class="third-card-title">
-					<text class="comment-title">Tips for you</text>
+					<text class="tips-title">Tips for you</text>
+					<image class="tips-icon" src="/static/battlefield/eqtips.png" mode="widthFix"></image>
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
@@ -147,7 +148,7 @@
 					const list = Object.keys(dbCourse)
 						.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
 						.sort() // 如果你想按照 comment1, comment2 的顺序排列
-						.map((key) => dbCourse[key]); // 提取这些键的值						;
+						.map((key) => dbCourse[key]); // 提取这些键的值      ;
 					this.comments = list;
 					this.suggestion = res.data.tips.join('\n');
 				},
@@ -171,7 +172,7 @@
 					this.gemCount = parseInt(res.data);
 					// let diamondAdd = 3; // 默认值为 3
 					// if (gemCount > 0) {
-					// 	diamondAdd = 10; // 如果 gemCount > 0, 设置 diamondAdd 为 10
+					//  diamondAdd = 10; // 如果 gemCount > 0, 设置 diamondAdd 为 10
 					// }
 					// this.diamondAdd = diamondAdd;
 					// console.log('获取到的 Gem Count:', gemCount, 'Diamond Add 值为:', diamondAdd);
@@ -217,6 +218,21 @@
 		text-underline-offset: 8rpx;
 		border-radius: 10rpx;
 		/* box-shadow: inset 0 -3px 0 0 #9EE44D, inset 0 -3px 0 0 #9EE44D; */
+	}
+
+	.tips-title {
+		color: #fff;
+		font-weight: 600;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 40rpx;
+		line-height: 50rpx;
+		text-decoration: underline;
+		text-decoration-thickness: 6rpx;
+		text-decoration-color: #9EE44D;
+		text-underline-offset: 8rpx;
+		border-radius: 10rpx;
+		margin: 20px 3px 0px 0px;
+
 	}
 
 	.comment-header {
@@ -351,6 +367,12 @@
 		margin-top: 20rpx;
 		margin-left: 20rpx;
 		position: relative;
+		display: flex;
+		flex-direction: row;
+	}
+
+	.tips-icon {
+		width: 430rpx;
 	}
 
 	.second-line {
@@ -358,13 +380,13 @@
 	}
 
 	.suggestion {
-		margin-top: 5px;
+		margin-left: 24rpx;
 		color: #fff;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.third-card {
 		height: 500rpx;
-		/* margin-bottom: 13vh; */
 	}
 
 	.guide-button-container {
