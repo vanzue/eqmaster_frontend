@@ -166,15 +166,16 @@ export default {
 	async getVoice(wording, voice = "onyx", style = "serious") {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/tts`,
+				url: `${API_ENDPOINT}/ttsaz`,
 				method: 'POST',
 				data: {
 					text: wording,
-					voice: voice,
-					style: style
+					voice: "en-US-AvaMultilingualNeural",
+					style: "general"
+					// voice: voice,
+					// style: style,
 				},
 			});
-		
 			if (response.statusCode === 200) {
 				return response.data;
 			} else {

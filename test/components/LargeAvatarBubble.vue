@@ -53,7 +53,10 @@ import apiService from '../services/api-service'
 		},
 		watch: {
 			character(newValue) {
-				console.log("new value");
+				if (this.audioContext) {
+					this.audioContext.pause();
+					this.audioContext.currentTime = 0;
+				}
 				if (newValue) {
 					uni.getStorage({
 						key: `voice-${newValue}`,
@@ -74,6 +77,7 @@ import apiService from '../services/api-service'
 		},
 		beforeDestory() {
 			if (this.audioContext) {
+				this.audioContext.pause();
 				this.audioContext.destroy();
 			}
 		}

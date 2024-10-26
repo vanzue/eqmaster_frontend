@@ -40,15 +40,14 @@ export default {
 				}
 			};
 			try {
-				result.dialog.forEach(async (item) => {
+				const promises = result.dialog.map(async (item) => {
 					const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
 					uni.setStorageSync(`voice-${item.role}`, result.message);
-					console.log("set storage success");
 				})
+				await Promise.all(promises);
 			} catch (error) {
 				console.log("get voice fail", error);
 			} finally {
-				console.log("finally")
 				uni.navigateTo({
 					url: '/pages/battlefield/battlefield-playground'
 				})

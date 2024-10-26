@@ -52,7 +52,7 @@
 				</scroll-view>
 			</view>
 
-			<view v-if="state === 'NpcTalk'" class="npc-talk-container">
+			<view v-if="state === 'NpcTalk' && !isFinish" class="npc-talk-container">
 				<large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
 					:wording="chattingHistory[displayedNpcChatIndex].content">
 				</large-avatar-bubble>
@@ -288,6 +288,7 @@
 				isCompleteTask: false,
 				currentTask: null,
 				isLoadingShow: false,
+				isFinish: false,
 			};
 		},
 		created() {
@@ -421,6 +422,7 @@
 				// this.answerNotGoodNum = 0;
 
 				if (this.task1Finished) {
+					this.isFinish = true;
 					await this.Pass();
 				}
 				const nextRound = await continueChat(this.allHistory, "4");
@@ -444,7 +446,7 @@
 							"style": "empathetic"
 						}
 					};
-					nextRound.dialog.forEach(async (item) => {
+					const promises = nextRound.dialog.map(async (item) => {
 						const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
 						uni.setStorage({
 							key: `voice-${item.role}`,
@@ -454,8 +456,12 @@
 							},
 						})
 					});
+					await Promise.all(promises);
 				} catch (error) {
 					console.log("get voice fail", error);
+					uni.clearStorageSync("voice-Jason");
+					uni.clearStorageSync("voice-Anna");
+					uni.clearStorageSync("voice-Sam");
 				}
 				console.log("current chatting history:", this.chattingHistory);
 				this.chattingHistory = nextRound.dialog;
@@ -904,10 +910,12 @@
 						if (anyNpcHealthLow) {
 							this.isPass = false;
 							this.diamonds = 3;
+							this.isFinish = true;
 							await this.Pass();
 						}
 
 						if (this.task1Finished) {
+							this.isFinish = true;
 							await this.Pass();
 						}
 						return true; // 添加返回值，表示处理成功
@@ -1042,6 +1050,7 @@
 					if (this.taskList.doneTaskLength >= totalTaskLength - 1) {
 						this.task1Finished = true;
 						this.isPass = true;
+						this.isFinish = true;
 						await this.Pass();
 						taskCompleted = false;
 					}
