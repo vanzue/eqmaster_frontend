@@ -11,7 +11,7 @@
                 <image class="nav-image" :class="{ 'highlight': selectedView === 'Battlefield' }"
                     :src="selectedView === 'Battlefield' ? '/static/nav/battlefield1.png' : '/static/nav/battlefield.png'"
                     mode="widthFix"></image>
-                <text class="nav-text" :class="{ 'highlight': selectedView === 'Battlefield' }">Battlefield</text>
+                <text class="nav-text" :class="{ 'highlight': selectedView === 'Battlefield' }">Arena</text>
             </view>
             <view class="nav-item" @click="navigateToProfilePage('Profile')">
                 <image class="nav-image" :class="{ 'highlight': selectedView === 'Profile' }"
