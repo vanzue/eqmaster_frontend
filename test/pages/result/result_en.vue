@@ -169,56 +169,56 @@
 				}
 				if(this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = this.homepageData.response.eq_scores;
-					const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores
+					const maxScore = Math.max(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores
 						.dimension4_score, scores.dimension5_score);
 					
 
 					// 根据最低分选择图片
-					if (minScore === scores.dimension1_score) { //Capypara 水豚
+					if (maxScore === scores.dimension1_score) { //Capypara 水豚
 						console.log("illustration src:", '1')
 						returnObj = {
 							animal_name: 'Capypara',
 							animal_icon: '/static/resulten/capybara.png',
 							animal_name_bg: '/static/resulten/animal-name-1.png',
 							weakness: 'Motivation',
-							characteristics: 'The capybara reflects a laid-back nature, symbolizing challenges in motivation.',
+							characteristics: 'is your EQ superpower—you bring energy and stay focused on your goals.',
 						}
 						// return '/static/aniimals/kapibala.png';
-					} else if (minScore === scores.dimension2_score) {//hedgehog 刺猬
+					} else if (maxScore === scores.dimension2_score) {//hedgehog 刺猬
 						console.log("illustration src:", '2')
 						returnObj = {
 							animal_name: 'hedgehog',
 							animal_icon: '/static/resulten/hedgehog.png',
 							animal_name_bg: '/static/resulten/animal-name-1.png',
 							weakness: 'Empathy',
-							characteristics: 'The hedgehog represents self-protection, symbolizing difficulty perceiving emotions.',
+							characteristics: `is your EQ superpower—you easily notice and understand others' emotions.`,
 						}
-					} else if (minScore === scores.dimension3_score) {//Coyote 狼
+					} else if (maxScore === scores.dimension3_score) {//Coyote 狼
 						console.log("illustration src:", '3')
 						returnObj = {
 							animal_name: 'Coyote',
 							animal_icon: '/static/resulten/coyote.png',
 							animal_name_bg: '/static/resulten/animal-name-1.png',
 							weakness: 'Social Skill',
-							characteristics: 'The coyote reflects independence, symbolizing challenges in social connections.',
+							characteristics: 'is your EQ superpower—you build connections and encourage collaboration.',
 						}
-					} else if (minScore === scores.dimension4_score) {//Ostrich 鸵鸟
+					} else if (maxScore === scores.dimension4_score) {//Ostrich 鸵鸟
 						console.log("illustration src:", '4')
 						returnObj = {
 							animal_name: 'Ostrich',
 							animal_icon: '/static/resulten/ostrich.png',
 							animal_name_bg: '/static/resulten/animal-name-1.png',
 							weakness: 'Perception',
-							characteristics: 'The ostrich reflects avoidance, symbolizing difficulty recognizing emotions.',
+							characteristics: 'is your EQ superpower—you’re great at sensing subtle cues and moods.',
 						}
-					} else if (minScore === scores.dimension5_score) {//Monkey 猴子
+					} else if (maxScore === scores.dimension5_score) {//Monkey 猴子
 						console.log("illustration src:", '5')
 						returnObj = {
 							animal_name: 'Monkey',
 							animal_icon: '/static/resulten/monkey.png',
 							animal_name_bg: '/static/resulten/animal-name-1.png',
 							weakness: 'Self-regulation',
-							characteristics: 'The monkey represents impulsiveness, symbolizing difficulty controlling emotions.',
+							characteristics: 'is your EQ superpower—you control emotions well, even under stress.',
 						}
 					}
 				}

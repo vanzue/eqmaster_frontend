@@ -18,7 +18,7 @@
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
 			<view class="quizButton" @click="startQuiz">
-				<text class="quizText">Start the experience</text>
+				<text class="quizText">Get started</text>
 			</view>
 			<view class="loginButton" @click="login">
 				<text class="login-text">Login</text>
