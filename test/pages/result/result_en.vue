@@ -4,7 +4,7 @@
 			<view class="content">
 				<view class="header">
 					<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
-					<text class="score-title-head">My career personality type</text>
+					<text class="score-title-head">My EQ report</text>
 					<image class="header-icon" src="/static/battlefield/share.png"></image>
 				</view>
 				<view class="background-curve">
