@@ -109,7 +109,7 @@
         " class="hintTooltip">
 				Need help? Here's your advice packet
 			</view>
-			<view class="player-action-container" :class="{ shadowed: shouldShadow }">
+			<view class="player-action-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
 				<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
 					<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 				</view>
@@ -288,6 +288,7 @@
 				isCompleteTask: false,
 				currentTask: null,
 				isLoadingShow: false,
+        		task2CompletedStatusOne: false,
 				isFinish: false,
 			};
 		},
@@ -336,7 +337,7 @@
 			},
 			goToDashboard() {
 				uni.navigateTo({
-					url: "/pages/dashboard/dashboard",
+					url: "/pages/dashboard/dashboard_en",
 				});
 			},
 			handleClickTaskList() {
@@ -425,12 +426,15 @@
 					this.isFinish = true;
 					await this.Pass();
 				}
-				const nextRound = await continueChat(this.allHistory, "4");
-				console.log("next round data", nextRound);
-				nextRound.dialog = nextRound.dialog.map((item) => ({
-					role: item.role,
-					content: item.content ?? item.words,
-				}));
+
+        if(!this.task2CompletedStatusOne) {
+          this.task2CompletedStatusOne = true;
+          const nextRound = await continueChat(this.allHistory, "4");
+          console.log("next round data", nextRound);
+          nextRound.dialog = nextRound.dialog.map((item) => ({
+            role: item.role,
+            content: item.content ?? item.words,
+          }));
 				try {
 					const voiceMap = {
 						"Jason": {
@@ -449,7 +453,7 @@
 					const promises = nextRound.dialog.map(async (item) => {
 						const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
 						uni.setStorage({
-							key: `voice-${item.role}`,
+							key: `voice-${item.words || item.content}`,
 							data: result.message,
 							success: (res) => {
 								console.log("set storage success");
@@ -458,21 +462,19 @@
 					});
 					await Promise.all(promises);
 				} catch (error) {
-					console.log("get voice fail", error);
-					uni.clearStorageSync("voice-Jason");
-					uni.clearStorageSync("voice-Anna");
-					uni.clearStorageSync("voice-Sam");
+					console.log("get audio fail", error);
 				}
-				console.log("current chatting history:", this.chattingHistory);
-				this.chattingHistory = nextRound.dialog;
-				this.allHistory = this.allHistory.concat(nextRound.dialog);
-				console.log("after concat, chatting history:", this.chattingHistory);
-				// let someoneTalked = false;
-				this.displayedNpcChatIndex = 0;
-				this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
+          console.log("current chatting history:", this.chattingHistory);
+          this.chattingHistory = nextRound.dialog;
+          this.allHistory = this.allHistory.concat(nextRound.dialog);
+          console.log("after concat, chatting history:", this.chattingHistory);
+          // let someoneTalked = false;
+          this.displayedNpcChatIndex = 0;
+          this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
+        }
 
 				this.state = "NpcTalk";
-				const isTask2 = await this.checkBossComplimentTask2(nextRound.dialog);
+				// const isTask2 = await this.checkBossComplimentTask2(nextRound.dialog);
 				this.isLoadingShow = false;
 				// console.log(isTask2);
 				// if(isTask2) {
@@ -577,6 +579,7 @@
 						this.talkingNpc = this.getNpcIndexByName(history[i].role);
 						this.npcDialog = history[i].content;
 						foundNpcMessage = true;
+            await this.checkBossComplimentTask2(history[i]);
 						break;
 					}
 				}
@@ -914,10 +917,9 @@
 							await this.Pass();
 						}
 
-						if (this.task1Finished) {
-							this.isFinish = true;
-							await this.Pass();
-						}
+						// if (this.task1Finished) {
+						// 	await this.Pass();
+						// }
 						return true; // 添加返回值，表示处理成功
 					} else {
 						throw new Error("judgeResult is undefined or null");
@@ -947,6 +949,7 @@
 						const allPositive = judgeResult.moods.every(
 							(item) => parseInt(item.mood, 10) > 0
 						);
+            // console.log(allPositive);
 						if (allPositive) {
 							if (!this.task1Finished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
@@ -977,6 +980,10 @@
 								await this.gotoNextRound();
 							}
 						} else {
+              const allZero = judgeResult.moods.every((item) => parseInt(item.mood, 10) == 0);   
+              if(allZero) {
+                await this.gotoNextRound();
+              }           
 							// this.state = "judge";
 							// this.judgeTitle = "Well done";
 							// this.isCompleteTask = false;
@@ -1016,8 +1023,9 @@
 				let taskCompleted = false;
 				if (!this.task1Finished && !this.taskList.getTask(1).one) {
 					const goalKeyword = "I agree with you";
-					for (let chat of dialog) {
-						if (chat.content.includes(goalKeyword)) {
+					// for (let chat of dialog) {
+          // console.log(dialog.content);
+						if (dialog.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;
 								this.state = "judge";
@@ -1035,23 +1043,23 @@
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved";
 									taskCompleted = false;
+                  this.task2CompletedStatusOne = true; //如果任务2完成
 								} else {
 									this.judgeTitle = "Goal achieved";
 									this.isCompleteTask = true;
 									taskCompleted = true;
 								}
 							}
-							break;
+							// break;
 						} else {
 							taskCompleted = true;
 						}
-					}
+					// }
 					const totalTaskLength = this.taskList.getTotalTaskLength();
-					if (this.taskList.doneTaskLength >= totalTaskLength - 1) {
+					if (this.taskList.doneTaskLength >= totalTaskLength) {
 						this.task1Finished = true;
 						this.isPass = true;
-						this.isFinish = true;
-						await this.Pass();
+						// await this.Pass();
 						taskCompleted = false;
 					}
 				} else {
@@ -1346,7 +1354,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 10%;
-		width: 105px;
+		width: 120px;
 		padding: 10px 20px;
 		/* transform: translateX(-50%); */
 		background-color: rgba(16, 16, 16, 0.4);

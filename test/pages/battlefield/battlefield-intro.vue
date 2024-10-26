@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="overlay"></view>
 		<view class="navbar">
-			<image class="back-button" src="/static/battlefield/back-iconpng.png"></image>
+			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
 			<view class="progress-bar">
 				<progress-bar :isActive="true"></progress-bar>
 				<progress-bar :isActive="false"></progress-bar>
@@ -55,7 +55,12 @@
 				uni.navigateTo({
 					url: '/pages/battlefield/battlefield-task' // Replace this with the actual path to your next page
 				});
-			}
+			},
+			goToDashboard() {
+				uni.navigateTo({
+					url: "/pages/dashboard/dashboard_en",
+				});
+			},
 		}
 	}
 </script>

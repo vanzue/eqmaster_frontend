@@ -138,11 +138,17 @@
 		margin-top: 20rpx;
 		display: flex;
 		justify-content: center;
-		width: 100%;
+		/* width: 100%; */
 		max-height: 200rpx;
 		margin-top: 20rpx;
 		margin-bottom: 70rpx;
 		overflow-y: auto;
+	}
+
+	.wording-icon {
+		width: 48rpx;
+		height: 48rpx;
+		margin-bottom: -10rpx;
 	}
 
 	.judge-button-container {

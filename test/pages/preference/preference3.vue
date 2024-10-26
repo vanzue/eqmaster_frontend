@@ -2,7 +2,7 @@
   <view class="container">
     <view class="text-content">
       <text class="question">{{
-        scenarioText || "Next, let's find out your workplace personality type!"
+        scenarioText || "Now, begin the journey to explore EQ!"
       }}</text>
       <!-- <text class="question1">个性化偏好</text> -->
     </view>
@@ -14,7 +14,7 @@
         @click="startTest"
         :class="{ 'is-loading': isLoading }"
       >
-        <text v-if="!isLoading" class="arrow">Start testing ↗</text>
+        <text v-if="!isLoading" class="arrow">Start ↗</text>
         <view v-else class="loader"></view>
       </button>
     </view>

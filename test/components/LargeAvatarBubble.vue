@@ -27,7 +27,7 @@ import apiService from '../services/api-service'
 			wording: {
 				type: String,
 				required: true
-			}
+			},
 		},
 		data() {
 			return {
@@ -35,52 +35,47 @@ import apiService from '../services/api-service'
 			}
 		},
 		async mounted() {
-			console.log(this.character);
 			this.audioContext = uni.createInnerAudioContext();
 			uni.getStorage({
-				key: `voice-${this.character}`,
+				key: `voice-${this.wording}`,
 				success: (res) => {
 					this.audioContext.src = res.data;
 					this.audioContext.play();
-					uni.removeStorage({
-						key: `voice-${this.character}`,
-					})
+					
 				},
 				fail: (error) => {
 					console.log(`fail to get ${this.character} voice`, error);
 				}
 			})
 		},
+		created() {
+			console.log("create large bubble");
+		},
 		watch: {
-			character(newValue) {
+			wording(newValue) {
 				if (this.audioContext) {
 					this.audioContext.pause();
 					this.audioContext.currentTime = 0;
 				}
-				if (newValue) {
-					uni.getStorage({
-						key: `voice-${newValue}`,
-						success: (res) => {
-							this.audioContext.src = res.data;
-							this.audioContext.play();
-							
-							uni.removeStorage({
-								key: `voice-${this.character}`,
-							})
-						},
-						fail: (error) => {
-							console.log(`fail to get ${newValue} voice`, error)
-						}
-					})
-				}
-			}
+				uni.getStorage({
+					key: `voice-${this.wording}`,
+					success: (res) => {
+						this.audioContext.src = res.data;
+						this.audioContext.play();
+					},
+					fail: (error) => {
+						console.log(`fail to get ${this.wording} audio`, error)
+					}
+				})
+			},
 		},
-		beforeDestory() {
+		unmounted() {
+			console.log("unmounted");
 			if (this.audioContext) {
 				this.audioContext.pause();
 				this.audioContext.destroy();
 			}
-		}
+		},
 	}
 </script>
 

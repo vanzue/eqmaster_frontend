@@ -42,7 +42,7 @@ export default {
 			try {
 				const promises = result.dialog.map(async (item) => {
 					const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
-					uni.setStorageSync(`voice-${item.role}`, result.message);
+					uni.setStorageSync(`voice-${item.words || item.content}`, result.message);
 				})
 				await Promise.all(promises);
 			} catch (error) {

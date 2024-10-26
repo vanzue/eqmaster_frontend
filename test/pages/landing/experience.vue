@@ -7,9 +7,9 @@
 		<!-- 内容区域 -->
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">Hi, Welcome!👋</text>
+				<text class="greeting">Welcome to ECoach!👋</text>
 			</view>
-			<text class="question">How may I call you?</text>
+			<text class="question">What can I call you?</text>
 			<!-- <text class="question1">完善个人信息</text> -->
 
 			<!-- 输入框 -->

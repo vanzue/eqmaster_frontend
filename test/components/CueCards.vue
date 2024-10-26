@@ -71,24 +71,15 @@
 				loading: false,
 				isLoading: true,
 				error: null,
-				homepageData: {
-					response: {
-						personal_info: {
-							name: ''
-						},
-						eq_scores: {
-							score: 0,
-							overall_suggestion: ''
-						},
-						contacts: []
-					}
-				},
 			};
 		},
 		onLoad(option) {
 			console.log(option);
 		},
 		computed: {
+			homepageData() {
+				return this.$store.getters.getHomepageData;
+			},
 			userId() {
 				return this.$store.getters.getUserId;
 			},
@@ -125,7 +116,7 @@
 			},
 		},
 		created() {
-			this.getHomepageData();
+			// this.getHomepageData();
 		},
 	}
 </script>
@@ -191,6 +182,7 @@
 	}
 
 	.box {
+		position: relative; 
 		display: block;
 		justify-content: center;
 		color: #252529;
@@ -240,7 +232,7 @@
 	}
 
 	.jewelry-num {
-		color: #90E0E7;
+		color: #2D6985;
 		font-size: 40rpx;
 		font-weight: 800;
 		text-align: left;
@@ -255,8 +247,19 @@
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
-	.card-selected {
+	/* .card-selected {
 		border: 3px solid #90E0E7;
+	} */
+	.card-selected::after {
+		content: '';
+		position: absolute;
+		top: -3px;
+		left: -3px;
+		right: -3px;
+		bottom: -3px;
+		border: 3px solid #90E0E7;
+		border-radius: 35rpx;
+		pointer-events: none;
 	}
 
 	.card-button {
