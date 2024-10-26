@@ -52,7 +52,7 @@
 				</scroll-view>
 			</view>
 
-			<view v-if="state === 'NpcTalk'" class="npc-talk-container">
+			<view v-if="state === 'NpcTalk' && !isFinish" class="npc-talk-container">
 				<large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
 					:wording="chattingHistory[displayedNpcChatIndex].content">
 				</large-avatar-bubble>
@@ -193,6 +193,8 @@
 	import Task from "../../models/Task";
 	import TaskList from "../../models/TaskList";
 	import state from "../../state";
+	import apiService from '../../services/api-service';
+
 	export default {
 		components: {
 			RewardBar,
@@ -286,8 +288,9 @@
 				isCompleteTask: false,
 				currentTask: null,
 				isLoadingShow: false,
-        task2CompletedStatusOne: false,
-        taskFinished: false,
+        		task2CompletedStatusOne: false,
+        		taskFinished: false,
+				isFinish: false,
 			};
 		},
 		created() {
@@ -420,7 +423,8 @@
 				}
 				// this.answerNotGoodNum = 0;
 
-				if (this.taskFinished) {
+				if (this.task1Finished) {
+					this.isFinish = true;
 					await this.Pass();
 				}
         console.log(this.task2CompletedStatusOne);
@@ -434,6 +438,35 @@
             role: item.role,
             content: item.content ?? item.words,
           }));
+				try {
+					const voiceMap = {
+						"Jason": {
+							"voice": "onyx",
+							"style": "serious"
+						},
+						"Anna": {
+							"voice": "nova",
+							"style": "empathetic"
+						},
+						"Sam": {
+							"voice": "echo",
+							"style": "empathetic"
+						}
+					};
+					const promises = nextRound.dialog.map(async (item) => {
+						const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
+						uni.setStorage({
+							key: `voice-${item.words || item.content}`,
+							data: result.message,
+							success: (res) => {
+								console.log("set storage success");
+							},
+						})
+					});
+					await Promise.all(promises);
+				} catch (error) {
+					console.log("get audio fail", error);
+				}
           console.log("current chatting history:", this.chattingHistory);
           this.chattingHistory = nextRound.dialog;
           this.allHistory = this.allHistory.concat(nextRound.dialog);
@@ -886,7 +919,7 @@
 						if (anyNpcHealthLow) {
 							this.isPass = false;
 							this.diamonds = 3;
-              // console.log("123456789");
+							this.isFinish = true;
 							await this.Pass();
 						}
 
