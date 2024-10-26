@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import apiService from '../services/api-service'
 	export default {
 		props: {
 			avatar: {
@@ -26,6 +27,54 @@
 			wording: {
 				type: String,
 				required: true
+			}
+		},
+		data() {
+			return {
+				audioContext: null,
+			}
+		},
+		async mounted() {
+			console.log(this.character);
+			this.audioContext = uni.createInnerAudioContext();
+			uni.getStorage({
+				key: `voice-${this.character}`,
+				success: (res) => {
+					this.audioContext.src = res.data;
+					this.audioContext.play();
+					uni.removeStorage({
+						key: `voice-${this.character}`,
+					})
+				},
+				fail: (error) => {
+					console.log(`fail to get ${this.character} voice`, error);
+				}
+			})
+		},
+		watch: {
+			character(newValue) {
+				console.log("new value");
+				if (newValue) {
+					uni.getStorage({
+						key: `voice-${newValue}`,
+						success: (res) => {
+							this.audioContext.src = res.data;
+							this.audioContext.play();
+							
+							uni.removeStorage({
+								key: `voice-${this.character}`,
+							})
+						},
+						fail: (error) => {
+							console.log(`fail to get ${newValue} voice`, error)
+						}
+					})
+				}
+			}
+		},
+		beforeDestory() {
+			if (this.audioContext) {
+				this.audioContext.destroy();
 			}
 		}
 	}

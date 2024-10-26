@@ -282,6 +282,7 @@ import { filterChatHistory, getNpcIndex } from "../../scripts/battlefield-chat";
 import Task from "../../models/Task";
 import TaskList from "../../models/TaskList";
 import state from "../../state";
+import apiService from '../../services/api-service';
 export default {
   components: {
     RewardBar,
@@ -512,6 +513,34 @@ export default {
         role: item.role,
         content: item.content ?? item.words,
       }));
+	  try {
+		const voiceMap = {
+			"Jason": {
+				"voice": "onyx",
+				"style": "serious"
+			},
+			"Anna": {
+				"voice": "nova",
+				"style": "empathetic"
+			},
+			"Sam": {
+				"voice": "echo",
+				"style": "empathetic"
+			}
+		};
+	  	nextRound.dialog.forEach(async (item) => {
+	  		const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
+	  		uni.setStorage({
+	  			key: `voice-${item.role}`,
+	  			data: result.message,
+	  			success: (res) => {
+	  				console.log("set storage success");
+	  			},
+	  		})
+	  	});
+	  } catch (error) {
+	  	console.log("get voice fail", error);
+	  }
       console.log("current chatting history:", this.chattingHistory);
       this.chattingHistory = nextRound.dialog;
       this.allHistory = this.allHistory.concat(nextRound.dialog);
@@ -1105,6 +1134,20 @@ export default {
   },
   onLoad(option) {
     console.log("loaded", option);
+    const voiceMap = {
+				"Jason": {
+					"voice": "onyx",
+					"style": "serious"
+				},
+				"Anna": {
+					"voice": "nova",
+					"style": "empathetic"
+				},
+				"Sam": {
+					"voice": "echo",
+					"style": "empathetic"
+				}
+		};
     uni.getStorage({
       key: "chats",
       success: (res) => {
@@ -1114,6 +1157,14 @@ export default {
           content: item.words || item.content,
         }));
         this.allHistory = JSON.parse(JSON.stringify(this.chattingHistory));
+        // this.allHistory.forEach(async (item, index) => {
+        //   console.log("history item", voiceMap[item.role]["voice"])
+        //   const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
+        //   uni.setStorage({
+        //     key: `voice-${item.role}`,
+        //     data: result.message,
+        //   })
+        // })
       },
     });
     this.jobId = option.jobId || "154ee592-287b-4675-b8bd-8f88de348476";

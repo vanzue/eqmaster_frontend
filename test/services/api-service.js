@@ -162,6 +162,29 @@ export default {
 			throw error;
 		}
 	},
+	
+	async getVoice(wording, voice = "onyx", style = "serious") {
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/tts`,
+				method: 'POST',
+				data: {
+					text: wording,
+					voice: voice,
+					style: style
+				},
+			});
+		
+			if (response.statusCode === 200) {
+				return response.data;
+			} else {
+				throw new Error(`Failed to get result: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error getting result:', error);
+			throw error;
+		}
+	},
 
 	async getContactProfile(contactId) {
 		try {
