@@ -103,8 +103,9 @@
 							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix"></image>
 							<text class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
 						</view>
+						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix"></image>
+						
 					</view>
-					<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
 
 					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
 						<view class="dashboard2-progress-container">
@@ -1940,7 +1941,7 @@
 		position: relative;
 		text-align: left;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: left;
 		padding: 40rpx 20rpx 0rpx 20rpx;
 	}
@@ -2012,20 +2013,20 @@
 		font-size: 50rpx;
 		font-weight: bold;
 		color: #fe9a52;
-		margin-left: 60rpx;
-		left: 30px;
-		top: 30px;
-		position: absolute;
+		margin-top: 20rpx;
+		/* left: 30px; */
+		/* top: 30px; */
+		position: relative;
 	}
 
 	.dashboard2-score-value-large-g {
 		font-size: 50rpx;
 		font-weight: bold;
 		color: #aeed50;
-		margin-left: 60rpx;
-		left: 30px;
-		top: 30px;
-		position: absolute;
+		margin-top: 20rpx;
+		/* left: 30px; */
+		/* top: 30px; */
+		position: relative;
 	}
 
 	.dashboard2-score-value-large1 {
