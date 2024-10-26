@@ -7,7 +7,8 @@
 			<view class="name-icon-container" style="display: flex; flex-direction: row; align-items: center;">
 				<view class="name">{{ name }}</view>
 				<!-- 根据 npcHealth 显示不同的 SVG 图标 -->
-				<!-- <image v-if="npcHealth !== 10" :src="npcHealth > 10 ? greenIcon : redIcon" class="health-icon"></image> -->
+				<image v-if="npcHealth > 10" :src="greenIcon" class="health-icon"></image>
+				<image v-else-if="npcHealth <= 10" :src="redIcon" class="health-icon"></image>
 			</view>
 			<view class="comment">{{ comment }}</view>
 		</view>
@@ -29,7 +30,10 @@
 				type: String,
 				required: true
 			},
-			// npcHealth: Number
+			npcHealth: { // 将 npcHealth 作为 prop 添加
+				type: [Number, String], // 支持数字和字符串类型
+				required: true
+			}
 		},
 		data() {
 			return {
@@ -87,5 +91,6 @@
 		font-size: 14px;
 		font-weight: 400;
 		margin-top: 5px;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 </style>

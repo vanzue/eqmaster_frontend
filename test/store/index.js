@@ -11,6 +11,23 @@ export default createStore({
     homepageData: {},
     intervalId: null, // 定时器ID
     homeNavName: 'dashboard',
+    npcs: [
+      {
+        characterName: "Jason",
+        health: 10,
+        avatar: "/static/battlefield/boss11.png",
+      },
+      {
+        characterName: "Sam",
+        health: 10,
+        avatar: "/static/battlefield/xiaoA1.png",
+      },
+      {
+        characterName: "Anna",
+        health: 10,
+        avatar: "/static/battlefield/xiaoB1.png",
+      },
+    ]
   },
   mutations: {
     setUserId(state, userId) {
@@ -42,7 +59,10 @@ export default createStore({
     },
     setHomeNavName(state, homeNavName) {
       state.homeNavName = homeNavName;
-    }
+    },
+    setNpcs(state, npcs) {
+      state.npcs = npcs;
+    },
   },
   getters: {
     getUserId(state) {
@@ -65,7 +85,10 @@ export default createStore({
     },
     getHomeNavName(state) {
       return state.homeNavName;
-    }
+    },
+    getNpcs(state) {
+      return state.npcs;
+    },
   },
   actions: {
     async fetchHomepageData({ commit, state }) {

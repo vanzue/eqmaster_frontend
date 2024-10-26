@@ -10,7 +10,7 @@
 		</view>
 		<view class="content">
 			<view class="task-header">
-				<text class="main-title">A Cross-Department Meeting</text>
+				<!-- <text class="main-title">A Cross-Department Meeting</text> -->
 				<text class="sub-title">Tasks</text>
 			</view>
 
@@ -31,7 +31,7 @@
 							2
 						</text>
 					</view>
-					<text class="task-word">Facilitate team input and ensure at least one colleague supports your approach.</text>
+					<text class="task-word">Encourage teammates to engage and get at least one to say, "I agree with you."</text>
 				</view>
 			</view>
 		</view>
@@ -70,6 +70,7 @@
 		flex-direction: column;
 		justify-content: center;
 		text-align: center;
+		margin-top: 160rpx;
 	}
 
 	.task-word {
@@ -83,7 +84,7 @@
 	}
 
 	.task-header {
-		margin-top: 30rpx;
+		/* margin-top: 30rpx; */
 		text-align: center;
 		color: #fff;
 	}
@@ -105,9 +106,10 @@
 		width: 100%;
 		margin-top: 64rpx;
 		display: flex;
-		min-height: 40rpx;
-		flex-direction: row;
-		justify-content: flex-start;
+		gap: 24rpx;
+		/* min-height: 40rpx; */
+		/* flex-direction: row; */
+		/* justify-content: flex-start; */
 	}
 
 	.task-item {
@@ -119,7 +121,7 @@
 		font-size: 28rpx;
 		margin-bottom: 20rpx;
 		width: 100%;
-		margin-top: 30rpx;
+		/* margin-top: 30rpx; */
 		margin-left: 48rpx;
 	}
 

@@ -6,7 +6,7 @@
 					<image class="avatar" :src="avatar" mode="aspectFill"></image>
 				</view>
 				<view class="name">
-					<image class="character-background" src="/static/battlefield/character_background1.png"
+					<image class="character-background" :src="isLastElement ? '/static/battlefield/character_background2.png' : '/static/battlefield/character_background1.png'"
 						mode="scaleToFill"></image>
 					<view class="character">{{ name }}</view>
 				</view>
@@ -31,6 +31,10 @@
 			dialog: {
 				type: String,
 				required: true
+			},
+			isLastElement: {
+				type: Boolean,
+				default: false,
 			}
 		}
 	};
@@ -63,7 +67,7 @@
 	}
 
 	.character-background {
-		width: 160rpx;
+		width: 200rpx;
 		height: 50rpx;
 		position: absolute;
 		left: 10%;

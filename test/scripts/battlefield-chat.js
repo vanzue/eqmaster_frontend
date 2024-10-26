@@ -18,7 +18,7 @@ function sendRequest(
     console.log("formattedChatContent:", formattedChatContent);
     const body = outerBody || {
       person_id: person_id || Math.floor(Math.random() * 500),
-      course_id: parseInt(course_id) || 2,
+      course_id: parseInt(course_id) || 4,
       chat_content: JSON.stringify(formattedChatContent),
     };
 
@@ -56,9 +56,7 @@ function formatChatContent(chat_content) {
   };
 
   chat_content.forEach((chat) => {
-    if (
-      ["Jason", "Sam", "Anna"].includes(chat.role)
-    ) {
+    if (["Jason", "Sam", "Anna"].includes(chat.role)) {
       // If the role is one of the NPCs, add it to the assistant's dialog
       assistantDialog.content[0].text.dialog.push({
         role: chat.role,
@@ -128,8 +126,8 @@ function formatChatContent(chat_content) {
 }
 
 // 导出startField函数
-export async function startField(person_id, course_id) {
-  return await sendRequest(person_id, course_id, [
+export async function startField(person_id, courseId) {
+  return await sendRequest(person_id, courseId, [
     {
       role: "user",
       content: [
@@ -143,17 +141,13 @@ export async function startField(person_id, course_id) {
 }
 
 // 导出reply函数
-export async function reply(chatHistory) {
+export async function reply(chatHistory, courseId) {
   console.log("reply:", chatHistory);
-  return await sendRequest(
-    chatHistory.person_id,
-    chatHistory.course_id,
-    chatHistory
-  );
+  return await sendRequest(chatHistory.person_id, courseId, chatHistory);
 }
 
 // 导出helpReply函数
-export async function helpReply(chatHistory) {
+export async function helpReply(chatHistory, courseId) {
   // 在 chat_content 中插入“帮我回答”
   chatHistory.push({
     role: "user",
@@ -166,7 +160,7 @@ export async function helpReply(chatHistory) {
   });
   const result = await sendRequest(
     chatHistory.person_id,
-    chatHistory.course_id,
+    courseId,
     chatHistory
   );
   chatHistory.pop();
@@ -174,7 +168,7 @@ export async function helpReply(chatHistory) {
 }
 
 // 导出hint函数
-export async function hint(chatHistory) {
+export async function hint(chatHistory, courseId) {
   // 在 chat_content 中插入“给我提示”
   chatHistory.push({
     role: "user",
@@ -187,7 +181,7 @@ export async function hint(chatHistory) {
   });
   const result = await sendRequest(
     chatHistory.person_id,
-    chatHistory.course_id,
+    courseId,
     chatHistory
   );
   chatHistory.pop();
@@ -195,7 +189,7 @@ export async function hint(chatHistory) {
 }
 
 // 导出continueChat函数
-export async function continueChat(chatHistory) {
+export async function continueChat(chatHistory, courseId) {
   // 在 chat_content 中插入“继续”
   chatHistory.push({
     role: "user",
@@ -208,7 +202,7 @@ export async function continueChat(chatHistory) {
   });
   const result = await sendRequest(
     chatHistory.person_id,
-    chatHistory.course_id,
+    courseId,
     chatHistory
   );
   chatHistory.pop();
@@ -248,7 +242,7 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
   // 在 body 中添加 isPass, gemCount, diamonds
   const body = {
     person_id: chatHistory.person_id || Math.floor(Math.random() * 500),
-    course_id: chatHistory.course_id || 2,
+    course_id: chatHistory.course_id || 4,
     chat_content: JSON.stringify(chatHistory),
     status: isPass ? "completed" : "incompleted", // 添加 isPass
     result: gemCount, // 添加 gemCount
@@ -268,7 +262,12 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 }
 
 export function filterChatHistory(chatHistory) {
-  const keywords = ["StartDialog", "ContinueNextRound", "HelpReply", "GivemeHint"];
+  const keywords = [
+    "StartDialog",
+    "ContinueNextRound",
+    "HelpReply",
+    "GivemeHint",
+  ];
 
   return chatHistory.filter((chat) => {
     for (let keyword of keywords) {

@@ -17,7 +17,7 @@
 					<view class="character-view" @click="navigateToResult">
 						<view style="display: flex;flex-direction: column;width: 308rpx;">
 							<view :class="['animal-tag', animal]">
-								<text>{{ animal }}1</text>
+								<text>{{ animal }}</text>
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
 								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;"> Needs
@@ -62,16 +62,20 @@
 							<image class="import-button" src="../../static/dashboard/import-button.png" mode="widthFix"
 								@click="chooseImage">
 							</image>
-							<view class="left-history-container">
-								<ChatHistory v-for="(item, index) in leftList" :key="index"
-									:title="item.analysis.summary.summary" :details="item.analysis.suggestions"
+							<view class="left-history-container" v-if="leftList.length > 0">
+								<ChatHistory v-for="(item, index) in leftList" 
+									:key="index" 
+									:title="item.low_dim || 'No summary available'"
+									:details="item?.summary || ''"
 									@click="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
-						<view class="right-history-container">
-							<ChatHistory v-for="(item, index) in rightList" :key="index"
-								:title="item.analysis.summary.summary" :details="item.analysis.suggestions"
+						<view class="right-history-container" v-if="rightList.length > 0">
+							<ChatHistory v-for="(item, index) in rightList"
+								:key="index"
+								:title="item.low_dim || 'No summary available'"
+								:details="item?.summary || ''"
 								@click="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -89,60 +93,49 @@
 			</view>
 			<!-- chat battlefield homepage -->
 			<view v-else-if="currentView === 'dashboard2'" class="dashboard2-content">
-				<!-- Integrated dashboard2.vue content -->
-				<view class="dashboard2-card-o">
-					<view class="dashboard2-card">
-						<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
-						<text
-							class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
+				<view class="dashboard2-fixed-content">
+					<view class="dashboard2-card-o">
+						<view class="dashboard2-card">
+							<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
+							<text class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
+						</view>
+						<view class="dashboard2-card">
+							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix"></image>
+							<text class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
+						</view>
 					</view>
-					<view class="dashboard2-card">
-						<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
-						</image>
-						<text
-							class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
-					</view>
-				</view>
-				<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
+					<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
 
-				<view class="dashboard2-card1">
-					<text class="dashboard2-score-value-large1">{{ homepageData?.response?.personal_info?.tag }}</text>
-					<!-- <text class="dashboard2-score-value-large1">{{homepageData }}</text> -->
-					<view class="dashboard2-level-badge">
-						<text class="dashboard2-score-title1">Lv1小试牛刀</text>
-						<!-- <text class="dashboard2-score-title1">{{courseData }}</text> -->
-					</view>
-					<view class="dashboard2-progress-container">
-						<!-- <text class="dashboard2-score-title2">情绪掌控力</text> -->
-						<text class="dashboard2-score-title2">情绪掌控力</text>
-						<view class="dashboard2-progress-bar1">
-							<view class="dashboard2-progress"
-								:style="{ width: progressWidth(homepageData?.response?.eq_scores?.dimension3_score || 0) }">
-							</view>
+					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
+						<view class="dashboard2-progress-container">
+							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
+						</view>
+
+						<view class="dashboard2-progress-container">
+							<AbilityProgressBar
+								:segment1Width="33"
+								:segment2Width="34"
+								:segment3Width="33"
+								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score)"
+								:animal="this.animal"
+								:activeColor="getActiveColor"
+							/>
 						</view>
 					</view>
 				</view>
 
-				<!-- <view class="dashboard2-card1-container">
-					
-				</view> -->
-
-				<view class="dashboard2-card-o">
-					<!-- 调用进度条组件 -->
-
-					<SProgressBar v-if="courseData && courseData.courses" :finishComponents="courseData.courses.length"
-						:starRatings="courseData.courses.map(course => course.result)" :totalComponents="6" />
+				<!-- 其他可滚动内容放在这里 -->
+				<view class="dashboard2-scrollable-content">
+					<view class="dashboard2-card-o">
+						<!-- 调用进度条组件 -->
+						<SProgressBar 
+						  v-if="courseData && courseData.courses"
+						  :finishComponents="courseData.courses.length"
+						  :starRatings="courseData.courses.map(course => course.result)"
+						  :totalComponents="4"
+						/>
+					</view>
 				</view>
-
-
-
-				<!-- <image class="dashboard2-illustration35" src="/static/dashboard2/plgon9.jpg" mode="widthFix" @click="navigateToBattlefieldIntro"></image> -->
-				<!-- <view class="dashboard2-card3">
-					<image class="dashboard2-illustration36" src="/static/dashboard2/icon2.jpg" mode="widthFix"
-						@click="switchView('dashboard')"></image>
-					<image class="dashboard2-illustration37" src="/static/dashboard2/icon1.jpg" mode="widthFix"></image>
-					<image class="dashboard2-illustration38" src="/static/Frame3.png" mode="widthFix"></image>
-				</view> -->
 			</view>
 		</scroll-view>
 		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
@@ -155,6 +148,7 @@
 	import apiService from '../../services/api-service';
 	import ChatHistory from '@/components/ChatHistory.vue';
 	import Nav from '../../components/Nav.vue';
+	import AbilityProgressBar from '@/components/AbilityProgressBar.vue';
 
 
 	export default {
@@ -171,8 +165,8 @@
 				selectedOptions: [],
 				jobId: null,
 				num: null,
-				finishComponents: 2,
-				totalComponents: 5,
+				finishComponents: 1,
+				totalComponents: 3,
 				isLoading: true,
 				error: null,
 				// homepageData: {
@@ -352,8 +346,41 @@
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
 			},
 			safeStarRatings() {
-				return this.courseData && this.courseData.courses ?
-					this.courseData.courses.map(course => course.result) : [];
+				return this.courseData && this.courseData.courses
+					? this.courseData.courses.map(course => course.result)
+					: [];
+			},
+			getEmotionText() {
+				switch (this.animal) {
+					case 'capybara':
+						return 'Motivation Swamp';
+					case 'hedgehog':
+						return 'Empathy Forest';
+					case 'coyote':
+						return 'Perception Savanna';
+					case 'ostrich':
+						return 'Social Skill Dessert';
+					case 'monkey':
+						return 'Self-regulation Hill';
+					default:
+						return 'Emotion'; // Default text if animal is not recognized
+				}
+			},
+			getActiveColor() {
+				switch (this.animal) {
+					case 'capybara':
+						return '#EFC59E'; // Gold
+					case 'hedgehog':
+						return '#F15D39'; // Green
+					case 'coyote':
+						return '#5555DB'; // Blue
+					case 'ostrich':
+						return '#6E4939'; // Orange
+					case 'monkey':
+						return '#C157E0'; // Purple
+					default:
+						return '#FFD700'; // Default gold
+				}
 			}
 		},
 		watch: {
@@ -370,10 +397,12 @@
 		components: {
 			SProgressBar,
 			ChatHistory,
-			Nav
+			Nav,
+			AbilityProgressBar
 		},
-		created() {
-			this.getBattlefield();
+		async created() {
+			await this.getAnalysisList();
+			await this.getBattlefield();
 		},
 		onLoad(option) {
 			console.log('Received options:', option);
@@ -467,7 +496,6 @@
 				this.isLoading = true; 
 			    const result = await apiService.uploadChatHistory(filePath, this.userId);
 				const resultJson = JSON.parse(result);
-				resultJson.chatHistory = JSON.parse(resultJson.chatHistory);
 			    this.navigateToAnalysis(resultJson);
 			  } catch (error) {
 			    console.error('Upload failed:', error);
@@ -506,6 +534,7 @@
 						item.analysis = JSON.parse(item.analysis);
 						item.chatHistory = JSON.parse(item.chatHistory);
 					});
+					console.log(data);
 					this.analysisList = data;
 				} catch (error) {
 					// this.error = 'Error fetching analysis data';
@@ -547,7 +576,7 @@
 			},
 			selectOption(option) {
 				this.selectedOption = option;
-				this.selectedTags = []; // 切换选项时重置已选择的标签
+				this.selectedTags = []; // 切换选项时重已选择的标签
 			},
 			toggleTag(tag) {
 				const index = this.selectedTags.indexOf(tag);
@@ -632,7 +661,7 @@
 					// 在发送请求之前打印数据
 					console.log('Sending data to create contact profile:', requestData);
 
-					// 发送请求创建联系人档案
+					// 送请求创建联系人档案
 					uni.request({
 						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
 						method: 'POST',
@@ -715,6 +744,10 @@
 			switchView(view) {
 				console.log(333);
 				this.currentView = view;
+			},
+			calculateProgress(score) {
+				// Assuming the score is out of 100
+				return score || 0;
 			},
 		},
 	};
@@ -1871,14 +1904,28 @@
 
 	/* Styles for the second view */
 	.dashboard2-content {
-		display: block;
-		flex-direction: column;
-		align-items: center;
-		padding: 10rpx;
+		position: relative;
+		/* height: 100vh; */
+		overflow-y: auto;
+	}
+
+	.dashboard2-fixed-content {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		background-color: #2F2F38; /* 匹配背景色 */
+		padding: 20rpx;
+	}
+
+	.dashboard2-scrollable-content {
+		padding-top: 300rpx; 
+		/* 其他样式 */
 	}
 
 	.dashboard2-card-o {
-		width: 105%;
+		width: 100%;
 		position: relative;
 		text-align: left;
 		display: flex;
@@ -1908,27 +1955,26 @@
 
 	.dashboard2-card1 {
 		width: calc(100% - 80rpx);
-		/* Screen width minus 20rpx on each side */
-		left: 5px;
-		background-color: #373742;
+		aspect-ratio: 9 / 2; /* 调整这个比例以匹配您的背景图片 */
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
 		border-radius: 50rpx;
 		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
 		position: relative;
 		z-index: 20;
-		text-align: left;
 		display: flex;
 		flex-direction: column;
 		align-items: left;
-		padding: 20rpx 30rpx 20rpx 30rpx;
+		padding: 20rpx 30rpx;
 	}
 
 	.dashboard2-progress-container {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
+		justify-content: center;
 		align-items: center;
-		margin-bottom: 10px;
+		margin: 15rpx;
 	}
 
 	.dashboard2-card3 {
@@ -1955,7 +2001,7 @@
 	}
 
 	.dashboard2-score-title2 {
-		font-size: 30rpx;
+		font-size: 50rpx;
 		color: #FFFFFF;
 		left: 300px;
 		top: -23px;
@@ -1991,15 +2037,16 @@
 	}
 
 	.dashboard2-progress-bar1 {
-		width: 70%;
-		height: 15rpx;
-		background-color: #000000;
+		width: 100%;
+		height: 35rpx;
+		background-color: rgba(255, 255, 255, 0.35);
 		border-radius: 15rpx;
 		overflow: hidden;
 		margin-top: 15rpx;
 		margin-bottom: 15rpx;
 		margin-left: 15rpx;
 	}
+	
 
 	.dashboard2-progress {
 		height: 100%;
@@ -2091,14 +2138,14 @@
 
 	.container-sprogress {
 		width: 100%;
-		overflow-x: hidden;
+		/* overflow-x: hidden; */
 		/* Hide horizontal overflow */
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
 		flex-direction: column;
 		background-color: #2F2F38;
-		margin-right: 3rpx;
+		/* margin-right: 3rpx; */
 	}
 
 	.progress-canvas {

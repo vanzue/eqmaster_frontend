@@ -59,12 +59,13 @@
 			indicatorStyle() {
 				return {
 					position: 'absolute',
-					top: '50%', // 垂直居中
-					transform: 'translateY(-50%)',
-					left: '80%', // 放置在背景条的末端
+					top: '-90%', // 垂直居中
+					transform: 'translateY(-100%)',
+					transform: 'translateX(-50%)',
+					left: '110%', // 放置在背景条的末端
 					marginLeft: '-18rpx', // 调整圆圈与血条末端的间距
-					width: '20px',
-					height: '20px',
+					width: '30px',
+					height: '30px',
 					borderRadius: '50%',
 					border: `2px solid ${this.indicatorColor}`, // 空心圈的边框颜色
 					backgroundColor: 'transparent', // 背景透明
@@ -95,7 +96,7 @@
 				this.indicatorTimeout = setTimeout(() => {
 					this.showIndicator = false;
 					this.indicatorTimeout = null;
-				}, 2000);
+				}, 4000);
 				console.log("hide the circle");
 
 				// 更新 prevHealth

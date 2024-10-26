@@ -26,30 +26,24 @@
 								</view>
 							</view>
 
-							<text
-								class="card-description">{{ truncatedSuggestion }}</text>
+							<text class="card-description">{{ truncatedSuggestion }}</text>
 							<image class="illustration31" src="/static/fullbutton.png" mode="widthFix"
 								@click="navigateToResult"></image>
 						</view>
 					</view>
 
 
-					
-					
-						
-					<view  class="dashboard1-card-j">
+
+
+
+					<view class="dashboard1-card-j">
 						<text class="card-title1">今日锦囊</text>
-						<Tear
-								leftImageSrc="/static/above left.png"
-								rightBackImageSrc="/static/aboveright2.png"
-								rightFrontImageSrc="/static/aboveright1.png"
-								leftText="自定义左侧文字"
-								rightText="FFI赞美法指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。"
-								pageText=""
-								
-							/>
-						
-						
+						<Tear leftImageSrc="/static/above left.png" rightBackImageSrc="/static/aboveright2.png"
+							rightFrontImageSrc="/static/aboveright1.png" leftText="自定义左侧文字"
+							rightText="FFI赞美法指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。"
+							pageText="" />
+
+
 					</view>
 
 					<view class="network-title-container">
@@ -195,20 +189,16 @@
 						</view>
 					</view>
 				</view>
-				
+
 				<!-- <view class="dashboard2-card1-container">
 					
 				</view> -->
 
 				<view class="dashboard2-card-o">
 					<!-- 调用进度条组件 -->
-					
-					<SProgressBar 
-					  v-if="courseData && courseData.courses"
-					  :finishComponents="courseData.courses.length"
-					  :starRatings="courseData.courses.map(course => course.result)"
-					  :totalComponents="6"
-					/>
+
+					<SProgressBar v-if="courseData && courseData.courses" :finishComponents="courseData.courses.length"
+						:starRatings="courseData.courses.map(course => course.result)" :totalComponents="6" />
 				</view>
 
 
@@ -218,7 +208,8 @@
 					<image class="dashboard2-illustration36" src="/static/dashboard2/icon2.jpg" mode="widthFix"
 						@click="switchView('dashboard')"></image>
 					<image class="dashboard2-illustration37" src="/static/dashboard2/icon1.jpg" mode="widthFix"></image>
-					<image class="dashboard2-illustration38" src="/static/Frame3.png" mode="widthFix" @click="navigateToProfilePage"></image>
+					<image class="dashboard2-illustration38" src="/static/Frame3.png" mode="widthFix"
+						@click="navigateToProfilePage"></image>
 				</view>
 			</view>
 		</scroll-view>
@@ -262,7 +253,7 @@
 						contacts: []
 					}
 				},
-				courseData:null,
+				courseData: null,
 
 
 				intervalId: null,
@@ -358,9 +349,8 @@
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
 			},
 			safeStarRatings() {
-				return this.courseData && this.courseData.courses
-					? this.courseData.courses.map(course => course.result)
-					: [];
+				return this.courseData && this.courseData.courses ?
+					this.courseData.courses.map(course => course.result) : [];
 			}
 		},
 		components: {
@@ -457,17 +447,17 @@
 					this.isLoading = false;
 				}
 			},
-			
+
 			async getBattlefield() {
 				try {
 
 					this.userId
 					console.log('Fetching homepage data with jobId:', this.userId);
-			
+
 					const data = await apiService.getBattlefield(1);
 					this.courseData = data;
 					console.log('Homepage data received:', this.courseData);
-			
+
 					this.$nextTick(() => {
 						this.drawRadar();
 					});
@@ -478,7 +468,7 @@
 					// this.isLoading = false;
 				}
 			},
-			
+
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
 			},
@@ -1037,6 +1027,7 @@
 		font-size: 40rpx;
 		color: #9EE44D;
 		margin-top: 20rpx;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.progress-bar1 {
@@ -1215,6 +1206,7 @@
 		/* 调整水平位置以居中 */
 		left: 50%;
 		/* 水平居中 */
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 
@@ -1622,6 +1614,7 @@
 		margin-bottom: 20rpx;
 		gap: 5rpx;
 	}
+
 	.dashboard1-card-j {
 		margin-bottom: 50rpx;
 	}
@@ -1847,37 +1840,43 @@
 
 	.floating-image {
 		position: absolute;
-		width: 320rpx; /* 调整图片大小 */
+		width: 320rpx;
+		/* 调整图片大小 */
 		height: auto;
-		top: 110rpx; /* 调整垂直位置，使图片漂浮在进度条上方 */
-		right: 105rpx; /* 调整水平位置 */
-		z-index: 10; /* 确保图片在进度条上方 */
+		top: 110rpx;
+		/* 调整垂直位置，使图片漂浮在进度条上方 */
+		right: 105rpx;
+		/* 调整水平位置 */
+		z-index: 10;
+		/* 确保图片在进度条上方 */
 	}
-	
+
 	.container-sprogress {
-	  width: 100%;
-	  overflow-x: hidden; /* Hide horizontal overflow */
-	  display: flex;
-	  justify-content: flex-start;
-	  align-items: center;
-	  flex-direction: column;
-	  background-color: #2F2F38;
-	  margin-right: 3rpx;
+		width: 100%;
+		overflow-x: hidden;
+		/* Hide horizontal overflow */
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
+		background-color: #2F2F38;
+		margin-right: 3rpx;
 	}
-	
+
 	.progress-canvas {
-	  width: 150%; /* Increase canvas width */
-	  height: 2000rpx;
-	  margin: 45rpx;
-	  transform: translateX(-20%); /* Move canvas to the left */
+		width: 150%;
+		/* Increase canvas width */
+		height: 2000rpx;
+		margin: 45rpx;
+		transform: translateX(-20%);
+		/* Move canvas to the left */
 	}
 
 	.tear-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 134px;
-  padding-top: 0px;
-}
-	
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		height: 134px;
+		padding-top: 0px;
+	}
 </style>

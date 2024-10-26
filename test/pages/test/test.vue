@@ -35,7 +35,8 @@
 		<!-- Test1 page content -->
 		<template v-else-if="currentPage === 'test1'">
 			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="npcAvatar" @tap="navigateToTest2"
-				:description="description" :class="{ 'disabled': isLoading }"></onboarding-chat-bubble>
+				:description="description" :class="{ 'disabled': isLoading }"
+				:requestCount="requestCount"></onboarding-chat-bubble>
 		</template>
 
 		<!-- Test2 page content -->
@@ -75,9 +76,9 @@
 
 		<!-- Test4 page content -->
 		<template v-else-if="currentPage === 'test4'">
-			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="'/static/npc1.png'"
-				:dismiss="navigateToTest5" :description="description"
-				:class="{ 'disabled': isLoading }"></onboarding-chat-bubble>
+			<onboarding-chat-bubble :userName="scenarioData.role" :avatar="npcAvatar" :dismiss="navigateToTest5"
+				:description="description" :class="{ 'disabled': isLoading }"
+				:requestCount="requestCount"></onboarding-chat-bubble>
 		</template>
 
 		<!-- Test5 page content -->
@@ -139,6 +140,7 @@
 				isLoading: false,
 				chatHistory: [], // Keep this new property
 				backgroundImageSrc: '/static/onboarding/bg1.png',
+				requestCount: 0,
 			};
 		},
 		onLoad(option) {
@@ -163,13 +165,17 @@
 				const userId = uni.getStorageSync('userId');
 				const jobId = uni.getStorageSync('jobId');
 				if (!userId || !jobId) {
-					uni.navigateTo({ url: '/pages/landing/experience' });
+					uni.navigateTo({
+						url: '/pages/landing/experience'
+					});
 					return;
 				}
 				this.userId = userId || "";
 				const username = uni.getStorageSync('username');
 				if (!username) {
-					uni.navigateTo({ url: '/pages/landing/experience' });
+					uni.navigateTo({
+						url: '/pages/landing/experience'
+					});
 					return;
 				}
 				this.username = username;
@@ -220,9 +226,9 @@
 					})();
 
 					console.log("####scenario id:############", scenarioId);
-					const scenarioResponse = scenarioId !== undefined
-						? await apiService.startScenarioWithId(this.jobId, scenarioId)
-						: await apiService.startScenario(this.jobId);
+					const scenarioResponse = scenarioId !== undefined ?
+						await apiService.startScenarioWithId(this.jobId, scenarioId) :
+						await apiService.startScenario(this.jobId);
 
 					console.log("#####################fetched scenario: ", scenarioResponse);
 
@@ -261,6 +267,9 @@
 					.then((res) => {
 						console.log("get current Scenario data:", res.scenario_id);
 						this.scenarioData = res.scene.scenes || res;
+						console.log("current npc name is --------", this.scenarioData.role);
+						this.npcAvatar = getAvatar(this.scenarioData.role);
+						console.log("src of npc avatar:", this.npcAvatar);
 						// this.scenarioId = res.scenario_id || 1;
 						this.handleScenarioData();
 						this.updateProgress();
@@ -270,6 +279,7 @@
 						console.error("Error getting scenario data:", err);
 						throw err; // Re-throw the error to be caught in navigateToTest3
 					});
+
 			},
 			handleScenarioData() {
 				if (this.scenarioData) {
@@ -413,6 +423,7 @@
 			analyzeBackground() {
 				if (this.background) {
 					this.npcName = findLastName(this.background);
+					console.log("Now npc name is:", this.npcName);
 					this.npcAvatar = getAvatar(this.npcName);
 				}
 			},
@@ -457,7 +468,9 @@
 					.chooseScenario(this.num, this.jobId)
 					.then((result) => {
 						console.log("Response data:", result);
-
+						// 增加请求计数
+						this.requestCount++;
+						console.log("API 请求次数:", this.requestCount)
 						if (
 							result.message ===
 							"Final choice made. Processing data in background."
@@ -495,15 +508,15 @@
 				}
 			},
 			navigateToLoading() {
-	// 			const loadingPageUrl = `/pages/result/loading?jobId=${
-    //     this.jobId
-    //   }&userId=${this.userId}&username=${encodeURIComponent(
-    //     this.username
-    //   )}&gender=${this.gender}&birthday=${encodeURIComponent(
-    //     JSON.stringify(this.birthday)
-    //   )}&options=${encodeURIComponent(
-    //     JSON.stringify(this.selectedOptions)
-    //   )}&num=${this.num}`;
+				// 			const loadingPageUrl = `/pages/result/loading?jobId=${
+				//     this.jobId
+				//   }&userId=${this.userId}&username=${encodeURIComponent(
+				//     this.username
+				//   )}&gender=${this.gender}&birthday=${encodeURIComponent(
+				//     JSON.stringify(this.birthday)
+				//   )}&options=${encodeURIComponent(
+				//     JSON.stringify(this.selectedOptions)
+				//   )}&num=${this.num}`;
 				const loadingPageUrl = `/pages/result/loading`;
 				uni.navigateTo({
 					url: loadingPageUrl,

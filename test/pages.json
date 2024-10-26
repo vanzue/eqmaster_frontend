@@ -43,12 +43,12 @@
                 "navigationStyle" : "custom"
             }
         },
-		{
-		    "path" : "pages/dashboard/moment_analysis",
-		    "style" : {
-		        "navigationStyle" : "custom"
-		    }
-		},
+        {
+            "path" : "pages/dashboard/moment_analysis",
+            "style" : {
+                "navigationStyle" : "custom"
+            }
+        },
         {
             "path" : "pages/battlefield/battlefield-playground",
             "style" : {
@@ -77,13 +77,13 @@
                 "navigationStyle" : "custom"
             }
         },
-		{
-		    "path" : "pages/result/result_en",
-		    "style" : {
-		        // "navigationStyle": "custom",
-		        "navigationStyle" : "custom"
-		    }
-		},
+        {
+            "path" : "pages/result/result_en",
+            "style" : {
+                // "navigationStyle": "custom",
+                "navigationStyle" : "custom"
+            }
+        },
         {
             "path" : "pages/test/test",
             "style" : {
@@ -143,8 +143,8 @@
             "style" : {}
         },
         {
-            "path": "components/ChatHistory",
-            "style": {}
+            "path" : "components/ChatHistory",
+            "style" : {}
         },
         {
             "path" : "components/Tear",
@@ -152,6 +152,10 @@
         },
         {
             "path" : "App",
+            "style" : {}
+        },
+        {
+            "path" : "components/AbilityProgressBar",
             "style" : {}
         }
     ],
