@@ -423,21 +423,21 @@
 				}
 				// this.answerNotGoodNum = 0;
 
-				if (this.task1Finished) {
-					this.isFinish = true;
+				if (this.taskFinished) {
 					await this.Pass();
+					return;
 				}
-        console.log(this.task2CompletedStatusOne);
-        if(this.task2CompletedStatusOne) {
-          this.task2CompletedStatusOne = false;
-          this.state = "NpcTalk";
-        } else {
-          const nextRound = await continueChat(this.allHistory, "4");
-          console.log("next round data", nextRound);
-          nextRound.dialog = nextRound.dialog.map((item) => ({
-            role: item.role,
-            content: item.content ?? item.words,
-          }));
+				console.log(this.task2CompletedStatusOne);
+				if(this.task2CompletedStatusOne) {
+				this.task2CompletedStatusOne = false;
+				this.state = "NpcTalk";
+				} else {
+				const nextRound = await continueChat(this.allHistory, "4");
+				console.log("next round data", nextRound);
+				nextRound.dialog = nextRound.dialog.map((item) => ({
+					role: item.role,
+					content: item.content ?? item.words,
+				}));
 				try {
 					const voiceMap = {
 						"Jason": {
@@ -477,28 +477,7 @@
           this.state = "NpcTalk";
         }
 
-				this.isLoadingShow = false;
-				// await this.checkBossComplimentTask2(this.chattingHistory);
-				// console.log(isTask2);
-				// if(isTask2) {
-				// }
-				// this.chattingHistory = this.chattingHistory.concat(nextRound.dialog);
-				// for (; this.displayedNpcChatIndex < this.chattingHistory.length;
-				// 	++this.displayedNpcChatIndex
-				// ) {
-				// 	let npcIndex = getNpcIndex(this.chattingHistory[this.displayedNpcChatIndex]);
-				// 	if (npcIndex >= 0) {
-				// 		this.talkingNpc = npcIndex;
-				// 		console.log('someone talk:', this.talkingNpc);
-				// 		someoneTalked = true;
-				// 		break;
-				// 	}
-				// }
-				// console.log(this.displayedNpcChatIndex);
-				// if (!someoneTalked) {
-				// 	console.log(this.displayedNpcChatIndex);
-				// 	this.displayedNpcChatIndex--;
-				// }
+			this.isLoadingShow = false;
 			},
 			retry() {
 				this.state = "userTalk";
@@ -583,7 +562,6 @@
 						this.talkingNpc = this.getNpcIndexByName(history[i].role);
 						this.npcDialog = history[i].content;
 						foundNpcMessage = true;
-            // await this.checkBossComplimentTask2(history[i]);
 						break;
 					}
           // this.displayedNpcChatIndex ++;
@@ -650,17 +628,6 @@
 						console.error("设置 NPC health 失败:", err);
 					},
 				});
-				// if (this.taskFinished) {
-				// 	uni.setStorage({
-				// 		key: 'isPass',
-				// 		data: true,
-				// 	});
-				// 	const gemCount = this.calculateStars();
-				// 	uni.setStorage({
-				// 		key: 'gemCount',
-				// 		data: gemCount,
-				// 	});
-				// }
 
 				setTimeout(() => {
 					uni.navigateTo({
@@ -919,13 +886,9 @@
 						if (anyNpcHealthLow) {
 							this.isPass = false;
 							this.diamonds = 3;
-							this.isFinish = true;
 							await this.Pass();
 						}
 
-						// if (this.taskFinished) {
-						// 	await this.Pass();
-						// }
 						return true; // 添加返回值，表示处理成功
 					} else {
 						throw new Error("judgeResult is undefined or null");
@@ -975,9 +938,9 @@
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved!";
-                    console.log("task1 success");
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
+										this.isPass = true;
 									}
 								} else {
 									this.judgeTitle = "Goal achieved";
@@ -987,13 +950,9 @@
 								await this.gotoNextRound();
 							}
 						} else {
-              const allZero = judgeResult.moods.every((item) => parseInt(item.mood, 10) == 0);   
-              if(allZero) {
-                await this.gotoNextRound();
-              }           
-							// this.state = "judge";
-							// this.judgeTitle = "Well done";
-							// this.isCompleteTask = false;
+							if(notBad) {
+								await this.gotoNextRound();
+							}           
 						}
 					} else {
 						if (this.answerNotGoodNum < 2) {
@@ -1030,7 +989,7 @@
 				let taskCompleted = false;
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
 					const goalKeyword = "I agree with you";
-          console.log(dialog);
+					console.log(dialog);
 					for (let chat of dialog) {
 						if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
@@ -1050,8 +1009,8 @@
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved";
 									taskCompleted = false;
-                  this.task2CompletedStatusOne = true; //如果任务2完成
-                  console.log("task2 success");
+									this.task2CompletedStatusOne = true; //如果任务2完成
+									console.log("task2 success");
 								} else {
 									this.judgeTitle = "Goal achieved";
 									this.isCompleteTask = true;
@@ -1067,7 +1026,6 @@
 					if (this.taskList.doneTaskLength >= totalTaskLength) {
 						this.taskFinished = true;
 						this.isPass = true;
-						// await this.Pass();
 						taskCompleted = false;
 					}
 				} else {
