@@ -81,8 +81,8 @@
 		</template>
 
 		<!-- Test5 page content -->
-		<template v-else-if="currentPage === 'test5'" :class="{ 'disabled': isLoading }">
-			<view class="options-container" >
+		<template v-else-if="currentPage === 'test5'" >
+			<view class="options-container"  :class="{ 'disabled': isLoading }">
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
             : []" :key="index" :class="['text-box1', { selected: selectedOptionIndex === index }]"
