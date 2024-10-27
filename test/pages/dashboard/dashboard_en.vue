@@ -752,8 +752,6 @@
 
 
 <style scoped>
-	@import ("./common_en.css");
-
 	.loading {
 		width: 100vw;
 		height: 80vh;

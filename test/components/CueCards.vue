@@ -81,6 +81,7 @@
 				return this.$store.getters.getDiamondCount;
 			},
 			homepageData() {
+				console.log("homepage data from store:", this.$store.getters.getHomepageData);
 				return this.$store.getters.getHomepageData;
 			},
 			userId() {
@@ -103,11 +104,15 @@
 			canAfford(cardType) {
 				return cardType === 1 ? this.diamondCount >= 60 : this.diamondCount >= 20;
 			},
-			exchangeClick() {
+			async exchangeClick() {
 				if (this.selectedCard === 1 && this.diamondCount >= 60) {
 					this.$store.commit('setDiamondCount', this.diamondCount - 60);
+					const userId = this.$store.getters.getUserId;
+					const res = await apiService.updateDiamonds(userId, -60);
 				} else if (this.selectedCard === 2 && this.diamondCount >= 20) {
 					this.$store.commit('setDiamondCount', this.diamondCount - 20);
+					const userId = this.$store.getters.getUserId;
+					const res = await apiService.updateDiamonds(userId, -20);
 				}
 				this.$emit('exchangeClick', this.selectedCard);
 			},
@@ -162,7 +167,6 @@
 		justify-content: center;
 		align-items: center;
 		font-size: 40rpx;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-weight: 600;
 		color: #2D6985;
 	}
@@ -218,13 +222,11 @@
 	text {
 		font-size: 34rpx;
 		font-weight: 600;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		color: #252529;
 	}
 
 	.top-content {
 		font-size: 24rpx;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-weight: 400;
 		margin-top: 24rpx;
 		text-align: left;
@@ -250,7 +252,6 @@
 		font-size: 40rpx;
 		font-weight: 800;
 		text-align: left;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.jewelry-num-dark {
@@ -258,7 +259,6 @@
 		font-size: 40rpx;
 		font-weight: 900;
 		text-align: left;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	/* .card-selected {
@@ -292,7 +292,6 @@
 		font-weight: 600;
 		color: #252529 !important;
 
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	}
 

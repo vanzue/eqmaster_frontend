@@ -590,6 +590,12 @@
 					gemCount,
 					diamonds
 				);
+				const userId = this.$store.getters.getUserId;
+				if (isPass === true) {
+					const res = await apiService.updateDiamonds(userId, 10);
+				} else {
+					const res = await apiService.updateDiamonds(userId, 3);
+				}
 				console.log("evaluation result:", evaluationResult);
 				// const evaluationResult = await evalBattlefield(this.chattingHistory);
 				// console.log('evaluation result:', evaluationResult);

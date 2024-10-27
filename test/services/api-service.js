@@ -67,7 +67,27 @@ export default {
 			throw error;
 		}
 	},
+	async updateDiamonds(userId, count) {
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/update/diamond`,
+				method: 'POST',
+				data: {
+					person_id: userId,
+					num_diamond: count,
+				}
+			});
 
+			if (response.statusCode === 200) {
+				return response.data;
+			} else {
+				throw new Error(`update diamonds failed: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	},
 	async uploadChatHistory(filePath, userId) {
 		try {
 			const response = await uni.uploadFile({
@@ -162,7 +182,7 @@ export default {
 			throw error;
 		}
 	},
-	
+
 	async getVoice(wording, voice = "onyx", style = "serious") {
 		try {
 			const response = await uni.request({
