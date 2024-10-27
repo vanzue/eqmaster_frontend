@@ -286,7 +286,7 @@
 			}
 		},
 		created() {
-			// this.$store.dispatch('fetchHomepageData')
+			this.$store.dispatch('fetchcourseData')
 		},
 		onUnload() {},
 		onReady(option) {

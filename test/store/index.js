@@ -11,6 +11,7 @@ export default createStore({
 		jobId: '',
 		selectedOptions: {},
 		homepageData: {},
+		courseData: {},
 		intervalId: null, // 定时器ID
 		homeNavName: 'dashboard',
 		npcs: [{
@@ -70,6 +71,11 @@ export default createStore({
 		setWeakness(state, weakness) {
 			state.weakness = weakness;
 		},
+		
+		setcourseDatas(state, courseData) {
+			state.courseData = courseData;
+		},
+		
 		setCharateristics(state, characteristics) {
 			state.characteristics = characteristics;
 		},
@@ -105,6 +111,9 @@ export default createStore({
 		getWeakness(state) {
 			return state.weakness;
 		},
+		getcourseData(state) {
+			return state.courseData;
+		},
 		getCharacteristics(state) {
 			return state.characteristics;
 		},
@@ -126,6 +135,22 @@ export default createStore({
 				console.error('Error fetching homepage data:', error);
 			}
 		},
+		async fetchcourseData({ commit, rootState }) {
+			try {
+				if (!rootState.userId) {
+					throw new Error('User ID is not set');
+				}
+				const courseData = await apiService.getBattlefield(rootState.userId);
+				if (!courseData) {
+					throw new Error('No course data received');
+				}
+				commit('setcourseDatas', courseData);
+				console.log("##########commit course Data:", courseData);
+			} catch (error) {
+				console.error('Error fetching course Data:', error);
+				// 可以在这里添加一些错误处理逻辑，比如显示一个错误消息给用户
+			}
+		},
 		clearAllState({
 			commit
 		}) {
@@ -138,6 +163,7 @@ export default createStore({
 			commit('setHomeNavName', '');
 			commit('setWeakness', '');
 			commit('setCharateristics', '');
+			commit('setcourseData', {});
 
 			const username = uni.getStorageSync('username');
 			localStorage.clear();

@@ -123,7 +123,7 @@
 				<view class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件 -->
-						<SProgressBar v-if="courseData && courseData.courses"
+						<SProgressBar v-if="courseData"
 							:finishComponents="courseData.courses.length"
 							:starRatings="courseData.courses.map(course => course.result)" :totalComponents="4" />
 					</view>
@@ -216,7 +216,7 @@
 					}
 				],
 				animal: '',
-				courseData: null,
+				courseData: {},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -266,6 +266,9 @@
 			},
 			weakness() {
 				return this.$store.getters.getWeakness;
+			},
+			courseData() {
+				return this.$store.getters.getcourseData;
 			},
 			characteristics() {
 				return this.$store.getters.getCharacteristics;
@@ -398,7 +401,7 @@
 		},
 		async created() {
 			await this.getAnalysisList();
-			await this.getBattlefield();
+			// await this.getBattlefield();
 		},
 		onLoad(option) {
 			console.log('Received options:', option);
@@ -540,26 +543,28 @@
 				}
 			},
 
-			async getBattlefield() {
-				try {
+			// async getBattlefield() {
+			// 	try {
 
-					// this.userId
-					console.log('Fetching homepage data with jobId:', this.userId);
+			// 		// this.userId
+			// 		console.log('Fetching homepage data with jobId:', this.userId);
 
-					const data = await apiService.getBattlefield(this.userId);
-					this.courseData = data;
-					console.log('Homepage data received:', this.courseData);
+			// 		const data = await apiService.getBattlefield(this.userId);
+			// 		this.courseData = data;
+			// 		console.log('Homepage data received:', this.courseData);
+					
+			// 		// this.$store.commit('setcourseDatas', returnObj.this.courseData);
 
-					// this.$nextTick(() => {
-					// 	this.drawRadar();
-					// });
-				} catch (error) {
-					this.error = 'Error fetching homepage data';
-					console.error(this.error, error);
-				} finally {
-					// this.isLoading = false;
-				}
-			},
+			// 		// this.$nextTick(() => {
+			// 		// 	this.drawRadar();
+			// 		// });
+			// 	} catch (error) {
+			// 		this.error = 'Error fetching homepage data';
+			// 		console.error(this.error, error);
+			// 	} finally {
+			// 		// this.isLoading = false;
+			// 	}
+			// },
 
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
@@ -752,8 +757,6 @@
 
 
 <style scoped>
-	@import ("./common_en.css");
-
 	.loading {
 		width: 100vw;
 		height: 80vh;

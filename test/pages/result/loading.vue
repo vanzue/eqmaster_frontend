@@ -20,6 +20,8 @@
 </template>
 
 <script>
+	import apiService from '../../services/api-service';
+	
 	export default {
 		data() {
 			return {
@@ -32,6 +34,7 @@
 				selectedOptions: [],
 				jobId: null,
 				num: null,
+				courseData: null,
 				homepageData: {
 					response: {
 						personal_info: {
@@ -130,6 +133,9 @@
 			}
 
 			this.getHomepageData();
+			this.getcourseData();
+			// this.getBattlefield();course
+			
 		},
 		onUnload() {
 			// 页面卸载时清除定时器
@@ -159,6 +165,7 @@
 			getHomepageData() {
 				// 不再需要 const that = this;
 				this.$store.dispatch('fetchHomepageData')
+				this.$store.dispatch('fetchcourseData')
 					.then(() => {
 						console.log('Homepage data fetched successfully');
 						if (this.interval) {
@@ -193,6 +200,68 @@
 						console.error('Error fetching homepage data:', error);
 					});
 			},
+			getcourseData() {
+				// 不再需要 const that = this;
+				// this.$store.dispatch('fetchHomepageData')
+				this.$store.dispatch('fetchcourseData')
+					.then(() => {
+						console.log('Homepage data fetched successfully');
+						if (this.interval) {
+							clearInterval(this.interval);
+							this.interval = null;
+						}
+						if (this.progressInterval) {
+							clearInterval(this.progressInterval);
+							this.progressInterval = null; // 修正了这里的错误
+						}
+						if (this.timeoutInterval) {
+							clearInterval(this.timeoutInterval);
+							this.timeoutInterval = null;
+						}
+			
+						const nextPageUrl = `/pages/result/result_en`;
+						uni.navigateTo({
+							url: nextPageUrl,
+							success: () => {
+								console.log('Navigation initiated successfully');
+							},
+							fail: (err) => {
+								console.error('Navigation failed:', err);
+								uni.showToast({
+									title: '页面跳转失败',
+									icon: 'none'
+								});
+							}
+						});
+					})
+					.catch((error) => {
+						console.error('Error fetching homepage data:', error);
+					});
+			},
+			
+			// async getBattlefield() {
+			// 	try {
+			
+			// 		// this.userId
+			// 		console.log('Fetching homepage data with jobId:', this.userId);
+			
+			// 		const data = await apiService.getBattlefield(this.userId);
+			// 		this.courseData = data;
+			// 		console.log('Homepage data received:', this.courseData);
+					
+			// 		this.$store.commit('setcourseDatas', returnObj.this.courseData);
+			
+			// 		// this.$nextTick(() => {
+			// 		// 	this.drawRadar();
+			// 		// });
+			// 	} catch (error) {
+			// 		this.error = 'Error fetching homepage data';
+			// 		console.error(this.error, error);
+			// 	} finally {
+			// 		// this.isLoading = false;
+			// 	}
+			// },
+			
 			startProgress() {
 				const totalDuration = 30000; // 30秒
 				const intervalDuration = totalDuration / 100; // 每次更新的间隔时间
