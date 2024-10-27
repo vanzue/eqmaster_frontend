@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
 
@@ -66,7 +66,7 @@
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
 			</view>
-			<view class="text-box" @tap="navigateToTest4" :class="{ 'disabled': isLoading }">
+			<view class="text-box" @click="navigateToTest4" :class="{ 'disabled': isLoading }">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
 					<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
@@ -109,7 +109,8 @@
 	} from "../../scripts/locate_name";
 	import OnboardingChatBubble from "/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
-
+	import StateStack from "./StateStack";
+	const stateStack = new StateStack();
 	export default {
 		components: {
 			OnboardingChatBubble,
@@ -141,6 +142,8 @@
 				chatHistory: [], // Keep this new property
 				backgroundImageSrc: '/static/onboarding/bg1.png',
 				requestCount: 0,
+				startX: 0, // 记录触摸开始时的 X 坐标
+				endX: 0, // 记录触摸结束时的 X 坐标
 			};
 		},
 		onLoad(option) {
@@ -333,6 +336,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test1");
 			},
 			navigateToTest2() {
 				if (this.isLoading) return;
@@ -354,6 +358,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test2");
 			},
 			navigateToTest3() {
 				// Show loading indicator
@@ -398,6 +403,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test4");
 			},
 			navigateToTest5() {
 				if (this.isLoading) return;
@@ -419,6 +425,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test5");
 			},
 			analyzeBackground() {
 				if (this.background) {
@@ -531,6 +538,27 @@
 			},
 			updateProgress() {
 				this.progress = (this.currentScene / this.totalScenes) * 100;
+			},
+			onTouchStart(event) {
+				// 记录触摸开始的 X 坐标
+				console.log("touch start!!!!!!!!!!! ", this.startX);
+				this.startX = event.changedTouches[0].clientX;
+				this.endX = this.startX;
+			},
+			onTouchMove(event) {
+				// 实时记录当前 X 坐标
+				console.log("touch end!!!!!!!!!!! ", this.endX);
+				this.endX = event.changedTouches[0].clientX;
+			},
+			onTouchEnd() {
+				// 计算滑动距离
+				const distance = this.startX - this.endX;
+				if (this.currentPage === "test5") {
+					console.log("move distance:", distance);
+					if (distance < -150) { // 自定义左滑的最小距离，比如 50px
+						this.navigateToTest3();
+					}
+				}
 			},
 		},
 	};

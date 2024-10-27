@@ -119,6 +119,7 @@ export default createStore({
 		}) {
 			try {
 				const homepageData = await apiService.getHomepageData(this.state.userId);
+				console.log("homepage data:", homepageData);
 				commit('setHomepageData', homepageData);
 				commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
