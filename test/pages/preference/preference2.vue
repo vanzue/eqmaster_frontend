@@ -172,7 +172,7 @@
 		font-size: 34rpx;
 		line-height: 44rpx;
 		margin-left: 16rpx;
-		font-family: Arial;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.question {
@@ -230,7 +230,7 @@
 		border-radius: 25px;
 		padding-left: 20rpx;
 		font-size: 30rpx;
-		font-family: Arial;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-weight: 500;
 		margin: 0;
 		line-height: 70rpx;

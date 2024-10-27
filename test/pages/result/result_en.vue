@@ -342,7 +342,7 @@
 
 <style scoped>
 	@font-face {
-		font-family: 'Poppins Italic';
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		src: url('/static/fonts/Poppins-Italic.ttf') format('truetype');
 		font-weight: normal;
 		font-style: normal;
@@ -441,7 +441,6 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		font-family: 'Poppins Italic', sans-serif;
 		font-size: 40rpx;
 		color: #FDEDC8;
 		font-weight: 600;
@@ -485,9 +484,7 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		font-family: 'Poppins';
 		font-size: 36rpx;
-		font-family: 'Poppins Italic', sans-serif;
 		color: #FDEDC8;
 		font-weight: 600;
 	}
@@ -505,7 +502,6 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		font-family: 'Poppins';
 		font-size: 40rpx;
 		color: #FFA1FC;
 		font-weight: 600;
