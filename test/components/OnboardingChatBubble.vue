@@ -11,7 +11,7 @@
 				</view>
 
 			</view>
-			<view class="text-content" @tap="dismiss">{{ description }}</view>
+			<view class="text-content" @click="dismiss">{{ description }}</view>
 			<view class="expand-icon">
 				<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
 			</view>
@@ -88,7 +88,6 @@
 
 	.text-content {
 		color: white;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 28rpx;
 		line-height: 1.4;
 	}

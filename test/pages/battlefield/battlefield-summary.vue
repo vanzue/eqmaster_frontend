@@ -378,6 +378,7 @@
 	}
 
 	.suggestion {
+		width: 654rpx;
 		margin-left: 24rpx;
 		color: #fff;
 	}
