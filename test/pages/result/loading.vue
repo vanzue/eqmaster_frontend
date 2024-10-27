@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" @touchmove.prevent>
 		<view class="splash-screen">
 			<text class="splash-text">Now, let's see your EQ report!</text>
 
@@ -73,6 +73,7 @@
 				interval: null,
 				isExpanded: false, // 默认收起状态
 				timeoutInterval: null,
+				disableSwipe: true, // 添加这个属性来禁止左滑
 			};
 		},
 		computed: {
@@ -136,6 +137,8 @@
 			this.getcourseData();
 			// this.getBattlefield();course
 			
+			// 禁止左滑
+			this.setSwipeBackDisabled();
 		},
 		onUnload() {
 			// 页面卸载时清除定时器
@@ -148,6 +151,8 @@
 			if (this.interval) {
 				clearInterval(this.interval);
 			}
+			// 页面卸载时，移除全局滑动事件监听
+			uni.offTouchMove();
 		},
 		methods: {
 			progressWidth(value) {
@@ -294,6 +299,28 @@
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
 			},
+			// 添加新方法来设置禁止左滑
+			setSwipeBackDisabled() {
+				// 禁止左滑返回
+				if (uni.setSwipeBackMode) {
+					uni.setSwipeBackMode({
+						mode: 'none',
+						success: () => {
+							console.log('禁止左滑返回成功');
+						},
+						fail: (err) => {
+							console.error('禁止左滑返回失败:', err);
+						}
+					});
+				} else {
+					console.warn('当前环境不支持 setSwipeBackMode 方法');
+				}
+
+				// 禁止全局的滑动事件
+				uni.onTouchMove((event) => {
+					event.preventDefault();
+				}, { passive: false });
+			},
 		},
 		mounted() {
 			this.startProgress(); // 开始进度条
@@ -336,6 +363,8 @@
 		height: 100vh;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
+		/* 添加以下样式来禁止触摸滑动 */
+		touch-action: none;
 	}
 
 	.header {
@@ -437,3 +466,4 @@
 		color: #9EE44D;
 	}
 </style>
+
