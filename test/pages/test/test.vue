@@ -40,8 +40,8 @@
 		</template>
 
 		<!-- Test2 page content -->
-		<template v-else-if="currentPage === 'test2'">
-			<view class="options-container">
+		<template v-else-if="currentPage === 'test2' " >
+			<view class="options-container" :class="{ 'disabled': isLoading }">
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
             : []" :key="index" :class="['text-box1', { selected: selectedOptionIndex === index }]"
@@ -51,8 +51,7 @@
 					</text>
 				</view>
 				<view class="next-button-container">
-					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage"
-						:class="{ 'disabled': isLoading }">
+					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage1">
 					</image>
 				</view>
 			</view>
@@ -82,8 +81,8 @@
 		</template>
 
 		<!-- Test5 page content -->
-		<template v-else-if="currentPage === 'test5'">
-			<view class="options-container">
+		<template v-else-if="currentPage === 'test5'" :class="{ 'disabled': isLoading }">
+			<view class="options-container" >
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
             : []" :key="index" :class="['text-box1', { selected: selectedOptionIndex === index }]"
@@ -93,12 +92,12 @@
 					</text>
 				</view>
 				<view class="next-button-container">
-					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage"
-						:class="{ 'disabled': isLoading }">
+					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage1">
 					</image>
 				</view>
 			</view>
 		</template>
+		
 	</view>
 </template>
 
@@ -304,7 +303,7 @@
 				} else {
 					console.warn("Background information not found in scenario data");
 					this.description = "无法获取背景信息";
-					this.background = "���点击下方箭头继续";
+					this.background = "点击下方箭头继续";
 					this.scenarioData = {
 						options: [],
 					};
@@ -314,7 +313,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.analyzeBackground();
@@ -325,7 +324,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed",
 							icon: "none",
 						});
 					})
@@ -338,7 +337,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test2";
@@ -346,7 +345,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed",
 							icon: "none",
 						});
 					})
@@ -358,7 +357,7 @@
 			navigateToTest3() {
 				// Show loading indicator
 				uni.showLoading({
-					title: "加载中...",
+					title: "loading...",
 				});
 
 				// Get new scenario data first
@@ -373,7 +372,7 @@
 						console.error("Error loading scenario data:", error);
 						uni.hideLoading();
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed",
 							icon: "none",
 						});
 					});
@@ -382,7 +381,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test4";
@@ -390,7 +389,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed",
 							icon: "none",
 						});
 					})
@@ -403,7 +402,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test5";
@@ -411,7 +410,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed",
 							icon: "none",
 						});
 					})
@@ -497,6 +496,62 @@
 						});
 					});
 			},
+			
+			nextPage1() {
+				if (this.isLoading) return;
+				this.isLoading = true;
+				uni.showLoading({ title: 'loading...' });
+				
+				if (this.num === null) {
+					uni.showToast({
+						title: "Please select an option",
+						icon: "none",
+					});
+					this.isLoading = false;
+					uni.hideLoading();
+					return;
+				}
+
+				// Add the current scenario and selected option to chat history
+				this.chatHistory.push({
+					background: this.background,
+					description: this.description,
+					selectedOption: this.scenarioData.options[this.selectedOptionIndex].text
+				});
+
+				// Start preparing the next page immediately
+				const prepareNextPage = this.navigateToNextPage();
+
+				// Make the API call
+				const apiCall = apiService.chooseScenario(this.num, this.jobId);
+
+				// Use Promise.all to wait for both the API call and page preparation
+				Promise.all([apiCall, prepareNextPage])
+					.then(([result, _]) => {
+						console.log("Response data:", result);
+
+						if (result.message === "Final choice made. Processing data in background.") {
+							this.navigateToLoading();
+						} else {
+							this.currentScene++;
+							this.selectedOptionIndex = null;
+							this.num = null;
+							this.updateProgress();
+						}
+					})
+					.catch((error) => {
+						console.error("Detailed error:", error);
+						uni.showToast({
+							title: `error：${error.message}`,
+							icon: "none",
+						});
+					})
+					.finally(() => {
+						this.isLoading = false;
+						uni.hideLoading();
+					});
+			},
+			
 			navigateToNextPage() {
 				// 根据当前页面，决定下一个页面
 				if (this.currentPage === "test2") {
