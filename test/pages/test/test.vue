@@ -314,7 +314,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.analyzeBackground();
@@ -325,7 +325,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -338,7 +338,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test2";
@@ -346,7 +346,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -358,7 +358,7 @@
 			navigateToTest3() {
 				// Show loading indicator
 				uni.showLoading({
-					title: "加载中...",
+					title: "loading...",
 				});
 
 				// Get new scenario data first
@@ -373,7 +373,7 @@
 						console.error("Error loading scenario data:", error);
 						uni.hideLoading();
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					});
@@ -382,7 +382,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test4";
@@ -390,7 +390,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -403,7 +403,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test5";
@@ -411,7 +411,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
