@@ -318,7 +318,6 @@
 		white-space: pre-wrap;
 		/* 确保文本正确换行 */
 		font-weight: 600;
-		font-family: Arial;
 	}
 
 	.progress-container {
@@ -366,7 +365,6 @@
 		position: relative;
 		font-size: 34rpx;
 		font-weight: 350;
-		font-family: Arial;
 		color: #9EE44D;
 	}
 </style>

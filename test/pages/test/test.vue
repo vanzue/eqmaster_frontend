@@ -324,7 +324,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "loading failed",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -345,7 +345,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "loading failed",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -372,7 +372,7 @@
 						console.error("Error loading scenario data:", error);
 						uni.hideLoading();
 						uni.showToast({
-							title: "loading failed",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					});
@@ -389,7 +389,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "loading failed",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -410,7 +410,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "loading failed",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})

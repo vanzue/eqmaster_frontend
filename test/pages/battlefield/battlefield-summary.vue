@@ -209,7 +209,6 @@
 	.comment-title {
 		color: #fff;
 		font-weight: 600;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 40rpx;
 		line-height: 50rpx;
 		text-decoration: underline;
@@ -223,7 +222,6 @@
 	.tips-title {
 		color: #fff;
 		font-weight: 600;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 40rpx;
 		line-height: 50rpx;
 		text-decoration: underline;
@@ -382,7 +380,6 @@
 	.suggestion {
 		margin-left: 24rpx;
 		color: #fff;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.third-card {

@@ -88,7 +88,7 @@
 
 	.text-content {
 		color: white;
-		font-family: Arial;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 28rpx;
 		line-height: 1.4;
 	}

@@ -31,6 +31,7 @@ export default createStore({
 		],
 		weakness: null,
 		characteristics: null,
+		diamondCount: 0,
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -71,6 +72,9 @@ export default createStore({
 		},
 		setCharateristics(state, characteristics) {
 			state.characteristics = characteristics;
+		},
+		setDiamondCount(state, diamondCount) {
+			state.diamondCount = diamondCount;
 		}
 	},
 	getters: {
@@ -103,6 +107,9 @@ export default createStore({
 		},
 		getCharacteristics(state) {
 			return state.characteristics;
+		},
+		getDiamondCount(state) {
+			return state.diamondCount;
 		}
 	},
 	actions: {
@@ -113,6 +120,8 @@ export default createStore({
 			try {
 				const homepageData = await apiService.getHomepageData(this.state.userId);
 				commit('setHomepageData', homepageData);
+				commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
+				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {
 				console.error('Error fetching homepage data:', error);
 			}
@@ -127,6 +136,9 @@ export default createStore({
 			commit('setSelectedOptions', []);
 			commit('setHomepageData', {});
 			commit('setHomeNavName', '');
+			commit('setWeakness', '');
+			commit('setCharateristics', '');
+
 			const username = uni.getStorageSync('username');
 			localStorage.clear();
 			uni.setStorageSync('username', username);

@@ -10,12 +10,12 @@
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
 					<view class="jewelry-num">
-						{{ homepageData?.response?.personal_info?.num_diamond || 100 }}
+						{{ diamondCount }}
 					</view>
 				</view>
 			</view>
 			<view class="card-center" @click.stop>
-				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectedCard = 1">
+				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
 					<view class="top">
 						<text>Best Answer</text>
 						<view class="top-content">
@@ -29,7 +29,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectedCard = 2">
+				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
 					<view class="top">
 						<text>Get Hint</text>
 						<view class="top-content">
@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			<view class="card-button">
-				<button :disabled="!selectedCard || cardButtonLoading || !eqScoresNum"
+				<button :disabled="!selectedCard || cardButtonLoading || !canAfford(selectedCard) || !eqScoresNum"
 					@click="exchangeClick">Confirm</button>
 			</view>
 		</view>
@@ -77,6 +77,9 @@
 			console.log(option);
 		},
 		computed: {
+			diamondCount() {
+				return this.$store.getters.getDiamondCount;
+			},
 			homepageData() {
 				return this.$store.getters.getHomepageData;
 			},
@@ -94,7 +97,18 @@
 			setShowCardPopup() {
 				this.$emit('closeCueCard');
 			},
+			selectCard(cardType) {
+				this.selectedCard = cardType;
+			},
+			canAfford(cardType) {
+				return cardType === 1 ? this.diamondCount >= 60 : this.diamondCount >= 20;
+			},
 			exchangeClick() {
+				if (this.selectedCard === 1 && this.diamondCount >= 60) {
+					this.$store.commit('setDiamondCount', this.diamondCount - 60);
+				} else if (this.selectedCard === 2 && this.diamondCount >= 20) {
+					this.$store.commit('setDiamondCount', this.diamondCount - 20);
+				}
 				this.$emit('exchangeClick', this.selectedCard);
 			},
 			async getHomepageData() {
@@ -182,7 +196,7 @@
 	}
 
 	.box {
-		position: relative; 
+		position: relative;
 		display: block;
 		justify-content: center;
 		color: #252529;

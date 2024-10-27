@@ -134,7 +134,7 @@
 	text-align: center;
 	color: #ffffff;
 	font-size: 20rpx;
-	font-family: Arial;
+	font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	z-index: 4;
 	justify-content: center;
 }
@@ -248,4 +248,8 @@
 .disabled {
 	opacity: 0.5;
 	pointer-events: none;
+}
+
+text {
+	font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
