@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="splash-screen">
-			<text class="splash-text">Now，Let's see your workplace personality type！</text>
+			<text class="splash-text">Now, begin the journey to explore EQ！</text>
 
 			<image class="splash-image" src="/static/cta-new.png" mode="widthFix"
 				:style="{ left: splashImageLeft1 + 'rpx' }"></image>
