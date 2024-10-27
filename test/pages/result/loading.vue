@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="splash-screen">
-			<text class="splash-text">Now, begin the journey to explore EQ！</text>
+			<text class="splash-text">Now, let's see your EQ report!</text>
 
 			<image class="splash-image" src="/static/cta-new.png" mode="widthFix"
 				:style="{ left: splashImageLeft1 + 'rpx' }"></image>
@@ -13,7 +13,7 @@
 				<view class="splash-progress-bar">
 					<view class="splash-progress-fill" :style="{ width: progress + '%' }"></view>
 				</view>
-				<text class="status-text">Generating personalized report...</text>
+				<!-- <text class="status-text">Generating personalized report...</text> -->
 			</view>
 		</view>
 	</view>
@@ -311,7 +311,7 @@
 		top: 20%;
 		position: absolute;
 		margin-bottom: 20rpx;
-		margin-left: 55rpx;
+		margin-left: 50rpx;
 		/* 添加文本和图像之间的空间 */
 		line-height: 60rpx;
 		/* 调整高以提高可读性 */
