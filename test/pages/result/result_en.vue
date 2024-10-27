@@ -227,6 +227,10 @@
 							characteristics: 'is your EQ superpower—you control emotions well, even under stress.',
 						}
 					}
+					console.log("-------result for your weakness:", returnObj.weakness)
+					console.log("-------------details:", returnObj.characteristics);
+					this.$store.commit('setWeakness', returnObj.weakness);
+					this.$store.commit('setCharateristics', returnObj.characteristics);
 				}
 				return returnObj;
 			},

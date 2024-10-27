@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
 		<view v-if="isLoading" class="loading">
-				Loading
-				<div></div>
-				<div></div>
-				<div></div>
+			Loading
+			<div></div>
+			<div></div>
+			<div></div>
 		</view>
 		<scroll-view v-else scroll-y style="height: calc(100vh - 150rpx)">
 			<view v-if="currentView === 'dashboard'" class="content">
@@ -20,15 +20,14 @@
 								<text>{{ animal }}</text>
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
-								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;"> Needs
-									to improve
+								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">
+									Your Superpower
 								</text>
 								<text
 									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
-									{{homepageData?.response?.personal_info?.tag}}
+									{{ weakness }}
 								</text>
-								<text
-									class="detail-summary">{{homepageData?.response?.eq_scores?.detail_summary}}</text>
+								<text class="detail-summary">{{ characteristics }}</text>
 							</view>
 						</view>
 						<image class="character-image" :src="userCard" />
@@ -63,19 +62,15 @@
 								@click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
-								<ChatHistory v-for="(item, index) in leftList" 
-									:key="index" 
-									:title="item.low_dim || 'No summary available'"
-									:details="item?.summary || ''"
+								<ChatHistory v-for="(item, index) in leftList" :key="index"
+									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
 									@click="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container" v-if="rightList.length > 0">
-							<ChatHistory v-for="(item, index) in rightList"
-								:key="index"
-								:title="item.low_dim || 'No summary available'"
-								:details="item?.summary || ''"
+							<ChatHistory v-for="(item, index) in rightList" :key="index"
+								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
 								@click="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -97,14 +92,18 @@
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
 							<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
-							<text class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
+							<text
+								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix"></image>
-							<text class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
+							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
+							</image>
+							<text
+								class="dashboard2-score-value-large-g">{{ homepageData?.response?.personal_info?.num_star || 0 }}</text>
 						</view>
-						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix"></image>
-						
+						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
+						</image>
+
 					</view>
 
 					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
@@ -113,14 +112,9 @@
 						</view>
 
 						<view class="dashboard2-progress-container">
-							<AbilityProgressBar
-								:segment1Width="33"
-								:segment2Width="34"
-								:segment3Width="33"
+							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
 								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score)"
-								:animal="this.animal"
-								:activeColor="getActiveColor"
-							/>
+								:animal="this.animal" :activeColor="getActiveColor" />
 						</view>
 					</view>
 				</view>
@@ -129,12 +123,9 @@
 				<view class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件 -->
-						<SProgressBar 
-						  v-if="courseData && courseData.courses"
-						  :finishComponents="courseData.courses.length"
-						  :starRatings="courseData.courses.map(course => course.result)"
-						  :totalComponents="4"
-						/>
+						<SProgressBar v-if="courseData && courseData.courses"
+							:finishComponents="courseData.courses.length"
+							:starRatings="courseData.courses.map(course => course.result)" :totalComponents="4" />
 					</view>
 				</view>
 			</view>
@@ -185,8 +176,7 @@
 				analysisList: [{
 						id: 1,
 						chatHistory: {
-							messages: [
-								{
+							messages: [{
 									user: "Ophelia",
 									message: "hello a",
 								},
@@ -274,6 +264,12 @@
 			username() {
 				return this.$store.getters.getUsername;
 			},
+			weakness() {
+				return this.$store.getters.getWeakness;
+			},
+			characteristics() {
+				return this.$store.getters.getCharacteristics;
+			},
 			formattedBirthday() {
 				if (this.birthday) {
 					const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
@@ -347,9 +343,8 @@
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
 			},
 			safeStarRatings() {
-				return this.courseData && this.courseData.courses
-					? this.courseData.courses.map(course => course.result)
-					: [];
+				return this.courseData && this.courseData.courses ?
+					this.courseData.courses.map(course => course.result) : [];
 			},
 			getEmotionText() {
 				switch (this.animal) {
@@ -493,15 +488,15 @@
 				}
 			},
 			async uploadImage(filePath) {
-			  try {
-				this.isLoading = true; 
-			    const result = await apiService.uploadChatHistory(filePath, this.userId);
-				const resultJson = JSON.parse(result);
-			    this.navigateToAnalysis(resultJson);
-			  } catch (error) {
-			    console.error('Upload failed:', error);
-			    // 处理上传失败的情况
-			  } finally {
+				try {
+					this.isLoading = true;
+					const result = await apiService.uploadChatHistory(filePath, this.userId);
+					const resultJson = JSON.parse(result);
+					this.navigateToAnalysis(resultJson);
+				} catch (error) {
+					console.error('Upload failed:', error);
+					// 处理上传失败的情况
+				} finally {
 					this.isLoading = false;
 				}
 			},
@@ -757,7 +752,6 @@
 
 
 <style scoped>
-	
 	.loading {
 		width: 100vw;
 		height: 80vh;
@@ -772,7 +766,7 @@
 		overflow-y: hidden;
 	}
 
-	.loading > div {
+	.loading>div {
 		position: relative;
 		box-sizing: border-box;
 	}
@@ -781,14 +775,14 @@
 		color: #333;
 	}
 
-	.loading > div {
+	.loading>div {
 		display: inline-block;
 		float: none;
 		background-color: currentColor;
 		border: 0 solid currentColor;
 	}
 
-	.loading > div {
+	.loading>div {
 		width: 6rpx;
 		height: 6rpx;
 		margin: 4px;
@@ -796,7 +790,7 @@
 		animation: ball-beat 0.7s -0.15s infinite linear;
 	}
 
-	.loading > div:nth-child(2n-1) {
+	.loading>div:nth-child(2n-1) {
 		animation-delay: -0.5s;
 	}
 
@@ -812,7 +806,7 @@
 		}
 	}
 
-    .character-view {
+	.character-view {
 		margin-top: 16rpx;
 		width: 668rpx;
 		height: 420rpx;
@@ -1916,7 +1910,8 @@
 		left: 0;
 		right: 0; */
 		z-index: 10;
-		background-color: #2F2F38; /* 匹配背景色 */
+		background-color: #2F2F38;
+		/* 匹配背景色 */
 		padding: 20rpx;
 	}
 
@@ -1956,7 +1951,8 @@
 
 	.dashboard2-card1 {
 		width: calc(100% - 80rpx);
-		aspect-ratio: 9 / 2; /* 调整这个比例以匹配您的背景图片 */
+		aspect-ratio: 9 / 2;
+		/* 调整这个比例以匹配您的背景图片 */
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 		border-radius: 50rpx;
@@ -2047,7 +2043,7 @@
 		margin-bottom: 15rpx;
 		margin-left: 15rpx;
 	}
-	
+
 
 	.dashboard2-progress {
 		height: 100%;

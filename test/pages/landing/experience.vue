@@ -7,13 +7,13 @@
 		<!-- 内容区域 -->
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">Welcome to ECoach!👋</text>
+				<text class="greeting">Hi, Welcome!👋</text>
 			</view>
-			<text class="question">What can I call you?</text>
+			<text class="question">How may I call you?</text>
 			<!-- <text class="question1">完善个人信息</text> -->
 
 			<!-- 输入框 -->
-			<input class="name-input" placeholder="Your name" v-model="username" />
+			<input class="name-input" placeholder="Please enter your nickname." v-model="username" />
 
 
 			<!-- 继续按钮 -->
@@ -36,25 +36,26 @@
 			};
 		},
 		mounted() {
-			const cachedUsername = uni.getStorageSync('username');
-			this.username = cachedUsername ? cachedUsername : "tester-" + uuidv4().slice(0, 6);
+			const randomNum = Math.floor(Math.random() * 10); // 生成1到10之间的随机数字
+			// this.username = "tester-" + uuidv4().slice(0, 6) + `##${randomNum}`;
+			this.username = "tester-" + uuidv4().slice(0, 6);
 		},
 		methods: {
 			nextStep() {
 				if (this.username.trim()) {
-					// const userId = 'fixedUserId12345'; // 使用固定的用户ID
+					const userId = 'fixedUserId12345'; // 使用固定的用户ID
 					// 保存用户名和ID
 					uni.setStorageSync('username', this.username);
-					this.$store.commit('setUsername', this.username);
-					// uni.setStorageSync('userId', userId);
+					uni.setStorageSync('userId', userId);
 					// 导航到下一页，并传递参数
 					uni.navigateTo({
-						url: `/pages/preference/preference2`
+						// url: `/pages/preference/preference2?userId=${userId}&username=${encodeURIComponent(this.username)}`
+						url: `/pages/preference/preference3?userId=${userId}&username=${encodeURIComponent(this.username)}`
 					});
 				} else {
 					// 提示用户输入名字
 					uni.showToast({
-						title: 'Please input your name',
+						title: '请输入您的名字',
 						icon: 'none'
 					});
 				}
