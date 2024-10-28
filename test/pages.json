@@ -70,16 +70,6 @@
 			}
 		},
 		{
-			"path": "pages/result/result",
-			"style": {
-				// "navigationStyle": "custom",
-				"navigationStyle": "custom",
-				"style": {
-					"disableSwipeBack": true
-				}
-			}
-		},
-		{
 			"path": "pages/result/result_en",
 			"style": {
 				// "navigationStyle": "custom",
@@ -115,12 +105,6 @@
 		},
 		{
 			"path": "pages/preference/preference3",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/profile/profile",
 			"style": {
 				"navigationStyle": "custom"
 			}

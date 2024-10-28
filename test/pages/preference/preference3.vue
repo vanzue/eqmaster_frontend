@@ -20,7 +20,6 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import apiService from "../../services/api-service.js";
-	import state from "../../state.js";
 
 	type BirthdayType = {
 		month : string;
@@ -35,86 +34,11 @@
 				userId: 0,
 				username: "",
 				gender: "",
-				// 显式指定 `birthday` 的类型
 				birthday: null as BirthdayType | null,
-				// 显式指定 `selectedOptions` 为字符串数组
-				// selectedOptions: [] as string[],
 				isLoading: false,
 			};
 		},
-		computed: {
-			// selectedOptions() {
-			//   return this.$store.getters.getSelectedOptions;
-			// },
-		},
-		watch: {
-			// selectedOptions: {
-			// 	immediate: true,
-			// 	async handler(val) {
-			// 		if (Object.keys(val).length === 0) {
-			// 			uni.navigateTo({
-			// 				url: '/pages/preference/preference2'
-			// 			});
-			// 		}
-			// 	},
-			// 	// deep: true,
-			// }
-		},
 		onLoad(options : any) {
-			// console.log("Raw options received in preference3:", options);
-
-			// this.userId = options.userId || "";
-			// this.username = decodeURIComponent(options.username || "");
-			// this.gender = options.gender || "";
-
-			// console.log("Parsed basic data in preference3:", {
-			//   userId: this.userId,
-			//   username: this.username,
-			//   gender: this.gender,
-			// });
-
-			// // 解析 birthday
-			// try {
-			//   this.birthday = options.birthday
-			//     ? JSON.parse(decodeURIComponent(options.birthday))
-			//     : null;
-			//   console.log("Parsed birthday in preference3:", this.birthday);
-			// } catch (e) {
-			//   console.error("Error parsing birthday in preference3:", e);
-			//   console.log("Raw birthday data in preference3:", options.birthday);
-			//   this.birthday = null;
-			// }
-
-			// // 解析 selectedOptions
-			// try {
-			//   const parsedOptions = options.options
-			//     ? JSON.parse(decodeURIComponent(options.options))
-			//     : [];
-			//   console.log("Parsed options:", parsedOptions);
-
-			//   // 使用显式类型赋值，避免类型错误
-			//   this.selectedOptions = Array.isArray(parsedOptions) ? parsedOptions : [];
-
-			//   console.log("Assigned selectedOptions:", this.selectedOptions);
-			//   console.log("selectedOptions length:", this.selectedOptions.length);
-			//   console.log(
-			//     "selectedOptions contents:",
-			//     JSON.stringify(this.selectedOptions)
-			//   );
-			// } catch (e) {
-			//   console.error("Error parsing selectedOptions in preference3:", e);
-			//   console.log("Raw options data in preference3:", options.options);
-			//   this.selectedOptions = [];
-			// }
-
-			// 打印最终的数据状态
-			// console.log('Final data state in preference3:', {
-			//   userId: this.userId,
-			//   username: this.username,
-			//   gender: this.gender,
-			//   birthday: this.birthday,
-			//   selectedOptions: this.selectedOptions
-			// });
 			const username = uni.getStorageSync('username');
 			if (!username) {
 				uni.navigateTo({
@@ -131,10 +55,7 @@
 			}
 			this.username = username;
 			if (
-				// !this.userId ||
 				!this.username ||
-				// !this.gender ||
-				// !this.birthday ||
 				this.selectedOptions.length === 0
 			) {
 				console.error("Some required data is missing or invalid in preference3");
@@ -149,7 +70,6 @@
 			},
 			async navigateToNextPage() {
 				try {
-					console.log("user name:", this.username);
 					const response = await apiService.createProfile({
 						name: this.username,
 						job_level: this.jobLevel || "",
@@ -159,7 +79,6 @@
 
 					console.log("Backend response:", response);
 
-					// Save jobId
 					this.jobId = response.job_id;
 					this.userId = response.user_id;
 					uni.setStorageSync('userId', response.user_id);
@@ -167,58 +86,20 @@
 					this.$store.commit('setUserId', response.user_id);
 					this.$store.commit('setJobId', response.jobId);
 
-					// state.userId = response.user_id;
-					// console.log("state userid", state.userId);
-					const indexes = this.username.split("##");
-					const scenarioId =
-						indexes[1] !== undefined && !isNaN(parseInt(indexes[1], 10))
-							? parseInt(indexes[1], 10)
-							: undefined;
-
-					console.log("####scenario id:############", scenarioId);
-
 					const scenarioResponse = await apiService.initializeScenario();
-					// result 中包含初始化场景的返回数据
-					// console.log('#####################场景初始化成功：', result);
-
-					// const scenarioResponse =
-					// 	scenarioId != undefined
-					// 		? await apiService.startScenarioWithId(this.jobId, scenarioId)
-					// 		: await apiService.startScenario(this.jobId);
-
-					console.log(
-						"#####################fetched scenario: ",
-						scenarioResponse
-					);
-
-
+					
 					// Get scenarioId
 					const fetchedScenarioId = scenarioResponse.scenario_id || 1;
 					console.log("Fetched scenarioId:", fetchedScenarioId);
 
-					// const testPageUrl = `/pages/test/test?userId=${
-					//   this.userId
-					// }&username=${encodeURIComponent(this.username)}&gender=${
-					//   this.gender
-					// }&birthday=${encodeURIComponent(
-					//   JSON.stringify(this.birthday)
-					// )}&options=${encodeURIComponent(
-					//   JSON.stringify(this.selectedOptions)
-					// )}&jobId=${this.jobId}&scenarioId=${fetchedScenarioId}`;
 					const testPageUrl = `/pages/test/test`;
-
-					console.log("Navigating to:", testPageUrl);
 
 					uni.navigateTo({
 						url: testPageUrl,
 					});
 				} catch (err) {
-					// Capture errors from all asynchronous operations
-					console.error("An error occurred:", err);
-
-					// Notify the user of the failure
 					uni.showToast({
-						title: "操作失败",
+						title: "something error happened",
 						icon: "none",
 					});
 				} finally {
