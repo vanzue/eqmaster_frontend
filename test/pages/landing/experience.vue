@@ -36,21 +36,22 @@
 			};
 		},
 		mounted() {
-			const randomNum = Math.floor(Math.random() * 10); // 生成1到10之间的随机数字
+			// const randomNum = Math.floor(Math.random() * 10); // 生成1到10之间的随机数字
 			// this.username = "tester-" + uuidv4().slice(0, 6) + `##${randomNum}`;
-			this.username = "tester-" + uuidv4().slice(0, 6);
+			// this.username = "tester-" + uuidv4().slice(0, 6);
 		},
 		methods: {
 			nextStep() {
 				if (this.username.trim()) {
-					const userId = 'fixedUserId12345'; // 使用固定的用户ID
+					// const userId = 'fixedUserId12345'; // 使用固定的用户ID
+					console.log("user input name:", this.username);
+					this.$store.commit('setUsername', this.username);
 					// 保存用户名和ID
 					uni.setStorageSync('username', this.username);
-					uni.setStorageSync('userId', userId);
 					// 导航到下一页，并传递参数
 					uni.navigateTo({
 						// url: `/pages/preference/preference2?userId=${userId}&username=${encodeURIComponent(this.username)}`
-						url: `/pages/preference/preference3?userId=${userId}&username=${encodeURIComponent(this.username)}`
+						url: `/pages/preference/preference3`
 					});
 				} else {
 					// 提示用户输入名字
