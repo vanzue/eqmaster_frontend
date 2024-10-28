@@ -112,6 +112,7 @@
 			return {
 				currentPage: "test",
 				userId: "",
+				selectedOption: null,
 				username: "",
 				gender: "",
 				selectedOptions: [],
@@ -195,43 +196,7 @@
 					return;
 				}
 				this.username = username;
-				// this.gender = option.gender || "";
 				this.jobId = jobId || "";
-				// console.log("jobID:", this.jobId);
-				// this.userId = option.userId || "";
-				// this.username = decodeURIComponent(option.username || "");
-				// this.gender = option.gender || "";
-				// this.jobId = option.jobId || "";
-				// console.log("jobID:", this.jobId);
-				// this.background = option.background || "";
-				// this.scenarioId = option.scenarioId || this.scenarioId;
-
-				// if (option.options) {
-				// 	try {
-				// 		this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
-				// 	} catch (e) {
-				// 		console.error("Error parsing options:", e);
-				// 		this.selectedOptions = [];
-				// 	}
-				// }
-
-				// if (option.birthday) {
-				// 	try {
-				// 		this.birthday = JSON.parse(decodeURIComponent(option.birthday));
-				// 	} catch (e) {
-				// 		console.error("Error parsing birthday:", e);
-				// 		this.birthday = null;
-				// 	}
-				// }
-
-				// console.log("Parsed data:", {
-				// 	userId: this.userId,
-				// 	username: this.username,
-				// 	gender: this.gender,
-				// 	selectedOptions: this.selectedOptions,
-				// 	birthday: this.birthday,
-				// 	jobId: this.jobId,
-				// });
 			},
 			async getScenarioId() {
 				try {
@@ -245,7 +210,7 @@
 					const scenarioResponse = scenarioId !== undefined ?
 						await apiService.startScenarioWithId(this.jobId, scenarioId) :
 						await apiService.startScenario(this.jobId);
-						
+
 
 					console.log("#####################fetched scenario: ", scenarioResponse);
 
@@ -276,12 +241,6 @@
 				});
 			},
 			getScenarioData() {
-				// const requestMethod = this.isFirstScene ?
-				// 	apiService.startScenario(this.jobId) :
-				// 	apiService.getCurrentScenario(this.jobId);
-				
-				// const requestMethod = apiService.getCurrentScenario(this.jobId);
-				console.log("11111111111111111111111111111");
 				const requestMethod = apiService.initializeScenario();
 				return requestMethod
 					.then((res) => {
@@ -310,8 +269,8 @@
 					this.dialogueHistory.push({
 						background: this.background,
 						description: this.description,
-						choice: null,     // Will be updated when option is selected
-						analysis: null    // Will be updated when option is selected
+						choice: null, // Will be updated when option is selected
+						analysis: null // Will be updated when option is selected
 					});
 
 					// 如果有选项，重置选项的文字颜色
@@ -346,21 +305,6 @@
 				this.analyzeBackground();
 				this.currentPage = "test1";
 				this.isLoading = false;
-				// this.getScenarioData()
-				// 	.then(() => {
-				// 		this.currentPage = "test1";
-				// 	})
-				// 	.catch((error) => {
-				// 		console.error("Error loading scenario data:", error);
-				// 		uni.showToast({
-				// 			title: "loading failed, try again",
-				// 			icon: "none",
-				// 		});
-				// 	})
-				// 	.finally(() => {
-				// 		this.isLoading = false;
-				// 	});
-				// stateStack.push("test1");
 			},
 			navigateToTest2() {
 				if (this.isLoading) return;
@@ -368,18 +312,6 @@
 
 				this.currentPage = "test2";
 				this.isLoading = false;
-				// this.getScenarioData()
-				// 	.catch((error) => {
-				// 		console.error("Error loading scenario data:", error);
-				// 		uni.showToast({
-				// 			title: "loading failed, try again",
-				// 			icon: "none",
-				// 		});
-				// 	})
-				// 	.finally(() => {
-				// 		this.isLoading = false;
-				// 	});
-				// stateStack.push("test2");
 			},
 			navigateToTest3() {
 				// Show loading indicator
@@ -410,39 +342,12 @@
 				this.currentPage = "test4";
 				this.isLoading = false;
 
-				// this.currentPage = "test4";
-				// this.getScenarioData()
-				// 	.catch((error) => {
-				// 		console.error("Error loading scenario data:", error);
-				// 		uni.showToast({
-				// 			title: "loading failed, try again",
-				// 			icon: "none",
-				// 		});
-				// 	})
-				// 	.finally(() => {
-				// 		this.isLoading = false;
-				// 	});
-				// stateStack.push("test4");
 			},
 			navigateToTest5() {
 				if (this.isLoading) return;
 				this.isLoading = true;
 				this.currentPage = "test5";
 				this.isLoading = false;
-
-				// this.currentPage = "test5";
-				// this.getScenarioData()
-				// 	.catch((error) => {
-				// 		console.error("Error loading scenario data:", error);
-				// 		uni.showToast({
-				// 			title: "loading failed, try again",
-				// 			icon: "none",
-				// 		});
-				// 	})
-				// 	.finally(() => {
-				// 		this.isLoading = false;
-				// 	});
-				// stateStack.push("test5");
 			},
 			analyzeBackground() {
 				if (this.background) {
@@ -453,36 +358,23 @@
 			},
 			selectOption(index) {
 				this.selectedOptionIndex = index;
-				this.num = this.num + (index + 1).toString();
 
 				// Update the current scene's choice and analysis
 				if (this.dialogueHistory.length > 0) {
 					const currentScene = this.dialogueHistory[this.dialogueHistory.length - 1];
-					const selectedOption = this.scenarioData.options[index];
-					currentScene.choice = selectedOption.text;
-					currentScene.analysis = `Selected option ${index + 1}: ${selectedOption.text}`;
-
-					// Calculate and update scores if the option has scores
-					if (selectedOption.scores) {
-						Object.entries(selectedOption.scores).forEach(([dimension, score]) => {
-							if (this.scores.hasOwnProperty(dimension)) {
-								this.scores[dimension] += score;
-							}
-						});
-					}
+					this.selectedOption = this.scenarioData.options[index];
+					currentScene.choice = this.selectedOption.text;
+					currentScene.analysis = this.selectedOption.analysis;
 				}
 
 				this.scenarioData.options.forEach((option, i) => {
 					option.textColor = i === index ? "black" : "white";
 				});
 			},
-			
-
 
 			nextPage() {
 				if (this.isLoading) return;
-				
-				if (!this.num) {
+				if (!this.selectedOptionIndex) {
 					uni.showToast({
 						title: "Please select an option",
 						icon: "none",
@@ -490,11 +382,17 @@
 					return;
 				}
 
-				this.isLoading = true;
-				console.log("Current Scores:", this.scores);
-				console.log("Current dialogueHistory:", this.dialogueHistory);
+				this.num = this.num + (this.selectedOptionIndex + 1).toString();
+				if (this.selectedOption.scores) {
+					Object.entries(this.selectedOption.scores).forEach(([dimension, score]) => {
+						if (this.scores.hasOwnProperty(dimension)) {
+							this.scores[dimension] += score;
+						}
+					});
+				}
 
-				// 从本地存储获取 jobId
+				this.isLoading = true;
+				this.selectedOptionIndex = null;
 				const jobId = uni.getStorageSync('jobId');
 				if (!jobId) {
 					console.error("No jobId found in storage");
@@ -550,24 +448,6 @@
 						});
 				}
 			},
-
-			// 删除或注释掉 navigateToNextPage1 方法，因为我们不再需要它
-			// navigateToNextPage1() {
-			// 	this.getScenarioData()  // 这里会导致数据被覆盖
-			// 		.then(() => {
-			// 			this.currentPage = "test3";
-			// 			this.isLoading = false;
-			// 			uni.hideLoading();
-			// 		})
-			// 		.catch((error) => {
-			// 			console.error("Error loading scenario data:", error);
-			// 			uni.hideLoading();
-			// 			uni.showToast({
-			// 				title: "loading failed, try again",
-			// 				icon: "none",
-			// 			});
-			// 		});
-			// },
 			navigateToLoading() {
 				// 			const loadingPageUrl = `/pages/result/loading?jobId=${
 				//     this.jobId
@@ -634,23 +514,3 @@
 
 	/* ... 其他样式保持不变 ... */
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
