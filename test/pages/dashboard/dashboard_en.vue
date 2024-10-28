@@ -43,9 +43,7 @@
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									The <text style="font-weight: bold;">FFC Praise Method</text> involves expressing
-									your genuine feelings, providing specific facts,
-									and making comparisons to highlight influence.
+									 <text style="font-weight: bold;">Empathy</text> is a cornerstone in building trust; validating others’ feelings with phrases like "I can see why you feel that way" builds connection. 
 								</text>
 							</view>
 						</view>
