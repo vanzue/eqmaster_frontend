@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			<view class="card-button">
-				<button :disabled="!selectedCard || cardButtonLoading"
+				<button :disabled="!selectedCard || cardButtonLoading || !canAfford(selectedCard) || !eqScoresNum"
 					@click="exchangeClick">Confirm</button>
 			</view>
 		</view>
