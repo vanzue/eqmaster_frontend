@@ -26,7 +26,7 @@
 				});
 			} else {
 				uni.navigateTo({
-					url: `/pages/landing/experience`
+					url: `/pages/landing/landing`
 				});
 			}
 			const username = uni.getStorageSync('username');
