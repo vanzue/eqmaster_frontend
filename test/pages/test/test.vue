@@ -523,7 +523,7 @@
 					fail: (err) => {
 						console.error("Navigation failed:", err);
 						uni.showToast({
-							title: "页面跳转失败",
+							title: "Page navigation failed",
 							icon: "none",
 						});
 					},

@@ -81,17 +81,12 @@
 				return '未设置';
 			}
 		},
+		created() {
+			this.getHomepageData();
+		},
 		onLoad(option) {
 			// 接收上一个页面传递的数据
 			try {
-				const userId = uni.getStorageSync('userId');
-				if (!userId) {
-					uni.navigateTo({
-						url: '/pages/landing/experience'
-					});
-					return;
-				}
-				this.userId = userId || "";
 				// this.userId = option.userId || '';
 				// this.username = decodeURIComponent(option.username || '');
 				// this.gender = option.gender || '';
@@ -129,7 +124,6 @@
 				console.log("something error happened", e);
 			}
 
-			this.getHomepageData();
 		},
 		onUnload() {
 			// 页面卸载时清除定时器
@@ -182,10 +176,10 @@
 							},
 							fail: (err) => {
 								console.error('Navigation failed:', err);
-								uni.showToast({
-									title: '页面跳转失败',
-									icon: 'none'
-								});
+								// uni.showToast({
+								// 	title: 'Page navigation failed',
+								// 	icon: 'none'
+								// });
 							}
 						});
 					})
