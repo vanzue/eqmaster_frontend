@@ -490,12 +490,13 @@
         this.playAudioIndex = params.index;
         this.audioContext = uni.createInnerAudioContext();
         const audio = this.$store.getters.getAudios(`voice-${params.dialog}`);
+        console.log(audio);
         if (audio) {
         	this.audioContext.src = audio;
         	this.audioContext.play();
-			this.audioContext.onEnded(() => {
-			    this.playAudioIndex = '';
-			});
+          this.audioContext.onEnded(() => {
+              this.playAudioIndex = -1;
+          });
         }
       },
 			retry() {
