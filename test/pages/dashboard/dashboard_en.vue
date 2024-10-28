@@ -141,7 +141,9 @@
 	import ChatHistory from '@/components/ChatHistory.vue';
 	import Nav from '../../components/Nav.vue';
 	import AbilityProgressBar from '@/components/AbilityProgressBar.vue';
-
+	import {
+		illustrationSrc
+	} from '../../scripts/illustrationHelper';
 
 	export default {
 
@@ -401,6 +403,7 @@
 		async created() {
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
+			const result = illustrationSrc(this.homepageData, this.$store);
 			// await this.getBattlefield();
 		},
 		onLoad(option) {
@@ -647,7 +650,7 @@
 <style scoped>
 	.loading {
 		width: 100vw;
-		height: calc(100vh - 250rpx);
+		height: 80vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -831,7 +834,7 @@
 		align-items: left;
 		padding-top: 100rpx;
 		width: 100%;
-		height: calc(100vh - 150rpx);
+		height: 100vh;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -1798,10 +1801,10 @@
 	}
 
 	.dashboard2-fixed-content {
-		position: fixed;
+		/* position: fixed;
 		top: 0;
 		left: 0;
-		right: 0;
+		right: 0; */
 		z-index: 10;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
@@ -1809,7 +1812,7 @@
 	}
 
 	.dashboard2-scrollable-content {
-		padding-top: 300rpx; 
+		/* padding-top: 300rpx;  */
 		/* 其他样式 */
 	}
 
@@ -2054,6 +2057,4 @@
 		height: 134px;
 		padding-top: 0px;
 	}
-
-	
 </style>

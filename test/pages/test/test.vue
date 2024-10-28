@@ -148,7 +148,9 @@
 		watch: {
 			isLoading(newValue) {
 				if (newValue) {
-					uni.showLoading({ title: 'loading...' });
+					uni.showLoading({
+						title: 'loading...'
+					});
 				} else {
 					uni.hideLoading();
 				}
@@ -443,7 +445,7 @@
 
 			nextPage() {
 				if (this.isLoading) return;
-				
+
 				if (this.num === null) {
 					uni.showToast({
 						title: "Please select an option",
@@ -466,13 +468,14 @@
 					.then((result) => {
 						console.log("Response data:", result);
 						this.requestCount++;
-						
+
 						if (result.message === "Final choice made. Processing data in background.") {
+							this.isLoading = false;
 							this.navigateToLoading();
 						} else {
 							this.selectedOptionIndex = null;
 							this.num = null;
-							
+
 							this.getScenarioData()
 								.then(() => {
 									this.currentScene++;
@@ -490,10 +493,10 @@
 					})
 					.catch((error) => {
 						console.error("Detailed error:", error);
-							uni.showToast({
-								title: `发生错误：${error.message}`,
-								icon: "none",
-							});
+						uni.showToast({
+							title: `发生错误：${error.message}`,
+							icon: "none",
+						});
 					})
 					.finally(() => {
 
@@ -565,7 +568,7 @@
 
 
 
-			
+
 			navigateToNextPage1() {
 				// Show loading indicator
 
@@ -588,7 +591,7 @@
 						});
 					});
 			},
-			
+
 			// navigateToNextPage() {
 			// 	// 根据当前页面，决定下一个页面
 			// 	if (this.currentPage === "test2") {
@@ -655,9 +658,3 @@
 
 	/* ... 其他样式保持不变 ... */
 </style>
-
-
-
-
-
-
