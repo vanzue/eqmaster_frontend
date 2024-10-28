@@ -60,10 +60,10 @@
 		methods: {
 			startQuiz() {
 				// 生成随机用户名
-				this.username = 'user_' + Math.floor(Math.random() * 10000); // 生成随机用户名
+				// this.username = 'user_' + Math.floor(Math.random() * 10000); // 生成随机用户名
 				// 跳转到问题页面并传递用户名
 				uni.navigateTo({
-					url: `/pages/landing/experience?username=${this.username}`
+					url: `/pages/landing/experience`
 				});
 			},
 			goToLogin() {

@@ -24,6 +24,10 @@
 				}).catch((error) => {
 					console.error('Error fetching homepage data:', error);
 				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/landing/experience`
+				});
 			}
 			const username = uni.getStorageSync('username');
 			if (username) {
@@ -80,6 +84,6 @@
 
 	text,
 	view {
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		/* font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; */
 	}
 </style>
