@@ -190,29 +190,6 @@
 				fetchData();
 			},
 
-			// async getBattlefield() {
-			// 	try {
-
-			// 		// this.userId
-			// 		console.log('Fetching homepage data with jobId:', this.userId);
-
-			// 		const data = await apiService.getBattlefield(this.userId);
-			// 		this.courseData = data;
-			// 		console.log('Homepage data received:', this.courseData);
-
-			// 		this.$store.commit('setcourseDatas', returnObj.this.courseData);
-
-			// 		// this.$nextTick(() => {
-			// 		// 	this.drawRadar();
-			// 		// });
-			// 	} catch (error) {
-			// 		this.error = 'Error fetching homepage data';
-			// 		console.error(this.error, error);
-			// 	} finally {
-			// 		// this.isLoading = false;
-			// 	}
-			// },
-
 			startProgress() {
 				const totalDuration = 30000; // 30秒
 				const intervalDuration = totalDuration / 100; // 每次更新的间隔时间

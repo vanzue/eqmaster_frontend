@@ -158,6 +158,7 @@ export default createStore({
 				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {
 				console.error('Error fetching homepage data:', error);
+				throw error;
 			}
 		},
 		async fetchcourseData({
