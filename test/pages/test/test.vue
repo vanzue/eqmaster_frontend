@@ -446,63 +446,65 @@
 					option.textColor = i === index ? "black" : "white";
 				});
 			},
-			nextPage() {
-				if (this.num === null) {
-					uni.showToast({
-						title: "Please select an option",
-						icon: "none",
-					});
-					return;
-				}
 
-				// Add the current scenario and selected option to chat history
-				this.chatHistory.push({
-					background: this.background,
-					description: this.description,
-					selectedOption: this.scenarioData.options[this.selectedOptionIndex].text
-				});
 
-				console.log("Sending data to backend:", {
-					choice: this.num,
-					job_id: this.jobId,
-				});
+			// nextPage() {
+			// 	if (this.num === null) {
+			// 		uni.showToast({
+			// 			title: "Please select an option",
+			// 			icon: "none",
+			// 		});
+			// 		return;
+			// 	}
 
-				// Log the chat history before navigating
-				console.log("Chat History:", this.chatHistory);
+			// 	// Add the current scenario and selected option to chat history
+			// 	this.chatHistory.push({
+			// 		background: this.background,
+			// 		description: this.description,
+			// 		selectedOption: this.scenarioData.options[this.selectedOptionIndex].text
+			// 	});
 
-				apiService
-					.chooseScenario(this.num, this.jobId)
-					.then((result) => {
-						console.log("Response data:", result);
-						// 增加请求计数
-						this.requestCount++;
-						console.log("API 请求次数:", this.requestCount)
-						if (
-							result.message ===
-							"Final choice made. Processing data in background."
-						) {
-							this.navigateToLoading();
-						} else {
-							// 更新当前场景
-							this.currentScene++;
-							// 重置选项
-							this.selectedOptionIndex = null;
-							this.num = null;
-							// 根据需要更新 currentPage
-							this.navigateToNextPage();
-						}
+			// 	console.log("Sending data to backend:", {
+			// 		choice: this.num,
+			// 		job_id: this.jobId,
+			// 	});
 
-						// 更新进度
-						this.updateProgress();
-					})
-					.catch((error) => {
-						console.error("Detailed error:", error);
-						uni.showToast({
-							title: `发生错误：${error.message}`,
-							icon: "none",
-						});
-					});
-			},
+			// 	// Log the chat history before navigating
+			// 	console.log("Chat History:", this.chatHistory);
+
+			// 	apiService
+			// 		.chooseScenario(this.num, this.jobId)
+			// 		.then((result) => {
+			// 			console.log("Response data:", result);
+			// 			// 增加请求计数
+			// 			this.requestCount++;
+			// 			console.log("API 请求次数:", this.requestCount)
+			// 			if (
+			// 				result.message ===
+			// 				"Final choice made. Processing data in background."
+			// 			) {
+			// 				this.navigateToLoading();
+			// 			} else {
+			// 				// 更新当前场景
+			// 				this.currentScene++;
+			// 				// 重置选项
+			// 				this.selectedOptionIndex = null;
+			// 				this.num = null;
+			// 				// 根据需要更新 currentPage
+			// 				this.navigateToNextPage();
+			// 			}
+
+			// 			// 更新进度
+			// 			this.updateProgress();
+			// 		})
+			// 		.catch((error) => {
+			// 			console.error("Detailed error:", error);
+			// 			uni.showToast({
+			// 				title: `发生错误：${error.message}`,
+			// 				icon: "none",
+			// 			});
+			// 		});
+			// },
 			
 			nextPage1() {
 				if (this.isLoading) return;
@@ -512,7 +514,7 @@
 				if (this.num === null) {
 					uni.showToast({
 						title: "Please select an option",
-						icon: "none",
+							icon: "none",
 					});
 					this.isLoading = false;
 					uni.hideLoading();
@@ -540,24 +542,35 @@
 						if (result.message === "Final choice made. Processing data in background.") {
 							this.navigateToLoading();
 						} else {
-							this.currentScene++;
 							this.selectedOptionIndex = null;
 							this.num = null;
+							// this.currentScene++; // 直接在这里增加场景计数
 							this.updateProgress();
 						}
 					})
 					.catch((error) => {
 						console.error("Detailed error:", error);
+						this.currentScene--;
 						uni.showToast({
-							title: `error：${error.message}`,
+							title: "loading failed, try again",
 							icon: "none",
 						});
+						
 					})
 					.finally(() => {
 						this.isLoading = false;
 						uni.hideLoading();
+						// 根据错误消息类型判断是否需要恢复场景计数
+						if (error.message === "loading failed, try again") {
+							this.currentScene = this.currentScene;
+						} else {
+							this.currentScene++;
+						}
 					});
 			},
+			
+
+
 			
 			navigateToNextPage() {
 				// 根据当前页面，决定下一个页面
@@ -625,3 +638,6 @@
 
 	/* ... 其他样式保持不变 ... */
 </style>
+
+
+

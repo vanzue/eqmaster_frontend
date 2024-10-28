@@ -170,7 +170,7 @@
 			getHomepageData() {
 				// 不再需要 const that = this;
 				this.$store.dispatch('fetchHomepageData')
-				this.$store.dispatch('fetchcourseData')
+				// this.$store.dispatch('fetchcourseData')
 					.then(() => {
 						console.log('Homepage data fetched successfully');
 						if (this.interval) {
