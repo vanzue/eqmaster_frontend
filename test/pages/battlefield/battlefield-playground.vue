@@ -419,6 +419,7 @@
 				this.isTooltipVisible = false;
 				this.showRecordTooltip = false;
 				this.showHintTooltip = false;
+				this.showTaskTooltip = false;
 				console.log(("change tooltip visible into:", this.isTooltipVisible));
 			},
 			async gotoNextRound() {
@@ -594,7 +595,7 @@
 				const evaluationResult = await evalBattlefield(
 					this.allHistory,
 					isPass,
-					gemCount,
+					this.gemCount,
 					diamonds
 				);
 				const userId = this.$store.getters.getUserId;
@@ -1105,7 +1106,7 @@
 
 					// 第二次进入 'userTalk' 时显示任务tooltip
 					if (this.userTalkCount === 2) {
-						console.log("show task tool tip!!!!", this.showTaskTooltip);
+						// console.log("show task tool tip!!!!", this.showTaskTooltip);
 						this.showTaskTooltip = true;
 						this.isTooltipVisible = true;
 					}
