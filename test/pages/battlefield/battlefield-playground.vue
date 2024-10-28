@@ -603,13 +603,14 @@
 				const isPass = this.isPass; // 假设你从当前状态得知是否通过
 				const gemCount = this.calculateStars(); // 假设 this.gemCount 是当前的宝石数量
 				const diamonds = this.diamonds; // 假设 this.diamonds 是当前的钻石数量
-
+				this.$store.commit('setGemCount', gemCount);
 				const evaluationResult = await evalBattlefield(
 					this.allHistory,
 					isPass,
-					this.gemCount,
+					gemCount,
 					diamonds
 				);
+				this.$store
 				const userId = this.$store.getters.getUserId;
 				if (this.isPass === true) {
 					const res = await apiService.updateDiamonds(userId, 10);
