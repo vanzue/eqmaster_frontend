@@ -129,7 +129,7 @@
 			}
 
 			this.getHomepageData();
-			this.getcourseData();
+			// this.getcourseData();
 			// this.getBattlefield();course
 
 			// 禁止左滑
@@ -206,44 +206,6 @@
 						});
 				};
 				fetchData();
-			},
-			getcourseData() {
-				// 不再需要 const that = this;
-				// this.$store.dispatch('fetchHomepageData')
-				this.$store.dispatch('fetchcourseData')
-					.then(() => {
-						console.log('Homepage data fetched successfully');
-						if (this.interval) {
-							clearInterval(this.interval);
-							this.interval = null;
-						}
-						if (this.progressInterval) {
-							clearInterval(this.progressInterval);
-							this.progressInterval = null; // 修正了这里的错误
-						}
-						if (this.timeoutInterval) {
-							clearInterval(this.timeoutInterval);
-							this.timeoutInterval = null;
-						}
-
-						const nextPageUrl = `/pages/result/result_en`;
-						uni.redirectTo({
-							url: nextPageUrl,
-							success: () => {
-								console.log('Navigation initiated successfully');
-							},
-							fail: (err) => {
-								console.error('Navigation failed:', err);
-								uni.showToast({
-									title: '页面跳转失败',
-									icon: 'none'
-								});
-							}
-						});
-					})
-					.catch((error) => {
-						console.error('Error fetching homepage data:', error);
-					});
 			},
 
 			// async getBattlefield() {
