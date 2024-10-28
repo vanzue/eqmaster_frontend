@@ -14,7 +14,7 @@
 			<text class="title content-item">UNIT 1</text>
 			<text class="subtitle content-item">Managing Tensions in a Meeting</text>
 			<text class="time-info content-item">3-4min</text>
-			<view class="description content-item">
+			<view class="description content-item" id="desc">
 				<text class="npc-name">
 					<image :src="npcs[0].avatar" class="npc-avatar"></image> Jason
 				</text>
@@ -129,17 +129,23 @@
 	}
 
 	.description {
-		font-size: 17px;
-		font-weight: 350;
+		font-size: 34rpx;
+		font-weight: 400;
 		align-items: center;
 		line-height: 48rpx;
+		text-align: center;
 		color: #fff;
 		/* 具体设置白色 */
 	}
 
+	#desc,
+	#desc .npc-name {
+		line-height: 54rpx;
+	}
+
 	.content-item {
 		/* margin-top: 30rpx; */
-		line-height: 48rpx;
+		line-height: 68rpx;
 	}
 
 	.npc-name {
@@ -162,7 +168,6 @@
 		height: 40rpx;
 		border-radius: 50%;
 		background-color: #fff;
-		margin-top: 10px;
 		position: relative;
 		top: 8rpx;
 		/* position: absolute;
