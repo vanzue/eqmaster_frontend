@@ -769,6 +769,7 @@
 		font-size: 28rpx;
 		line-height: 40rpx;
 		overflow-y: hidden;
+		z-index: 9999;
 	}
 
 	.loading>div {
