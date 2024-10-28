@@ -419,6 +419,7 @@
 		onLoad(option) {
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
+			this.userCard();
 
 			// 接收上一个页面传递的数据
 			// this.userId = option.userId || '717';
