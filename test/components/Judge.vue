@@ -1,6 +1,7 @@
 <template>
 	<view class="judge-containers" :style="{ backgroundColor: bgColor }">
 		<view class="judge-container-box">
+			<image class="wording-icon" src="/static/battlefield/commit_warning-fill.png" v-if="!goodJudge"></image>
 			<text class="title" :style="{color: fontColor}">{{ title }}
 			</text>
 			<view class="speed-right" v-if="isCompleteTask">
@@ -23,7 +24,6 @@
 				</view>
 			</view>
 			<text class="wording" :style="{color: fontColor}">
-				<image class="wording-icon" src="/static/battlefield/commit_warning-fill.png" v-if="!goodJudge"></image>
 				{{ wording }}
 			</text>
 		</view>
