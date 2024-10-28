@@ -302,7 +302,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 
-				this.analyzeBackground();
+				// this.analyzeBackground();
 				this.currentPage = "test1";
 				this.isLoading = false;
 			},
@@ -429,6 +429,8 @@
 						.then((result) => {
 							console.log("#####retrieveScenarioResponse data:", result);
 							this.scenarioData = result.scene.scenes;
+							this.npcName = this.scenarioData.role;
+							this.npcAvatar = getAvatar(this.npcName);
 							this.handleScenarioData();
 							this.requestCount++;
 							this.selectedOptionIndex = null;
