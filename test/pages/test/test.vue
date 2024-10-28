@@ -40,7 +40,7 @@
 		</template>
 
 		<!-- Test2 page content -->
-		<template v-else-if="currentPage === 'test2' " >
+		<template v-else-if="currentPage === 'test2' ">
 			<view class="options-container" :class="{ 'disabled': isLoading }">
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
@@ -81,8 +81,8 @@
 		</template>
 
 		<!-- Test5 page content -->
-		<template v-else-if="currentPage === 'test5'" >
-			<view class="options-container"  :class="{ 'disabled': isLoading }">
+		<template v-else-if="currentPage === 'test5'">
+			<view class="options-container" :class="{ 'disabled': isLoading }">
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
             : []" :key="index" :class="['text-box1', { selected: selectedOptionIndex === index }]"
@@ -97,7 +97,7 @@
 				</view>
 			</view>
 		</template>
-		
+
 	</view>
 </template>
 
@@ -451,12 +451,14 @@
 			nextPage() {
 				if (this.isLoading) return;
 				this.isLoading = true;
-				uni.showLoading({ title: 'loading...' });
-				
+				uni.showLoading({
+					title: 'loading...'
+				});
+
 				if (this.num === null) {
 					uni.showToast({
 						title: "Please select an option",
-							icon: "none",
+						icon: "none",
 					});
 					this.isLoading = false;
 					uni.hideLoading();
@@ -476,14 +478,14 @@
 						console.log("Response data:", result);
 						this.requestCount++;
 						console.log("API 请求次数:", this.requestCount)
-						
+
 						if (result.message === "Final choice made. Processing data in background.") {
 							this.navigateToLoading();
 						} else {
 							// Reset selection state
 							this.selectedOptionIndex = null;
 							this.num = null;
-							
+
 							// Get new scenario data before navigation
 							this.getScenarioData()
 								.then(() => {
@@ -512,12 +514,12 @@
 						uni.hideLoading();
 					});
 			},
-			
+
 			// nextPage1() {
 			// 	if (this.isLoading) return;
 			// 	this.isLoading = true;
 			// 	uni.showLoading({ title: 'loading...' });
-				
+
 			// 	if (this.num === null) {
 			// 		uni.showToast({
 			// 			title: "Please select an option",
@@ -562,7 +564,7 @@
 			// 				title: "loading failed, try again",
 			// 				icon: "none",
 			// 			});
-						
+
 			// 		})
 			// 		.finally(() => {
 			// 			this.isLoading = false;
@@ -575,10 +577,10 @@
 			// 			}
 			// 		});
 			// },
-			
 
 
-			
+
+
 			navigateToNextPage() {
 				// 根据当前页面，决定下一个页面
 				if (this.currentPage === "test2") {
@@ -645,8 +647,3 @@
 
 	/* ... 其他样式保持不变 ... */
 </style>
-
-
-
-
-
