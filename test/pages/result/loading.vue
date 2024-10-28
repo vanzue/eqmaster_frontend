@@ -89,54 +89,11 @@
 			this.getHomepageData();
 		},
 		onLoad(option) {
-			// 接收上一个页面传递的数据
-			try {
-				// this.userId = option.userId || '';
-				// this.username = decodeURIComponent(option.username || '');
-				// this.gender = option.gender || '';
-				// this.jobId = option.jobId || '';
-				// this.num = option.num || '';
-
-				// if (option.options) {
-				// 	try {
-				// 		this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
-				// 	} catch (e) {
-				// 		console.error('Error parsing options:', e);
-				// 		this.selectedOptions = [];
-				// 	}
-				// }
-
-				// if (option.birthday) {
-				// 	try {
-				// 		this.birthday = JSON.parse(decodeURIComponent(option.birthday));
-				// 	} catch (e) {
-				// 		console.error('Error parsing birthday:', e);
-				// 		this.birthday = null;
-				// 	}
-				// }
-
-				// console.log('Parsed data:', {
-				// 	userId: this.userId,
-				// 	username: this.username,
-				// 	gender: this.gender,
-				// 	selectedOptions: this.selectedOptions,
-				// 	birthday: this.birthday,
-				// 	jobId: this.jobId,
-				// 	num: this.num,
-				// });
-			} catch (e) {
-				console.log("something error happened", e);
-			}
-
 			this.getHomepageData();
-			// this.getcourseData();
-			// this.getBattlefield();course
-
 			// 禁止左滑
 			this.setSwipeBackDisabled();
 		},
 		onUnload() {
-			// 页面卸载时清除定时器
 			if (this.intervalId) {
 				clearInterval(this.intervalId);
 			}
@@ -146,7 +103,6 @@
 			if (this.interval) {
 				clearInterval(this.interval);
 			}
-			// 页面卸载时，移除全局滑动事件监听
 			uni.offTouchMove();
 		},
 		methods: {
@@ -165,13 +121,17 @@
 			getHomepageData() {
 				const maxAttempts = 100; // Maximum number of retry attempts
 				let attempts = 0;
-				
+
 				const fetchData = () => {
 					this.$store.dispatch('fetchHomepageData')
 						.then(() => {
+							if (!this.$store.state.homepageData) {
+								throw new Error('Homepage data is empty');
+							}
+							
 							console.log('Homepage data fetched successfully');
 							this.clearAllIntervals();
-							
+
 							const nextPageUrl = `/pages/result/result_en`;
 							uni.redirectTo({
 								url: nextPageUrl,
@@ -199,13 +159,13 @@
 			getcourseData() {
 				const maxAttempts = 10;
 				let attempts = 0;
-				
+
 				const fetchData = () => {
 					this.$store.dispatch('fetchcourseData')
 						.then(() => {
 							console.log('Course data fetched successfully');
 							this.clearAllIntervals();
-							
+
 							const nextPageUrl = `/pages/result/result_en`;
 							uni.redirectTo({
 								url: nextPageUrl,
