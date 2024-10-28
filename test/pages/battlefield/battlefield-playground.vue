@@ -26,13 +26,19 @@
 				<scroll-view class="chat-history-container" scroll-y :scroll-top="scrollTop" ref="chatHistoryContainer"
 					:scroll-into-view="scrollIntoViewId">
 					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
-						<npc-chat-box v-if="
+						<npc-chat-box 
+              v-if="
                 ['Jason', 'Sam', 'Anna'].includes(
                   chat.role
                 )
-              " :key="'npc-' + index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
+              " 
+              :key="'npc-' + index" 
+              :index="index"
+              :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
 							:dialog="chat.content"
-							:isLastElement="index === displayedMessages.length - 1"></npc-chat-box>
+							:isLastElement="index === displayedMessages.length - 1"
+              :playAudioIndex="playAudioIndex"
+              @playAudio="playAudio"></npc-chat-box>
 						<view v-else-if="chat.role === 'user'"
 							:class="['message-wrapper', { animate: chat.shouldAnimate }]">
 							<self-chat-box :key="'user' + index" :wording="chat.content" :commit="userJudgeContent"
@@ -74,8 +80,9 @@
 				<text class="cancel-text">Release to send, slide up to cancel</text>
 			</view>
 
-			<view v-if="state === 'userTalk' && showToolTips && isTooltipVisible" class="tooltipOverlay"
-				@click="hideTooltip">
+			<view
+				v-if="state === 'userTalk' && showToolTips && isTooltipVisible && (showHintTooltip || showRecordTooltip || showTaskTooltip)"
+				class="tooltipOverlay" @click="hideTooltip">
 			</view>
 			<!-- tooltip -->
 			<!-- tooltip for record -->
@@ -133,16 +140,17 @@
 			</view>
 
 			<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-        <view class="input-container-wrapper">
-          <view class="input-container" @click.stop>
-            <!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-            <textarea placeholder="Type your response" v-model="inputContent" auto-height
-              @blur="inputRecordingBlur" />
-          </view>
-          <view class="send-sms-container">
-            <image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur"></image>
-          </view>
-        </view>
+				<view class="input-container-wrapper">
+					<view class="input-container" @click.stop>
+						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
+						<textarea placeholder="Type your response" v-model="inputContent" auto-height
+							@blur="inputRecordingBlur" />
+					</view>
+					<view class="send-sms-container">
+						<image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur">
+						</image>
+					</view>
+				</view>
 			</view>
 
 			<view class="judge-container" v-if="state === 'judge' || state === 'judgeTry'">
@@ -296,6 +304,8 @@
 				task2CompletedStatusOne: false,
 				taskFinished: false,
 				isFinish: false,
+        playAudioIndex: -1,
+        audioContext: null,
 			};
 		},
 		created() {
@@ -417,6 +427,7 @@
 				this.isTooltipVisible = false;
 				this.showRecordTooltip = false;
 				this.showHintTooltip = false;
+				this.showTaskTooltip = false;
 				console.log(("change tooltip visible into:", this.isTooltipVisible));
 			},
 			async gotoNextRound() {
@@ -467,6 +478,26 @@
 
 				this.isLoadingShow = false;
 			},
+      playAudio(params) {
+        console.log(params);
+        this.playAudioIndex = params.index;
+        this.audioContext = uni.createInnerAudioContext();
+        uni.getStorage({
+          key: `voice-${params.dialog}`,
+          success: (res) => {
+            console.log(res)
+            this.audioContext.src = res.data;
+            this.audioContext.play();
+            this.audioContext.onEnded(() => {
+              this.playAudioIndex = '';
+            });
+            
+          },
+          fail: (error) => {
+            console.log(`fail to get ${this.character} voice`, error);
+          }
+        })
+      },
 			retry() {
 				this.state = "userTalk";
 			},
@@ -574,14 +605,16 @@
 				const evaluationResult = await evalBattlefield(
 					this.allHistory,
 					isPass,
-					gemCount,
+					this.gemCount,
 					diamonds
 				);
 				const userId = this.$store.getters.getUserId;
-				if (isPass === true) {
+				if (this.isPass === true) {
 					const res = await apiService.updateDiamonds(userId, 10);
+					console.log("update diamond res:", res);
 				} else {
 					const res = await apiService.updateDiamonds(userId, 3);
+					console.log("update diamond res:", res);
 				}
 				console.log("evaluation result:", evaluationResult);
 				// const evaluationResult = await evalBattlefield(this.chattingHistory);
@@ -1083,6 +1116,7 @@
 
 					// 第二次进入 'userTalk' 时显示任务tooltip
 					if (this.userTalkCount === 2) {
+						// console.log("show task tool tip!!!!", this.showTaskTooltip);
 						this.showTaskTooltip = true;
 						this.isTooltipVisible = true;
 					}
@@ -1518,15 +1552,16 @@
 		opacity: 0.5;
 	}
 
-  .input-container-wrapper {
-    position: fixed;
-    display: flex;
+	.input-container-wrapper {
+		position: fixed;
+		display: flex;
 		width: 70%;
 		/* left: 10%; */
 		bottom: 200rpx;
-    justify-content: center;
-    gap: 20rpx;
-  }
+		justify-content: center;
+		gap: 20rpx;
+	}
+
 	.input-container {
 		/* position: fixed; */
 		width: 100%;
@@ -1534,19 +1569,20 @@
 		/* bottom: 200rpx; */
 		/* 将其固定在屏幕底部 */
 		display: flex;
-    align-items: center;
+		align-items: center;
 		/* justify-content: center; */
 		/* padding: 20rpx 0; */
 		border-radius: 40rpx;
 		/* 增加一些内边距 */
 		background-color: #d6fcf6;
-    border: 2px solid #90E0E7;
+		border: 2px solid #90E0E7;
 		/* 可选的背景色，用于强调输入框 */
 	}
-  .send-sms-icon {
-    width: 88rpx;
-    height: 88rpx;
-  }
+
+	.send-sms-icon {
+		width: 88rpx;
+		height: 88rpx;
+	}
 
 	textarea {
 		padding: 0 20rpx;
