@@ -311,7 +311,7 @@
 			console.log("state userid", state.userId);
 			// 动态添加任务到 taskList
 			this.taskList.addTask(
-				new Task(0, "Cheer up Sam while avoiding further infuriating Jason", async (judgeResult) => {
+				new Task(0, "Cheer up Sam while avoiding further infuriating Jason.", async (judgeResult) => {
 					const samMood = judgeResult.find(item => item.role === "Sam")?.mood;
 					const jasonMood = judgeResult.find(item => item.role === "Jason")?.mood;
 
@@ -327,7 +327,7 @@
 				})
 			);
 			this.taskList.addTask(
-				new Task(1, "Facilitate team input and ensure at least one colleague supports your approach", async (
+				new Task(1, "Encourage teammates to engage and get at least one to say, \"I agree with you.\"", async (
 					judgeResult) => {
 					let res = "";
 

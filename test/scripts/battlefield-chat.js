@@ -18,7 +18,6 @@ function sendRequest(
   return new Promise((resolve, reject) => {
     const formattedChatContent = formatChatContent(chat_content);
     console.log("formattedChatContent:", formattedChatContent);
-	console.log("state from js", state.getters.getUserId)
     const body = outerBody || {
       person_id: state.getters.getUserId,
       course_id: parseInt(course_id) || 4,
