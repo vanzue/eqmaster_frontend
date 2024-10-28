@@ -12,7 +12,8 @@
 						<view class="animal-my-eq-type">
 							My EQ companion
 						</view>
-						<view class="animal-name" :style="{ backgroundImage: `url(${illustrationSrc.animal_name_bg})` }">
+						<view class="animal-name"
+							:style="{ backgroundImage: `url(${illustrationSrc.animal_name_bg})` }">
 							<view class="animal-score-desc">
 								{{ illustrationSrc.animal_name }}
 							</view>
@@ -22,7 +23,8 @@
 							<view class="animal-score-title">
 								EQ points
 							</view>
-							<view class="animal-score-desc" :style="{ backgroundImage: `url(/static/resulten/animal-name-3.png)` }">
+							<view class="animal-score-desc"
+								:style="{ backgroundImage: `url(/static/resulten/animal-name-3.png)` }">
 								{{homepageData?.response?.eq_scores?.score}}/100
 							</view>
 						</view>
@@ -59,7 +61,8 @@
 										<view class="health-bar-container">
 											<view class="health-bar-line"></view>
 											<view class="health-bar-background">
-												<view class="health-bar-foreground" :style="progressWidth(caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].score : 0, 1)">
+												<view class="health-bar-foreground"
+													:style="progressWidth(caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].score : 0, 1)">
 												</view>
 											</view>
 										</view>
@@ -67,7 +70,7 @@
 								</view>
 							</view>
 
-							<view v-for="(score, index) in caleOverviewScores" :key="index" class="speed-right" >
+							<view v-for="(score, index) in caleOverviewScores" :key="index" class="speed-right">
 								<view v-if="index < caleOverviewScores.length - 1">
 									<view class="speed-title">
 										{{ score.name }}
@@ -77,7 +80,8 @@
 											<view class="health-bar-container">
 												<view class="health-bar-line"></view>
 												<view class="health-bar-background">
-													<view class="health-bar-foreground" :style="progressWidth(score.score)">
+													<view class="health-bar-foreground"
+														:style="progressWidth(score.score)">
 													</view>
 												</view>
 											</view>
@@ -105,7 +109,8 @@
 						</view>
 
 						<view class="improved-title key-strength-title">key strength:</view>
-						<view v-for="(score, index) in caleOverviewScores" :key="index" class="improved-content key-strength-content">
+						<view v-for="(score, index) in caleOverviewScores" :key="index"
+							class="improved-content key-strength-content">
 							<view v-if="index < caleOverviewScores.length - 1">
 								<image class="key-strength-nice" src="/static/resulten/nice.png"></image>
 								<view class="improved-content-item">
@@ -167,11 +172,12 @@
 					weakness: 'Weakness',
 					characteristics: '',
 				}
-				if(this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
+				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = this.homepageData.response.eq_scores;
-					const maxScore = Math.max(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores
+					const maxScore = Math.max(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score,
+						scores
 						.dimension4_score, scores.dimension5_score);
-					
+
 
 					// 根据最低分选择图片
 					if (maxScore === scores.dimension1_score) { //Capypara 水豚
@@ -184,7 +190,7 @@
 							characteristics: 'is your EQ superpower—you bring energy and stay focused on your goals.',
 						}
 						// return '/static/aniimals/kapibala.png';
-					} else if (maxScore === scores.dimension2_score) {//hedgehog 刺猬
+					} else if (maxScore === scores.dimension2_score) { //hedgehog 刺猬
 						console.log("illustration src:", '2')
 						returnObj = {
 							animal_name: 'hedgehog',
@@ -193,7 +199,7 @@
 							weakness: 'Empathy',
 							characteristics: `is your EQ superpower—you easily notice and understand others' emotions.`,
 						}
-					} else if (maxScore === scores.dimension3_score) {//Coyote 狼
+					} else if (maxScore === scores.dimension3_score) { //Coyote 狼
 						console.log("illustration src:", '3')
 						returnObj = {
 							animal_name: 'Coyote',
@@ -202,7 +208,7 @@
 							weakness: 'Social Skill',
 							characteristics: 'is your EQ superpower—you build connections and encourage collaboration.',
 						}
-					} else if (maxScore === scores.dimension4_score) {//Ostrich 鸵鸟
+					} else if (maxScore === scores.dimension4_score) { //Ostrich 鸵鸟
 						console.log("illustration src:", '4')
 						returnObj = {
 							animal_name: 'Ostrich',
@@ -211,7 +217,7 @@
 							weakness: 'Perception',
 							characteristics: 'is your EQ superpower—you’re great at sensing subtle cues and moods.',
 						}
-					} else if (maxScore === scores.dimension5_score) {//Monkey 猴子
+					} else if (maxScore === scores.dimension5_score) { //Monkey 猴子
 						console.log("illustration src:", '5')
 						returnObj = {
 							animal_name: 'Monkey',
@@ -221,17 +227,45 @@
 							characteristics: 'is your EQ superpower—you control emotions well, even under stress.',
 						}
 					}
+					console.log("-------result for your weakness:", returnObj.weakness)
+					console.log("-------------details:", returnObj.characteristics);
+					this.$store.commit('setWeakness', returnObj.weakness);
+					this.$store.commit('setCharateristics', returnObj.characteristics);
 				}
 				return returnObj;
 			},
 			caleOverviewScores() {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
-					const scores = [
-						{ name: 'Perception', score: this.homepageData.response.eq_scores.dimension1_score, detail: this.homepageData.response.eq_scores.dimension1_detail, 'icon': '/static/resulten/awareness0.svg' },
-						{ name: 'self regulation', score: this.homepageData.response.eq_scores.dimension2_score, detail: this.homepageData.response.eq_scores.dimension2_detail, 'icon': '/static/resulten/regulation0.svg'},
-						{ name: 'social skill', score: this.homepageData.response.eq_scores.dimension3_score, detail: this.homepageData.response.eq_scores.dimension3_detail, 'icon': '/static/resulten/socialskill0.svg'},
-						{ name: 'empathy', score: this.homepageData.response.eq_scores.dimension4_score, detail: this.homepageData.response.eq_scores.dimension4_detail, 'icon': '/static/resulten/empathy0.svg'},
-						{ name: 'motivation', score: this.homepageData.response.eq_scores.dimension5_score, detail: this.homepageData.response.eq_scores.dimension5_detail, 'icon': '/static/resulten/motivation0.svg'}
+					const scores = [{
+							name: 'Perception',
+							score: this.homepageData.response.eq_scores.dimension1_score,
+							detail: this.homepageData.response.eq_scores.dimension1_detail,
+							'icon': '/static/resulten/awareness0.svg'
+						},
+						{
+							name: 'self regulation',
+							score: this.homepageData.response.eq_scores.dimension2_score,
+							detail: this.homepageData.response.eq_scores.dimension2_detail,
+							'icon': '/static/resulten/regulation0.svg'
+						},
+						{
+							name: 'social skill',
+							score: this.homepageData.response.eq_scores.dimension3_score,
+							detail: this.homepageData.response.eq_scores.dimension3_detail,
+							'icon': '/static/resulten/socialskill0.svg'
+						},
+						{
+							name: 'empathy',
+							score: this.homepageData.response.eq_scores.dimension4_score,
+							detail: this.homepageData.response.eq_scores.dimension4_detail,
+							'icon': '/static/resulten/empathy0.svg'
+						},
+						{
+							name: 'motivation',
+							score: this.homepageData.response.eq_scores.dimension5_score,
+							detail: this.homepageData.response.eq_scores.dimension5_detail,
+							'icon': '/static/resulten/motivation0.svg'
+						}
 					];
 
 					// Sort scores in descending order
@@ -252,10 +286,9 @@
 			}
 		},
 		created() {
-			// this.$store.dispatch('fetchHomepageData')
+			this.$store.dispatch('fetchcourseData')
 		},
-		onUnload() {
-		},
+		onUnload() {},
 		onReady(option) {
 			// console.log('option', option);
 		},
@@ -290,7 +323,7 @@
 				// uni.navigateTo({
 				// 	url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				// });
-				this.$store.commit('setHomeNavName', 'dashboard');
+				this.$store.commit('setHomeNavName', 'dashboard2');
 				uni.navigateTo({
 					url: `/pages/dashboard/dashboard_en`
 				});
@@ -309,11 +342,12 @@
 
 <style scoped>
 	@font-face {
-	font-family: 'Poppins Italic';
-	src: url('/static/fonts/Poppins-Italic.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		src: url('/static/fonts/Poppins-Italic.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
 	}
+
 	.container {
 		/* position: absolute; */
 		/* position: fixed; */
@@ -349,7 +383,7 @@
 		align-items: center;
 	}
 
-	
+
 	.content {
 		display: flex;
 		/* 避免 flex 布局干扰 */
@@ -366,7 +400,8 @@
 		position: relative;
 		z-index: 5;
 		display: flex;
-		overflow: hidden; /* Changed from visible to hidden */
+		overflow: hidden;
+		/* Changed from visible to hidden */
 		/* justify-content: center;
 		align-items: center; */
 		background-image: url("/static/resulten/header-bg.png");
@@ -378,6 +413,7 @@
 	.animal-box {
 		display: flex;
 	}
+
 	.animal-my-eq-type {
 		position: absolute;
 		display: flex;
@@ -391,6 +427,7 @@
 		font-size: 26rpx;
 		font-weight: 400;
 	}
+
 	.animal-name {
 		position: absolute;
 		display: flex;
@@ -404,11 +441,11 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		font-family: 'Poppins Italic', sans-serif;
 		font-size: 40rpx;
 		color: #FDEDC8;
 		font-weight: 600;
 	}
+
 	.animal-icon {
 		position: absolute;
 		display: flex;
@@ -419,12 +456,14 @@
 		width: 296rpx;
 		height: 300rpx;
 	}
+
 	.animal-score {
 		display: block;
 		position: absolute;
 		top: 404rpx;
 		left: 32rpx;
 	}
+
 	.animal-score-title {
 		font-size: 26rpx;
 		font-weight: 400;
@@ -432,6 +471,7 @@
 		margin-left: 20rpx;
 		margin-bottom: 14rpx;
 	}
+
 	.animal-score-desc {
 		position: absolute;
 		display: flex;
@@ -444,12 +484,11 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		font-family: 'Poppins';
 		font-size: 36rpx;
-		font-family: 'Poppins Italic', sans-serif;
 		color: #FDEDC8;
 		font-weight: 600;
 	}
+
 	.animal-desc {
 		position: absolute;
 		display: flex;
@@ -463,7 +502,6 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		font-family: 'Poppins';
 		font-size: 40rpx;
 		color: #FFA1FC;
 		font-weight: 600;
@@ -513,16 +551,19 @@
 		margin-top: 32rpx;
 		border-radius: 32rpx;
 	}
+
 	.overview {
 		/* width: 100%; */
 		padding: 16rpx;
 	}
+
 	.overview-title {
 		font-size: 40rpx;
 		font-weight: 600;
 		color: #E8FFC4;
 		margin-left: 16rpx;
 	}
+
 	.overview-content {
 		position: relative;
 		display: block;
@@ -534,6 +575,7 @@
 		/* padding-left: 32rpx;
 		padding-left: 32rpx; */
 	}
+
 	.overview-content-icon {
 		position: absolute;
 		top: -20rpx;
@@ -541,15 +583,18 @@
 		width: 526rpx;
 		height: 50rpx;
 	}
+
 	.overview-content-item {
 		padding: 60rpx 32rpx 32rpx 32rpx;
 		display: block;
 	}
+
 	.overview-content-title {
 		font-size: 34rpx;
 		color: #2F2F38;
 		font-weight: 600;
 	}
+
 	.overview-content-detail {
 		margin-top: 16rpx;
 		font-size: 30rpx;
@@ -571,6 +616,7 @@
 		/* margin-top: 24rpx; */
 		margin-bottom: 20rpx;
 	}
+
 	.speed-title {
 		color: #373742;
 	}
@@ -583,7 +629,7 @@
 		/* flex-direction: column; */
 		align-items: center;
 	}
-	
+
 	.health-bar-container {
 		width: 100%;
 		height: 16rpx;
@@ -591,7 +637,7 @@
 		position: relative;
 		overflow: visible;
 	}
-	
+
 	.health-bar-background {
 		display: flex;
 		align-items: center;
@@ -603,7 +649,7 @@
 		overflow: visible;
 		z-index: 3;
 	}
-	
+
 	.health-bar-foreground {
 		/* margin-top: 2rpx; */
 		height: 100%;
@@ -615,7 +661,7 @@
 		overflow: visible;
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
 	}
-	
+
 	.health-bar-line {
 		position: absolute;
 		left: 50%;
@@ -635,10 +681,12 @@
 		margin-top: 32rpx;
 		border-radius: 32rpx;
 	}
+
 	.improved {
 		width: 100%;
 		padding: 16rpx;
 	}
+
 	.improved-title {
 		height: 88rpx;
 		font-size: 40rpx;
@@ -646,6 +694,7 @@
 		color: #FFFFFF;
 		margin-left: 16rpx;
 	}
+
 	.improved-content {
 		width: 100%;
 		/* height: 184px; */
@@ -654,9 +703,11 @@
 		opacity: 0px;
 		background: linear-gradient(90deg, #2C6E5F 0.52%, #50856E 99.36%);
 	}
+
 	.improved-content-item {
 		padding: 60rpx 32rpx 60rpx 32rpx;
 	}
+
 	.improved-content-title {
 		display: flex;
 		align-items: center;
@@ -665,10 +716,12 @@
 		color: #FCDDB2;
 		font-weight: 600;
 	}
+
 	.improved-show-icon {
 		width: 40rpx;
 		height: 32rpx;
 	}
+
 	.improved-content-description {
 		font-size: 30rpx;
 		font-weight: 400;
@@ -690,12 +743,14 @@
 		border: 1px solid #67677A66;
 		margin-bottom: 32rpx;
 	}
+
 	.key-strength-content-title {
 		display: flex;
 		align-items: center;
 		color: #E8FFC4;
 		gap: 12rpx;
 	}
+
 	.key-strength-nice {
 		position: absolute;
 		width: 184rpx;
@@ -703,6 +758,7 @@
 		right: 16rpx;
 		bottom: 0;
 	}
+
 	.guide-button-container {
 		z-index: 1000;
 		/* 确保按钮悬浮在其他内容之上 */
@@ -719,6 +775,7 @@
 		border-top: 1px solid #454552;
 		padding-top: 24rpx;
 	}
+
 	.guide-button {
 		width: 80%;
 		height: 88rpx;

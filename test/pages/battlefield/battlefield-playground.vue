@@ -52,7 +52,7 @@
 				</scroll-view>
 			</view>
 
-			<view v-if="state === 'NpcTalk'" class="npc-talk-container">
+			<view v-if="state === 'NpcTalk' && !isFinish" class="npc-talk-container">
 				<large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
 					:wording="chattingHistory[displayedNpcChatIndex].content">
 				</large-avatar-bubble>
@@ -193,6 +193,8 @@
 	import Task from "../../models/Task";
 	import TaskList from "../../models/TaskList";
 	import state from "../../state";
+	import apiService from '../../services/api-service';
+
 	export default {
 		components: {
 			RewardBar,
@@ -286,8 +288,9 @@
 				isCompleteTask: false,
 				currentTask: null,
 				isLoadingShow: false,
-        task2CompletedStatusOne: false,
-        taskFinished: false,
+				task2CompletedStatusOne: false,
+				taskFinished: false,
+				isFinish: false,
 			};
 		},
 		created() {
@@ -422,50 +425,60 @@
 
 				if (this.taskFinished) {
 					await this.Pass();
+					return;
 				}
-        console.log(this.task2CompletedStatusOne);
-        if(this.task2CompletedStatusOne) {
-          this.task2CompletedStatusOne = false;
-          this.state = "NpcTalk";
-        } else {
-          const nextRound = await continueChat(this.allHistory, "4");
-          console.log("next round data", nextRound);
-          nextRound.dialog = nextRound.dialog.map((item) => ({
-            role: item.role,
-            content: item.content ?? item.words,
-          }));
-          console.log("current chatting history:", this.chattingHistory);
-          this.chattingHistory = nextRound.dialog;
-          this.allHistory = this.allHistory.concat(nextRound.dialog);
-          console.log("after concat, chatting history:", this.chattingHistory);
-          // let someoneTalked = false;
-          this.displayedNpcChatIndex = 0;
-          this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
-          this.state = "NpcTalk";
-        }
+				console.log(this.task2CompletedStatusOne);
+				if (this.task2CompletedStatusOne) {
+					this.task2CompletedStatusOne = false;
+					this.state = "NpcTalk";
+				} else {
+					const nextRound = await continueChat(this.allHistory, "4");
+					console.log("next round data", nextRound);
+					nextRound.dialog = nextRound.dialog.map((item) => ({
+						role: item.role,
+						content: item.content ?? item.words,
+					}));
+					try {
+						const voiceMap = {
+							"Jason": {
+								"voice": "onyx",
+								"style": "serious"
+							},
+							"Anna": {
+								"voice": "nova",
+								"style": "empathetic"
+							},
+							"Sam": {
+								"voice": "echo",
+								"style": "empathetic"
+							}
+						};
+						const promises = nextRound.dialog.map(async (item) => {
+							const result = await apiService.getVoice(item.words || item.content, voiceMap[
+								item.role]["voice"], voiceMap[item.role]["style"]);
+							uni.setStorage({
+								key: `voice-${item.words || item.content}`,
+								data: result.message,
+								success: (res) => {
+									console.log("set storage success");
+								},
+							})
+						});
+						await Promise.all(promises);
+					} catch (error) {
+						console.log("get audio fail", error);
+					}
+					console.log("current chatting history:", this.chattingHistory);
+					this.chattingHistory = nextRound.dialog;
+					this.allHistory = this.allHistory.concat(nextRound.dialog);
+					console.log("after concat, chatting history:", this.chattingHistory);
+					// let someoneTalked = false;
+					this.displayedNpcChatIndex = 0;
+					this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
+					this.state = "NpcTalk";
+				}
 
 				this.isLoadingShow = false;
-				// await this.checkBossComplimentTask2(this.chattingHistory);
-				// console.log(isTask2);
-				// if(isTask2) {
-				// }
-				// this.chattingHistory = this.chattingHistory.concat(nextRound.dialog);
-				// for (; this.displayedNpcChatIndex < this.chattingHistory.length;
-				// 	++this.displayedNpcChatIndex
-				// ) {
-				// 	let npcIndex = getNpcIndex(this.chattingHistory[this.displayedNpcChatIndex]);
-				// 	if (npcIndex >= 0) {
-				// 		this.talkingNpc = npcIndex;
-				// 		console.log('someone talk:', this.talkingNpc);
-				// 		someoneTalked = true;
-				// 		break;
-				// 	}
-				// }
-				// console.log(this.displayedNpcChatIndex);
-				// if (!someoneTalked) {
-				// 	console.log(this.displayedNpcChatIndex);
-				// 	this.displayedNpcChatIndex--;
-				// }
 			},
 			retry() {
 				this.state = "userTalk";
@@ -542,7 +555,7 @@
 			async dismissNpcTalk() {
 				let foundNpcMessage = false;
 				const history = this.chattingHistory;
-        console.log(this.displayedNpcChatIndex, history);
+				console.log(this.displayedNpcChatIndex, history);
 				for (let i = this.displayedNpcChatIndex + 1; i < history.length; i++) {
 					if (history[i].role !== "user") {
 						// Found the next NPC message
@@ -550,16 +563,15 @@
 						this.talkingNpc = this.getNpcIndexByName(history[i].role);
 						this.npcDialog = history[i].content;
 						foundNpcMessage = true;
-            // await this.checkBossComplimentTask2(history[i]);
 						break;
 					}
-          // this.displayedNpcChatIndex ++;
+					// this.displayedNpcChatIndex ++;
 				}
 				if (!foundNpcMessage) {
-          // No more NPC messages; change state to 'userTalk'
+					// No more NPC messages; change state to 'userTalk'
 					console.log("no more npc, now user turn.");
 					this.state = "userTalk";
-          await this.checkBossComplimentTask2(history);
+					await this.checkBossComplimentTask2(history);
 				}
 			},
 
@@ -578,6 +590,12 @@
 					gemCount,
 					diamonds
 				);
+				const userId = this.$store.getters.getUserId;
+				if (isPass === true) {
+					const res = await apiService.updateDiamonds(userId, 10);
+				} else {
+					const res = await apiService.updateDiamonds(userId, 3);
+				}
 				console.log("evaluation result:", evaluationResult);
 				// const evaluationResult = await evalBattlefield(this.chattingHistory);
 				// console.log('evaluation result:', evaluationResult);
@@ -617,17 +635,6 @@
 						console.error("设置 NPC health 失败:", err);
 					},
 				});
-				// if (this.taskFinished) {
-				// 	uni.setStorage({
-				// 		key: 'isPass',
-				// 		data: true,
-				// 	});
-				// 	const gemCount = this.calculateStars();
-				// 	uni.setStorage({
-				// 		key: 'gemCount',
-				// 		data: gemCount,
-				// 	});
-				// }
 
 				setTimeout(() => {
 					uni.navigateTo({
@@ -811,7 +818,7 @@
 							const validChatsRepy = filterChatHistory(this.allHistory);
 							const judgeResultRepy = await reply(validChatsRepy, "4");
 							await this.handleRecorderReply(judgeResultRepy);
-							this.$store.dispatch('fetchHomepageData');
+							await this.$store.dispatch('fetchHomepageData');
 						}
 					}
 					if (selectedCard == 2) {
@@ -886,13 +893,9 @@
 						if (anyNpcHealthLow) {
 							this.isPass = false;
 							this.diamonds = 3;
-              // console.log("123456789");
 							await this.Pass();
 						}
 
-						// if (this.taskFinished) {
-						// 	await this.Pass();
-						// }
 						return true; // 添加返回值，表示处理成功
 					} else {
 						throw new Error("judgeResult is undefined or null");
@@ -922,7 +925,7 @@
 						const allPositive = judgeResult.moods.every(
 							(item) => parseInt(item.mood, 10) > 0
 						);
-            // console.log(allPositive);
+						// console.log(allPositive);
 						if (allPositive) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
@@ -942,9 +945,9 @@
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved!";
-                    console.log("task1 success");
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
+										this.isPass = true;
 									}
 								} else {
 									this.judgeTitle = "Goal achieved";
@@ -954,13 +957,9 @@
 								await this.gotoNextRound();
 							}
 						} else {
-              const allZero = judgeResult.moods.every((item) => parseInt(item.mood, 10) == 0);   
-              if(allZero) {
-                await this.gotoNextRound();
-              }           
-							// this.state = "judge";
-							// this.judgeTitle = "Well done";
-							// this.isCompleteTask = false;
+							if (notBad) {
+								await this.gotoNextRound();
+							}
 						}
 					} else {
 						if (this.answerNotGoodNum < 2) {
@@ -997,7 +996,7 @@
 				let taskCompleted = false;
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
 					const goalKeyword = "I agree with you";
-          console.log(dialog);
+					console.log(dialog);
 					for (let chat of dialog) {
 						if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
@@ -1017,8 +1016,8 @@
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
 										" Goals achieved";
 									taskCompleted = false;
-                  this.task2CompletedStatusOne = true; //如果任务2完成
-                  console.log("task2 success");
+									this.task2CompletedStatusOne = true; //如果任务2完成
+									console.log("task2 success");
 								} else {
 									this.judgeTitle = "Goal achieved";
 									this.isCompleteTask = true;
@@ -1034,7 +1033,6 @@
 					if (this.taskList.doneTaskLength >= totalTaskLength) {
 						this.taskFinished = true;
 						this.isPass = true;
-						// await this.Pass();
 						taskCompleted = false;
 					}
 				} else {

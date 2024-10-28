@@ -15,7 +15,7 @@
 						const currentPages = getCurrentPages();
 						const currentRoute = currentPages.length > 0 ? currentPages[currentPages.length - 1].route : '';
 						// console.log(currentRoute);
-						if(currentRoute === 'pages/landing/landing' || currentRoute === '') {
+						if (currentRoute === 'pages/landing/landing' || currentRoute === '') {
 							uni.navigateTo({
 								url: `/pages/dashboard/dashboard_en?currentView=dashboard`
 							});
@@ -23,6 +23,10 @@
 					}
 				}).catch((error) => {
 					console.error('Error fetching homepage data:', error);
+				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/landing/experience`
 				});
 			}
 			const username = uni.getStorageSync('username');
@@ -73,8 +77,13 @@
 	.uni-column {
 		flex-direction: column;
 	}
-	
+
 	body {
 		margin: 0;
+	}
+
+	text,
+	view {
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 </style>

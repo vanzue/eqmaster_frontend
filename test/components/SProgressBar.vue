@@ -184,14 +184,15 @@ export default {
 
         ctx.lineTo(endPoint.x, endPoint.y + yOffset);
 
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = i < this.finishComponents ? '#EDFB8B' : '#3B413B';
-        
-        // 修改这里：为未完成的路径设置虚线样式
-        if (i >= this.finishComponents) {
-          ctx.setLineDash([30, 30]); // 设置虚线样式，10像素实线，10像素空白
-        } else {
+        // 修改这里：为完成和未完成的路径设置不同的线宽
+        if (i < this.finishComponents) {
+          ctx.lineWidth = 10; // 完成的路径保持 10 的宽度
+          ctx.strokeStyle = '#EDFB8B';
           ctx.setLineDash([]); // 实线
+        } else {
+          ctx.lineWidth = 8; // 未完成的路径设置为 6 的宽度
+          ctx.strokeStyle = '#3B413B';
+          ctx.setLineDash([40, 50]); // 设置虚线样式，30像素实线，50像素空白
         }
         
         ctx.stroke();
@@ -515,6 +516,7 @@ export default {
   /* 移除transform属性 */
 }
 </style>
+
 
 
 

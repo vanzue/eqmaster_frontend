@@ -1,7 +1,7 @@
 <template>
-	<view class="container">
+	<view class="container" @touchmove.prevent>
 		<view class="splash-screen">
-			<text class="splash-text">Now，Let's see your workplace personality type！</text>
+			<text class="splash-text">Now, let's see your EQ report!</text>
 
 			<image class="splash-image" src="/static/cta-new.png" mode="widthFix"
 				:style="{ left: splashImageLeft1 + 'rpx' }"></image>
@@ -13,13 +13,15 @@
 				<view class="splash-progress-bar">
 					<view class="splash-progress-fill" :style="{ width: progress + '%' }"></view>
 				</view>
-				<text class="status-text">Generating personalized report...</text>
+				<!-- <text class="status-text">Generating personalized report...</text> -->
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import apiService from '../../services/api-service';
+	
 	export default {
 		data() {
 			return {
@@ -32,6 +34,7 @@
 				selectedOptions: [],
 				jobId: null,
 				num: null,
+				courseData: null,
 				homepageData: {
 					response: {
 						personal_info: {
@@ -70,6 +73,7 @@
 				interval: null,
 				isExpanded: false, // 默认收起状态
 				timeoutInterval: null,
+				disableSwipe: true, // 添加这个属性来禁止左滑
 			};
 		},
 		computed: {
@@ -124,6 +128,12 @@
 				console.log("something error happened", e);
 			}
 
+			this.getHomepageData();
+			this.getcourseData();
+			// this.getBattlefield();course
+			
+			// 禁止左滑
+			this.setSwipeBackDisabled();
 		},
 		onUnload() {
 			// 页面卸载时清除定时器
@@ -136,6 +146,8 @@
 			if (this.interval) {
 				clearInterval(this.interval);
 			}
+			// 页面卸载时，移除全局滑动事件监听
+			uni.offTouchMove();
 		},
 		methods: {
 			progressWidth(value) {
@@ -153,6 +165,7 @@
 			getHomepageData() {
 				// 不再需要 const that = this;
 				this.$store.dispatch('fetchHomepageData')
+				this.$store.dispatch('fetchcourseData')
 					.then(() => {
 						console.log('Homepage data fetched successfully');
 						if (this.interval) {
@@ -187,6 +200,68 @@
 						console.error('Error fetching homepage data:', error);
 					});
 			},
+			getcourseData() {
+				// 不再需要 const that = this;
+				// this.$store.dispatch('fetchHomepageData')
+				this.$store.dispatch('fetchcourseData')
+					.then(() => {
+						console.log('Homepage data fetched successfully');
+						if (this.interval) {
+							clearInterval(this.interval);
+							this.interval = null;
+						}
+						if (this.progressInterval) {
+							clearInterval(this.progressInterval);
+							this.progressInterval = null; // 修正了这里的错误
+						}
+						if (this.timeoutInterval) {
+							clearInterval(this.timeoutInterval);
+							this.timeoutInterval = null;
+						}
+			
+						const nextPageUrl = `/pages/result/result_en`;
+						uni.navigateTo({
+							url: nextPageUrl,
+							success: () => {
+								console.log('Navigation initiated successfully');
+							},
+							fail: (err) => {
+								console.error('Navigation failed:', err);
+								uni.showToast({
+									title: '页面跳转失败',
+									icon: 'none'
+								});
+							}
+						});
+					})
+					.catch((error) => {
+						console.error('Error fetching homepage data:', error);
+					});
+			},
+			
+			// async getBattlefield() {
+			// 	try {
+			
+			// 		// this.userId
+			// 		console.log('Fetching homepage data with jobId:', this.userId);
+			
+			// 		const data = await apiService.getBattlefield(this.userId);
+			// 		this.courseData = data;
+			// 		console.log('Homepage data received:', this.courseData);
+					
+			// 		this.$store.commit('setcourseDatas', returnObj.this.courseData);
+			
+			// 		// this.$nextTick(() => {
+			// 		// 	this.drawRadar();
+			// 		// });
+			// 	} catch (error) {
+			// 		this.error = 'Error fetching homepage data';
+			// 		console.error(this.error, error);
+			// 	} finally {
+			// 		// this.isLoading = false;
+			// 	}
+			// },
+			
 			startProgress() {
 				const totalDuration = 30000; // 30秒
 				const intervalDuration = totalDuration / 100; // 每次更新的间隔时间
@@ -218,6 +293,28 @@
 			},
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
+			},
+			// 添加新方法来设置禁止左滑
+			setSwipeBackDisabled() {
+				// 禁止左滑返回
+				if (uni.setSwipeBackMode) {
+					uni.setSwipeBackMode({
+						mode: 'none',
+						success: () => {
+							console.log('禁止左滑返回成功');
+						},
+						fail: (err) => {
+							console.error('禁止左滑返回失败:', err);
+						}
+					});
+				} else {
+					console.warn('当前环境不支持 setSwipeBackMode 方法');
+				}
+
+				// 禁止全局的滑动事件
+				uni.onTouchMove((event) => {
+					event.preventDefault();
+				}, { passive: false });
 			},
 		},
 		mounted() {
@@ -261,6 +358,8 @@
 		height: 100vh;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
+		/* 添加以下样式来禁止触摸滑动 */
+		touch-action: none;
 	}
 
 	.header {
@@ -305,14 +404,13 @@
 		top: 20%;
 		position: absolute;
 		margin-bottom: 20rpx;
-		margin-left: 55rpx;
+		margin-left: 50rpx;
 		/* 添加文本和图像之间的空间 */
 		line-height: 60rpx;
 		/* 调整高以提高可读性 */
 		white-space: pre-wrap;
 		/* 确保文本正确换行 */
 		font-weight: 600;
-		font-family: Arial;
 	}
 
 	.progress-container {
@@ -360,7 +458,7 @@
 		position: relative;
 		font-size: 34rpx;
 		font-weight: 350;
-		font-family: Arial;
 		color: #9EE44D;
 	}
 </style>
+

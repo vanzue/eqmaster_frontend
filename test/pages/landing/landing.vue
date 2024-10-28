@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view v-if="showSplash" :class="{'splash-screen': true, 'splash-screen-hidden': splashHidden}">
-			<image class="splash-image" src="/static/splashEN.png" mode="aspectFill"></image>
+			<image class="splash-image" src="/static/splashEN1.png" mode="aspectFill"></image>
 		</view>
 		<!-- <view class="splashBackground"></view>
 		<view v-if="showSplash" class="splash-screen">
@@ -60,10 +60,10 @@
 		methods: {
 			startQuiz() {
 				// 生成随机用户名
-				this.username = 'user_' + Math.floor(Math.random() * 10000); // 生成随机用户名
+				// this.username = 'user_' + Math.floor(Math.random() * 10000); // 生成随机用户名
 				// 跳转到问题页面并传递用户名
 				uni.navigateTo({
-					url: `/pages/landing/experience?username=${this.username}`
+					url: `/pages/landing/experience`
 				});
 			},
 			goToLogin() {

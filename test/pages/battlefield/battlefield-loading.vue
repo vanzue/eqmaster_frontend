@@ -14,6 +14,8 @@
 
 <script>
 import { startField } from "../../scripts/battlefield-chat";
+import apiService from '../../services/api-service';
+
 export default {
   async mounted() {
     const result = await startField(4, "4");
@@ -23,11 +25,35 @@ export default {
       data: result.dialog,
     });
 
-    uni.navigateTo({
-      url: "/pages/battlefield/battlefield-playground",
-    });
-  },
-};
+			const voiceMap = {
+				"Jason": {
+					"voice": "onyx",
+					"style": "serious"
+				},
+				"Anna": {
+					"voice": "nova",
+					"style": "empathetic"
+				},
+				"Sam": {
+					"voice": "echo",
+					"style": "empathetic"
+				}
+			};
+			try {
+				const promises = result.dialog.map(async (item) => {
+					const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
+					uni.setStorageSync(`voice-${item.words || item.content}`, result.message);
+				})
+				await Promise.all(promises);
+			} catch (error) {
+				console.log("get voice fail", error);
+			} finally {
+				uni.navigateTo({
+					url: '/pages/battlefield/battlefield-playground'
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped>

@@ -10,12 +10,12 @@
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
 					<view class="jewelry-num">
-						{{ homepageData?.response?.personal_info?.num_diamond || 100 }}
+						{{ diamondCount }}
 					</view>
 				</view>
 			</view>
 			<view class="card-center" @click.stop>
-				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectedCard = 1">
+				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
 					<view class="top">
 						<text>Best Answer</text>
 						<view class="top-content">
@@ -29,7 +29,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectedCard = 2">
+				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
 					<view class="top">
 						<text>Get Hint</text>
 						<view class="top-content">
@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			<view class="card-button">
-				<button :disabled="!selectedCard || cardButtonLoading || !eqScoresNum"
+				<button :disabled="!selectedCard || cardButtonLoading || !canAfford(selectedCard) || !eqScoresNum"
 					@click="exchangeClick">Confirm</button>
 			</view>
 		</view>
@@ -77,7 +77,11 @@
 			console.log(option);
 		},
 		computed: {
+			diamondCount() {
+				return this.$store.getters.getDiamondCount;
+			},
 			homepageData() {
+				console.log("homepage data from store:", this.$store.getters.getHomepageData);
 				return this.$store.getters.getHomepageData;
 			},
 			userId() {
@@ -94,7 +98,22 @@
 			setShowCardPopup() {
 				this.$emit('closeCueCard');
 			},
-			exchangeClick() {
+			selectCard(cardType) {
+				this.selectedCard = cardType;
+			},
+			canAfford(cardType) {
+				return cardType === 1 ? this.diamondCount >= 60 : this.diamondCount >= 20;
+			},
+			async exchangeClick() {
+				if (this.selectedCard === 1 && this.diamondCount >= 60) {
+					this.$store.commit('setDiamondCount', this.diamondCount - 60);
+					const userId = this.$store.getters.getUserId;
+					const res = await apiService.updateDiamonds(userId, -60);
+				} else if (this.selectedCard === 2 && this.diamondCount >= 20) {
+					this.$store.commit('setDiamondCount', this.diamondCount - 20);
+					const userId = this.$store.getters.getUserId;
+					const res = await apiService.updateDiamonds(userId, -20);
+				}
 				this.$emit('exchangeClick', this.selectedCard);
 			},
 			async getHomepageData() {
@@ -148,7 +167,6 @@
 		justify-content: center;
 		align-items: center;
 		font-size: 40rpx;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-weight: 600;
 		color: #2D6985;
 	}
@@ -182,7 +200,7 @@
 	}
 
 	.box {
-		position: relative; 
+		position: relative;
 		display: block;
 		justify-content: center;
 		color: #252529;
@@ -204,13 +222,11 @@
 	text {
 		font-size: 34rpx;
 		font-weight: 600;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		color: #252529;
 	}
 
 	.top-content {
 		font-size: 24rpx;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-weight: 400;
 		margin-top: 24rpx;
 		text-align: left;
@@ -236,7 +252,6 @@
 		font-size: 40rpx;
 		font-weight: 800;
 		text-align: left;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.jewelry-num-dark {
@@ -244,7 +259,6 @@
 		font-size: 40rpx;
 		font-weight: 900;
 		text-align: left;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	/* .card-selected {
@@ -278,7 +292,6 @@
 		font-weight: 600;
 		color: #252529 !important;
 
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	}
 

@@ -9,7 +9,7 @@
 			<view class="text-content">
 				<text class="greeting">Welcome to ECoach!👋</text>
 			</view>
-			<text class="question">What can I call you?</text>
+			<text class="question">How may I call you?👋</text>
 			<!-- <text class="question1">完善个人信息</text> -->
 
 			<!-- 输入框 -->
@@ -54,7 +54,7 @@
 				} else {
 					// 提示用户输入名字
 					uni.showToast({
-						title: 'Please input your name',
+						title: '请输入您的名字',
 						icon: 'none'
 					});
 				}

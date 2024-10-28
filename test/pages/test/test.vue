@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
 
@@ -40,8 +40,8 @@
 		</template>
 
 		<!-- Test2 page content -->
-		<template v-else-if="currentPage === 'test2'">
-			<view class="options-container">
+		<template v-else-if="currentPage === 'test2' " >
+			<view class="options-container" :class="{ 'disabled': isLoading }">
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
             : []" :key="index" :class="['text-box1', { selected: selectedOptionIndex === index }]"
@@ -51,8 +51,7 @@
 					</text>
 				</view>
 				<view class="next-button-container">
-					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage"
-						:class="{ 'disabled': isLoading }">
+					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage1">
 					</image>
 				</view>
 			</view>
@@ -66,7 +65,7 @@
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
 			</view>
-			<view class="text-box" @tap="navigateToTest4" :class="{ 'disabled': isLoading }">
+			<view class="text-box" @click="navigateToTest4" :class="{ 'disabled': isLoading }">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
 					<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
@@ -82,8 +81,8 @@
 		</template>
 
 		<!-- Test5 page content -->
-		<template v-else-if="currentPage === 'test5'">
-			<view class="options-container">
+		<template v-else-if="currentPage === 'test5'" >
+			<view class="options-container"  :class="{ 'disabled': isLoading }">
 				<view v-for="(option, index) in scenarioData && scenarioData.options
             ? scenarioData.options
             : []" :key="index" :class="['text-box1', { selected: selectedOptionIndex === index }]"
@@ -93,12 +92,12 @@
 					</text>
 				</view>
 				<view class="next-button-container">
-					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage"
-						:class="{ 'disabled': isLoading }">
+					<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @click="nextPage1">
 					</image>
 				</view>
 			</view>
 		</template>
+		
 	</view>
 </template>
 
@@ -109,7 +108,8 @@
 	} from "../../scripts/locate_name";
 	import OnboardingChatBubble from "/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
-
+	import StateStack from "./StateStack";
+	const stateStack = new StateStack();
 	export default {
 		components: {
 			OnboardingChatBubble,
@@ -141,6 +141,8 @@
 				chatHistory: [], // Keep this new property
 				backgroundImageSrc: '/static/onboarding/bg1.png',
 				requestCount: 0,
+				startX: 0, // 记录触摸开始时的 X 坐标
+				endX: 0, // 记录触摸结束时的 X 坐标
 			};
 		},
 		onLoad(option) {
@@ -304,7 +306,7 @@
 				} else {
 					console.warn("Background information not found in scenario data");
 					this.description = "无法获取背景信息";
-					this.background = "���点击下方箭头继续";
+					this.background = "点击下方箭头继续";
 					this.scenarioData = {
 						options: [],
 					};
@@ -314,7 +316,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.analyzeBackground();
@@ -325,7 +327,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -333,12 +335,13 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test1");
 			},
 			navigateToTest2() {
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test2";
@@ -346,7 +349,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -354,11 +357,12 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test2");
 			},
 			navigateToTest3() {
 				// Show loading indicator
 				uni.showLoading({
-					title: "加载中...",
+					title: "loading...",
 				});
 
 				// Get new scenario data first
@@ -373,7 +377,7 @@
 						console.error("Error loading scenario data:", error);
 						uni.hideLoading();
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					});
@@ -382,7 +386,7 @@
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test4";
@@ -390,7 +394,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -398,12 +402,13 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test4");
 			},
 			navigateToTest5() {
 				if (this.isLoading) return;
 				this.isLoading = true;
 				uni.showLoading({
-					title: '加载中...'
+					title: 'loading...'
 				});
 
 				this.currentPage = "test5";
@@ -411,7 +416,7 @@
 					.catch((error) => {
 						console.error("Error loading scenario data:", error);
 						uni.showToast({
-							title: "加载失败，请重试",
+							title: "loading failed, try again",
 							icon: "none",
 						});
 					})
@@ -419,6 +424,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
+				stateStack.push("test5");
 			},
 			analyzeBackground() {
 				if (this.background) {
@@ -497,6 +503,62 @@
 						});
 					});
 			},
+			
+			nextPage1() {
+				if (this.isLoading) return;
+				this.isLoading = true;
+				uni.showLoading({ title: 'loading...' });
+				
+				if (this.num === null) {
+					uni.showToast({
+						title: "Please select an option",
+						icon: "none",
+					});
+					this.isLoading = false;
+					uni.hideLoading();
+					return;
+				}
+
+				// Add the current scenario and selected option to chat history
+				this.chatHistory.push({
+					background: this.background,
+					description: this.description,
+					selectedOption: this.scenarioData.options[this.selectedOptionIndex].text
+				});
+
+				// Start preparing the next page immediately
+				const prepareNextPage = this.navigateToNextPage();
+
+				// Make the API call
+				const apiCall = apiService.chooseScenario(this.num, this.jobId);
+
+				// Use Promise.all to wait for both the API call and page preparation
+				Promise.all([apiCall, prepareNextPage])
+					.then(([result, _]) => {
+						console.log("Response data:", result);
+
+						if (result.message === "Final choice made. Processing data in background.") {
+							this.navigateToLoading();
+						} else {
+							this.currentScene++;
+							this.selectedOptionIndex = null;
+							this.num = null;
+							this.updateProgress();
+						}
+					})
+					.catch((error) => {
+						console.error("Detailed error:", error);
+						uni.showToast({
+							title: `error：${error.message}`,
+							icon: "none",
+						});
+					})
+					.finally(() => {
+						this.isLoading = false;
+						uni.hideLoading();
+					});
+			},
+			
 			navigateToNextPage() {
 				// 根据当前页面，决定下一个页面
 				if (this.currentPage === "test2") {
@@ -531,6 +593,27 @@
 			},
 			updateProgress() {
 				this.progress = (this.currentScene / this.totalScenes) * 100;
+			},
+			onTouchStart(event) {
+				// 记录触摸开始的 X 坐标
+				console.log("touch start!!!!!!!!!!! ", this.startX);
+				this.startX = event.changedTouches[0].clientX;
+				this.endX = this.startX;
+			},
+			onTouchMove(event) {
+				// 实时记录当前 X 坐标
+				console.log("touch end!!!!!!!!!!! ", this.endX);
+				this.endX = event.changedTouches[0].clientX;
+			},
+			onTouchEnd() {
+				// 计算滑动距离
+				const distance = this.startX - this.endX;
+				if (this.currentPage === "test5") {
+					console.log("move distance:", distance);
+					if (distance < -150) { // 自定义左滑的最小距离，比如 50px
+						this.navigateToTest3();
+					}
+				}
 			},
 		},
 	};
