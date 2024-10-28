@@ -340,7 +340,7 @@
 					.finally(() => {
 						this.isLoading = false;
 					});
-				stateStack.push("test1");
+				// stateStack.push("test1");
 			},
 			navigateToTest2() {
 				if (this.isLoading) return;
@@ -358,7 +358,7 @@
 					.finally(() => {
 						this.isLoading = false;
 					});
-				stateStack.push("test2");
+				// stateStack.push("test2");
 			},
 			navigateToTest3() {
 				// Show loading indicator
@@ -399,7 +399,7 @@
 					.finally(() => {
 						this.isLoading = false;
 					});
-				stateStack.push("test4");
+				// stateStack.push("test4");
 			},
 			navigateToTest5() {
 				if (this.isLoading) return;
@@ -417,7 +417,7 @@
 					.finally(() => {
 						this.isLoading = false;
 					});
-				stateStack.push("test5");
+				// stateStack.push("test5");
 			},
 			analyzeBackground() {
 				if (this.background) {

@@ -21,7 +21,7 @@
 
 <script>
 	import apiService from '../../services/api-service';
-	
+
 	export default {
 		data() {
 			return {
@@ -131,7 +131,7 @@
 			this.getHomepageData();
 			this.getcourseData();
 			// this.getBattlefield();course
-			
+
 			// 禁止左滑
 			this.setSwipeBackDisabled();
 		},
@@ -165,7 +165,7 @@
 			getHomepageData() {
 				// 不再需要 const that = this;
 				this.$store.dispatch('fetchHomepageData')
-				// this.$store.dispatch('fetchcourseData')
+					// this.$store.dispatch('fetchcourseData')
 					.then(() => {
 						console.log('Homepage data fetched successfully');
 						if (this.interval) {
@@ -182,7 +182,7 @@
 						}
 
 						const nextPageUrl = `/pages/result/result_en`;
-						uni.navigateTo({
+						uni.redirectTo({
 							url: nextPageUrl,
 							success: () => {
 								console.log('Navigation initiated successfully');
@@ -218,9 +218,9 @@
 							clearInterval(this.timeoutInterval);
 							this.timeoutInterval = null;
 						}
-			
+
 						const nextPageUrl = `/pages/result/result_en`;
-						uni.navigateTo({
+						uni.redirectTo({
 							url: nextPageUrl,
 							success: () => {
 								console.log('Navigation initiated successfully');
@@ -238,19 +238,19 @@
 						console.error('Error fetching homepage data:', error);
 					});
 			},
-			
+
 			// async getBattlefield() {
 			// 	try {
-			
+
 			// 		// this.userId
 			// 		console.log('Fetching homepage data with jobId:', this.userId);
-			
+
 			// 		const data = await apiService.getBattlefield(this.userId);
 			// 		this.courseData = data;
 			// 		console.log('Homepage data received:', this.courseData);
-					
+
 			// 		this.$store.commit('setcourseDatas', returnObj.this.courseData);
-			
+
 			// 		// this.$nextTick(() => {
 			// 		// 	this.drawRadar();
 			// 		// });
@@ -261,7 +261,7 @@
 			// 		// this.isLoading = false;
 			// 	}
 			// },
-			
+
 			startProgress() {
 				const totalDuration = 30000; // 30秒
 				const intervalDuration = totalDuration / 100; // 每次更新的间隔时间
@@ -314,7 +314,9 @@
 				// 禁止全局的滑动事件
 				uni.onTouchMove((event) => {
 					event.preventDefault();
-				}, { passive: false });
+				}, {
+					passive: false
+				});
 			},
 		},
 		mounted() {
@@ -461,4 +463,3 @@
 		color: #9EE44D;
 	}
 </style>
-
