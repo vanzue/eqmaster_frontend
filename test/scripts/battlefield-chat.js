@@ -1,10 +1,10 @@
 // 定义常量URL
 const BASE_URL =
-  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/chat/battlefield_agent";
+  "https://nft-b2b2c-apim-azsc-eus-int.azure-api.net/eqmaster/chat/battlefield_agent";
 const EVAL_URL =
-  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/eval/battlefield_agent";
+  "https://nft-b2b2c-apim-azsc-eus-int.azure-api.net/eqmaster/eval/battlefield_agent";
 const TOOLTIP_URL =
-  "https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/course_exists";
+  "https://nft-b2b2c-apim-azsc-eus-int.azure-api.net/eqmaster/course_exists";
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
 function sendRequest(
   person_id,
