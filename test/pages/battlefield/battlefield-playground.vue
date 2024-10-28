@@ -455,32 +455,33 @@
 					if (!this.isLoadingShow) {
 						this.isLoadingShow = true;
 					}
-					const nextRound = await continueChat(this.allHistory, "4");
-					console.log("next round data", nextRound);
-					nextRound.dialog = nextRound.dialog.map((item) => ({
-						role: item.role,
-						content: item.content ?? item.words,
-					}));
 					try {
-						const npcs = this.$store.getters.getNpcs;
-						const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
-						
-						const promises = nextRound.dialog.map(async (item) => {
-							const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);		
-							this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
-						})
-						await Promise.all(promises);
+						const nextRound = await continueChat(this.allHistory, "4");
+						console.log("next round data", nextRound);
+
+						nextRound.dialog = nextRound.dialog.map(item => ({
+							role: item.role,
+							content: item.content ?? item.words,
+						}));
+
+						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
+
+						await Promise.all(nextRound.dialog.map(async item => {
+							const result = await apiService.getVoice(item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);
+							this.$store.commit('setAudios', { key: `voice-${item.content}`, value: result.message });
+						}));
+
+						console.log("current chatting history:", this.chattingHistory);
+						this.chattingHistory = nextRound.dialog;
+						this.allHistory = [...this.allHistory, ...nextRound.dialog];
+						console.log("after concat, chatting history:", this.chattingHistory);
+
+						this.displayedNpcChatIndex = 0;
+						this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
+						this.state = "NpcTalk";
 					} catch (error) {
-						console.log("get audio fail", error);
+						console.error("get audio fail", error);
 					}
-					console.log("current chatting history:", this.chattingHistory);
-					this.chattingHistory = nextRound.dialog;
-					this.allHistory = this.allHistory.concat(nextRound.dialog);
-					console.log("after concat, chatting history:", this.chattingHistory);
-					// let someoneTalked = false;
-					this.displayedNpcChatIndex = 0;
-					this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
-					this.state = "NpcTalk";
 				}
         this.sendMessageNavShow = true;
 				this.isLoadingShow = false;
