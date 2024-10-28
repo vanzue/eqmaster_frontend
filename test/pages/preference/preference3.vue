@@ -150,7 +150,7 @@
 
 	.card-image {
 		width: 100%;
-		height: 400rpx;
+		height: 33vh;
 	}
 
 	.start-button {
