@@ -123,8 +123,7 @@
 				<view class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件 -->
-						<SProgressBar v-if="courseData"
-							:finishComponents="courseData.courses.length"
+						<SProgressBar v-if="courseData" :finishComponents="courseData.courses.length"
 							:starRatings="courseData.courses.map(course => course.result)" :totalComponents="4" />
 					</view>
 				</view>
@@ -401,6 +400,7 @@
 		},
 		async created() {
 			await this.getAnalysisList();
+			this.$store.dispatch('fetchcourseData');
 			// await this.getBattlefield();
 		},
 		onLoad(option) {
@@ -552,7 +552,7 @@
 			// 		const data = await apiService.getBattlefield(this.userId);
 			// 		this.courseData = data;
 			// 		console.log('Homepage data received:', this.courseData);
-					
+
 			// 		// this.$store.commit('setcourseDatas', returnObj.this.courseData);
 
 			// 		// this.$nextTick(() => {
