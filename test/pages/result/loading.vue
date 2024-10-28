@@ -163,7 +163,7 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			getHomepageData() {
-				const maxAttempts = 10; // Maximum number of retry attempts
+				const maxAttempts = 100; // Maximum number of retry attempts
 				let attempts = 0;
 				
 				const fetchData = () => {
