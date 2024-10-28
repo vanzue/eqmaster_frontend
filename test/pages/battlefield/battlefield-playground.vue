@@ -115,7 +115,9 @@
         " class="hintTooltip">
 				Need help? Here's your advice packet
 			</view>
-			<view class="player-action-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
+
+
+			<view class="player-action-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk' && sendMessageNavShow">
 				<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
 					<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 				</view>
@@ -304,6 +306,7 @@
 				isFinish: false,
         playAudioIndex: -1,
         audioContext: null,
+        sendMessageNavShow: true,
 			};
 		},
 		created() {
@@ -429,6 +432,7 @@
 			},
 			async gotoNextRound() {
 				console.log("go next round");
+        this.sendMessageNavShow = true;
 				if (!this.isGoodReply) {
 					this.retry();
 					this.isLoadingShow = false;
@@ -445,6 +449,9 @@
 					this.task2CompletedStatusOne = false;
 					this.state = "NpcTalk";
 				} else {
+					if (!this.isLoadingShow) {
+						this.isLoadingShow = true;
+					}
 					const nextRound = await continueChat(this.allHistory, "4");
 					console.log("next round data", nextRound);
 					nextRound.dialog = nextRound.dialog.map((item) => ({
@@ -490,7 +497,6 @@
 					this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
 					this.state = "NpcTalk";
 				}
-
 				this.isLoadingShow = false;
 			},
       playAudio(params) {
@@ -746,6 +752,7 @@
 								this.anasLoadingObj.text = "Analyzing";
 							}, 50);
 						});
+            this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
 						const judgeResult = await reply(validChats, "4");
 
@@ -754,6 +761,7 @@
 						this.anasLoadingObj.loading = false;
 					} catch (error) {
 						this.anasLoadingObj.loading = false;
+            this.sendMessageNavShow = true;
 						if (this.chattingHistory.length > 0) {
 							this.chattingHistory.pop();
 						}
@@ -791,6 +799,7 @@
 						});
 					});
 					try {
+            this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
 						const judgeResult = await reply(validChats, "4");
 						// console.log("validChat:", validChat);
@@ -806,6 +815,7 @@
 							this.chattingHistory.pop();
 						}
 						this.anasLoadingObj.loading = false;
+            this.sendMessageNavShow = true;
 					}
 				}
 			},
@@ -825,6 +835,7 @@
 						judgeResult = await helpReply(validChats, "4");
 						// console.log(judgeResult.responsive);
 						if (judgeResult.responsive) {
+              await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage = {
 								role: "user",
@@ -848,10 +859,10 @@
 								});
 							});
 
+              this.sendMessageNavShow = false;
 							const validChatsRepy = filterChatHistory(this.allHistory);
 							const judgeResultRepy = await reply(validChatsRepy, "4");
 							await this.handleRecorderReply(judgeResultRepy);
-							await this.$store.dispatch('fetchHomepageData');
 						}
 					}
 					if (selectedCard == 2) {
@@ -862,6 +873,7 @@
 						judgeResult = await hint(validChats, "4");
 						// console.log(judgeResult.tips);
 						if (judgeResult.tips) {
+              await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage2 = {
 								role: "tipping",
@@ -889,6 +901,7 @@
 					this.anasLoadingObj.loading = false;
 				} catch (error) {
 					this.anasLoadingObj.loading = false;
+          this.sendMessageNavShow = true;
 				}
 			},
 			async handleRecorderReply(judgeResult) {
@@ -942,6 +955,7 @@
 					if (this.chattingHistory.length > 0) {
 						this.chattingHistory.pop();
 					}
+          this.sendMessageNavShow = true;
 					return false; // 添加返回值，表示处理失败
 				}
 			},
@@ -958,11 +972,11 @@
 						const allPositive = judgeResult.moods.every(
 							(item) => parseInt(item.mood, 10) > 0
 						);
-						// console.log(allPositive);
+						console.log(allPositive);
 						if (allPositive) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
-								console.log("allPositive:", allPositive);
+								// console.log("allPositive:", allPositive);
 								this.currentTask = this.taskList.getTask(0);
 								const totalTaskLength = this.taskList.getTotalTaskLength();
 								console.log("Total task length:", totalTaskLength);

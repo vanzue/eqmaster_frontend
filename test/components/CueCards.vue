@@ -10,7 +10,7 @@
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
 					<view class="jewelry-num">
-						{{ diamondCount }}
+						{{ diamondCount || 0 }}
 					</view>
 				</view>
 			</view>
@@ -78,10 +78,9 @@
 		},
 		computed: {
 			diamondCount() {
-				return this.$store.getters.getDiamondCount;
+				return this.homepageData?.response?.personal_info?.num_diamond;
 			},
 			homepageData() {
-				console.log("homepage data from store:", this.$store.getters.getHomepageData);
 				return this.$store.getters.getHomepageData;
 			},
 			userId() {
@@ -115,23 +114,6 @@
 					const res = await apiService.updateDiamonds(userId, -20);
 				}
 				this.$emit('exchangeClick', this.selectedCard);
-			},
-			async getHomepageData() {
-				try {
-					this.isLoading = true;
-					this.error = null;
-					console.log('Fetching homepage data with userId:', this.userId);
-
-					const data = await apiService.getHomepageData(this.userId);
-					this.homepageData = data;
-					console.log('Homepage data received:', this.homepageData);
-
-				} catch (error) {
-					this.error = 'Error fetching homepage data';
-					console.error(this.error, error);
-				} finally {
-					this.isLoading = false;
-				}
 			},
 		},
 		created() {
