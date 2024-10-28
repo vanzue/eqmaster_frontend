@@ -33,6 +33,7 @@ export default createStore({
 		weakness: null,
 		characteristics: null,
 		diamondCount: 0,
+		gemCount: 0,
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -81,6 +82,9 @@ export default createStore({
 		},
 		setDiamondCount(state, diamondCount) {
 			state.diamondCount = diamondCount;
+		},
+		setGemCount(state, gemCount) {
+			state.gemCount = gemCount;
 		}
 	},
 	getters: {
@@ -119,6 +123,9 @@ export default createStore({
 		},
 		getDiamondCount(state) {
 			return state.diamondCount;
+		},
+		getGemCount(state) {
+			return state.gemCount;
 		}
 	},
 	actions: {

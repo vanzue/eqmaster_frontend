@@ -18,11 +18,11 @@
 				<text class="npc-name">
 					<image :src="npcs[0].avatar" class="npc-avatar"></image> Jason
 				</text>
-				&nbsp;joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as 
+				&nbsp;joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as
 				<text class="npc-name">
 					<image :src="npcs[1].avatar" class="npc-avatar"></image> Sam
 				</text>
-				&nbsp;feels uneasy, and 
+				&nbsp;feels uneasy, and
 				<text class="npc-name">
 					<image :src="npcs[2].avatar" class="npc-avatar"></image> Anna
 				</text>
@@ -42,8 +42,7 @@
 			ProgressBar, // 注册组件
 		},
 		data() {
-			return {
-			};
+			return {};
 		},
 		computed: {
 			npcs() {
@@ -133,26 +132,31 @@
 		font-size: 17px;
 		font-weight: 350;
 		align-items: center;
-		line-height: 25.5px;
+		line-height: 48rpx;
 		color: #fff;
 		/* 具体设置白色 */
 	}
 
 	.content-item {
 		/* margin-top: 30rpx; */
+		line-height: 48rpx;
 	}
+
 	.npc-name {
 		width: max-content;
 		height: 52rpx;
 		background-color: #2D6985;
 		font-size: 34rpx;
 		font-weight: 400;
-		white-space: nowrap; /* 强制不换行 */
+		white-space: nowrap;
+		/* 强制不换行 */
 		padding: 4rpx 12rpx;
-		line-height: 52rpx; /* 上下居中 */
+		line-height: 52rpx;
+		/* 上下居中 */
 		position: relative;
 		border-radius: 26rpx;
 	}
+
 	.npc-avatar {
 		width: 40rpx;
 		height: 40rpx;
@@ -165,6 +169,6 @@
 		top: 50%;
 		transform: translateY(-50%); */
 	}
-	.description-text {
-	}
+
+	.description-text {}
 </style>
