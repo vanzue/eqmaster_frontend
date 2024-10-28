@@ -163,80 +163,71 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			getHomepageData() {
-				// 不再需要 const that = this;
-				this.$store.dispatch('fetchHomepageData')
-					// this.$store.dispatch('fetchcourseData')
-					.then(() => {
-						console.log('Homepage data fetched successfully');
-						if (this.interval) {
-							clearInterval(this.interval);
-							this.interval = null;
-						}
-						if (this.progressInterval) {
-							clearInterval(this.progressInterval);
-							this.progressInterval = null; // 修正了这里的错误
-						}
-						if (this.timeoutInterval) {
-							clearInterval(this.timeoutInterval);
-							this.timeoutInterval = null;
-						}
-
-						const nextPageUrl = `/pages/result/result_en`;
-						uni.redirectTo({
-							url: nextPageUrl,
-							success: () => {
-								console.log('Navigation initiated successfully');
-							},
-							fail: (err) => {
-								console.error('Navigation failed:', err);
-								// uni.showToast({
-								// 	title: 'Page navigation failed',
-								// 	icon: 'none'
-								// });
-							}
-						});
-					})
-					.catch((error) => {
-						console.error('Error fetching homepage data:', error);
-					});
-			},
-			getcourseData() {
-				// 不再需要 const that = this;
-				// this.$store.dispatch('fetchHomepageData')
-				this.$store.dispatch('fetchcourseData')
-					.then(() => {
-						console.log('Homepage data fetched successfully');
-						if (this.interval) {
-							clearInterval(this.interval);
-							this.interval = null;
-						}
-						if (this.progressInterval) {
-							clearInterval(this.progressInterval);
-							this.progressInterval = null; // 修正了这里的错误
-						}
-						if (this.timeoutInterval) {
-							clearInterval(this.timeoutInterval);
-							this.timeoutInterval = null;
-						}
-
-						const nextPageUrl = `/pages/result/result_en`;
-						uni.redirectTo({
-							url: nextPageUrl,
-							success: () => {
-								console.log('Navigation initiated successfully');
-							},
-							fail: (err) => {
-								console.error('Navigation failed:', err);
+				const maxAttempts = 10; // Maximum number of retry attempts
+				let attempts = 0;
+				
+				const fetchData = () => {
+					this.$store.dispatch('fetchHomepageData')
+						.then(() => {
+							console.log('Homepage data fetched successfully');
+							this.clearAllIntervals();
+							
+							const nextPageUrl = `/pages/result/result_en`;
+							uni.redirectTo({
+								url: nextPageUrl,
+								success: () => console.log('Navigation initiated successfully'),
+								fail: (err) => console.error('Navigation failed:', err)
+							});
+						})
+						.catch((error) => {
+							console.error('Error fetching homepage data:', error);
+							attempts++;
+							if (attempts < maxAttempts) {
+								// Retry after 3 seconds
+								setTimeout(fetchData, 3000);
+							} else {
 								uni.showToast({
-									title: '页面跳转失败',
+									title: 'Failed to load data',
 									icon: 'none'
 								});
 							}
 						});
-					})
-					.catch((error) => {
-						console.error('Error fetching homepage data:', error);
-					});
+				};
+
+				fetchData();
+			},
+			getcourseData() {
+				const maxAttempts = 10;
+				let attempts = 0;
+				
+				const fetchData = () => {
+					this.$store.dispatch('fetchcourseData')
+						.then(() => {
+							console.log('Course data fetched successfully');
+							this.clearAllIntervals();
+							
+							const nextPageUrl = `/pages/result/result_en`;
+							uni.redirectTo({
+								url: nextPageUrl,
+								success: () => console.log('Navigation initiated successfully'),
+								fail: (err) => console.error('Navigation failed:', err)
+							});
+						})
+						.catch((error) => {
+							console.error('Error fetching course data:', error);
+							attempts++;
+							if (attempts < maxAttempts) {
+								setTimeout(fetchData, 3000);
+							} else {
+								uni.showToast({
+									title: 'Failed to load course data',
+									icon: 'none'
+								});
+							}
+						});
+				};
+
+				fetchData();
 			},
 
 			// async getBattlefield() {
@@ -317,6 +308,20 @@
 				}, {
 					passive: false
 				});
+			},
+			clearAllIntervals() {
+				if (this.interval) {
+					clearInterval(this.interval);
+					this.interval = null;
+				}
+				if (this.progressInterval) {
+					clearInterval(this.progressInterval);
+					this.progressInterval = null;
+				}
+				if (this.timeoutInterval) {
+					clearInterval(this.timeoutInterval);
+					this.timeoutInterval = null;
+				}
 			},
 		},
 		mounted() {

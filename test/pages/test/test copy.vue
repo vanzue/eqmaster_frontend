@@ -12,6 +12,12 @@
 
 		<!-- Test page content -->
 		<template v-if="currentPage === 'test'">
+			<!-- <view class="banner-container">
+				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<view style="display: flex;">
+					<text class="room-text">{{ scenarioData.location }}</text>
+				</view>
+			</view> -->
 			<view class="banner-container">
 				<image class="logo" src="/static/signa.png" mode="aspectFit" />
 				<view class="test">
@@ -124,7 +130,7 @@
 				description: "",
 				firstScene: false,
 				selectedOptionIndex: null,
-				num: "", // Changed from null to empty string
+				num: null,
 				baseURL: apiService.API_ENDPOINT,
 				progress: 0,
 				currentScene: 0,
@@ -137,14 +143,6 @@
 				requestCount: 0,
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标
-				dialogueHistory: [], // Modified structure for dialogue history
-				scores: {
-					Perception: 0,
-					"Self Regulation": 0,
-					Empathy: 0,
-					"Social Skill": 0,
-					Motivation: 0
-				},
 			};
 		},
 		watch: {
@@ -161,7 +159,6 @@
 			// this.sendDataToBackend();
 		},
 		async created() {
-			console.log("Initial num value:", this.num);
 			try {
 				await this.initializeData();
 				await this.getScenarioId();
@@ -278,12 +275,11 @@
 				// 	apiService.startScenario(this.jobId) :
 				// 	apiService.getCurrentScenario(this.jobId);
 				
-				// const requestMethod = apiService.getCurrentScenario(this.jobId);
-				console.log("11111111111111111111111111111");
-				const requestMethod = apiService.initializeScenario();
+				const requestMethod = apiService.getCurrentScenario(this.jobId);
+				// const requestMethod = apiService.retrieveScenario(this.scenarioId,this.num);
 				return requestMethod
 					.then((res) => {
-						console.log("########initialize Scenario data:", res);
+						console.log("get current Scenario data:", res.scenario_id);
 						this.scenarioData = res.scene.scenes || res;
 						console.log("current npc name is --------", this.scenarioData.role);
 						this.npcAvatar = getAvatar(this.scenarioData.role);
@@ -304,14 +300,6 @@
 					this.description = this.scenarioData.description || "Unable to retrieve background information";
 					this.background = this.scenarioData.background || "Please click the arrow below to continue";
 
-					// Store the current scene data with the new structure
-					this.dialogueHistory.push({
-						background: this.background,
-						description: this.description,
-						choice: null,     // Will be updated when option is selected
-						analysis: null    // Will be updated when option is selected
-					});
-
 					// 如果有选项，重置选项的文字颜色
 					if (this.scenarioData.options) {
 						this.scenarioData.options = this.scenarioData.options.map(
@@ -324,10 +312,9 @@
 						this.scenarioData.options = [];
 					}
 
-					// 只重置选中的选项索引，不重置 num
+					// 重置选中的选项
 					this.selectedOptionIndex = null;
-					// 删除这行
-					// this.num = ""; // 不要重置 num
+					this.num = null;
 				} else {
 					console.warn("Background information not found in scenario data");
 					this.description = "无法获取背景信息";
@@ -451,36 +438,23 @@
 			},
 			selectOption(index) {
 				this.selectedOptionIndex = index;
-				this.num = this.num + (index + 1).toString();
-
-				// Update the current scene's choice and analysis
-				if (this.dialogueHistory.length > 0) {
-					const currentScene = this.dialogueHistory[this.dialogueHistory.length - 1];
-					const selectedOption = this.scenarioData.options[index];
-					currentScene.choice = selectedOption.text;
-					currentScene.analysis = `Selected option ${index + 1}: ${selectedOption.text}`;
-
-					// Calculate and update scores if the option has scores
-					if (selectedOption.scores) {
-						Object.entries(selectedOption.scores).forEach(([dimension, score]) => {
-							if (this.scores.hasOwnProperty(dimension)) {
-								this.scores[dimension] += score;
-							}
-						});
-					}
-				}
+				this.num = index + 1;
+				console.log(
+					"Selected option:",
+					this.num,
+					this.scenarioData.options[index].text
+				);
 
 				this.scenarioData.options.forEach((option, i) => {
 					option.textColor = i === index ? "black" : "white";
 				});
 			},
-			
 
 
 			nextPage() {
 				if (this.isLoading) return;
 				
-				if (!this.num) {
+				if (this.num === null) {
 					uni.showToast({
 						title: "Please select an option",
 						icon: "none",
@@ -489,82 +463,154 @@
 				}
 
 				this.isLoading = true;
-				console.log("Current Scores:", this.scores);
-				console.log("Current dialogueHistory:", this.dialogueHistory);
 
-				// 从本地存储获取 jobId
-				const jobId = uni.getStorageSync('jobId');
-				if (!jobId) {
-					console.error("No jobId found in storage");
-					uni.showToast({
-						title: "Session error, please try again",
-						icon: "none",
-					});
-					return;
-				}
+				// Add the current scenario and selected option to chat history
+				this.chatHistory.push({
+					background: this.background,
+					description: this.description,
+					selectedOption: this.scenarioData.options[this.selectedOptionIndex].text
+				});
 
-				if (this.num.length === 5) {
-					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory)
-						.then((result) => {
-							console.log("Final Scenario Results:", {
-								scores: this.scores,
-								dialogueHistory: this.dialogueHistory,
-								jobId: jobId,
-								finalResponse: result
-							});
+				apiService
+					// .chooseScenario(this.num, this.jobId)
+					
+					.retrieveScenario(this.scenarioId,this.num)
+					.then((result) => {
+						console.log("#####retrieveScenarioResponse data:", result);
+						this.requestCount++;
+						
+						if (result.message === "Final choice made. Processing data in background.") {
+							
 							this.navigateToLoading();
-						})
-						.catch((error) => {
-							console.error("Detailed error:", error);
-							uni.showToast({
-								title: `发生错误：${error.message}`,
-								icon: "none",
-							});
-						})
-						.finally(() => {
-							this.isLoading = false;
-						});
-				} else {
-					apiService.retrieveScenario(this.scenarioId, this.num)
-						.then((result) => {
-							console.log("#####retrieveScenarioResponse data:", result);
-							this.scenarioData = result.scene.scenes;
-							this.handleScenarioData();
-							this.requestCount++;
+						} else {
 							this.selectedOptionIndex = null;
-							this.currentScene++;
-							this.updateProgress();
-							this.currentPage = "test3";
-						})
-						.catch((error) => {
-							console.error("Detailed error:", error);
+							this.num = null;
+							
+							this.getScenarioData()
+								.then(() => {
+									this.currentScene++;
+									this.updateProgress();
+									this.navigateToNextPage1();
+								})
+								.catch((error) => {
+									console.error("Error loading scenario data:", error);
+									uni.showToast({
+										title: "loading failed, try again",
+										icon: "none",
+									});
+								});
+						}
+					})
+					.catch((error) => {
+						console.error("Detailed error:", error);
 							uni.showToast({
 								title: `发生错误：${error.message}`,
 								icon: "none",
 							});
-						})
-						.finally(() => {
-							this.isLoading = false;
-						});
-				}
+					})
+					.finally(() => {
+
+					});
 			},
 
-			// 删除或注释掉 navigateToNextPage1 方法，因为我们不再需要它
-			// navigateToNextPage1() {
-			// 	this.getScenarioData()  // 这里会导致数据被覆盖
-			// 		.then(() => {
-			// 			this.currentPage = "test3";
-			// 			this.isLoading = false;
-			// 			uni.hideLoading();
+			// nextPage1() {
+			// 	if (this.isLoading) return;
+			// 	this.isLoading = true;
+			// 	uni.showLoading({ title: 'loading...' });
+
+			// 	if (this.num === null) {
+			// 		uni.showToast({
+			// 			title: "Please select an option",
+			// 				icon: "none",
+			// 		});
+			// 		this.isLoading = false;
+			// 		uni.hideLoading();
+			// 		return;
+			// 	}
+
+			// 	// Add the current scenario and selected option to chat history
+			// 	this.chatHistory.push({
+			// 		background: this.background,
+			// 		description: this.description,
+			// 		selectedOption: this.scenarioData.options[this.selectedOptionIndex].text
+			// 	});
+
+			// 	// Start preparing the next page immediately
+			// 	const prepareNextPage = this.navigateToNextPage();
+
+			// 	// Make the API call
+			// 	const apiCall = apiService.chooseScenario(this.num, this.jobId);
+
+			// 	// Use Promise.all to wait for both the API call and page preparation
+			// 	Promise.all([apiCall, prepareNextPage])
+			// 		.then(([result, _]) => {
+			// 			console.log("Response data:", result);
+
+			// 			if (result.message === "Final choice made. Processing data in background.") {
+			// 				this.navigateToLoading();
+			// 			} else {
+			// 				this.selectedOptionIndex = null;
+			// 				this.num = null;
+			// 				// this.currentScene++; // 直接在这里增加场景计数
+			// 				this.updateProgress();
+			// 			}
 			// 		})
 			// 		.catch((error) => {
-			// 			console.error("Error loading scenario data:", error);
-			// 			uni.hideLoading();
+			// 			console.error("Detailed error:", error);
+			// 			this.currentScene--;
 			// 			uni.showToast({
 			// 				title: "loading failed, try again",
 			// 				icon: "none",
 			// 			});
+
+			// 		})
+			// 		.finally(() => {
+			// 			this.isLoading = false;
+			// 			uni.hideLoading();
+			// 			// 根据错误消息类型判断是否需要恢复场景计数
+			// 			if (error.message === "loading failed, try again") {
+			// 				this.currentScene = this.currentScene;
+			// 			} else {
+			// 				this.currentScene++;
+			// 			}
 			// 		});
+			// },
+
+
+
+			
+			navigateToNextPage1() {
+				// Show loading indicator
+
+
+				// Get new scenario data first
+				this.getScenarioData()
+					.then(() => {
+						// Update the page only after new data is loaded
+						this.currentPage = "test3";
+						this.isLoading = false;
+						// Hide loading indicator
+						uni.hideLoading();
+					})
+					.catch((error) => {
+						console.error("Error loading scenario data:", error);
+						uni.hideLoading();
+						uni.showToast({
+							title: "loading failed, try again",
+							icon: "none",
+						});
+					});
+			},
+			
+			// navigateToNextPage() {
+			// 	// 根据当前页面，决定下一个页面
+			// 	if (this.currentPage === "test2") {
+			// 		this.navigateToTest3();
+			// 	} else if (this.currentPage === "test5") {
+			// 		this.navigateToTest3();
+			// 	} else {
+			// 		this.navigateToTest3();
+			// 	}
 			// },
 			navigateToLoading() {
 				// 			const loadingPageUrl = `/pages/result/loading?jobId=${
@@ -592,7 +638,7 @@
 				this.progress = (this.currentScene / this.totalScenes) * 100;
 			},
 			onTouchStart(event) {
-				// 触摸开始的 X 坐标
+				// 记录触摸开始的 X 坐标
 				console.log("touch start!!!!!!!!!!! ", this.startX);
 				this.startX = event.changedTouches[0].clientX;
 				this.endX = this.startX;
@@ -612,16 +658,6 @@
 					}
 				}
 			},
-			// Add a helper method to reset scores if needed
-			resetScores() {
-				this.scores = {
-					Perception: 0,
-					"Self Regulation": 0,
-					Empathy: 0,
-					"Social Skill": 0,
-					Motivation: 0
-				};
-			}
 		},
 	};
 </script>
@@ -632,20 +668,6 @@
 
 	/* ... 其他样式保持不变 ... */
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

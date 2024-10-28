@@ -176,15 +176,21 @@
 							: undefined;
 
 					console.log("####scenario id:############", scenarioId);
-					const scenarioResponse =
-						scenarioId != undefined
-							? await apiService.startScenarioWithId(this.jobId, scenarioId)
-							: await apiService.startScenario(this.jobId);
+
+					const scenarioResponse = await apiService.initializeScenario();
+					// result 中包含初始化场景的返回数据
+					// console.log('#####################场景初始化成功：', result);
+
+					// const scenarioResponse =
+					// 	scenarioId != undefined
+					// 		? await apiService.startScenarioWithId(this.jobId, scenarioId)
+					// 		: await apiService.startScenario(this.jobId);
 
 					console.log(
 						"#####################fetched scenario: ",
 						scenarioResponse
 					);
+
 
 					// Get scenarioId
 					const fetchedScenarioId = scenarioResponse.scenario_id || 1;

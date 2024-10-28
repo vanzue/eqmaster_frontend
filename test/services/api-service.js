@@ -320,6 +320,82 @@ export default {
 			throw error;
 		}
 	},
+	
+	async initializeScenario() {
+		// console.log('startScenario called with jobId:', jobId);
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/initialize_scenario?locale=en`,
+				method: 'POST',
+			});
+	
+			if (response.statusCode === 200) {
+				console.log('response:', response);
+				return response.data;
+			} else {
+				throw new Error(`Failed to initialize_scenario: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error initialize_scenario:', error);
+			throw error;
+		}
+	},
+	
+	async retrieveScenario(scenarioId,num) {
+		// console.log('startScenario called with jobId:', jobId);
+		console.log("#####retrieveScenarioResponse data:", scenarioId);
+		console.log("#####retrieveScenarioResponse data:", num);
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/retrieve_scene`,
+				method: 'POST',
+				data: {
+					scenario_id: parseInt(scenarioId),
+					choices: String(num),
+					locale: "en"
+				}
+			});
+	
+			if (response.statusCode === 200) {
+				console.log('response:', response);
+				return response.data;
+			} else {
+				throw new Error(`Failed to initialize_scenario: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error initialize_scenario:', error);
+			throw error;
+		}
+	},
+	
+	async finalizeScenario(scores,job_id,dialogue_history) {
+		// console.log('startScenario called with jobId:', jobId);
+		console.log("#####finalizeScenarioResponse data:", scores);
+		console.log("#####finalizeScenarioResponse data:", job_id);
+		console.log("#####finalizeScenarioResponse data:", dialogue_history);
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/finalize_scenario`,
+				method: 'POST',
+				data: {
+					scores: scores,
+					job_id: job_id,
+					dialogue_history: dialogue_history,
+					locale: "en"
+				}
+			});
+	
+			if (response.statusCode === 200) {
+				console.log('response:', response);
+				return response.data;
+			} else {
+				throw new Error(`Failed to finalizeScenarioResponse: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error finalizeScenarioResponse:', error);
+			throw error;
+		}
+	},
 
 	async chooseScenario(choice, jobId) {
 		try {
