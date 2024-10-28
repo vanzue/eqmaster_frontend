@@ -374,7 +374,7 @@
 
 			nextPage() {
 				if (this.isLoading) return;
-				if (!this.selectedOptionIndex) {
+				if (this.selectedOptionIndex == null) {
 					uni.showToast({
 						title: "Please select an option",
 						icon: "none",
