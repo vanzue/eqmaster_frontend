@@ -386,9 +386,8 @@
 			homepageData: {
 				immediate: true,
 				async handler(val) {
-					if (val && val.response) {
-						this.isLoading = false;
-					}
+					// if (val && val.response) {
+					// }
 				},
 				// deep: true,
 			}
@@ -539,7 +538,7 @@
 					// this.error = 'Error fetching analysis data';
 					console.error(this.error, error);
 				} finally {
-
+					this.isLoading = false;
 				}
 			},
 

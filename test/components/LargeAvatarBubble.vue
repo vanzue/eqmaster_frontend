@@ -39,6 +39,7 @@ import apiService from '../services/api-service'
 			uni.getStorage({
 				key: `voice-${this.wording}`,
 				success: (res) => {
+					console.log(res)
 					this.audioContext.src = res.data;
 					this.audioContext.play();
 					
