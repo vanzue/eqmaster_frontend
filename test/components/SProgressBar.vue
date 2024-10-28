@@ -51,6 +51,10 @@ export default {
         'Staying calm in team setbacks',
         'Reading the room to resolve conflicts'
       ]
+    },
+    isCompleteTask: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -405,7 +409,7 @@ export default {
           ctx.fillText(line.trim(), textContainerX + textContainerWidth / 2, startY + (index * lineHeight));
         });
 
-        // 添加星级评分（只为已完成的关卡显示，且星星数量大于0）
+        // 添加星级评分（���为已完成的关卡显示，且星星数量大于0）
         if (isCompleted && this.starRatings[i] > 0) {
           const starSize = 30;
           const starSpacing = 5;
@@ -431,7 +435,8 @@ export default {
       const jobId = this.homepageData?.response?.personal_info?.job_id;
       console.log('okok');
       uni.navigateTo({
-        url: `/pages/battlefield/battlefield-intro`
+        // url: `/pages/battlefield/battlefield-intro`
+        url: `/pages/${this.isCompleteTask ? 'battlefield/battlefield-summary' : 'battlefield/battlefield-intro'}`
       });
     },
     // 新增方法：绘制六边形
@@ -516,6 +521,7 @@ export default {
   /* 移除transform属性 */
 }
 </style>
+
 
 
 

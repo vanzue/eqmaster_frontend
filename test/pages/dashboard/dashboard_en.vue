@@ -122,9 +122,14 @@
 				<!-- 其他可滚动内容放在这里 -->
 				<view class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
-						<!-- 调用进度条组件 -->
-						<SProgressBar v-if="courseData" :finishComponents="courseData.courses.length"
-							:starRatings="courseData.courses.map(course => course.result)" :totalComponents="4" />
+						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
+						<SProgressBar 
+							v-if="courseData" 
+							:finishComponents="courseData.courses.length"
+							:starRatings="courseData.courses.map(course => course.result)" 
+							:totalComponents="4"
+							:isCompleteTask="!!courseData.course_level"
+						/>
 					</view>
 				</view>
 			</view>
@@ -407,6 +412,8 @@
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
 			const result = illustrationSrc(this.homepageData, this.$store);
+			console.log('Course Data:', this.courseData)
+
 			// await this.getBattlefield();
 		},
 		onLoad(option) {
@@ -1917,10 +1924,10 @@
 	}
 
 	.dashboard2-fixed-content {
-		/* position: fixed;
+		position: fixed;
 		top: 0;
 		left: 0;
-		right: 0; */
+		right: 0;
 		z-index: 10;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
@@ -1928,7 +1935,7 @@
 	}
 
 	.dashboard2-scrollable-content {
-		/* padding-top: 300rpx;  */
+		padding-top: 300rpx; 
 		/* 其他样式 */
 	}
 
@@ -1983,7 +1990,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		margin: 15rpx;
+		margin-top: 15rpx;
 	}
 
 	.dashboard2-card3 {
