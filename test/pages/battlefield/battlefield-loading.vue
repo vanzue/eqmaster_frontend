@@ -24,25 +24,13 @@ export default {
       key: "chats",
       data: result.dialog,
     });
-
-			const voiceMap = {
-				"Jason": {
-					"voice": "onyx",
-					"style": "serious"
-				},
-				"Anna": {
-					"voice": "nova",
-					"style": "empathetic"
-				},
-				"Sam": {
-					"voice": "echo",
-					"style": "empathetic"
-				}
-			};
 			try {
+				const npcs = this.$store.getters.getNpcs;
+				const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
+				
 				const promises = result.dialog.map(async (item) => {
-					const result = await apiService.getVoice(item.words || item.content, voiceMap[item.role]["voice"], voiceMap[item.role]["style"]);
-					uni.setStorageSync(`voice-${item.words || item.content}`, result.message);
+					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);		
+					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
 				})
 				await Promise.all(promises);
 			} catch (error) {

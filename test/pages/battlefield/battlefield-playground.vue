@@ -444,31 +444,13 @@
 						content: item.content ?? item.words,
 					}));
 					try {
-						const voiceMap = {
-							"Jason": {
-								"voice": "onyx",
-								"style": "serious"
-							},
-							"Anna": {
-								"voice": "nova",
-								"style": "empathetic"
-							},
-							"Sam": {
-								"voice": "echo",
-								"style": "empathetic"
-							}
-						};
+						const npcs = this.$store.getters.getNpcs;
+						const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
+						
 						const promises = nextRound.dialog.map(async (item) => {
-							const result = await apiService.getVoice(item.words || item.content, voiceMap[
-								item.role]["voice"], voiceMap[item.role]["style"]);
-							uni.setStorage({
-								key: `voice-${item.words || item.content}`,
-								data: result.message,
-								success: (res) => {
-									console.log("set storage success");
-								},
-							})
-						});
+							const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);		
+							this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
+						})
 						await Promise.all(promises);
 					} catch (error) {
 						console.log("get audio fail", error);
