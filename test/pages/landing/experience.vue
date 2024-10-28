@@ -1,22 +1,15 @@
 <template>
 	<view class="container">
-		<!-- 背景图片 -->
 		<image class="background-image" :src="backgroundImage" mode="widthFix"></image>
-		<!-- <image class="illustration1" src="/static/img1.png" mode="widthFix"></image> -->
 
-		<!-- 内容区域 -->
 		<view class="content">
 			<view class="text-content">
 				<text class="greeting">Welcome!👋</text>
 			</view>
 			<text class="question">What can I call you?</text>
-			<!-- <text class="question1">完善个人信息</text> -->
 
-			<!-- 输入框 -->
 			<input class="name-input" placeholder="Your name" v-model="username" />
 
-
-			<!-- 继续按钮 -->
 			<view class="button-container">
 				<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @tap="nextStep"></image>
 			</view>
@@ -25,40 +18,25 @@
 </template>
 
 <script>
-	import {
-		v4 as uuidv4
-	} from 'uuid';
 	export default {
 		data() {
 			return {
 				username: '',
-				backgroundImage: '/static/picture1.png', // 确保背景图片路径正确
+				backgroundImage: '/static/picture1.png',
 			};
-		},
-		mounted() {
-			const randomNum = Math.floor(Math.random() * 10); // 生成1到10之间的随机数字
-			const cachedUsername = uni.getStorageSync('username');
-			this.username = cachedUsername ? cachedUsername : "";
-			// this.username = "tester-" + uuidv4().slice(0, 6) + `##${randomNum}`;
-			// this.username = "tester-" + uuidv4().slice(0, 6);
 		},
 		methods: {
 			nextStep() {
 				if (this.username.trim()) {
-					// const userId = 'fixedUserId12345'; // 使用固定的用户ID
 					console.log("user input name:", this.username);
 					this.$store.commit('setUsername', this.username);
-					// 保存用户名和ID
 					uni.setStorageSync('username', this.username);
-					// 导航到下一页，并传递参数
 					uni.navigateTo({
-						// url: `/pages/preference/preference2?userId=${userId}&username=${encodeURIComponent(this.username)}`
 						url: `/pages/preference/preference3`
 					});
 				} else {
-					// 提示用户输入名字
 					uni.showToast({
-						title: '请输入您的名字',
+						title: 'Enter your name please',
 						icon: 'none'
 					});
 				}
@@ -73,7 +51,6 @@
 		flex-direction: column;
 		min-height: 100vh;
 		background-color: #1c1c1e;
-		/* 确保背景颜色覆盖整个页面 */
 		position: relative;
 		overflow: hidden;
 		touch-action: none;
@@ -85,9 +62,7 @@
 		right: 0px;
 		width: 30%;
 		height: 100vh;
-		/* 确保背景图片覆盖整个视窗 */
 		z-index: 1;
-		/* 确保背景图片位于内容之下 */
 	}
 
 	.content {
@@ -95,21 +70,15 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
-		/* 将内容区域向上对齐 */
 		padding: 40rpx 20rpx;
 		z-index: 1;
-		/* 确保内容位于背景图片之上 */
 		position: relative;
 		padding: 20px;
 		margin-left: 10rpx;
 	}
 
 	.text-content {
-
-		/* 增加底部间距 */
 		margin-top: 145rpx;
-		/* 增加底部间距 */
-
 	}
 
 	.greeting {
@@ -140,7 +109,6 @@
 		font-size: 28rpx;
 		color: #8e8e93;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 	}
 
 	.name-input {
@@ -160,7 +128,6 @@
 		align-items: center;
 		margin-top: auto;
 		margin-bottom: 1100rpx;
-		/* 调整底部间距，避免过大的白色区域 */
 	}
 
 	.continue-button {
