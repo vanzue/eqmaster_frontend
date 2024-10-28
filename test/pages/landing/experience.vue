@@ -36,7 +36,9 @@
 			};
 		},
 		mounted() {
-			// const randomNum = Math.floor(Math.random() * 10); // 生成1到10之间的随机数字
+			const randomNum = Math.floor(Math.random() * 10); // 生成1到10之间的随机数字
+			const cachedUsername = uni.getStorageSync('username');
+			this.username = cachedUsername ? cachedUsername : "";
 			// this.username = "tester-" + uuidv4().slice(0, 6) + `##${randomNum}`;
 			// this.username = "tester-" + uuidv4().slice(0, 6);
 		},
