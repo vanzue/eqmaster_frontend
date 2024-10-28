@@ -482,6 +482,7 @@
 					this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
 					this.state = "NpcTalk";
 				}
+        this.sendMessageNavShow = true;
 				this.isLoadingShow = false;
 			},
       playAudio(params) {
