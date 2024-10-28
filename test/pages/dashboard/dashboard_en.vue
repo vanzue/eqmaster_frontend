@@ -1928,7 +1928,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		z-index: 10;
+		z-index: 10000;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
 		padding: 20rpx;
