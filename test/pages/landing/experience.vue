@@ -7,7 +7,7 @@
 		<!-- 内容区域 -->
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">Welcome to EQoach!👋</text>
+				<text class="greeting">Welcome!👋</text>
 			</view>
 			<text class="question">What can I call you?</text>
 			<!-- <text class="question1">完善个人信息</text> -->

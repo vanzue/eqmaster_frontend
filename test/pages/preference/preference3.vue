@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="text-content">
 			<text class="question">{{
-        scenarioText || "Now, begin the journey to explore EQ!"
+        scenarioText || "Start your personalized EQ journey now!"
       }}</text>
 			<!-- <text class="question1">个性化偏好</text> -->
 		</view>
