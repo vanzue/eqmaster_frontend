@@ -489,21 +489,14 @@
         console.log(params);
         this.playAudioIndex = params.index;
         this.audioContext = uni.createInnerAudioContext();
-        uni.getStorage({
-          key: `voice-${params.dialog}`,
-          success: (res) => {
-            console.log(res)
-            this.audioContext.src = res.data;
-            this.audioContext.play();
-            this.audioContext.onEnded(() => {
-              this.playAudioIndex = '';
-            });
-            
-          },
-          fail: (error) => {
-            console.log(`fail to get ${this.character} voice`, error);
-          }
-        })
+        const audio = this.$store.getters.getAudios(`voice-${params.dialog}`);
+        if (audio) {
+        	this.audioContext.src = audio;
+        	this.audioContext.play();
+			this.audioContext.onEnded(() => {
+			    this.playAudioIndex = '';
+			});
+        }
       },
 			retry() {
 				this.state = "userTalk";
