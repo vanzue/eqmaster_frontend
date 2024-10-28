@@ -1910,10 +1910,10 @@
 	}
 
 	.dashboard2-fixed-content {
-		/* position: fixed;
+		position: fixed;
 		top: 0;
 		left: 0;
-		right: 0; */
+		right: 0;
 		z-index: 10;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
@@ -1921,7 +1921,7 @@
 	}
 
 	.dashboard2-scrollable-content {
-		/* padding-top: 300rpx;  */
+		padding-top: 300rpx; 
 		/* 其他样式 */
 	}
 
@@ -2166,4 +2166,6 @@
 		height: 134px;
 		padding-top: 0px;
 	}
+
+	
 </style>
