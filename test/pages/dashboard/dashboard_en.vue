@@ -6,7 +6,7 @@
 			<div></div>
 			<div></div>
 		</view>
-		<scroll-view v-else scroll-y style="height: calc(100vh - 150rpx)">
+		<view v-else style="height: calc(100vh - 150rpx)">
 			<view v-if="currentView === 'dashboard'" class="content">
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
@@ -117,7 +117,7 @@
 				</view>
 
 				<!-- 其他可滚动内容放在这里 -->
-				<view class="dashboard2-scrollable-content">
+				<scroll-view scroll-y class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
 						<SProgressBar 
@@ -128,9 +128,9 @@
 							:isCompleteTask="!!courseData.course_level"
 						/>
 					</view>
-				</view>
+				</scroll-view >
 			</view>
-		</scroll-view>
+		</view>
 		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
 			:userId="userId" :username="username" :jobId="jobId" />
 	</view>
