@@ -335,7 +335,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
-				stateStack.push("test1");
+				// stateStack.push("test1");
 			},
 			navigateToTest2() {
 				if (this.isLoading) return;
@@ -357,7 +357,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
-				stateStack.push("test2");
+				// stateStack.push("test2");
 			},
 			navigateToTest3() {
 				// Show loading indicator
@@ -402,7 +402,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
-				stateStack.push("test4");
+				// stateStack.push("test4");
 			},
 			navigateToTest5() {
 				if (this.isLoading) return;
@@ -424,7 +424,7 @@
 						this.isLoading = false;
 						uni.hideLoading();
 					});
-				stateStack.push("test5");
+				// stateStack.push("test5");
 			},
 			analyzeBackground() {
 				if (this.background) {
