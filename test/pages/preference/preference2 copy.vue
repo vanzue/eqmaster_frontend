@@ -103,7 +103,7 @@
 						fail: (err) => {
 							console.error('Navigation failed:', err);
 							uni.showToast({
-								title: 'Page navigation failed',
+								title: '页面跳转失败',
 								icon: 'none'
 							});
 						}
