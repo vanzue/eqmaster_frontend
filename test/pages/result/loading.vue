@@ -85,17 +85,12 @@
 				return '未设置';
 			}
 		},
+		created() {
+			this.getHomepageData();
+		},
 		onLoad(option) {
 			// 接收上一个页面传递的数据
 			try {
-				const userId = uni.getStorageSync('userId');
-				if (!userId) {
-					uni.navigateTo({
-						url: '/pages/landing/experience'
-					});
-					return;
-				}
-				this.userId = userId || "";
 				// this.userId = option.userId || '';
 				// this.username = decodeURIComponent(option.username || '');
 				// this.gender = option.gender || '';
@@ -170,7 +165,7 @@
 			getHomepageData() {
 				// 不再需要 const that = this;
 				this.$store.dispatch('fetchHomepageData')
-				this.$store.dispatch('fetchcourseData')
+				// this.$store.dispatch('fetchcourseData')
 					.then(() => {
 						console.log('Homepage data fetched successfully');
 						if (this.interval) {
@@ -194,10 +189,10 @@
 							},
 							fail: (err) => {
 								console.error('Navigation failed:', err);
-								uni.showToast({
-									title: '页面跳转失败',
-									icon: 'none'
-								});
+								// uni.showToast({
+								// 	title: 'Page navigation failed',
+								// 	icon: 'none'
+								// });
 							}
 						});
 					})
