@@ -6,8 +6,8 @@
 					<image class="avatar" :src="avatar" mode="aspectFill"></image>
 				</view>
 				<view class="name">
-					<image class="character-background" :src="isLastElement ? '/static/battlefield/character_background2.png' : '/static/battlefield/character_background1.png'"
-						mode="scaleToFill"></image>
+					<image class="character-background" :src="playAudioIndex === index ? '/static/battlefield/character_background1.png' : '/static/battlefield/character_background2.png'"
+						mode="scaleToFill" @click="playAudio()"></image>
 					<view class="character">{{ name }}</view>
 				</view>
 			</view>
@@ -35,8 +35,23 @@
 			isLastElement: {
 				type: Boolean,
 				default: false,
+			},
+			playAudioIndex: {
+				type: Number,
+				default: -1,
+			},
+			index: {
+				type: Number,
+				default: 0,
 			}
-		}
+		},
+		methods: {
+			playAudio() {
+				if(this.playAudioIndex == -1) {
+					this.$emit('playAudio', { dialog: this.dialog, index: this.index });
+				}
+			}
+		},
 	};
 </script>
 
