@@ -657,7 +657,7 @@
 						console.error("设置 NPC health 失败:", err);
 					},
 				});
-
+        await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
 					uni.navigateTo({
 						url: "/pages/battlefield/battlefield-summary",
