@@ -53,10 +53,6 @@ import apiService from '../services/api-service'
 		},
 		watch: {
 			wording(newValue) {
-				if (this.audioContext) {
-					this.audioContext.pause();
-					this.audioContext.currentTime = 0;
-				}
 				uni.getStorage({
 					key: `voice-${this.wording}`,
 					success: (res) => {
