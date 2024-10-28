@@ -13,12 +13,12 @@
 							My EQ companion
 						</view>
 						<view class="animal-name"
-							:style="{ backgroundImage: `url(${illustrationSrc.animal_name_bg})` }">
+							:style="{ backgroundImage: `url(${illustrationData.animal_name_bg})` }">
 							<view class="animal-score-desc">
-								{{ illustrationSrc.animal_name }}
+								{{ illustrationData.animal_name }}
 							</view>
 						</view>
-						<image class="animal-icon" :src="illustrationSrc.animal_icon"></image>
+						<image class="animal-icon" :src="illustrationData.animal_icon"></image>
 						<view class="animal-score">
 							<view class="animal-score-title">
 								EQ points
@@ -32,8 +32,8 @@
 							<view class="card-text-container">
 								<!-- <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
 								<text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text> -->
-								<text class="card-title">{{ illustrationSrc.weakness }}</text>
-								<text class="card-description">{{ illustrationSrc.characteristics }}</text>
+								<text class="card-title">{{ illustrationData.weakness }}</text>
+								<text class="card-description">{{ illustrationData.characteristics }}</text>
 							</view>
 						</view>
 					</view>
@@ -135,6 +135,10 @@
 </template>
 
 <script>
+	import {
+		illustrationSrc
+	} from '@/scripts/illustrationHelper.js';
+
 	export default {
 		data() {
 			return {
@@ -164,75 +168,8 @@
 				}
 				return '未设置';
 			},
-			illustrationSrc() {
-				let returnObj = {
-					animal_name: 'Capypara',
-					animal_icon: '/static/resulten/monkey.png',
-					animal_name_bg: '/static/resulten/animal-name-1.png',
-					weakness: 'Weakness',
-					characteristics: '',
-				}
-				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
-					const scores = this.homepageData.response.eq_scores;
-					const maxScore = Math.max(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score,
-						scores
-						.dimension4_score, scores.dimension5_score);
-
-
-					// 根据最低分选择图片
-					if (maxScore === scores.dimension1_score) { //Capypara 水豚
-						console.log("illustration src:", '1')
-						returnObj = {
-							animal_name: 'Capypara',
-							animal_icon: '/static/resulten/capybara.png',
-							animal_name_bg: '/static/resulten/animal-name-1.png',
-							weakness: 'Motivation',
-							characteristics: 'is your EQ superpower—you bring energy and stay focused on your goals.',
-						}
-						// return '/static/aniimals/kapibala.png';
-					} else if (maxScore === scores.dimension2_score) { //hedgehog 刺猬
-						console.log("illustration src:", '2')
-						returnObj = {
-							animal_name: 'hedgehog',
-							animal_icon: '/static/resulten/hedgehog.png',
-							animal_name_bg: '/static/resulten/animal-name-1.png',
-							weakness: 'Empathy',
-							characteristics: `is your EQ superpower—you easily notice and understand others' emotions.`,
-						}
-					} else if (maxScore === scores.dimension3_score) { //Coyote 狼
-						console.log("illustration src:", '3')
-						returnObj = {
-							animal_name: 'Coyote',
-							animal_icon: '/static/resulten/coyote.png',
-							animal_name_bg: '/static/resulten/animal-name-1.png',
-							weakness: 'Social Skill',
-							characteristics: 'is your EQ superpower—you build connections and encourage collaboration.',
-						}
-					} else if (maxScore === scores.dimension4_score) { //Ostrich 鸵鸟
-						console.log("illustration src:", '4')
-						returnObj = {
-							animal_name: 'Ostrich',
-							animal_icon: '/static/resulten/ostrich.png',
-							animal_name_bg: '/static/resulten/animal-name-1.png',
-							weakness: 'Perception',
-							characteristics: 'is your EQ superpower—you’re great at sensing subtle cues and moods.',
-						}
-					} else if (maxScore === scores.dimension5_score) { //Monkey 猴子
-						console.log("illustration src:", '5')
-						returnObj = {
-							animal_name: 'Monkey',
-							animal_icon: '/static/resulten/monkey.png',
-							animal_name_bg: '/static/resulten/animal-name-1.png',
-							weakness: 'Self-regulation',
-							characteristics: 'is your EQ superpower—you control emotions well, even under stress.',
-						}
-					}
-					console.log("-------result for your weakness:", returnObj.weakness)
-					console.log("-------------details:", returnObj.characteristics);
-					this.$store.commit('setWeakness', returnObj.weakness);
-					this.$store.commit('setCharateristics', returnObj.characteristics);
-				}
-				return returnObj;
+			illustrationData() {
+				return illustrationSrc(this.homepageData, this.$store);
 			},
 			caleOverviewScores() {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
