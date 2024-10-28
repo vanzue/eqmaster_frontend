@@ -18,21 +18,28 @@ export default createStore({
 				characterName: "Jason",
 				health: 10,
 				avatar: "/static/battlefield/boss11.png",
+				voice: "onyx",
+				style: "serious",
 			},
 			{
 				characterName: "Sam",
 				health: 10,
 				avatar: "/static/battlefield/xiaoA1.png",
+				voice: "nova",
+				style: "empathetic",
 			},
 			{
 				characterName: "Anna",
 				health: 10,
 				avatar: "/static/battlefield/xiaoB1.png",
+				voice: "echo",
+				style: "empathetic",
 			},
 		],
 		weakness: null,
 		characteristics: null,
 		diamondCount: 0,
+		audios: new Map(),
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -81,6 +88,9 @@ export default createStore({
 		},
 		setDiamondCount(state, diamondCount) {
 			state.diamondCount = diamondCount;
+		},
+		setAudios(state, { key, value }) {
+			state.audios.set(key, value);
 		}
 	},
 	getters: {
@@ -119,7 +129,10 @@ export default createStore({
 		},
 		getDiamondCount(state) {
 			return state.diamondCount;
-		}
+		},
+		getAudios: (state) => (key) => {
+		    return state.audios.get(key);
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -168,6 +181,7 @@ export default createStore({
 			commit('setWeakness', '');
 			commit('setCharateristics', '');
 			commit('setcourseData', {});
+			commit('setAudios', {})
 
 			const username = uni.getStorageSync('username');
 			localStorage.clear();

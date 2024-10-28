@@ -80,8 +80,9 @@
 				<text class="cancel-text">Release to send, slide up to cancel</text>
 			</view>
 
-			<view v-if="state === 'userTalk' && showToolTips && isTooltipVisible" class="tooltipOverlay"
-				@click="hideTooltip">
+			<view
+				v-if="state === 'userTalk' && showToolTips && isTooltipVisible && (showHintTooltip || showRecordTooltip || showTaskTooltip)"
+				class="tooltipOverlay" @click="hideTooltip">
 			</view>
 			<!-- tooltip -->
 			<!-- tooltip for record -->
@@ -141,16 +142,17 @@
 			</view>
 
 			<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-        <view class="input-container-wrapper">
-          <view class="input-container" @click.stop>
-            <!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-            <textarea placeholder="Type your response" v-model="inputContent" auto-height
-              @blur="inputRecordingBlur" />
-          </view>
-          <view class="send-sms-container">
-            <image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur"></image>
-          </view>
-        </view>
+				<view class="input-container-wrapper">
+					<view class="input-container" @click.stop>
+						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
+						<textarea placeholder="Type your response" v-model="inputContent" auto-height
+							@blur="inputRecordingBlur" />
+					</view>
+					<view class="send-sms-container">
+						<image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur">
+						</image>
+					</view>
+				</view>
 			</view>
 
 			<view class="judge-container" v-if="state === 'judge' || state === 'judgeTry'">
@@ -428,6 +430,7 @@
 				this.isTooltipVisible = false;
 				this.showRecordTooltip = false;
 				this.showHintTooltip = false;
+				this.showTaskTooltip = false;
 				console.log(("change tooltip visible into:", this.isTooltipVisible));
 			},
 			async gotoNextRound() {
@@ -459,31 +462,13 @@
 						content: item.content ?? item.words,
 					}));
 					try {
-						const voiceMap = {
-							"Jason": {
-								"voice": "onyx",
-								"style": "serious"
-							},
-							"Anna": {
-								"voice": "nova",
-								"style": "empathetic"
-							},
-							"Sam": {
-								"voice": "echo",
-								"style": "empathetic"
-							}
-						};
+						const npcs = this.$store.getters.getNpcs;
+						const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
+						
 						const promises = nextRound.dialog.map(async (item) => {
-							const result = await apiService.getVoice(item.words || item.content, voiceMap[
-								item.role]["voice"], voiceMap[item.role]["style"]);
-							uni.setStorage({
-								key: `voice-${item.words || item.content}`,
-								data: result.message,
-								success: (res) => {
-									console.log("set storage success");
-								},
-							})
-						});
+							const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);		
+							this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
+						})
 						await Promise.all(promises);
 					} catch (error) {
 						console.log("get audio fail", error);
@@ -626,14 +611,16 @@
 				const evaluationResult = await evalBattlefield(
 					this.allHistory,
 					isPass,
-					gemCount,
+					this.gemCount,
 					diamonds
 				);
 				const userId = this.$store.getters.getUserId;
-				if (isPass === true) {
+				if (this.isPass === true) {
 					const res = await apiService.updateDiamonds(userId, 10);
+					console.log("update diamond res:", res);
 				} else {
 					const res = await apiService.updateDiamonds(userId, 3);
+					console.log("update diamond res:", res);
 				}
 				console.log("evaluation result:", evaluationResult);
 				// const evaluationResult = await evalBattlefield(this.chattingHistory);
@@ -1143,6 +1130,7 @@
 
 					// 第二次进入 'userTalk' 时显示任务tooltip
 					if (this.userTalkCount === 2) {
+						// console.log("show task tool tip!!!!", this.showTaskTooltip);
 						this.showTaskTooltip = true;
 						this.isTooltipVisible = true;
 					}
@@ -1578,15 +1566,16 @@
 		opacity: 0.5;
 	}
 
-  .input-container-wrapper {
-    position: fixed;
-    display: flex;
+	.input-container-wrapper {
+		position: fixed;
+		display: flex;
 		width: 70%;
 		/* left: 10%; */
 		bottom: 200rpx;
-    justify-content: center;
-    gap: 20rpx;
-  }
+		justify-content: center;
+		gap: 20rpx;
+	}
+
 	.input-container {
 		/* position: fixed; */
 		width: 100%;
@@ -1594,19 +1583,20 @@
 		/* bottom: 200rpx; */
 		/* 将其固定在屏幕底部 */
 		display: flex;
-    align-items: center;
+		align-items: center;
 		/* justify-content: center; */
 		/* padding: 20rpx 0; */
 		border-radius: 40rpx;
 		/* 增加一些内边距 */
 		background-color: #d6fcf6;
-    border: 2px solid #90E0E7;
+		border: 2px solid #90E0E7;
 		/* 可选的背景色，用于强调输入框 */
 	}
-  .send-sms-icon {
-    width: 88rpx;
-    height: 88rpx;
-  }
+
+	.send-sms-icon {
+		width: 88rpx;
+		height: 88rpx;
+	}
 
 	textarea {
 		padding: 0 20rpx;
