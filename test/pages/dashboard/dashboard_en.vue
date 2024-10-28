@@ -771,7 +771,7 @@
 <style scoped>
 	.loading {
 		width: 100vw;
-		height: 80vh;
+		height: calc(100vh - 250rpx);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -957,7 +957,7 @@
 		align-items: left;
 		padding-top: 100rpx;
 		width: 100%;
-		height: 100vh;
+		height: calc(100vh - 150rpx);
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
