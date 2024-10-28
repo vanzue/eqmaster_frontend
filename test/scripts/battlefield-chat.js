@@ -6,6 +6,8 @@ const EVAL_URL =
 const TOOLTIP_URL =
   "https://nft-b2b2c-apim-azsc-eus-int.azure-api.net/eqmaster/course_exists";
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
+
+import state from "../store/index.js";
 function sendRequest(
   person_id,
   course_id,
@@ -16,8 +18,9 @@ function sendRequest(
   return new Promise((resolve, reject) => {
     const formattedChatContent = formatChatContent(chat_content);
     console.log("formattedChatContent:", formattedChatContent);
+	console.log("state from js", state.getters.getUserId)
     const body = outerBody || {
-      person_id: person_id || Math.floor(Math.random() * 500),
+      person_id: state.getters.getUserId,
       course_id: parseInt(course_id) || 4,
       chat_content: JSON.stringify(formattedChatContent),
     };
@@ -241,7 +244,7 @@ export async function checkShowToolTips(personId) {
 export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
   // 在 body 中添加 isPass, gemCount, diamonds
   const body = {
-    person_id: chatHistory.person_id || Math.floor(Math.random() * 500),
+    person_id: state.getters.getUserId,
     course_id: chatHistory.course_id || 4,
     chat_content: JSON.stringify(chatHistory),
     status: isPass ? "completed" : "incompleted", // 添加 isPass
