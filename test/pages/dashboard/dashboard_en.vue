@@ -51,9 +51,8 @@
 
 					<view class="network-title-container">
 						<text class="card-title1">Moments</text>
-						<text class="card-title15">Upload your chats, receive personalized soft skill insights.</text>
+						<text class="card-title15">Reflect on your chat moments for analysis and advice.</text>
 					</view>
-
 					<view class="history-list">
 						<view>
 							<image class="import-button" src="../../static/dashboard/import-button.png" mode="widthFix"
@@ -923,6 +922,7 @@
 	}
 
 	.import-button {
+		margin-top: 8rpx;
 		width: 324rpx;
 		height: 120rpx;
 	}
@@ -946,6 +946,7 @@
 		flex-direction: column;
 		gap: 24rpx;
 		padding-bottom: 24rpx;
+		margin-top: 8rpx;
 	}
 
 	.container {
