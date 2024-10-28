@@ -26,13 +26,19 @@
 				<scroll-view class="chat-history-container" scroll-y :scroll-top="scrollTop" ref="chatHistoryContainer"
 					:scroll-into-view="scrollIntoViewId">
 					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
-						<npc-chat-box v-if="
+						<npc-chat-box 
+              v-if="
                 ['Jason', 'Sam', 'Anna'].includes(
                   chat.role
                 )
-              " :key="'npc-' + index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
+              " 
+              :key="'npc-' + index" 
+              :index="index"
+              :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
 							:dialog="chat.content"
-							:isLastElement="index === displayedMessages.length - 1"></npc-chat-box>
+							:isLastElement="index === displayedMessages.length - 1"
+              :playAudioIndex="playAudioIndex"
+              @playAudio="playAudio"></npc-chat-box>
 						<view v-else-if="chat.role === 'user'"
 							:class="['message-wrapper', { animate: chat.shouldAnimate }]">
 							<self-chat-box :key="'user' + index" :wording="chat.content" :commit="userJudgeContent"
@@ -296,6 +302,8 @@
 				task2CompletedStatusOne: false,
 				taskFinished: false,
 				isFinish: false,
+        playAudioIndex: -1,
+        audioContext: null,
 			};
 		},
 		created() {
@@ -485,6 +493,26 @@
 
 				this.isLoadingShow = false;
 			},
+      playAudio(params) {
+        console.log(params);
+        this.playAudioIndex = params.index;
+        this.audioContext = uni.createInnerAudioContext();
+        uni.getStorage({
+          key: `voice-${params.dialog}`,
+          success: (res) => {
+            console.log(res)
+            this.audioContext.src = res.data;
+            this.audioContext.play();
+            this.audioContext.onEnded(() => {
+              this.playAudioIndex = '';
+            });
+            
+          },
+          fail: (error) => {
+            console.log(`fail to get ${this.character} voice`, error);
+          }
+        })
+      },
 			retry() {
 				this.state = "userTalk";
 			},
