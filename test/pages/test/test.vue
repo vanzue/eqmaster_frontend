@@ -145,6 +145,15 @@
 				endX: 0, // 记录触摸结束时的 X 坐标
 			};
 		},
+		watch: {
+			isLoading(newValue) {
+				if (newValue) {
+					uni.showLoading({ title: 'loading...' });
+				} else {
+					uni.hideLoading();
+				}
+			}
+		},
 		onLoad(option) {
 			console.log("Received options:", option);
 			// this.sendDataToBackend();
@@ -315,9 +324,6 @@
 			navigateToTest1() {
 				if (this.isLoading) return;
 				this.isLoading = true;
-				uni.showLoading({
-					title: 'loading...'
-				});
 
 				this.analyzeBackground();
 				this.getScenarioData()
@@ -333,16 +339,12 @@
 					})
 					.finally(() => {
 						this.isLoading = false;
-						uni.hideLoading();
 					});
-				stateStack.push("test1");
+				// stateStack.push("test1");
 			},
 			navigateToTest2() {
 				if (this.isLoading) return;
 				this.isLoading = true;
-				uni.showLoading({
-					title: 'loading...'
-				});
 
 				this.currentPage = "test2";
 				this.getScenarioData()
@@ -355,9 +357,8 @@
 					})
 					.finally(() => {
 						this.isLoading = false;
-						uni.hideLoading();
 					});
-				stateStack.push("test2");
+				// stateStack.push("test2");
 			},
 			navigateToTest3() {
 				// Show loading indicator
@@ -385,9 +386,6 @@
 			navigateToTest4() {
 				if (this.isLoading) return;
 				this.isLoading = true;
-				uni.showLoading({
-					title: 'loading...'
-				});
 
 				this.currentPage = "test4";
 				this.getScenarioData()
@@ -400,16 +398,12 @@
 					})
 					.finally(() => {
 						this.isLoading = false;
-						uni.hideLoading();
 					});
-				stateStack.push("test4");
+				// stateStack.push("test4");
 			},
 			navigateToTest5() {
 				if (this.isLoading) return;
 				this.isLoading = true;
-				uni.showLoading({
-					title: 'loading...'
-				});
 
 				this.currentPage = "test5";
 				this.getScenarioData()
@@ -422,9 +416,8 @@
 					})
 					.finally(() => {
 						this.isLoading = false;
-						uni.hideLoading();
 					});
-				stateStack.push("test5");
+				// stateStack.push("test5");
 			},
 			analyzeBackground() {
 				if (this.background) {
@@ -450,20 +443,16 @@
 
 			nextPage() {
 				if (this.isLoading) return;
-				this.isLoading = true;
-				uni.showLoading({
-					title: 'loading...'
-				});
-
+				
 				if (this.num === null) {
 					uni.showToast({
 						title: "Please select an option",
 						icon: "none",
 					});
-					this.isLoading = false;
-					uni.hideLoading();
 					return;
 				}
+
+				this.isLoading = true;
 
 				// Add the current scenario and selected option to chat history
 				this.chatHistory.push({
@@ -477,24 +466,21 @@
 					.then((result) => {
 						console.log("Response data:", result);
 						this.requestCount++;
-						console.log("API 请求次数:", this.requestCount)
-
+						
 						if (result.message === "Final choice made. Processing data in background.") {
 							this.navigateToLoading();
 						} else {
-							// Reset selection state
 							this.selectedOptionIndex = null;
 							this.num = null;
-
-							// Get new scenario data before navigation
+							
 							this.getScenarioData()
 								.then(() => {
-									this.currentScene++; // Only increment after successful data fetch
+									this.currentScene++;
 									this.updateProgress();
-									this.navigateToNextPage();
+									this.navigateToNextPage1();
 								})
 								.catch((error) => {
-									console.error("Error loading new scenario:", error);
+									console.error("Error loading scenario data:", error);
 									uni.showToast({
 										title: "loading failed, try again",
 										icon: "none",
@@ -504,14 +490,13 @@
 					})
 					.catch((error) => {
 						console.error("Detailed error:", error);
-						uni.showToast({
-							title: `发生错误：${error.message}`,
-							icon: "none",
-						});
+							uni.showToast({
+								title: `发生错误：${error.message}`,
+								icon: "none",
+							});
 					})
 					.finally(() => {
-						this.isLoading = false;
-						uni.hideLoading();
+
 					});
 			},
 
@@ -580,17 +565,40 @@
 
 
 
+			
+			navigateToNextPage1() {
+				// Show loading indicator
 
-			navigateToNextPage() {
-				// 根据当前页面，决定下一个页面
-				if (this.currentPage === "test2") {
-					this.navigateToTest3();
-				} else if (this.currentPage === "test5") {
-					this.navigateToTest3();
-				} else {
-					this.navigateToTest3();
-				}
+
+				// Get new scenario data first
+				this.getScenarioData()
+					.then(() => {
+						// Update the page only after new data is loaded
+						this.currentPage = "test3";
+						this.isLoading = false;
+						// Hide loading indicator
+						uni.hideLoading();
+					})
+					.catch((error) => {
+						console.error("Error loading scenario data:", error);
+						uni.hideLoading();
+						uni.showToast({
+							title: "loading failed, try again",
+							icon: "none",
+						});
+					});
 			},
+			
+			// navigateToNextPage() {
+			// 	// 根据当前页面，决定下一个页面
+			// 	if (this.currentPage === "test2") {
+			// 		this.navigateToTest3();
+			// 	} else if (this.currentPage === "test5") {
+			// 		this.navigateToTest3();
+			// 	} else {
+			// 		this.navigateToTest3();
+			// 	}
+			// },
 			navigateToLoading() {
 				// 			const loadingPageUrl = `/pages/result/loading?jobId=${
 				//     this.jobId
@@ -647,3 +655,9 @@
 
 	/* ... 其他样式保持不变 ... */
 </style>
+
+
+
+
+
+
