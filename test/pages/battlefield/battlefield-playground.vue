@@ -1314,12 +1314,24 @@
 		position: absolute;
 		z-index: 12;
 		top: 83%;
-		left: 31%;
-		width: 105px;
+		left: 50%;
+		width: 238rpx;
 		padding: 10px 20px;
-		/* transform: translateX(-50%); */
+		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);
 		border-radius: 10px;
+	}
+
+	.recordTooltip::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		/* Position the arrow right below the tooltip */
+		left: 50%;
+		transform: translateX(-50%);
+		border-width: 6px;
+		border-style: solid;
+		border-color: rgba(16, 16, 16, 0.4) transparent transparent transparent;
 	}
 
 	.keyboardToolTip {
@@ -1334,28 +1346,68 @@
 		border-radius: 10px;
 	}
 
+	.keyboardToolTip::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		/* Position the arrow right below the tooltip */
+		left: 40%;
+		transform: translateX(-50%);
+		border-width: 6px;
+		border-style: solid;
+		border-color: rgba(16, 16, 16, 0.4) transparent transparent transparent;
+	}
+
 	.hintTooltip {
 		position: absolute;
 		z-index: 12;
 		top: 83%;
 		right: 1%;
-		width: 205px;
-		padding: 10px 20px;
+		width: 458rpx;
+		padding: 10px 16px;
+		font-size: 26rpx;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		/* transform: translateX(-50%); */
 		background-color: rgba(16, 16, 16, 0.4);
 		border-radius: 10px;
 	}
 
+	.hintTooltip::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		/* Position the arrow right below the tooltip */
+		left: 65%;
+		transform: translateX(-50%);
+		border-width: 6px;
+		border-style: solid;
+		border-color: rgba(16, 16, 16, 0.4) transparent transparent transparent;
+	}
+
 	.taskTooltip {
 		position: absolute;
 		z-index: 12;
-		top: 11%;
-		right: 1%;
-		width: 105px;
-		padding: 10px 20px;
+		top: 12%;
+		right: 3.2%;
+		width: 192rpx;
+		padding: 10px 5px;
+		font-size: 26rpx;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		/* transform: translateX(-50%); */
 		background-color: rgba(16, 16, 16, 0.4);
 		border-radius: 10px;
+	}
+
+	.taskTooltip::before {
+		content: "";
+		position: absolute;
+		bottom: 100%;
+		/* Position the arrow above the tooltip */
+		left: 50%;
+		transform: translateX(-50%);
+		border-width: 6px;
+		border-style: solid;
+		border-color: transparent transparent rgba(16, 16, 16, 0.4) transparent;
 	}
 
 	.tooltipOverlay {
