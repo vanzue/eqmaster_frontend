@@ -163,42 +163,49 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			getHomepageData() {
-				// 不再需要 const that = this;
-				this.$store.dispatch('fetchHomepageData')
-				// this.$store.dispatch('fetchcourseData')
-					.then(() => {
-						console.log('Homepage data fetched successfully');
-						if (this.interval) {
-							clearInterval(this.interval);
-							this.interval = null;
-						}
-						if (this.progressInterval) {
-							clearInterval(this.progressInterval);
-							this.progressInterval = null; // 修正了这里的错误
-						}
-						if (this.timeoutInterval) {
-							clearInterval(this.timeoutInterval);
-							this.timeoutInterval = null;
-						}
+				const fetchData = () => {
+					this.$store.dispatch('fetchHomepageData')
+						.then(() => {
+							const homepageData = this.$store.getters.getHomepageData;
+							if (homepageData.response && homepageData.response.eq_scores) {
+								console.log('Homepage data fetched successfully');
+								if (this.interval) {
+									clearInterval(this.interval);
+									this.interval = null;
+								}
+								if (this.progressInterval) {
+									clearInterval(this.progressInterval);
+									this.progressInterval = null; // 修正了这里的错误
+								}
+								if (this.timeoutInterval) {
+									clearInterval(this.timeoutInterval);
+									this.timeoutInterval = null;
+								}
 
-						const nextPageUrl = `/pages/result/result_en`;
-						uni.navigateTo({
-							url: nextPageUrl,
-							success: () => {
-								console.log('Navigation initiated successfully');
-							},
-							fail: (err) => {
-								console.error('Navigation failed:', err);
-								// uni.showToast({
-								// 	title: 'Page navigation failed',
-								// 	icon: 'none'
-								// });
+								const nextPageUrl = `/pages/result/result_en`;
+								uni.navigateTo({
+									url: nextPageUrl,
+									success: () => {
+										console.log('Navigation initiated successfully');
+									},
+									fail: (err) => {
+										console.error('Navigation failed:', err);
+										// uni.showToast({
+										// 	title: 'Page navigation failed',
+										// 	icon: 'none'
+										// });
+									}
+								});
+							} else {
+								console.log('Homepage data not complete, refetching...');
+								fetchData();
 							}
+						})
+						.catch((error) => {
+							console.error('Error fetching homepage data:', error);
 						});
-					})
-					.catch((error) => {
-						console.error('Error fetching homepage data:', error);
-					});
+				};
+				fetchData();
 			},
 			getcourseData() {
 				// 不再需要 const that = this;

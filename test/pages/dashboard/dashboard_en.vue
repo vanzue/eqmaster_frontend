@@ -123,7 +123,7 @@
 				<view class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件 -->
-						<SProgressBar v-if="courseData"
+						<SProgressBar v-if="courseData && courseData.courses"
 							:finishComponents="courseData.courses.length"
 							:starRatings="courseData.courses.map(course => course.result)" :totalComponents="4" />
 					</view>
@@ -216,7 +216,7 @@
 					}
 				],
 				animal: '',
-				courseData: {},
+				// courseData: {},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -532,7 +532,7 @@
 						item.analysis = JSON.parse(item.analysis);
 						item.chatHistory = JSON.parse(item.chatHistory);
 					});
-					console.log(data);
+					// console.log(data);
 					this.analysisList = data;
 				} catch (error) {
 					// this.error = 'Error fetching analysis data';
