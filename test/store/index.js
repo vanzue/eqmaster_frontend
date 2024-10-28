@@ -39,6 +39,8 @@ export default createStore({
 		weakness: null,
 		characteristics: null,
 		diamondCount: 0,
+		gemCount: 0,
+		diamondCount: 0,
 		audios: new Map(),
 	},
 	mutations: {
@@ -89,7 +91,13 @@ export default createStore({
 		setDiamondCount(state, diamondCount) {
 			state.diamondCount = diamondCount;
 		},
-		setAudios(state, { key, value }) {
+		setGemCount(state, gemCount) {
+			state.gemCount = gemCount;
+		},
+		setAudios(state, {
+			key,
+			value
+		}) {
 			state.audios.set(key, value);
 		}
 	},
@@ -130,8 +138,11 @@ export default createStore({
 		getDiamondCount(state) {
 			return state.diamondCount;
 		},
+		getGemCount(state) {
+			return state.gemCount;
+		},
 		getAudios: (state) => (key) => {
-		    return state.audios.get(key);
+			return state.audios.get(key);
 		},
 	},
 	actions: {
