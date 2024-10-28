@@ -24,6 +24,10 @@
 				}).catch((error) => {
 					console.error('Error fetching homepage data:', error);
 				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/landing/experience`
+				});
 			}
 			const username = uni.getStorageSync('username');
 			if (username) {

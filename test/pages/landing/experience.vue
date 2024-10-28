@@ -13,7 +13,7 @@
 			<!-- <text class="question1">完善个人信息</text> -->
 
 			<!-- 输入框 -->
-			<input class="name-input" placeholder="Please enter your nickname." v-model="username" />
+			<input class="name-input" placeholder="Please input" v-model="username" />
 
 
 			<!-- 继续按钮 -->
