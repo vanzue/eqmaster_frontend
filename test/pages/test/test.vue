@@ -150,7 +150,9 @@
 		watch: {
 			isLoading(newValue) {
 				if (newValue) {
-					uni.showLoading({ title: 'loading...' });
+					uni.showLoading({
+						title: 'loading...'
+					});
 				} else {
 					uni.hideLoading();
 				}

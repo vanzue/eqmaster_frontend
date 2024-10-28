@@ -18,21 +18,28 @@ export default createStore({
 				characterName: "Jason",
 				health: 10,
 				avatar: "/static/battlefield/boss11.png",
+				voice: "onyx",
+				style: "serious",
 			},
 			{
 				characterName: "Sam",
 				health: 10,
 				avatar: "/static/battlefield/xiaoA1.png",
+				voice: "nova",
+				style: "empathetic",
 			},
 			{
 				characterName: "Anna",
 				health: 10,
 				avatar: "/static/battlefield/xiaoB1.png",
+				voice: "echo",
+				style: "empathetic",
 			},
 		],
 		weakness: null,
 		characteristics: null,
 		diamondCount: 0,
+		audios: new Map(),
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -71,16 +78,19 @@ export default createStore({
 		setWeakness(state, weakness) {
 			state.weakness = weakness;
 		},
-		
+
 		setcourseDatas(state, courseData) {
 			state.courseData = courseData;
 		},
-		
+
 		setCharateristics(state, characteristics) {
 			state.characteristics = characteristics;
 		},
 		setDiamondCount(state, diamondCount) {
 			state.diamondCount = diamondCount;
+		},
+		setAudios(state, { key, value }) {
+			state.audios.set(key, value);
 		}
 	},
 	getters: {
@@ -119,7 +129,10 @@ export default createStore({
 		},
 		getDiamondCount(state) {
 			return state.diamondCount;
-		}
+		},
+		getAudios: (state) => (key) => {
+		    return state.audios.get(key);
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -128,7 +141,7 @@ export default createStore({
 		}) {
 			try {
 				const homepageData = await apiService.getHomepageData(this.state.userId);
-				console.log("homepage data:", homepageData);
+				console.log("#####store homepage data:", homepageData);
 				commit('setHomepageData', homepageData);
 				commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
@@ -136,7 +149,10 @@ export default createStore({
 				console.error('Error fetching homepage data:', error);
 			}
 		},
-		async fetchcourseData({ commit, rootState }) {
+		async fetchcourseData({
+			commit,
+			rootState
+		}) {
 			try {
 				if (!rootState.userId) {
 					throw new Error('User ID is not set');
@@ -165,6 +181,7 @@ export default createStore({
 			commit('setWeakness', '');
 			commit('setCharateristics', '');
 			commit('setcourseData', {});
+			commit('setAudios', {})
 
 			const username = uni.getStorageSync('username');
 			localStorage.clear();

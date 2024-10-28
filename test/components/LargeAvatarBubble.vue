@@ -36,37 +36,22 @@ import apiService from '../services/api-service'
 		},
 		async mounted() {
 			this.audioContext = uni.createInnerAudioContext();
-			uni.getStorage({
-				key: `voice-${this.wording}`,
-				success: (res) => {
-					this.audioContext.src = res.data;
-					this.audioContext.play();
-					
-				},
-				fail: (error) => {
-					console.log(`fail to get ${this.character} voice`, error);
-				}
-			})
+			const audio = this.$store.getters.getAudios(`voice-${this.wording}`);
+			if (audio) {
+				this.audioContext.src = audio;
+				this.audioContext.play();
+			}
 		},
 		created() {
-			console.log("create large bubble");
+			
 		},
 		watch: {
 			wording(newValue) {
-				if (this.audioContext) {
-					this.audioContext.pause();
-					this.audioContext.currentTime = 0;
+				const audio = this.$store.getters.getAudios(`voice-${this.wording}`);
+				if (audio) {
+					this.audioContext.src = audio;
+					this.audioContext.play();
 				}
-				uni.getStorage({
-					key: `voice-${this.wording}`,
-					success: (res) => {
-						this.audioContext.src = res.data;
-						this.audioContext.play();
-					},
-					fail: (error) => {
-						console.log(`fail to get ${this.wording} audio`, error)
-					}
-				})
 			},
 		},
 		unmounted() {

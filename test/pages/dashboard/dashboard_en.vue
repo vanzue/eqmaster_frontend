@@ -123,7 +123,7 @@
 				<view class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件 -->
-						<SProgressBar v-if="courseData"
+						<SProgressBar v-if="courseData && courseData.courses"
 							:finishComponents="courseData.courses.length"
 							:starRatings="courseData.courses.map(course => course.result)" :totalComponents="4" />
 					</view>
@@ -141,7 +141,9 @@
 	import ChatHistory from '@/components/ChatHistory.vue';
 	import Nav from '../../components/Nav.vue';
 	import AbilityProgressBar from '@/components/AbilityProgressBar.vue';
-
+	import {
+		illustrationSrc
+	} from '../../scripts/illustrationHelper';
 
 	export default {
 
@@ -216,7 +218,7 @@
 					}
 				],
 				animal: '',
-				courseData: {},
+				// courseData: {},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -386,9 +388,8 @@
 			homepageData: {
 				immediate: true,
 				async handler(val) {
-					if (val && val.response) {
-						this.isLoading = false;
-					}
+					// if (val && val.response) {
+					// }
 				},
 				// deep: true,
 			}
@@ -401,6 +402,8 @@
 		},
 		async created() {
 			await this.getAnalysisList();
+			this.$store.dispatch('fetchcourseData');
+			const result = illustrationSrc(this.homepageData, this.$store);
 			// await this.getBattlefield();
 		},
 		onLoad(option) {
@@ -503,27 +506,6 @@
 					this.isLoading = false;
 				}
 			},
-			async getHomepageData() {
-				try {
-					this.isLoading = true;
-					this.error = null;
-					this.userId
-					console.log('Fetching homepage data with userId:', this.userId);
-
-					const data = await apiService.getHomepageData(this.userId);
-					this.homepageData = data;
-					console.log('Homepage data received:', this.homepageData);
-
-					// this.$nextTick(() => {
-					// 	this.drawRadar();
-					// });
-				} catch (error) {
-					this.error = 'Error fetching homepage data';
-					console.error(this.error, error);
-				} finally {
-					this.isLoading = false;
-				}
-			},
 
 			async getAnalysisList() {
 				try {
@@ -533,13 +515,13 @@
 						item.analysis = JSON.parse(item.analysis);
 						item.chatHistory = JSON.parse(item.chatHistory);
 					});
-					console.log(data);
+					// console.log(data);
 					this.analysisList = data;
 				} catch (error) {
 					// this.error = 'Error fetching analysis data';
 					console.error(this.error, error);
 				} finally {
-
+					this.isLoading = false;
 				}
 			},
 
@@ -552,7 +534,7 @@
 			// 		const data = await apiService.getBattlefield(this.userId);
 			// 		this.courseData = data;
 			// 		console.log('Homepage data received:', this.courseData);
-					
+
 			// 		// this.$store.commit('setcourseDatas', returnObj.this.courseData);
 
 			// 		// this.$nextTick(() => {
@@ -600,97 +582,6 @@
 					url: `/pages/battlefield/battlefield-intro?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
 
 				});
-			},
-			toProfilePage() {
-				if (this.canNavigateToProfile) {
-					// 准备要发送的数据
-					this.getHomepageData();
-					const requestData = {
-						personal_name: this.homepageData?.response?.personal_info?.name || '',
-						name: this.profileName,
-						tag: this.selectedTags.join(','),
-						contact_relationship: this.selectedOption
-					};
-
-					// 在发送请求之前打印数据
-					console.log('Sending data to create contact profile:', requestData);
-
-					// 发送请求创建联系人档案
-					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
-						method: 'POST',
-						data: requestData,
-						success: (res) => {
-							if (res.statusCode === 200) {
-								console.log('Contact profile created successfully:', res.data);
-								// 创建成功后，导航到档案页面
-								uni.navigateTo({
-									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
-								});
-							} else {
-								console.error('Failed to create contact profile:', res.statusCode, res.data);
-								uni.showToast({
-									title: `创建档案失败: ${res.statusCode}`,
-									icon: 'none'
-								});
-							}
-						},
-						fail: (err) => {
-							console.error('Error creating contact profile:', err);
-							uni.showToast({
-								title: '网络错误，请稍后重试',
-								icon: 'none'
-							});
-						}
-					});
-				}
-			},
-			toProfilePage1(contact) {
-				this.getHomepageData();
-				console.log('Navigating to profile page for contact:', contact);
-				console.log('Navigating to profile page for contact:', this.homepageData?.response?.personal_info?.name);
-				if (this.canNavigateToProfile) {
-					// 准备要发送的数据
-					this.getHomepageData();
-					const requestData = {
-						personal_name: this.homepageData?.response?.personal_info?.name || '',
-						name: contact?.name || '',
-						tag: contact?.tag || '',
-						contact_relationship: contact?.contact_relationship || ''
-					};
-
-					// 在发送请求之前打印数据
-					console.log('Sending data to create contact profile:', requestData);
-
-					// 送请求创建联系人档案
-					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
-						method: 'POST',
-						data: requestData,
-						success: (res) => {
-							if (res.statusCode === 200) {
-								console.log('Contact profile created successfully:', res.data);
-								// 创建成功后，导航到档案页面
-								uni.navigateTo({
-									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(contact?.name || '')}&jobId=${this.jobId}&relation=${encodeURIComponent(contact?.contact_relationship || '')}&tags=${encodeURIComponent(contact?.tag || '')}&contactId=${res.data.contact_id}`
-								});
-							} else {
-								console.error('Failed to create contact profile:', res.statusCode, res.data);
-								uni.showToast({
-									title: `创建档案失败: ${res.statusCode}`,
-									icon: 'none'
-								});
-							}
-						},
-						fail: (err) => {
-							console.error('Error creating contact profile:', err);
-							uni.showToast({
-								title: '网络错误，请稍后重试',
-								icon: 'none'
-							});
-						}
-					});
-				}
 			},
 			navigateToResult() {
 				uni.navigateTo({
@@ -1910,10 +1801,10 @@
 	}
 
 	.dashboard2-fixed-content {
-		position: fixed;
+		/* position: fixed;
 		top: 0;
 		left: 0;
-		right: 0;
+		right: 0; */
 		z-index: 10;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
@@ -1921,7 +1812,7 @@
 	}
 
 	.dashboard2-scrollable-content {
-		padding-top: 300rpx; 
+		/* padding-top: 300rpx;  */
 		/* 其他样式 */
 	}
 
@@ -2166,6 +2057,4 @@
 		height: 134px;
 		padding-top: 0px;
 	}
-
-	
 </style>

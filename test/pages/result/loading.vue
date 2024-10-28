@@ -129,7 +129,7 @@
 			}
 
 			this.getHomepageData();
-			this.getcourseData();
+			// this.getcourseData();
 			// this.getBattlefield();course
 
 			// 禁止左滑

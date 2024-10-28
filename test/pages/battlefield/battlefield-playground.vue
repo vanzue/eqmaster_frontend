@@ -26,13 +26,19 @@
 				<scroll-view class="chat-history-container" scroll-y :scroll-top="scrollTop" ref="chatHistoryContainer"
 					:scroll-into-view="scrollIntoViewId">
 					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
-						<npc-chat-box v-if="
+						<npc-chat-box 
+              v-if="
                 ['Jason', 'Sam', 'Anna'].includes(
                   chat.role
                 )
-              " :key="'npc-' + index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
+              " 
+              :key="'npc-' + index" 
+              :index="index"
+              :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
 							:dialog="chat.content"
-							:isLastElement="index === displayedMessages.length - 1"></npc-chat-box>
+							:isLastElement="index === displayedMessages.length - 1"
+              :playAudioIndex="playAudioIndex"
+              @playAudio="playAudio"></npc-chat-box>
 						<view v-else-if="chat.role === 'user'"
 							:class="['message-wrapper', { animate: chat.shouldAnimate }]">
 							<self-chat-box :key="'user' + index" :wording="chat.content" :commit="userJudgeContent"
@@ -74,8 +80,9 @@
 				<text class="cancel-text">Release to send, slide up to cancel</text>
 			</view>
 
-			<view v-if="state === 'userTalk' && showToolTips && isTooltipVisible" class="tooltipOverlay"
-				@click="hideTooltip">
+			<view
+				v-if="state === 'userTalk' && showToolTips && isTooltipVisible && (showHintTooltip || showRecordTooltip || showTaskTooltip)"
+				class="tooltipOverlay" @click="hideTooltip">
 			</view>
 			<!-- tooltip -->
 			<!-- tooltip for record -->
@@ -109,7 +116,9 @@
         " class="hintTooltip">
 				Need help? Here's your advice packet
 			</view>
-			<view class="player-action-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
+
+
+			<view class="player-action-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk' && sendMessageNavShow">
 				<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
 					<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 				</view>
@@ -133,10 +142,16 @@
 			</view>
 
 			<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-				<view class="input-container" @click.stop>
-					<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-					<textarea placeholder="Enter here.." v-model="inputContent" auto-height
-						@blur="inputRecordingBlur" />
+				<view class="input-container-wrapper">
+					<view class="input-container" @click.stop>
+						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
+						<textarea placeholder="Type your response" v-model="inputContent" auto-height
+							@blur="inputRecordingBlur" />
+					</view>
+					<view class="send-sms-container">
+						<image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur">
+						</image>
+					</view>
 				</view>
 			</view>
 
@@ -291,6 +306,9 @@
 				task2CompletedStatusOne: false,
 				taskFinished: false,
 				isFinish: false,
+        playAudioIndex: -1,
+        audioContext: null,
+        sendMessageNavShow: true,
 			};
 		},
 		created() {
@@ -412,10 +430,12 @@
 				this.isTooltipVisible = false;
 				this.showRecordTooltip = false;
 				this.showHintTooltip = false;
+				this.showTaskTooltip = false;
 				console.log(("change tooltip visible into:", this.isTooltipVisible));
 			},
 			async gotoNextRound() {
 				console.log("go next round");
+        this.sendMessageNavShow = true;
 				if (!this.isGoodReply) {
 					this.retry();
 					this.isLoadingShow = false;
@@ -432,54 +452,54 @@
 					this.task2CompletedStatusOne = false;
 					this.state = "NpcTalk";
 				} else {
-					const nextRound = await continueChat(this.allHistory, "4");
-					console.log("next round data", nextRound);
-					nextRound.dialog = nextRound.dialog.map((item) => ({
-						role: item.role,
-						content: item.content ?? item.words,
-					}));
-					try {
-						const voiceMap = {
-							"Jason": {
-								"voice": "onyx",
-								"style": "serious"
-							},
-							"Anna": {
-								"voice": "nova",
-								"style": "empathetic"
-							},
-							"Sam": {
-								"voice": "echo",
-								"style": "empathetic"
-							}
-						};
-						const promises = nextRound.dialog.map(async (item) => {
-							const result = await apiService.getVoice(item.words || item.content, voiceMap[
-								item.role]["voice"], voiceMap[item.role]["style"]);
-							uni.setStorage({
-								key: `voice-${item.words || item.content}`,
-								data: result.message,
-								success: (res) => {
-									console.log("set storage success");
-								},
-							})
-						});
-						await Promise.all(promises);
-					} catch (error) {
-						console.log("get audio fail", error);
+					if (!this.isLoadingShow) {
+						this.isLoadingShow = true;
 					}
-					console.log("current chatting history:", this.chattingHistory);
-					this.chattingHistory = nextRound.dialog;
-					this.allHistory = this.allHistory.concat(nextRound.dialog);
-					console.log("after concat, chatting history:", this.chattingHistory);
-					// let someoneTalked = false;
-					this.displayedNpcChatIndex = 0;
-					this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
-					this.state = "NpcTalk";
-				}
+					try {
+						const nextRound = await continueChat(this.allHistory, "4");
+						console.log("next round data", nextRound);
 
+						nextRound.dialog = nextRound.dialog.map(item => ({
+							role: item.role,
+							content: item.content ?? item.words,
+						}));
+
+						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
+
+						await Promise.all(nextRound.dialog.map(async item => {
+							const result = await apiService.getVoice(item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);
+							this.$store.commit('setAudios', { key: `voice-${item.content}`, value: result.message });
+						}));
+
+						console.log("current chatting history:", this.chattingHistory);
+						this.chattingHistory = nextRound.dialog;
+						this.allHistory = [...this.allHistory, ...nextRound.dialog];
+						console.log("after concat, chatting history:", this.chattingHistory);
+
+						this.displayedNpcChatIndex = 0;
+						this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
+						this.state = "NpcTalk";
+					} catch (error) {
+						console.error("get audio fail", error);
+					}
+				}
+        this.sendMessageNavShow = true;
 				this.isLoadingShow = false;
 			},
+      playAudio(params) {
+        console.log(params);
+        this.playAudioIndex = params.index;
+        this.audioContext = uni.createInnerAudioContext();
+        const audio = this.$store.getters.getAudios(`voice-${params.dialog}`);
+        console.log(audio);
+        if (audio) {
+        	this.audioContext.src = audio;
+        	this.audioContext.play();
+          this.audioContext.onEnded(() => {
+              this.playAudioIndex = -1;
+          });
+        }
+      },
 			retry() {
 				this.state = "userTalk";
 			},
@@ -587,14 +607,16 @@
 				const evaluationResult = await evalBattlefield(
 					this.allHistory,
 					isPass,
-					gemCount,
+					this.gemCount,
 					diamonds
 				);
 				const userId = this.$store.getters.getUserId;
-				if (isPass === true) {
+				if (this.isPass === true) {
 					const res = await apiService.updateDiamonds(userId, 10);
+					console.log("update diamond res:", res);
 				} else {
 					const res = await apiService.updateDiamonds(userId, 3);
+					console.log("update diamond res:", res);
 				}
 				console.log("evaluation result:", evaluationResult);
 				// const evaluationResult = await evalBattlefield(this.chattingHistory);
@@ -635,7 +657,7 @@
 						console.error("设置 NPC health 失败:", err);
 					},
 				});
-
+        await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
 					uni.navigateTo({
 						url: "/pages/battlefield/battlefield-summary",
@@ -713,6 +735,7 @@
 								this.anasLoadingObj.text = "Analyzing";
 							}, 50);
 						});
+            this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
 						const judgeResult = await reply(validChats, "4");
 
@@ -721,6 +744,7 @@
 						this.anasLoadingObj.loading = false;
 					} catch (error) {
 						this.anasLoadingObj.loading = false;
+            this.sendMessageNavShow = true;
 						if (this.chattingHistory.length > 0) {
 							this.chattingHistory.pop();
 						}
@@ -758,6 +782,7 @@
 						});
 					});
 					try {
+            this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
 						const judgeResult = await reply(validChats, "4");
 						// console.log("validChat:", validChat);
@@ -773,6 +798,7 @@
 							this.chattingHistory.pop();
 						}
 						this.anasLoadingObj.loading = false;
+            this.sendMessageNavShow = true;
 					}
 				}
 			},
@@ -792,6 +818,7 @@
 						judgeResult = await helpReply(validChats, "4");
 						// console.log(judgeResult.responsive);
 						if (judgeResult.responsive) {
+              await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage = {
 								role: "user",
@@ -815,10 +842,10 @@
 								});
 							});
 
+              this.sendMessageNavShow = false;
 							const validChatsRepy = filterChatHistory(this.allHistory);
 							const judgeResultRepy = await reply(validChatsRepy, "4");
 							await this.handleRecorderReply(judgeResultRepy);
-							await this.$store.dispatch('fetchHomepageData');
 						}
 					}
 					if (selectedCard == 2) {
@@ -829,6 +856,7 @@
 						judgeResult = await hint(validChats, "4");
 						// console.log(judgeResult.tips);
 						if (judgeResult.tips) {
+              await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage2 = {
 								role: "tipping",
@@ -856,6 +884,7 @@
 					this.anasLoadingObj.loading = false;
 				} catch (error) {
 					this.anasLoadingObj.loading = false;
+          this.sendMessageNavShow = true;
 				}
 			},
 			async handleRecorderReply(judgeResult) {
@@ -909,6 +938,7 @@
 					if (this.chattingHistory.length > 0) {
 						this.chattingHistory.pop();
 					}
+          this.sendMessageNavShow = true;
 					return false; // 添加返回值，表示处理失败
 				}
 			},
@@ -925,11 +955,11 @@
 						const allPositive = judgeResult.moods.every(
 							(item) => parseInt(item.mood, 10) > 0
 						);
-						// console.log(allPositive);
+						console.log(allPositive);
 						if (allPositive) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
-								console.log("allPositive:", allPositive);
+								// console.log("allPositive:", allPositive);
 								this.currentTask = this.taskList.getTask(0);
 								const totalTaskLength = this.taskList.getTotalTaskLength();
 								console.log("Total task length:", totalTaskLength);
@@ -1096,6 +1126,7 @@
 
 					// 第二次进入 'userTalk' 时显示任务tooltip
 					if (this.userTalkCount === 2) {
+						// console.log("show task tool tip!!!!", this.showTaskTooltip);
 						this.showTaskTooltip = true;
 						this.isTooltipVisible = true;
 					}
@@ -1531,19 +1562,36 @@
 		opacity: 0.5;
 	}
 
-	.input-container {
+	.input-container-wrapper {
 		position: fixed;
-		width: 80%;
-		left: 10%;
+		display: flex;
+		width: 70%;
+		/* left: 10%; */
 		bottom: 200rpx;
+		justify-content: center;
+		gap: 20rpx;
+	}
+
+	.input-container {
+		/* position: fixed; */
+		width: 100%;
+		/* left: 10%; */
+		/* bottom: 200rpx; */
 		/* 将其固定在屏幕底部 */
 		display: flex;
+		align-items: center;
 		/* justify-content: center; */
-		padding: 20rpx 0;
+		/* padding: 20rpx 0; */
 		border-radius: 40rpx;
 		/* 增加一些内边距 */
 		background-color: #d6fcf6;
+		border: 2px solid #90E0E7;
 		/* 可选的背景色，用于强调输入框 */
+	}
+
+	.send-sms-icon {
+		width: 88rpx;
+		height: 88rpx;
 	}
 
 	textarea {
