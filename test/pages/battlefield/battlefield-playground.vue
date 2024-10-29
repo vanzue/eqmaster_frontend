@@ -814,7 +814,7 @@
 							loading: true,
 							text: "Generating",
 						};
-						 = await helpReply(validChats, "4");
+						replyContent = await helpReply(validChats, "4");
 						if (replyContent.responsive) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
