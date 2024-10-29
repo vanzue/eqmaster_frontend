@@ -609,15 +609,14 @@
 					gemCount,
 					diamonds
 				);
-				this.$store
 				const userId = this.$store.getters.getUserId;
-				if (this.isPass === true) {
-					const res = await apiService.updateDiamonds(userId, 10);
-					console.log("update diamond res:", res);
-				} else {
-					const res = await apiService.updateDiamonds(userId, 3);
-					console.log("update diamond res:", res);
-				}
+				// if (this.isPass === true) {
+				// 	const res = await apiService.updateDiamonds(userId, 10);
+				// 	console.log("update diamond res:", res);
+				// } else {
+				// 	const res = await apiService.updateDiamonds(userId, 3);
+				// 	console.log("update diamond res:", res);
+				// }
 				console.log("evaluation result:", evaluationResult);
 				// const evaluationResult = await evalBattlefield(this.chattingHistory);
 				// console.log('evaluation result:', evaluationResult);
