@@ -524,6 +524,7 @@
 
 	.eqoach-bot {
 		display: flex;
+    position: relative;
 		/* height: 128rpx; */
 		background-color: #373742;
 		border-radius: 32rpx;
@@ -541,12 +542,14 @@
 	.eqoach-bot-center {
 		width: 368rpx;
 		display: block;
-		padding-left: 8rpx;
+		padding-left: 16rpx;
 	}
 
 	.eqoach-bot-add {
+    position: absolute;
+    right: 24rpx;
 		display: flex;
-		width: 226rpx;
+		width: 100rpx;
 		justify-content: right;
 		/* margin-left: 140rpx; */
 	}
