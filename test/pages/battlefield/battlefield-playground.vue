@@ -9,7 +9,7 @@
 				<reward-bar :gemCount="gemCount"></reward-bar>
 				<view class="setting-group">
 					<!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
-					<image class="setting-item" src="/static/battlefield/copy.png" @click="handleClickTaskList"></image>
+					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList"></image>
 					<image class="setting-item" src="/static/battlefield/setting.png"></image>
 				</view>
 			</view>
@@ -1723,7 +1723,7 @@
 		align-items: center;
 		flex-direction: column;
 		z-index: 1000;
-		padding: 10rpx;
+		/* padding: 10rpx; */
 	}
 
 	.judge-mission-container {

@@ -78,7 +78,7 @@
 						concerns: this.selectedOptions || ["Fitting in"],
 					});
 
-					console.log("Backend response:", response);
+					// console.log("Backend response:", response);
 
 					this.jobId = response.job_id;
 					this.userId = response.user_id;
@@ -89,7 +89,9 @@
 
 					await this.getScenarioId();
 					// const scenarioResponse = await apiService.initializeScenario();
-					
+					// if(scenarioResponse) {
+					// 	this.$store.commit('setScenarioResponse', scenarioResponse.scene.scenes || scenarioResponse);
+					// }
 					// Get scenarioId
 					// const fetchedScenarioId = scenarioResponse.scenario_id || 1;
 					// console.log("Fetched scenarioId:", fetchedScenarioId);

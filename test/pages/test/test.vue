@@ -152,6 +152,9 @@
 			scenarioId() {
 				return this.$store.getters.getScenarioId;
 			},
+			// scenarioData() {
+			// 	return this.$store.getters.getScenarioResponse;
+			// },
 		},
 		watch: {
 			isLoading: {
@@ -172,7 +175,9 @@
 				async handler(val) {
 					if(val) {
 						this.backgroundImageSrc = `/static/onboarding/bg${val}.png`;
-						this.isLoading = false;
+						setTimeout(() => {
+							this.isLoading = false;
+						}, 300); // Adjust the delay as needed
 					} else {
 						uni.navigateTo({
 							url: '/pages/preference/preference3'
@@ -182,7 +187,21 @@
 					// console.log(val)
 				},
 				// deep: true,
-			}
+			},
+			// scenarioData: {
+			// 	immediate: true,
+			// 	async handler(newValue) {
+			// 		console.log("scenarioData", newValue);
+			// 		if(newValue) {
+			// 			this.npcAvatar = getAvatar(newValue.role);
+			// 			// console.log("src of npc avatar:", this.npcAvatar);
+			// 			// this.scenarioId = res.scenario_id || 1;
+			// 			this.handleScenarioData();
+			// 			this.updateProgress();
+			// 			this.isFirstScene = false;
+			// 		}
+			// 	},
+			// }
 		},
 		onLoad(option) {
 			console.log("Received options:", option);
@@ -425,6 +444,7 @@
 						.then((result) => {
 							console.log("#####retrieveScenarioResponse data:", result);
 							this.scenarioData = result.scene.scenes;
+							// this.$store.commit('setScenarioResponse', result.scene.scenes);
 							this.npcName = this.scenarioData.role;
 							this.npcAvatar = getAvatar(this.npcName);
 							this.handleScenarioData();
