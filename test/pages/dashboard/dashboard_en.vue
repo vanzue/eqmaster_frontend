@@ -120,12 +120,18 @@
 				<scroll-view scroll-y class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
+						<!-- v-if="courseData"
+						:finishComponents="courseData.courses.length"
+						:starRatings="courseData.courses.map(course => course.result)" 
+						:totalComponents="4"
+						:isCompleteTask="!!courseData.course_level" -->
 						<SProgressBar 
-							v-if="courseData" 
+							
+							v-if="courseData"
 							:finishComponents="courseData.courses.length"
-							:starRatings="courseData.courses.map(course => course.result)" 
+							:starRatings="Array(courseData.courses.length).fill(gemCount)"  
 							:totalComponents="4"
-							:isCompleteTask="!!courseData.course_level"
+							:isCompleteTask="gemCount"
 						/>
 					</view>
 				</scroll-view >
@@ -409,6 +415,19 @@
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
 			const result = illustrationSrc(this.homepageData, this.$store);
+			// const evalResult = uni.getStorage({
+			// 	key: "evalResult",
+			// 	success: (res) => {
+			// 		console.log("result:", res);
+			// 		const dbCourse = res.data.db_course;
+			// 		const list = Object.keys(dbCourse)
+			// 			.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
+			// 			.sort() // 如果你想按照 comment1, comment2 的顺序排列
+			// 			.map((key) => dbCourse[key]); // 提取这些键的值      ;
+			// 		this.comments = list;
+			// 		this.suggestion = res.data.db_course.tips.join('\n');
+			// 	},
+			// });
 			console.log('Course Data:', this.courseData)
 
 			// await this.getBattlefield();
@@ -417,6 +436,9 @@
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
 			this.userCard();
+			
+
+			
 
 			// 接收上一个页面传递的数据
 			// this.userId = option.userId || '717';
@@ -457,6 +479,7 @@
 		},
 		onShow() {
 			this.getAnalysisList(this.userId);
+			
 		},
 		methods: {
 			progressWidth(value) {
