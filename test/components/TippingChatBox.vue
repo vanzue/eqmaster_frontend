@@ -2,9 +2,10 @@
 	<view class="tip-container">
 		<!-- <image class="tip-background" src="/static/battlefield/question-mark.png" mode="widthFix"></image> -->
 		<view class="tip-content">
-			<image class="tip-mark" src="/static/battlefield/tip-yellow.png"></image>
+			<image class="tip-mark" src="/static/battlefield/tip-yellow.svg"></image>
 			<text class="tip-text">Tip: {{ tip }}</text>
 		</view>
+		<image class="tip-mark-yellow" src="/static/battlefield/tips-icon.png"></image>
 	</view>
 </template>
 
@@ -23,7 +24,7 @@
 	.tip-container {
 		position: relative;
 		/* width: 100%; */
-		background-color: #FDEDC8;
+		background-color: #FFFFFF;
 		border-radius: 10px;
 		padding: 40rpx 48rpx;
 		box-sizing: border-box;
@@ -65,5 +66,12 @@
 		font-size: 15px;
 		color: #333;
 		line-height: 1.5;
+	}
+	.tip-mark-yellow {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 222rpx;
+		height: 220rpx;
 	}
 </style>

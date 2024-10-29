@@ -9,7 +9,7 @@
 				<reward-bar :gemCount="gemCount"></reward-bar>
 				<view class="setting-group">
 					<!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
-					<image class="setting-item" src="/static/battlefield/copy.png" @click="handleClickTaskList"></image>
+					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList"></image>
 					<image class="setting-item" src="/static/battlefield/setting.png"></image>
 				</view>
 			</view>
@@ -806,7 +806,7 @@
 				this.cardButtonLoading = true;
 				console.log("Exchangeclick:", this.allHistory);
 				const validChats = filterChatHistory(this.allHistory);
-				let judgeResult = null;
+				let replyContent = null;
 				this.userJudgeContent = "";
 				try {
 					if (selectedCard == 1) {
@@ -814,14 +814,13 @@
 							loading: true,
 							text: "Generating",
 						};
-						judgeResult = await helpReply(validChats, "4");
-						// console.log(judgeResult.responsive);
-						if (judgeResult.responsive) {
+						replyContent = await helpReply(validChats, "4");
+						if (replyContent.responsive) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage = {
 								role: "user",
-								content: judgeResult.responsive,
+								content: replyContent.responsive,
 								shouldAnimate: false,
 							};
 							this.chattingHistory.push(newMessage);
@@ -842,6 +841,7 @@
 							});
 
 							this.sendMessageNavShow = false;
+							await new Promise(resolve => setTimeout(resolve, 3000));
 							const validChatsRepy = filterChatHistory(this.allHistory);
 							const judgeResultRepy = await reply(validChatsRepy, "4");
 							await this.handleRecorderReply(judgeResultRepy);
@@ -1722,7 +1722,7 @@
 		align-items: center;
 		flex-direction: column;
 		z-index: 1000;
-		padding: 10rpx;
+		/* padding: 10rpx; */
 	}
 
 	.judge-mission-container {

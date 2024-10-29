@@ -47,6 +47,7 @@ export default createStore({
 		diamondCount: 0,
 		audios: new Map(),
     scenario_id: 1,
+    scenarioResponse: {},
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -108,6 +109,9 @@ export default createStore({
     setScenarioId(state, scenarioId) {
       state.scenarioId = scenarioId;
     },
+    setScenarioResponse(state, scenarioResponse) {
+      state.scenarioResponse = scenarioResponse;
+    },
 	},
 	getters: {
 		getUserId(state) {
@@ -155,6 +159,9 @@ export default createStore({
 		getScenarioId(state) {
 			return state.scenarioId;
 		},
+    getScenarioResponse(state) {
+      return state.scenarioResponse;
+    },
 	},
 	actions: {
 		async fetchHomepageData({
