@@ -56,9 +56,9 @@
 								@click="showEqoachPopup = true; saveqrcodeLoding = false;">Add</button>
 						</view>
 					</view>
-					<view class="delete-btn" :style="{ opacity: deleteOpacity }">
+					<!-- <view class="delete-btn" :style="{ opacity: deleteOpacity }">
 						<image class="delete-btn-icon" src="/static/delete.png" @click="isDelEqoashBot = true"></image>
-					</view>
+					</view> -->
 				</view>
 
 			</view>
