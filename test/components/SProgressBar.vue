@@ -196,8 +196,8 @@ export default {
         } else {
           ctx.lineWidth = 8; // 未完成的路径设置为 6 的宽度
           ctx.strokeStyle = '#3B413B';
-          const dashLength = 50; // 虚线的实线部分长度
-          const gapLength = 60; // 虚线的空白部分长度
+          const dashLength = 30; // 虚线的实线部分长度
+          const gapLength = 40; // 虚线的空白部分长度
           ctx.setLineDash([dashLength, gapLength]); // 设置虚线样式
         }
         
