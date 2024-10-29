@@ -1,11 +1,11 @@
 <template>
 	<view class="popup-content" @click.stop>
 		<view class="card-box">
+			<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode=""
+				@click="setShowCardPopup"></image>
 			<view class="card-header">
 				<view class="title">
 					Choose your advice card
-					<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode=""
-						@click="setShowCardPopup"></image>
 				</view>
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
@@ -135,38 +135,43 @@
 
 <style scoped>
 	.popup-content {
-		width: 580rpx;
+		width: 654rpx;
 		/* Set the width to 90% */
 		/* height: 810rpx; */
 		background-color: #D6FCF6;
 		border-radius: 32rpx;
-		padding: 56rpx 32rpx;
 		display: flex;
 		/* justify-content: center; */
 		align-items: left;
 		flex-direction: column;
 	}
 
-	.card-box {}
+	.card-box {
+		position: relative;
+		padding: 56rpx 32rpx;
+	}
 
 	.card-header {
 		display: block;
+		position: relative;
 	}
 
 	.title {
 		width: 100%;
-		position: relative;
+		/* position: relative; */
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		font-size: 40rpx;
-		font-weight: 600;
+		font-weight: 500;
 		color: #2D6985;
+		margin-top: 32rpx;
 	}
 
 	.card-close-image {
 		position: absolute;
-		right: 0;
+		right: 32rpx;
+		top: 32rpx;
 		width: 48rpx;
 		height: 48rpx;
 	}
