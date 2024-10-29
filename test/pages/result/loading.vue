@@ -125,7 +125,8 @@
 				const fetchData = () => {
 					this.$store.dispatch('fetchHomepageData')
 						.then(() => {
-							if (!this.$store.state.homepageData) {
+							const homepageData = this.$store.state.homepageData;
+							if (!homepageData || !homepageData?.response?.eq_scores) {
 								throw new Error('Homepage data is empty');
 							}
 
