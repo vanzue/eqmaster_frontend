@@ -44,7 +44,6 @@ export default createStore({
 		characteristics: null,
 		diamondCount: 0,
 		gemCount: 0,
-		diamondCount: 0,
 		audios: new Map(),
     scenario_id: 1,
     scenarioResponse: {},
@@ -180,6 +179,7 @@ export default createStore({
 				}
 
 				commit('setHomepageData', homepageData);
+				commit('setGemCount', homepageData.response.personal_info.num_star)
 				// commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {
@@ -220,7 +220,9 @@ export default createStore({
 			commit('setWeakness', '');
 			commit('setCharateristics', '');
 			commit('setcourseData', {});
-			commit('setAudios', {})
+			commit('setAudios', {});
+			commit('setGemCount', 0);
+			commit('setDiamondCount', 0);
 
 			const username = uni.getStorageSync('username');
 			localStorage.clear();
