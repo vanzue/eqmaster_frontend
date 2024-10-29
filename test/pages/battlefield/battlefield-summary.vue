@@ -241,7 +241,7 @@
 		text-underline-offset: 8rpx;
 		border-radius: 10rpx;
 		margin: 20px 3px 0px 0px;
-
+		white-space: nowrap;
 	}
 
 	.tips-title1 {
