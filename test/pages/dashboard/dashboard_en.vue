@@ -111,7 +111,7 @@
 						<view class="dashboard2-progress-container">
 							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
 								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score)"
-								:animal="this.minanimal" :activeColor="getActiveColor" />
+								:animal="this.maxanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
 				</view>
@@ -366,14 +366,14 @@
 			},
 			getEmotionText() {
 				switch (this.minanimal) {
-					case 'capybara':
+					case 'capybara': //水豚
 						return 'Motivation Swamp';
-					case 'hedgehog':
+					case 'hedgehog': //刺猬
 						return 'Empathy Forest';
-					case 'coyote':
-						return 'Perception Savanna';
-					case 'ostrich':
+					case 'coyote': //狼
 						return 'Social Skill Dessert';
+					case 'ostrich'://鸵鸟
+						return 'Perception Savanna';
 					case 'monkey':
 						return 'Self-regulation Hill';
 					default:
@@ -386,8 +386,9 @@
 				console.log('results for backgrounds:', scores);
 				const maxScore = Math.max(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
 					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
-				const minScore = Math.max(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
+				const minScore = Math.min(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
 					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
+				console.log('@@@@@@@@@@@@最高分:', maxScore);
 				console.log('@@@@@@@@@@@@最低分:', minScore);
 				// 根据最低分选择图片1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
 				if (maxScore === scores?.dimension1_score) {
@@ -412,27 +413,23 @@
 					// return '/static/dashboard/en/monkey.png';
 				}
 
-				if (minScore === scores?.dimension1_score) {
-					console.log("usercard src:", '鸵鸟')
-					this.minanimal = "ostrich";
-					// return '/static/dashboard/en/capybara.png';-okokok猴子刺猬鸵鸟
-				} else if (minScore === scores?.dimension2_score) {
-					console.log("usercard src:", '猴子')
-					this.minanimal = "monkey";
-					// return '/static/dashboard/en/hedgehog.png';
-				} else if (minScore === scores?.dimension3_score) {
-					console.log("usercard src:", '狼')
-					this.minanimal = "coyote";
-					// return '/static/dashboard/en/coyote.png';
+				if (minScore === scores?.dimension5_score) {
+					console.log("usercard src:", '水豚')
+					this.minanimal = "capybara";
 				} else if (minScore === scores?.dimension4_score) {
 					console.log("usercard src:", '刺猬')
 					this.minanimal = "hedgehog";
-					// return '/static/dashboard/en/ostrich.png';
-				} else if (minScore === scores?.dimension5_score) {
-					console.log("usercard src:", '水豚')
-					this.minanimal = "capybara";
-					// return '/static/dashboard/en/monkey.png';
+				} else if (minScore === scores?.dimension3_score) {
+					console.log("usercard src:", '狼')
+					this.minanimal = "coyote";
+				} else if (minScore === scores?.dimension2_score) {
+					console.log("usercard src:", '猴子')
+					this.minanimal = "monkey";
+				} else if (minScore === scores?.dimension1_score) {
+					console.log("usercard src:", '鸵鸟')
+					this.minanimal = "ostrich";
 				}
+				console.log(this.minanimal);
 				
 				switch (this.maxanimal) {
 					case 'capybara':
