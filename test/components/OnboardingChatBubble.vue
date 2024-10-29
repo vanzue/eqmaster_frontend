@@ -111,7 +111,7 @@
 
 	.user-name-left {
 		position: absolute;
-		left: 30%;
+		left: 20%;
 		display: flex;
 		flex-direction: row;
 		z-index: 2;
@@ -119,7 +119,7 @@
 
 	.user-name-right {
 		position: absolute;
-		left: 65%;
+		left: 50%;
 		display: flex;
 		flex-direction: row;
 		z-index: 2;
@@ -130,6 +130,8 @@
 		color: #000;
 		margin-top: 10rpx;
 		font-size: 16px;
+		width: 228rpx;
+		text-align: center;
 		z-index: 4;
 	}
 
@@ -138,7 +140,7 @@
 	}
 
 	.name-text-left {
-		left: 10rpx;
+		/* left: 10rpx; */
 	}
 
 	.user-info {
