@@ -66,6 +66,7 @@ export default {
       canvasWidth: 0,
       canvasHeight: 0,
       yOffset: 10, // 新增：Y轴偏移量
+      isFromMap: true,
     };
   },
   mounted() {
@@ -438,7 +439,9 @@ export default {
       console.log('okok');
       uni.navigateTo({
         // url: `/pages/battlefield/battlefield-intro`
-        url: `/pages/${this.isCompleteTask ? 'battlefield/battlefield-summary' : 'battlefield/battlefield-intro'}`
+        url: this.isCompleteTask 
+          ? `/pages/battlefield/battlefield-summary?isFromMap=${this.isFromMap}` 
+          : `/pages/battlefield/battlefield-intro`
       });
     },
     // 新增方法：绘制六边形
@@ -492,7 +495,7 @@ export default {
       if (Math.sqrt(dx * dx + dy * dy) > radius) {
         return false;
       }
-      // 进一步判断点是否在六边形内
+      // 进���步判断点是否在六边形内
       const angle = Math.atan2(dy, dx);
       const sector = Math.floor((angle + Math.PI) / (Math.PI / 3));
       const distance = Math.abs(dx * Math.sin(sector * Math.PI / 3) - dy * Math.cos(sector * Math.PI / 3));

@@ -542,6 +542,7 @@
 		onShow() {
 			this.getAnalysisList(this.userId);
 			
+			
 		},
 		methods: {
 			progressWidth(value) {

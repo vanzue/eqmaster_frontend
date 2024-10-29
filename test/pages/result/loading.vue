@@ -85,9 +85,9 @@
 				return '未设置';
 			}
 		},
-		created() {
-			this.getHomepageData();
-		},
+		// created() {
+		// 	this.getHomepageData();
+		// },
 		onLoad(option) {
 			this.getHomepageData();
 			// 禁止左滑
@@ -157,39 +157,39 @@
 
 				fetchData();
 			},
-			getcourseData() {
-				const maxAttempts = 10;
-				let attempts = 0;
+			// getcourseData() {
+			// 	const maxAttempts = 10;
+			// 	let attempts = 0;
 
-				const fetchData = () => {
-					this.$store.dispatch('fetchcourseData')
-						.then(() => {
-							console.log('Course data fetched successfully');
-							this.clearAllIntervals();
+			// 	const fetchData = () => {
+			// 		this.$store.dispatch('fetchcourseData')
+			// 			.then(() => {
+			// 				console.log('Course data fetched successfully');
+			// 				this.clearAllIntervals();
 
-							const nextPageUrl = `/pages/result/result_en`;
-							uni.redirectTo({
-								url: nextPageUrl,
-								success: () => console.log('Navigation initiated successfully'),
-								fail: (err) => console.error('Navigation failed:', err)
-							});
-						})
-						.catch((error) => {
-							console.error('Error fetching course data:', error);
-							attempts++;
-							if (attempts < maxAttempts) {
-								setTimeout(fetchData, 3000);
-							} else {
-								uni.showToast({
-									title: 'Failed to load course data',
-									icon: 'none'
-								});
-							}
-						});
-				};
+			// 				const nextPageUrl = `/pages/result/result_en`;
+			// 				uni.redirectTo({
+			// 					url: nextPageUrl,
+			// 					success: () => console.log('Navigation initiated successfully'),
+			// 					fail: (err) => console.error('Navigation failed:', err)
+			// 				});
+			// 			})
+			// 			.catch((error) => {
+			// 				console.error('Error fetching course data:', error);
+			// 				attempts++;
+			// 				if (attempts < maxAttempts) {
+			// 					setTimeout(fetchData, 3000);
+			// 				} else {
+			// 					uni.showToast({
+			// 						title: 'Failed to load course data',
+			// 						icon: 'none'
+			// 					});
+			// 				}
+			// 			});
+			// 	};
 
-				fetchData();
-			},
+			// 	fetchData();
+			// },
 
 			startProgress() {
 				const totalDuration = 30000; // 30秒
