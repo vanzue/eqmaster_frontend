@@ -71,6 +71,7 @@
 				loading: false,
 				isLoading: true,
 				error: null,
+				isExchanging: false,
 			};
 		},
 		onLoad(option) {
@@ -104,16 +105,26 @@
 				return cardType === 1 ? this.diamondCount >= 60 : this.diamondCount >= 20;
 			},
 			async exchangeClick() {
-				if (this.selectedCard === 1 && this.diamondCount >= 60) {
-					this.$store.commit('setDiamondCount', this.diamondCount - 60);
+				if (this.isExchanging) return; // 如果已经在请求中，则直接返回
+				this.isExchanging = true;
+
+				try {
 					const userId = this.$store.getters.getUserId;
-					const res = await apiService.updateDiamonds(userId, -60);
-				} else if (this.selectedCard === 2 && this.diamondCount >= 20) {
-					this.$store.commit('setDiamondCount', this.diamondCount - 20);
-					const userId = this.$store.getters.getUserId;
-					const res = await apiService.updateDiamonds(userId, -20);
+					if (this.selectedCard === 1 && this.diamondCount >= 60) {
+						this.$store.commit('setDiamondCount', this.diamondCount - 60);
+						await apiService.updateDiamonds(userId, -60);
+					} else if (this.selectedCard === 2 && this.diamondCount >= 20) {
+						this.$store.commit('setDiamondCount', this.diamondCount - 20);
+						await apiService.updateDiamonds(userId, -20);
+					}
+
+					// 发送事件通知
+					this.$emit('exchangeClick', this.selectedCard);
+				} catch (error) {
+					console.error("Exchange request failed:", error);
+				} finally {
+					this.isExchanging = false; // 请求完成后重置标志位
 				}
-				this.$emit('exchangeClick', this.selectedCard);
 			},
 		},
 		created() {

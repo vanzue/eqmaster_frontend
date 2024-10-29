@@ -192,11 +192,13 @@ export default {
         if (i < this.finishComponents) {
           ctx.lineWidth = 10; // 完成的路径保持 10 的宽度
           ctx.strokeStyle = '#EDFB8B';
-          ctx.setLineDash([]); // 实线
+          ctx.setLineDash([]); // 设置虚线样式
         } else {
           ctx.lineWidth = 8; // 未完成的路径设置为 6 的宽度
           ctx.strokeStyle = '#3B413B';
-          ctx.setLineDash([40, 50]); // 设置虚线样式，30像素实线，50像素空白
+          const dashLength = 50; // 虚线的实线部分长度
+          const gapLength = 60; // 虚线的空白部分长度
+          ctx.setLineDash([dashLength, gapLength]); // 设置虚线样式
         }
         
         ctx.stroke();
@@ -409,7 +411,7 @@ export default {
           ctx.fillText(line.trim(), textContainerX + textContainerWidth / 2, startY + (index * lineHeight));
         });
 
-        // 添加星级评分（���为已完成的关卡显示，且星星数量大于0）
+        // 添加星级评分（为已完成的关卡显示，且星星数量大于0）
         if (isCompleted && this.starRatings[i] > 0) {
           const starSize = 30;
           const starSpacing = 5;
