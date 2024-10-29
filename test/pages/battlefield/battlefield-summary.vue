@@ -61,9 +61,16 @@
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
-					<text>{{ suggestion }}</text>
+					<text >{{ suggestion }}</text>
+					<image class="tips-icon1" src="/static/battlefield/eqtips1.png" mode="widthFix"></image>
+					
 				</view>
+				
 			</view>
+			<view class="status-text1">
+				<text class="tips-title1">-THE END-</text>
+			</view>
+			
 			<view class="guide-button-container">
 				<image class="guide-icon" src="/static/battlefield/time.png" mode="aspectFill"></image>
 				<image class="guide-icon" src="/static/battlefield/flag.png" mode="aspectFill"></image>
@@ -236,6 +243,21 @@
 		margin: 20px 3px 0px 0px;
 
 	}
+	.tips-title1 {
+		color: #fff;
+		font-weight: 300;
+		font-size: 30rpx;
+		color: #888888;
+		
+		/* line-height: 50rpx; */
+		/* text-decoration: underline; */
+/* 		text-decoration-thickness: 6rpx;
+		text-decoration-color: #9EE44D;
+		text-underline-offset: 8rpx;
+		border-radius: 10rpx;
+		margin: 20px 3px 0px 0px; */
+	
+	}
 
 	.comment-header {
 		position: relative;
@@ -283,6 +305,18 @@
 		height: 64rpx;
 		margin-top: 80rpx;
 		font-weight: 700;
+
+	}
+	
+	.status-text1 {
+		color: #fff;
+		text-align: center;
+		font-size: 56rpx;
+		line-height: 64rpx;
+		height: 64rpx;
+		margin-top: 80rpx;
+		font-weight: 700;
+		margin-bottom: 15vh;
 	}
 
 	.diamond-wrapper {
@@ -374,7 +408,19 @@
 	}
 
 	.tips-icon {
-		width: 400rpx;
+		width: 430rpx;
+	}
+	
+	.tips-icon1 {
+		width: 300rpx;
+		margin-top: 0rpx;
+		/* margin-left: 20rpx; */
+		left: 55%;
+		top: 40%;
+		position: absolute;
+		display: flex-end;
+		flex-direction: row;
+		z-index:-1
 	}
 
 	.second-line {
@@ -391,7 +437,7 @@
 
 	.third-card {
 		height: auto;
-		margin-bottom: 13vh;
+		/* margin-bottom: 13vh; */
 	}
 
 	.guide-button-container {
