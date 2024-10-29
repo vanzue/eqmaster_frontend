@@ -99,7 +99,7 @@
 						<view class="improved-content">
 							<view class="improved-content-item">
 								<view class="improved-content-title">
-									<image class="improved-show-icon" src="/static/resulten/awareness1.svg"></image>
+									<image class="improved-show-icon" :src="caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].icon1 : ''"></image>
 									{{ caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].name : '' }}
 								</view>
 								<view class="improved-content-description">
@@ -177,31 +177,36 @@
 							name: 'perception',
 							score: this.homepageData.response.eq_scores.dimension1_score,
 							detail: this.homepageData.response.eq_scores.dimension1_detail,
-							'icon': '/static/resulten/awareness0.svg'
+							icon: '/static/resulten/awareness0.svg',
+							icon1: '/static/resulten/awareness1.svg',
 						},
 						{
 							name: 'self regulation',
 							score: this.homepageData.response.eq_scores.dimension2_score,
 							detail: this.homepageData.response.eq_scores.dimension2_detail,
-							'icon': '/static/resulten/regulation0.svg'
+							icon: '/static/resulten/regulation0.svg',
+							icon1: '/static/resulten/regulation0.svg',
 						},
 						{
 							name: 'social skill',
 							score: this.homepageData.response.eq_scores.dimension3_score,
 							detail: this.homepageData.response.eq_scores.dimension3_detail,
-							'icon': '/static/resulten/socialskill0.svg'
+							icon: '/static/resulten/socialskill0.svg',
+							icon1: '/static/resulten/socialskill1.svg'
 						},
 						{
 							name: 'empathy',
 							score: this.homepageData.response.eq_scores.dimension4_score,
 							detail: this.homepageData.response.eq_scores.dimension4_detail,
-							'icon': '/static/resulten/empathy0.svg'
+							icon: '/static/resulten/empathy0.svg',
+							icon1: '/static/resulten/empathy1.svg'
 						},
 						{
 							name: 'motivation',
 							score: this.homepageData.response.eq_scores.dimension5_score,
 							detail: this.homepageData.response.eq_scores.dimension5_detail,
-							'icon': '/static/resulten/motivation0.svg'
+							icon: '/static/resulten/motivation0.svg',
+							icon1: '/static/resulten/motivation1.svg'
 						}
 					];
 
