@@ -105,12 +105,12 @@
 
 					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
 						<view class="dashboard2-progress-container">
-							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
+							<text class="dashboard2-score-title2">{{ caleOverviewScores.name }}</text>
 						</view>
 
 						<view class="dashboard2-progress-container">
 							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score * 5)"
+								:currentProgress="'1'"
 								:animal="this.minanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
@@ -423,6 +423,37 @@
 					default:
 						return '#FFD700'; // Default gold
 				}
+			},
+			caleOverviewScores() {
+				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
+					const scores = [{
+							name: 'perception',
+							score: this.homepageData.response.eq_scores.dimension1_score,
+						},
+						{
+							name: 'self regulation',
+							score: this.homepageData.response.eq_scores.dimension2_score,
+						},
+						{
+							name: 'social skill',
+							score: this.homepageData.response.eq_scores.dimension3_score,
+						},
+						{
+							name: 'empathy',
+							score: this.homepageData.response.eq_scores.dimension4_score,
+						},
+						{
+							name: 'motivation',
+							score: this.homepageData.response.eq_scores.dimension5_score,
+						}
+					];
+
+					// Find the score with the minimum value
+					const minScore = scores.reduce((min, score) => score.score < min.score ? score : min, scores[0]);
+					console.log(minScore);
+					return minScore;
+				}
+				return {};
 			}
 		},
 		watch: {
