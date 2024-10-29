@@ -110,7 +110,7 @@
 
 						<view class="dashboard2-progress-container">
 							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-								:currentProgress="'1'"
+								:currentProgress="caleOverviewScores.score"
 								:animal="this.minanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
@@ -541,7 +541,6 @@
 		},
 		onShow() {
 			this.getAnalysisList(this.userId);
-			
 			
 		},
 		methods: {
