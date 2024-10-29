@@ -18,7 +18,7 @@
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
 			</view>
-			<view class="text-box" @tap="navigateToTest1" :class="{ 'disabled': isLoading }">
+			<view class="text-box" @tap="navigateToTest1" :class="{ 'disabled': isLoading }" v-if="background">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
 					<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
@@ -59,7 +59,7 @@
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
 			</view>
-			<view class="text-box" @click="navigateToTest4" :class="{ 'disabled': isLoading }">
+			<view class="text-box" @click="navigateToTest4" :class="{ 'disabled': isLoading }" v-if="background">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
 					<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
@@ -118,7 +118,7 @@
 				selectedOptions: [],
 				birthday: null,
 				scenarioData: null,
-				background: "Please click the arrow below to continue",
+				background: "",
 				jobId: "",
 				npcName: "",
 				npcAvatar: "",
@@ -131,10 +131,10 @@
 				currentScene: 0,
 				totalScenes: 5,
 				isFirstScene: true, // Add this new property
-				scenarioId: 1, // Add this new property
-				isLoading: false,
+				// scenarioId: 1, // Add this new property
+				isLoading: true,
 				chatHistory: [], // Keep this new property
-				backgroundImageSrc: '/static/onboarding/bg1.png',
+				backgroundImageSrc: '',
 				requestCount: 0,
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标
@@ -148,15 +148,40 @@
 				},
 			};
 		},
+		computed: {
+			scenarioId() {
+				return this.$store.getters.getScenarioId;
+			},
+		},
 		watch: {
-			isLoading(newValue) {
-				if (newValue) {
-					uni.showLoading({
-						title: 'loading...'
-					});
-				} else {
-					uni.hideLoading();
-				}
+			isLoading: {
+				immediate: true,
+				async handler(newValue) {
+					if(newValue) {
+						uni.showLoading({
+							title: 'loading...'
+						});
+					} else {
+						uni.hideLoading();
+					}
+				},
+				// deep: true,
+			},
+			scenarioId: {
+				immediate: true,
+				async handler(val) {
+					if(val) {
+						this.backgroundImageSrc = `/static/onboarding/bg${val}.png`;
+						this.isLoading = false;
+					} else {
+						uni.navigateTo({
+							url: '/pages/preference/preference3'
+						});
+						uni.hideLoading();
+					}
+					// console.log(val)
+				},
+				// deep: true,
 			}
 		},
 		onLoad(option) {
@@ -167,12 +192,11 @@
 			console.log("Initial num value:", this.num);
 			try {
 				await this.initializeData();
-				await this.getScenarioId();
 				await this.getScenarioData();
 			} catch (error) {
 				console.error("Error during created lifecycle:", error);
 				uni.showToast({
-					title: "初始化失败",
+					title: "Initialization failed",
 					icon: "none",
 				});
 			}
@@ -198,33 +222,6 @@
 				this.username = username;
 				this.jobId = jobId || "";
 			},
-			async getScenarioId() {
-				try {
-					const scenarioId = (() => {
-						const indexes = this.username.split("##");
-						const id = parseInt(indexes[1], 10);
-						return !isNaN(id) ? id : undefined;
-					})();
-
-					console.log("####scenario id:############", scenarioId);
-					const scenarioResponse = scenarioId !== undefined ?
-						await apiService.startScenarioWithId(this.jobId, scenarioId) :
-						await apiService.startScenario(this.jobId);
-
-
-					console.log("#####################fetched scenario: ", scenarioResponse);
-
-					// Get scenarioId
-					this.scenarioId = scenarioResponse.scenario_id || 1;
-					this.backgroundImageSrc = `/static/onboarding/bg${scenarioResponse.scenario_id}.png`;
-				} catch (error) {
-					console.error("Error fetching scenarioId:", error);
-					uni.showToast({
-						title: "获取场景ID失败",
-						icon: "none",
-					});
-				}
-			},
 			getScenarioIdFromStorage() {
 				return new Promise((resolve) => {
 					uni.getStorage({
@@ -244,11 +241,11 @@
 				const requestMethod = apiService.initializeScenario();
 				return requestMethod
 					.then((res) => {
-						console.log("########initialize Scenario data:", res);
+						// console.log("########initialize Scenario data:", res);
 						this.scenarioData = res.scene.scenes || res;
-						console.log("current npc name is --------", this.scenarioData.role);
+						// console.log("current npc name is --------", this.scenarioData.role);
 						this.npcAvatar = getAvatar(this.scenarioData.role);
-						console.log("src of npc avatar:", this.npcAvatar);
+						// console.log("src of npc avatar:", this.npcAvatar);
 						// this.scenarioId = res.scenario_id || 1;
 						this.handleScenarioData();
 						this.updateProgress();
@@ -258,7 +255,6 @@
 						console.error("Error getting scenario data:", err);
 						throw err; // Re-throw the error to be caught in navigateToTest3
 					});
-
 			},
 			handleScenarioData() {
 				if (this.scenarioData) {
