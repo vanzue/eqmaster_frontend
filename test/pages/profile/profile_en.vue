@@ -26,7 +26,7 @@
 								<view class="diamonds-source">
 									<view class="diamonds-source-text">Diamonds</view>
 									<view class="diamonds-source-number">
-										{{ omepageData?.response?.personal_info?.num_diamond }}
+										{{ homepageData?.response?.personal_info?.num_diamond }}
 									</view>
 								</view>
 							</view>
