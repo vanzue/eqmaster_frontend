@@ -227,6 +227,7 @@
 		font-weight: 600;
 		font-size: 40rpx;
 		line-height: 50rpx;
+		width: 230rpx;
 		text-decoration: underline;
 		text-decoration-thickness: 6rpx;
 		text-decoration-color: #9EE44D;
@@ -373,7 +374,7 @@
 	}
 
 	.tips-icon {
-		width: 430rpx;
+		width: 400rpx;
 	}
 
 	.second-line {
@@ -384,7 +385,7 @@
 		width: 654rpx;
 		margin-left: 24rpx;
 		margin-bottom: 44rpx;
-		line-height: 40rpx;
+		line-height: 48rpx;
 		color: #fff;
 	}
 
