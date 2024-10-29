@@ -191,7 +191,8 @@
 		async created() {
 			console.log("Initial num value:", this.num);
 			try {
-				await this.initializeData();
+				// await this.initializeData();
+				// await this.getScenarioId();
 				await this.getScenarioData();
 			} catch (error) {
 				console.error("Error during created lifecycle:", error);
@@ -243,10 +244,9 @@
 					.then((res) => {
 						// console.log("########initialize Scenario data:", res);
 						this.scenarioData = res.scene.scenes || res;
-						// console.log("current npc name is --------", this.scenarioData.role);
 						this.npcAvatar = getAvatar(this.scenarioData.role);
-						// console.log("src of npc avatar:", this.npcAvatar);
-						// this.scenarioId = res.scenario_id || 1;
+						this.backgroundImageSrc = `/static/onboarding/bg${res.scenario_id}.png`;
+						this.scenarioId = res.scenario_id;
 						this.handleScenarioData();
 						this.updateProgress();
 						this.isFirstScene = false;
@@ -257,6 +257,7 @@
 					});
 			},
 			handleScenarioData() {
+				console.log("handle scenario data", this.scenarioData);
 				if (this.scenarioData) {
 					this.description = this.scenarioData.description || "Unable to retrieve background information";
 					this.background = this.scenarioData.background || "Please click the arrow below to continue";

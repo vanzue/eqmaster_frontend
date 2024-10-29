@@ -29,7 +29,7 @@ export default {
 				const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
 				
 				const promises = result.dialog.map(async (item) => {
-					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style);		
+					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);		
 					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
 				})
 				await Promise.all(promises);

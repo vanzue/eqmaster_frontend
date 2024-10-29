@@ -183,17 +183,16 @@ export default {
 		}
 	},
 
-	async getVoice(wording, voice = "onyx", style = "serious") {
+	async getVoice(wording, voice, style, rate) {
 		try {
 			const response = await uni.request({
 				url: `${API_ENDPOINT}/ttsaz`,
 				method: 'POST',
 				data: {
 					text: wording,
-					voice: "en-US-AvaMultilingualNeural",
-					style: "general"
-					// voice: voice,
-					// style: style,
+					voice: voice,
+					style: style,
+					rate: rate
 				},
 			});
 			if (response.statusCode === 200) {
