@@ -110,8 +110,8 @@
 
 						<view class="dashboard2-progress-container">
 							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score)"
-								:animal="this.animal" :activeColor="getActiveColor" />
+								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score * 5)"
+								:animal="this.minanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
 				</view>
@@ -225,6 +225,7 @@
 					}
 				],
 				animal: '',
+				minanimal: '',
 				courseData: {},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
@@ -332,27 +333,28 @@
 
 				// 根据最低分选择图片
 				if (maxScore === scores?.dimension1_score) {
-					console.log("usercard src:", '水豚')
-					this.animal = "capybara";
-					return '/static/dashboard/en/capybara.png';
+					console.log("usercard src:", '鸵鸟')
+					this.animal = "ostrich";
+					return '/static/dashboard/en/ostrich.png';
 				} else if (maxScore === scores?.dimension2_score) {
-					console.log("usercard src:", '刺猬')
-					this.animal = "hedgehog";
-					return '/static/dashboard/en/hedgehog.png';
+					console.log("usercard src:", '猴子')
+					this.animal = "monkey";
+					return '/static/dashboard/en/monkey.png';
 				} else if (maxScore === scores?.dimension3_score) {
 					console.log("usercard src:", '狼')
 					this.animal = "coyote";
 					return '/static/dashboard/en/coyote.png';
 				} else if (maxScore === scores?.dimension4_score) {
-					console.log("usercard src:", '鸵鸟')
-					this.animal = "ostrich";
-					return '/static/dashboard/en/ostrich.png';
+					console.log("usercard src:", '刺猬')
+					this.animal = "hedgehog";
+					return '/static/dashboard/en/hedgehog.png';
 				} else if (maxScore === scores?.dimension5_score) {
-					console.log("usercard src:", '猴子')
-					this.animal = "monkey";
-					return '/static/dashboard/en/monkey.png';
+					console.log("usercard src:", '水豚')
+					this.animal = "capybara";
+					return '/static/dashboard/en/capybara.png';
 				}
 			},
+			
 			truncatedSuggestion() {
 				const suggestion = this.homepageData?.response?.eq_scores?.overall_suggestion || '暂无建议';
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
@@ -362,7 +364,7 @@
 					this.courseData.courses.map(course => course.result) : [];
 			},
 			getEmotionText() {
-				switch (this.animal) {
+				switch (this.minanimal) {
 					case 'capybara':
 						return 'Motivation Swamp';
 					case 'hedgehog':
@@ -378,7 +380,36 @@
 				}
 			},
 			getActiveColor() {
-				switch (this.animal) {
+				const scores = this.homepageData?.response?.eq_scores;
+				console.log('jobid:', this.jobId);
+				console.log('results for backgrounds:', scores);
+				const minScore = Math.min(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
+					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
+				console.log('@@@@@@@@@@@@最低分:', minScore);
+				// 根据最低分选择图片1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
+				if (minScore === scores?.dimension1_score) {
+					console.log("usercard src:", '鸵鸟')
+					this.minanimal = "ostrich";
+					// return '/static/dashboard/en/capybara.png';-okokok猴子刺猬鸵鸟
+				} else if (minScore === scores?.dimension2_score) {
+					console.log("usercard src:", '猴子')
+					this.minanimal = "monkey";
+					// return '/static/dashboard/en/hedgehog.png';
+				} else if (minScore === scores?.dimension3_score) {
+					console.log("usercard src:", '狼')
+					this.minanimal = "coyote";
+					// return '/static/dashboard/en/coyote.png';
+				} else if (minScore === scores?.dimension4_score) {
+					console.log("usercard src:", '刺猬')
+					this.minanimal = "hedgehog";
+					// return '/static/dashboard/en/ostrich.png';
+				} else if (minScore === scores?.dimension5_score) {
+					console.log("usercard src:", '水豚')
+					this.minanimal = "capybara";
+					// return '/static/dashboard/en/monkey.png';
+				}
+				
+				switch (this.minanimal) {
 					case 'capybara':
 						return '#EFC59E'; // Gold
 					case 'hedgehog':

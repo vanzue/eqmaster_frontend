@@ -408,7 +408,7 @@
 	}
 
 	.tips-icon {
-		width: 430rpx;
+		width: 400rpx;
 	}
 	
 	.tips-icon1 {
