@@ -55,8 +55,9 @@
 			}
 			this.username = username;
 			if (
-				!this.username ||
-				this.selectedOptions.length === 0
+				!this.username 
+				// ||
+				// this.selectedOptions.length === 0
 			) {
 				console.error("Some required data is missing or invalid in preference3");
 			}
@@ -86,11 +87,12 @@
 					this.$store.commit('setUserId', response.user_id);
 					this.$store.commit('setJobId', response.jobId);
 
-					const scenarioResponse = await apiService.initializeScenario();
+					await this.getScenarioId();
+					// const scenarioResponse = await apiService.initializeScenario();
 					
 					// Get scenarioId
-					const fetchedScenarioId = scenarioResponse.scenario_id || 1;
-					console.log("Fetched scenarioId:", fetchedScenarioId);
+					// const fetchedScenarioId = scenarioResponse.scenario_id || 1;
+					// console.log("Fetched scenarioId:", fetchedScenarioId);
 
 					const testPageUrl = `/pages/test/test`;
 
@@ -104,6 +106,34 @@
 					});
 				} finally {
 					this.isLoading = false;
+				}
+			},
+			async getScenarioId() {
+				try {
+					const scenarioId = (() => {
+						const indexes = this.username.split("##");
+						const id = parseInt(indexes[1], 10);
+						return !isNaN(id) ? id : undefined;
+					})();
+
+					console.log("####scenario id:############", scenarioId);
+					const scenarioResponse = scenarioId !== undefined ?
+						await apiService.startScenarioWithId(this.jobId, scenarioId) :
+						await apiService.startScenario(this.jobId);
+
+
+					console.log("#####################fetched scenario: ", scenarioResponse);
+
+					// Get scenarioId
+					const scenarioIdVal = scenarioResponse.scenario_id || 1;
+					this.$store.commit('setScenarioId', scenarioIdVal);
+					// this.backgroundImageSrc = `/static/onboarding/bg${scenarioResponse.scenario_id}.png`;
+				} catch (error) {
+					console.error("Error fetching scenarioId:", error);
+					uni.showToast({
+						title: "获取场景ID失败",
+						icon: "none",
+					});
 				}
 			},
 		},

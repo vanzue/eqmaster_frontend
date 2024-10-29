@@ -42,6 +42,7 @@ export default createStore({
 		gemCount: 0,
 		diamondCount: 0,
 		audios: new Map(),
+    scenario_id: 1,
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -99,7 +100,10 @@ export default createStore({
 			value
 		}) {
 			state.audios.set(key, value);
-		}
+		},
+    setScenarioId(state, scenarioId) {
+      state.scenarioId = scenarioId;
+    },
 	},
 	getters: {
 		getUserId(state) {
@@ -144,6 +148,9 @@ export default createStore({
 		getAudios: (state) => (key) => {
 			return state.audios.get(key);
 		},
+		getScenarioId(state) {
+			return state.scenarioId;
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -154,10 +161,10 @@ export default createStore({
 				const homepageData = await apiService.getHomepageData(this.state.userId);
 				console.log("#####store homepage data:", homepageData);
 				commit('setHomepageData', homepageData);
-				commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
+				// commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {
-				console.error('Error fetching homepage data:', error);
+				// console.error('Error fetching homepage data:', error);
 				throw error;
 			}
 		},
