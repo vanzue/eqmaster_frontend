@@ -174,7 +174,7 @@
 			caleOverviewScores() {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = [{
-							name: 'Perception',
+							name: 'perception',
 							score: this.homepageData.response.eq_scores.dimension1_score,
 							detail: this.homepageData.response.eq_scores.dimension1_detail,
 							'icon': '/static/resulten/awareness0.svg'
