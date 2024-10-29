@@ -128,7 +128,7 @@
 							if (!this.$store.state.homepageData) {
 								throw new Error('Homepage data is empty');
 							}
-							
+
 							console.log('Homepage data fetched successfully');
 							this.clearAllIntervals();
 
@@ -348,7 +348,7 @@
 		top: 20%;
 		position: absolute;
 		margin-bottom: 20rpx;
-		margin-left: 50rpx;
+		text-align: center;
 		/* 添加文本和图像之间的空间 */
 		line-height: 60rpx;
 		/* 调整高以提高可读性 */

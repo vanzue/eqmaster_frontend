@@ -6,7 +6,8 @@
 					<image class="avatar" :src="avatar" mode="aspectFill"></image>
 				</view>
 				<view class="name">
-					<image class="character-background" :src="playAudioIndex === index ? '/static/battlefield/character_background1.png' : '/static/battlefield/character_background2.png'"
+					<image class="character-background"
+						:src="playAudioIndex === index ? '/static/battlefield/character_background1.png' : '/static/battlefield/character_background2.png'"
 						mode="scaleToFill" @click="playAudio()"></image>
 					<view class="character">{{ name }}</view>
 				</view>
@@ -47,8 +48,11 @@
 		},
 		methods: {
 			playAudio() {
-				if(this.playAudioIndex == -1) {
-					this.$emit('playAudio', { dialog: this.dialog, index: this.index });
+				if (this.playAudioIndex == -1) {
+					this.$emit('playAudio', {
+						dialog: this.dialog,
+						index: this.index
+					});
 				}
 			}
 		},
@@ -60,9 +64,8 @@
 	.bubble-container {
 		background-color: #2F2F38;
 		border-radius: 10px;
-		padding: 12px;
+		padding: 50rpx 42rpx 36rpx 42rpx;
 		margin-top: 100rpx;
-
 		/* width: 100%; */
 		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 		line-height: 1.5;
@@ -116,7 +119,8 @@
 	}
 
 	.txt {
-		margin: 10rpx 20rpx;
+		text-align: left;
+		font-size: 30rpx;
 		color: #fff;
 	}
 
