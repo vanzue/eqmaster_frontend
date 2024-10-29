@@ -126,6 +126,21 @@
 					this.isExchanging = false; // 请求完成后重置标志位
 				}
 			},
+			async exchangeClickWithoutEmit() {
+				console.log("clicked!!!");
+				try {
+					const userId = this.$store.getters.getUserId;
+					if (this.selectedCard === 1 && this.diamondCount >= 60) {
+						this.$store.commit('setDiamondCount', this.diamondCount - 60);
+						await apiService.updateDiamonds(userId, -60);
+					} else if (this.selectedCard === 2 && this.diamondCount >= 20) {
+						this.$store.commit('setDiamondCount', this.diamondCount - 20);
+						await apiService.updateDiamonds(userId, -20);
+					}
+				} catch (error) {
+					console.error("Exchange request failed:", error);
+				}
+			},
 		},
 		created() {
 			// this.getHomepageData();
