@@ -43,7 +43,9 @@
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									 <text style="font-weight: bold;">Empathy</text> is a cornerstone in building trust; validating others’ feelings with phrases like "I can see why you feel that way" builds connection. 
+									<text style="font-weight: bold;">Empathy</text> is a cornerstone in building trust;
+									validating others’ feelings with phrases like "I can see why you feel that way"
+									builds connection.
 								</text>
 							</view>
 						</view>
@@ -96,7 +98,7 @@
 							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
 							</image>
 							<text
-								class="dashboard2-score-value-large-g">{{ gemCount === homepageData?.response?.personal_info?.num_star ? gemCount : gemCount}}</text>
+								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
 						</view>
 						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
 						</image>
@@ -120,15 +122,21 @@
 				<scroll-view scroll-y class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
+						<!-- v-if="courseData"
+						:finishComponents="courseData.courses.length"
+						:starRatings="courseData.courses.map(course => course.result)" 
+						:totalComponents="4"
+						:isCompleteTask="!!courseData.course_level" -->
 						<SProgressBar 
-							v-if="courseData" 
+							
+							v-if="courseData"
 							:finishComponents="courseData.courses.length"
-							:starRatings="courseData.courses.map(course => course.result)" 
+							:starRatings="Array(courseData.courses.length).fill(gemCount)"  
 							:totalComponents="4"
-							:isCompleteTask="!!courseData.course_level"
+							:isCompleteTask="gemCount"
 						/>
 					</view>
-				</scroll-view >
+				</scroll-view>
 			</view>
 		</view>
 		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
@@ -409,6 +417,19 @@
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
 			const result = illustrationSrc(this.homepageData, this.$store);
+			// const evalResult = uni.getStorage({
+			// 	key: "evalResult",
+			// 	success: (res) => {
+			// 		console.log("result:", res);
+			// 		const dbCourse = res.data.db_course;
+			// 		const list = Object.keys(dbCourse)
+			// 			.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
+			// 			.sort() // 如果你想按照 comment1, comment2 的顺序排列
+			// 			.map((key) => dbCourse[key]); // 提取这些键的值      ;
+			// 		this.comments = list;
+			// 		this.suggestion = res.data.db_course.tips.join('\n');
+			// 	},
+			// });
 			console.log('Course Data:', this.courseData)
 
 			// await this.getBattlefield();
@@ -417,6 +438,9 @@
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
 			this.userCard();
+			
+
+			
 
 			// 接收上一个页面传递的数据
 			// this.userId = option.userId || '717';
@@ -457,6 +481,7 @@
 		},
 		onShow() {
 			this.getAnalysisList(this.userId);
+			
 		},
 		methods: {
 			progressWidth(value) {
@@ -1935,7 +1960,7 @@
 	}
 
 	.dashboard2-scrollable-content {
-		padding-top: 300rpx; 
+		padding-top: 300rpx;
 		/* 其他样式 */
 	}
 
