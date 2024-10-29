@@ -19,7 +19,7 @@
 				<view class="diamond-wrapper">
 					<image class="diamond-image" src="/static/battlefield/diamond.png" mode="aspectFill"></image>
 					<text class="diamond-text">
-						{{ this.isPass ? "+10！" : "+3" }}
+						{{ this.isPass ? "+10" : "+3" }}
 					</text>
 				</view>
 			</view>
@@ -150,7 +150,10 @@
 						.sort() // 如果你想按照 comment1, comment2 的顺序排列
 						.map((key) => dbCourse[key]); // 提取这些键的值      ;
 					this.comments = list;
-					this.suggestion = res.data.db_course.tips.join('\n');
+					this.suggestion = res.data.db_course.tips
+						.map(tip => `• ${tip}`) // 在每行开头添加 bullet point
+						.join('\n'); // 用换行符连接所有行
+
 				},
 			});
 			uni.getStorage({
@@ -193,7 +196,7 @@
 		min-height: 100vh;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
 			url("/static/battlefield/background1.png");
-		background-color: #373742;
+		background-color: #2F2F38;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -362,7 +365,7 @@
 	}
 
 	.third-card-title {
-		margin-top: 20rpx;
+		margin-top: 0rpx;
 		margin-left: 20rpx;
 		position: relative;
 		display: flex;
@@ -380,11 +383,14 @@
 	.suggestion {
 		width: 654rpx;
 		margin-left: 24rpx;
+		margin-bottom: 44rpx;
+		line-height: 40rpx;
 		color: #fff;
 	}
 
 	.third-card {
-		height: 500rpx;
+		height: auto;
+		margin-bottom: 13vh;
 	}
 
 	.guide-button-container {

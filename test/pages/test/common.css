@@ -144,7 +144,7 @@
 
 .progress-container {
 	position: absolute;
-	top: 120rpx;
+	top: 80rpx;
 	left: 40rpx;
 	right: 40rpx;
 	display: flex;
