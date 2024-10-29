@@ -212,6 +212,7 @@
 					// this.diamondAdd = 3;
 				},
 			});
+			this.$store.commit('initNpcsHealth');
 		},
 	};
 </script>

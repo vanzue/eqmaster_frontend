@@ -1,6 +1,6 @@
 import {
 	createStore
-} from 'vuex'
+} from 'vuex';
 import apiService from "@/services/api-service";
 
 export default createStore({
@@ -106,12 +106,15 @@ export default createStore({
 		}) {
 			state.audios.set(key, value);
 		},
-    setScenarioId(state, scenarioId) {
-      state.scenarioId = scenarioId;
-    },
-    setScenarioResponse(state, scenarioResponse) {
-      state.scenarioResponse = scenarioResponse;
-    },
+		initNpcsHealth(state) {
+			state.npcs.forEach((item) => item.health = 10);
+		},
+		setScenarioId(state, scenarioId) {
+		  state.scenarioId = scenarioId;
+		},
+		setScenarioResponse(state, scenarioResponse) {
+		  state.scenarioResponse = scenarioResponse;
+		},
 	},
 	getters: {
 		getUserId(state) {
