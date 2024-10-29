@@ -74,8 +74,10 @@
 			<view class="guide-button-container">
 				<image class="guide-icon" src="/static/battlefield/time.png" mode="aspectFill"></image>
 				<image class="guide-icon" src="/static/battlefield/flag.png" mode="aspectFill"></image>
-				<button class="guide-button" @click="navigateToGuide">
-					{{ this.isPass ? "Continue" : "Try again" }}
+				<button class="guide-button" @click="this.isFromMap ? navigateToIntro() : navigateToMap()">
+					<!-- {{ this.isFromMap ? "Back to Map" : (this.isPass ? "Continue" : "Try again") }} -->
+					<!-- {{ this.isPass ? "Continue" : "Try again" }} -->
+					{{ this.isFromMap ? "Try again":"Continue" }}
 				</button>
 			</view>
 
@@ -85,7 +87,7 @@
 
 <script>
 	import RewardBar from "/components/RewardBar.vue";
-	import NpcComment from "/components/NpcComment.vue"; // 引入组件
+	import NpcComment from "/components/NpcComment.vue"; // ���入组件
 	import api from "../../services/api-service";
 	export default {
 		components: {
@@ -103,6 +105,7 @@
 				diamondAdd: 3,
 				gemCount: 0,
 				npcHealthValues: [],
+				isFromMap: false, // 新增属性以接收参数
 			};
 		},
 		methods: {
@@ -112,7 +115,7 @@
 				// console.log('${percentage}%：', `${percentage}%`)
 				return `${percentage}%`;
 			},
-			navigateToGuide() {
+			navigateToMap() {
 				console.log("Navigating to guide with data:", {
 					userId: this.userId,
 					username: this.username,
@@ -120,6 +123,18 @@
 				});
 				uni.navigateTo({
 					url: `/pages/dashboard/dashboard_en`,
+
+					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
+				});
+			},
+			navigateToIntro() {
+				console.log("Navigating to guide with data:", {
+					userId: this.userId,
+					username: this.username,
+					// jobId: this.homepageData.response.personal_info.job_id
+				});
+				uni.navigateTo({
+					url: `/pages/battlefield/battlefield-intro`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -132,7 +147,11 @@
 			},
 		},
 
-		onLoad() {
+		onLoad(options) {
+			// 接收上个页面传来的参数
+			if (options.isFromMap !== undefined) {
+				this.isFromMap = options.isFromMap === 'true'; // 将字符串转换为布尔值
+			}
 			// this.homepageData = api.getHomepageData()
 			uni.getStorage({
 				key: "isPass",
@@ -142,7 +161,7 @@
 					this.isPass = res.data || false; // 如果 res.data 为 undefined，则默认为 false
 				},
 				fail: () => {
-					console.warn("获取 isPass 值失败");
+					console.warn("获取 isPass 值败");
 					this.isPass = false; // 失败时可以设置默认值
 					// console.log("this.isPass: ", this.isPass);
 				},
@@ -170,7 +189,7 @@
 					console.log("NPC health 获取成功:", this.npcHealthValues);
 				},
 				fail: (err) => {
-					console.error("获取 NPC health 失败:", err);
+					console.error("获取 NPC health 失���:", err);
 				},
 			});
 
