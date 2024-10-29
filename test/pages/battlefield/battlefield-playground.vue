@@ -463,7 +463,7 @@
 
 						await Promise.all(nextRound.dialog.map(async item => {
 							const result = await apiService.getVoice(item.content, npcsMap.get(item
-								.role).voice, npcsMap.get(item.role).style);
+								.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
 								value: result.message
