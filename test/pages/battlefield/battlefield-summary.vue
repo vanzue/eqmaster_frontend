@@ -61,16 +61,16 @@
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
-					<text >{{ suggestion }}</text>
+					<text>{{ suggestion }}</text>
 					<image class="tips-icon1" src="/static/battlefield/eqtips1.png" mode="widthFix"></image>
-					
+
 				</view>
-				
+
 			</view>
 			<view class="status-text1">
 				<text class="tips-title1">-THE END-</text>
 			</view>
-			
+
 			<view class="guide-button-container">
 				<image class="guide-icon" src="/static/battlefield/time.png" mode="aspectFill"></image>
 				<image class="guide-icon" src="/static/battlefield/flag.png" mode="aspectFill"></image>
@@ -260,22 +260,16 @@
 		text-underline-offset: 8rpx;
 		border-radius: 10rpx;
 		margin: 20px 3px 0px 0px;
-
+		white-space: nowrap;
 	}
+
 	.tips-title1 {
 		color: #fff;
 		font-weight: 300;
 		font-size: 30rpx;
 		color: #888888;
-		
-		/* line-height: 50rpx; */
-		/* text-decoration: underline; */
-/* 		text-decoration-thickness: 6rpx;
-		text-decoration-color: #9EE44D;
-		text-underline-offset: 8rpx;
-		border-radius: 10rpx;
-		margin: 20px 3px 0px 0px; */
-	
+		text-align: center;
+
 	}
 
 	.comment-header {
@@ -326,7 +320,7 @@
 		font-weight: 700;
 
 	}
-	
+
 	.status-text1 {
 		color: #fff;
 		text-align: center;
@@ -429,7 +423,7 @@
 	.tips-icon {
 		width: 400rpx;
 	}
-	
+
 	.tips-icon1 {
 		width: 300rpx;
 		margin-top: 0rpx;
@@ -439,7 +433,7 @@
 		position: absolute;
 		display: flex-end;
 		flex-direction: row;
-		z-index:-1
+		z-index: -1
 	}
 
 	.second-line {

@@ -9,7 +9,8 @@
 				<reward-bar :gemCount="gemCount"></reward-bar>
 				<view class="setting-group">
 					<!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
-					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList"></image>
+					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
+					</image>
 					<image class="setting-item" src="/static/battlefield/setting.png"></image>
 				</view>
 			</view>
@@ -464,7 +465,8 @@
 
 						await Promise.all(nextRound.dialog.map(async item => {
 							const result = await apiService.getVoice(item.content, npcsMap.get(item
-								.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);
+								.role).voice, npcsMap.get(item.role).style, npcsMap.get(item
+								.role).rate);
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
 								value: result.message
@@ -849,12 +851,13 @@
 						}
 					}
 					if (selectedCard == 2) {
+						console.log("get hint card!!!!!!!!!!1");
 						this.anasLoadingObj = {
 							loading: true,
 							text: "Generating",
 						};
-						judgeResult = await hint(validChats, "4");
-						// console.log(judgeResult.tips);
+						const judgeResult = await hint(validChats, "4");
+						console.log("get tips from backend:", judgeResult);
 						if (judgeResult.tips) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
@@ -1458,7 +1461,7 @@
 		top: 76%;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 406rpx;
+		width: 420rpx;
 		height: 160rpx;
 		background-color: #d6fcf6;
 		display: flex;
