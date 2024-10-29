@@ -439,6 +439,7 @@
 				// this.answerNotGoodNum = 0;
 
 				if (this.taskFinished) {
+					this.isFinish = true;
 					await this.Pass();
 					return;
 				}
@@ -921,6 +922,7 @@
 						if (anyNpcHealthLow) {
 							this.isPass = false;
 							this.diamonds = 3;
+							this.isFinish = true;
 							await this.Pass();
 						}
 
