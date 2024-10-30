@@ -255,14 +255,14 @@
 						filePath: '/static/eqoach-code.png',
 						success: () => {
 							uni.showToast({
-								title: '图片保存成功',
+								title: 'Image saved successfully',
 								icon: 'success'
 							});
 						},
 						fail: (err) => {
 							console.log('保存图片失败：', err);
 							uni.showToast({
-								title: '图片保存失败',
+								title: 'Image save failed',
 								icon: 'none'
 							});
 						}
@@ -289,13 +289,13 @@
 								filePath: link.href,
 								success: () => {
 									uni.showToast({
-										title: '图片保存成功',
+										title: 'Image saved successfully',
 										icon: 'success'
 									});
 								},
 								fail: (err) => {
 									uni.showToast({
-										title: '图片保存失败',
+										title: 'Image save failed',
 										icon: 'none'
 									});
 								}
