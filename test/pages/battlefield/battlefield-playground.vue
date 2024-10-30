@@ -238,28 +238,11 @@
 				talkingNpc: 0,
 				displayedNpcChatIndex: 0, // Tracks the last displayed NPC chat
 				npcDialog: "NPC dialogue here", // Replace with actual dialogue
-				// Other data properties
 				someoneTalk: true,
 				chattingHistory: [],
 				allHistory: [],
 				showInput: false,
 				focusInput: false,
-				// npcs: [{
-				// 		characterName: "Jason",
-				// 		health: 10,
-				// 		avatar: "/static/battlefield/boss11.png",
-				// 	},
-				// 	{
-				// 		characterName: "Sam",
-				// 		health: 10,
-				// 		avatar: "/static/battlefield/xiaoA1.png",
-				// 	},
-				// 	{
-				// 		characterName: "Anna",
-				// 		health: 10,
-				// 		avatar: "/static/battlefield/xiaoB1.png",
-				// 	},
-				// ],
 				gemCount: 2,
 				isPass: false, // 初始化 isPass 值，可以是 true 或 false
 				diamonds: 0,
@@ -613,16 +596,7 @@
 					diamonds
 				);
 				const userId = this.$store.getters.getUserId;
-				// if (this.isPass === true) {
-				// 	const res = await apiService.updateDiamonds(userId, 10);
-				// 	console.log("update diamond res:", res);
-				// } else {
-				// 	const res = await apiService.updateDiamonds(userId, 3);
-				// 	console.log("update diamond res:", res);
-				// }
 				console.log("evaluation result:", evaluationResult);
-				// const evaluationResult = await evalBattlefield(this.chattingHistory);
-				// console.log('evaluation result:', evaluationResult);
 				uni.setStorage({
 					key: "evalResult",
 					data: evaluationResult,
@@ -951,7 +925,7 @@
 					const hasNegativeMood = judgeResult.moods.some(
 						(item) => parseInt(item.mood, 10) < 0
 					);
-					// if (totalScore > 0) {
+					// if (totalScore >= 0) {
 					if (!hasNegativeMood) {
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
@@ -991,9 +965,7 @@
 								await this.gotoNextRound();
 							}
 						} else {
-							if (notBad) {
-								await this.gotoNextRound();
-							}
+							await this.gotoNextRound();
 						}
 					} else {
 						if (this.answerNotGoodNum < 2) {

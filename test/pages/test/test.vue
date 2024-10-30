@@ -174,7 +174,7 @@
 				immediate: true,
 				async handler(val) {
 					if(val) {
-						this.backgroundImageSrc = `/static/onboarding/bg${val}.png`;
+						// this.backgroundImageSrc = `/static/onboarding/bg${val}.png`;
 						setTimeout(() => {
 							this.isLoading = false;
 						}, 300); // Adjust the delay as needed

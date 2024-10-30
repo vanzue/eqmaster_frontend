@@ -1,6 +1,6 @@
 import {
 	createStore
-} from 'vuex'
+} from 'vuex';
 import apiService from "@/services/api-service";
 
 export default createStore({
@@ -44,7 +44,6 @@ export default createStore({
 		characteristics: null,
 		diamondCount: 0,
 		gemCount: 0,
-		diamondCount: 0,
 		audios: new Map(),
     scenario_id: 1,
     scenarioResponse: {},
@@ -106,12 +105,15 @@ export default createStore({
 		}) {
 			state.audios.set(key, value);
 		},
-    setScenarioId(state, scenarioId) {
-      state.scenarioId = scenarioId;
-    },
-    setScenarioResponse(state, scenarioResponse) {
-      state.scenarioResponse = scenarioResponse;
-    },
+		initNpcsHealth(state) {
+			state.npcs.forEach((item) => item.health = 10);
+		},
+		setScenarioId(state, scenarioId) {
+		  state.scenarioId = scenarioId;
+		},
+		setScenarioResponse(state, scenarioResponse) {
+		  state.scenarioResponse = scenarioResponse;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -177,6 +179,7 @@ export default createStore({
 				}
 
 				commit('setHomepageData', homepageData);
+				commit('setGemCount', homepageData.response.personal_info.num_star)
 				// commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {
@@ -217,7 +220,9 @@ export default createStore({
 			commit('setWeakness', '');
 			commit('setCharateristics', '');
 			commit('setcourseData', {});
-			commit('setAudios', {})
+			commit('setAudios', {});
+			commit('setGemCount', 0);
+			commit('setDiamondCount', 0);
 
 			const username = uni.getStorageSync('username');
 			localStorage.clear();
