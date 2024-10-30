@@ -384,7 +384,7 @@ export default {
         const levelName = this.levelNames[i] || `Level ${i + 1}`;
         
         // 添加文本换行逻辑
-        const maxWidth = textContainerWidth + 0; // 留一些边距
+        const maxWidth = textContainerWidth; // 留一些边距
         const words = levelName.split(' ');
         let line = '';
         const lines = [];
@@ -393,14 +393,24 @@ export default {
           const testLine = line + words[n] + ' ';
           const metrics = ctx.measureText(testLine);
           const testWidth = metrics.width;
-          if (testWidth > maxWidth && n > 0) {
+          if (testWidth > maxWidth - 10 && n > 0) {
             lines.push(line);
             line = words[n] + ' ';
           } else {
             line = testLine;
           }
         }
-        lines.push(line);
+        if (line.trim()) {
+            lines.push(line.trim());
+        }
+
+        // 如果只有一行且超过最大宽度，强制分成两行
+        if (lines.length === 1) {
+            const words = lines[0].split(' ');
+            const midPoint = Math.ceil(words.length / 2);
+            lines[0] = words.slice(0, midPoint).join(' ');
+            lines.push(words.slice(midPoint).join(' '));
+        }
 
         // 绘制多行文本
         const lineHeight = 18;
