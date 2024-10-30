@@ -409,7 +409,7 @@ export default {
         let startY = textContainerY + 10 ;
 
         lines.forEach((line, index) => {
-          ctx.fillText(line.trim(), textContainerX + textContainerWidth / 2, startY + (index * lineHeight));
+          ctx.fillText(line.trim(), textContainerX + textContainerWidth / 2, startY + (index * lineHeight), maxWidth);
         });
 
         // 添加星级评分（为已完成的关卡显示，且星星数量大于0）
