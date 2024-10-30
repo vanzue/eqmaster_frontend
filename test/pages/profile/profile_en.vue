@@ -56,9 +56,12 @@
 								@click="showEqoachPopup = true; saveqrcodeLoding = false;">Add</button>
 						</view>
 					</view>
-					<!-- <view class="delete-btn" :style="{ opacity: deleteOpacity }">
+					<view class="delete-btn" :style="{ 
+              opacity: deleteOpacity,
+              pointerEvents: deleteOpacity === 0 ? 'none' : 'auto'
+          }">
 						<image class="delete-btn-icon" src="/static/delete.png" @click="isDelEqoashBot = true"></image>
-					</view> -->
+					</view>
 				</view>
 
 			</view>
@@ -70,7 +73,7 @@
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 
 		<!-- 二维码弹框 -->
-		<view v-if="showEqoachPopup" class="popup-overlay" @click="showCardPopup = false">
+		<view v-if="showEqoachPopup" class="popup-overlay">
 			<view class="popup-content" @click.stop>
 				<view class="card-box">
 					<view class="card-header">
