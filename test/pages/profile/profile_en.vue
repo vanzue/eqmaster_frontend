@@ -56,9 +56,12 @@
 								@click="showEqoachPopup = true; saveqrcodeLoding = false;">Add</button>
 						</view>
 					</view>
-					<!-- <view class="delete-btn" :style="{ opacity: deleteOpacity }">
+					<view class="delete-btn" :style="{ 
+              opacity: deleteOpacity,
+              pointerEvents: deleteOpacity === 0 ? 'none' : 'auto'
+          }">
 						<image class="delete-btn-icon" src="/static/delete.png" @click="isDelEqoashBot = true"></image>
-					</view> -->
+					</view>
 				</view>
 
 			</view>
@@ -70,7 +73,7 @@
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 
 		<!-- 二维码弹框 -->
-		<view v-if="showEqoachPopup" class="popup-overlay" @click="showCardPopup = false">
+		<view v-if="showEqoachPopup" class="popup-overlay">
 			<view class="popup-content" @click.stop>
 				<view class="card-box">
 					<view class="card-header">
@@ -252,14 +255,14 @@
 						filePath: '/static/eqoach-code.png',
 						success: () => {
 							uni.showToast({
-								title: '图片保存成功',
+								title: 'Image saved successfully',
 								icon: 'success'
 							});
 						},
 						fail: (err) => {
 							console.log('保存图片失败：', err);
 							uni.showToast({
-								title: '图片保存失败',
+								title: 'Image save failed',
 								icon: 'none'
 							});
 						}
@@ -286,13 +289,13 @@
 								filePath: link.href,
 								success: () => {
 									uni.showToast({
-										title: '图片保存成功',
+										title: 'Image saved successfully',
 										icon: 'success'
 									});
 								},
 								fail: (err) => {
 									uni.showToast({
-										title: '图片保存失败',
+										title: 'Image save failed',
 										icon: 'none'
 									});
 								}
