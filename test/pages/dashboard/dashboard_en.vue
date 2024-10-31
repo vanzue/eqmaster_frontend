@@ -125,13 +125,13 @@
 						:starRatings="courseData.courses.map(course => course.result)" 
 						:totalComponents="4"
 						:isCompleteTask="!!courseData.course_level" -->
-						<SProgressBar 
-							
+						<SProgressBar
 							v-if="courseData"
 							:finishComponents="courseData.courses.length"
 							:starRatings="Array(courseData.courses.length).fill(gemCount)"  
-							:totalComponents="4"
+							:totalComponents="totalComponents"
 							:isCompleteTask="gemCount"
+							:courseData="courseData.courses"
 						/>
 					</view>
 				</scroll-view >
@@ -167,7 +167,7 @@
 				jobId: null,
 				num: null,
 				finishComponents: 1,
-				totalComponents: 3,
+				totalComponents: [4, 1, 2, 3],
 				isLoading: true,
 				error: null,
 				// homepageData: {
@@ -227,7 +227,7 @@
 				animal: '',
 				minanimal: '',
 				maxanimal: '',
-				courseData: {},
+				courseData: {courses: [4, 1]},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -281,9 +281,9 @@
 			weakness() {
 				return this.$store.getters.getWeakness;
 			},
-			courseData() {
-				return this.$store.getters.getcourseData;
-			},
+			// courseData() {
+			// 	return this.$store.getters.getcourseData;
+			// },
 			characteristics() {
 				return this.$store.getters.getCharacteristics;
 			},
@@ -487,7 +487,14 @@
 					}
 				},
 				// deep: true,
-			}
+			},
+			courseData: {
+				immediate: true,
+				async handler(val) {
+					console.log(val);
+				},
+				// deep: true,
+			},
 		},
 		components: {
 			SProgressBar,
@@ -519,7 +526,7 @@
 		onLoad(option) {
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
-			this.userCard();
+			// this.userCard();
 			
 
 			

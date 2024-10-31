@@ -28,7 +28,7 @@
 					:scroll-into-view="scrollIntoViewId">
 					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
-                ['Jason', 'Sam', 'Anna'].includes(
+                npcNames.includes(
                   chat.role
                 )
               " :key="'npc-' + index" :index="index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
@@ -436,7 +436,7 @@
 						this.isLoadingShow = true;
 					}
 					try {
-						const nextRound = await continueChat(this.allHistory, "4");
+						const nextRound = await continueChat(this.allHistory, this.couseId);
 						console.log("next round data", nextRound);
 
 						nextRound.dialog = nextRound.dialog.map(item => ({
@@ -713,7 +713,7 @@
 						});
 						this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "4");
+						const judgeResult = await reply(validChats, this.couseId);
 
 
 						await this.handleRecorderReply(judgeResult);
@@ -760,7 +760,7 @@
 					try {
 						this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "4");
+						const judgeResult = await reply(validChats, this.couseId);
 						// console.log("validChat:", validChat);
 						console.log("judge Result:", judgeResult);
 						this.gemCount = this.calculateStars();
@@ -791,7 +791,7 @@
 							loading: true,
 							text: "Generating",
 						};
-						replyContent = await helpReply(validChats, "4");
+						replyContent = await helpReply(validChats, this.couseId);
 						if (replyContent.responsive) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
@@ -820,7 +820,7 @@
 							this.sendMessageNavShow = false;
 							await new Promise(resolve => setTimeout(resolve, 3000));
 							const validChatsRepy = filterChatHistory(this.allHistory);
-							const judgeResultRepy = await reply(validChatsRepy, "4");
+							const judgeResultRepy = await reply(validChatsRepy, this.couseId);
 							await this.handleRecorderReply(judgeResultRepy);
 						}
 					}
@@ -830,7 +830,7 @@
 							loading: true,
 							text: "Generating",
 						};
-						const judgeResult = await hint(validChats, "4");
+						const judgeResult = await hint(validChats, this.couseId);
 						console.log("get tips from backend:", judgeResult);
 						if (judgeResult.tips) {
 							await this.$store.dispatch('fetchHomepageData');
@@ -1096,6 +1096,14 @@
 				},
 				deep: true,
 			},
+			npcs: {
+				handler(newValue, oldValue) {
+					console.log(newValue, oldValue)
+					if(newValue) {
+          }
+				},
+				// deep: true,
+			},
 			state(newVal, oldVal) {
 				if (newVal === "userTalk") {
 					this.userTalkCount++; // 增加计数器
@@ -1108,6 +1116,16 @@
 					}
 				}
 			},
+      couseId: {
+				immediate: true,
+				async handler(val) {
+					if(!val) {
+						uni.navigateTo({
+							url: '/pages/dashboard/dashboard_en' // Replace this with the actual path to your next page
+						});
+					}
+				},
+			},
 		},
 		computed: {
 			userId() {
@@ -1119,20 +1137,23 @@
 			npcs() {
 				return this.$store.getters.getNpcs;
 			},
+      npcNames() {
+        return this.npcs.map(npc => npc.characterName);
+      },
 			shouldShadow() {
 				return (
 					this.state === "NpcTalk" || this.isRecording || this.showTippingCard
 				);
 			},
-
+      couseId() {
+				return this.$store.getters.getCourseId;
+			},
 			displayedMessages() {
 				const validChats = filterChatHistory(this.chattingHistory);
 				const userAndNpcChats = validChats.filter(
 					(chat) =>
 					chat.role === "user" ||
-					chat.role === "Jason" ||
-					chat.role === "Sam" ||
-					chat.role === "Anna" ||
+					this.npcNames.includes(chat.role) ||
 					chat.role === "tipping"
 				);
 				console.log("displayedMessages");

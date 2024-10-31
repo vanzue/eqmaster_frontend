@@ -9,6 +9,7 @@ export default createStore({
 		username: '', //用户名
 		userInfo: {}, //用户信息
 		jobId: '',
+    couseId: 1, //课程ID
 		selectedOptions: {},
 		homepageData: {},
 		courseData: {},
@@ -21,7 +22,6 @@ export default createStore({
 				voice: "en-US-DavisNeural",
 				style: "chat",
 				rate: "-10%",
-				
 			},
 			{
 				characterName: "Sam",
@@ -114,6 +114,12 @@ export default createStore({
 		setScenarioResponse(state, scenarioResponse) {
 		  state.scenarioResponse = scenarioResponse;
 		},
+		setCourseId(state, courseId) {
+			state.courseId = courseId;
+			if (courseId) {
+				this.dispatch('fetchNpcsByCourseId', courseId);
+			}
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -164,6 +170,9 @@ export default createStore({
     getScenarioResponse(state) {
       return state.scenarioResponse;
     },
+		getCourseId(state) {
+			return state.courseId;
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -186,6 +195,19 @@ export default createStore({
 				// console.error('Error fetching homepage data:', error);
 				console.log("####get home page data failed.")
 				throw error;
+			}
+		},
+		async fetchNpcsByCourseId({ commit }, courseId) {
+			try {
+				const npcData = await apiService.getNpcsByCourseId(courseId);
+				if (!npcData) {
+					throw new Error('No NPC data received');
+				}
+				commit('setNpcs', npcData);
+				console.log("##########commit NPC Data:", npcData);
+			} catch (error) {
+				console.error('Error fetching NPC data:', error);
+				// 可以在这里添加一些错误处理逻辑，比如显示一个错误消息给用户
 			}
 		},
 		async fetchcourseData({

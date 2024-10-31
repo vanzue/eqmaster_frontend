@@ -1,6 +1,6 @@
 <template>
   <view class="container-sprogress">
-    <canvas :id="canvasId" :canvas-id="canvasId" class="progress-canvas" @tap="handleCanvasTap"></canvas>
+    <canvas :id="canvasId" :canvas-id="canvasId" class="progress-canvas" @tap="handleCanvasTap($event)"></canvas>
   </view>
 </template>
 
@@ -13,8 +13,8 @@ export default {
       default: 2
     },
     totalComponents: {
-      type: Number,
-      default: 4
+      type: Array,
+      default: () => [1, 2, 3, 4]
     },
     circleRadius: {
       type: Number,
@@ -39,6 +39,10 @@ export default {
     homepageData: {
       type: Object,
       default: () => ({})
+    },
+    courseData: {
+      type: Object,
+      default: () => []
     },
     starRatings: {
       type: Array,
@@ -73,7 +77,7 @@ export default {
     uni.getSystemInfo({
       success: (res) => {
         this.canvasWidth = res.windowWidth; // 将Canvas宽度设置为窗口宽度
-        this.canvasHeight = (this.circleRadius * 4 * (this.totalComponents + 1)) + this.verticalOffset * 2;
+        this.canvasHeight = (this.circleRadius * 4 * (this.totalComponents.length + 1)) + this.verticalOffset * 2;
         this.calculateBezierPoints();
         this.drawSProgress();
       },
@@ -106,7 +110,7 @@ export default {
       this.bezierPoints.push(initialPoints);
       this.endPoints.push(initialPoints[initialPoints.length - 1]);
 
-      for (let component = 0; component < this.totalComponents; component++) {
+      for (let component = 0; component < this.totalComponents.length; component++) {
         const componentPoints = [];
         const baseY = component * 2 * radius;
 
@@ -167,7 +171,7 @@ export default {
       ctx.translate(0, 0);
 
       // 绘制所有路径
-      for (let i = 0; i < this.totalComponents; i++) {
+      for (let i = 0; i < this.totalComponents.length; i++) {
         const points = this.bezierPoints[i];
         ctx.beginPath();
         ctx.lineCap = 'round'; // 设置线条端点为圆形
@@ -270,9 +274,10 @@ export default {
       ];
 
       // 绘制所有端点、线段和图片
-      for (let i = 0; i < this.totalComponents; i++) {
+      for (let i = 0; i < this.totalComponents.length; i++) {
         const endPoint = this.endPoints[i];
-        const isCompleted = i < this.finishComponents;
+        // const isCompleted = i < this.finishComponents;
+        const isCompleted = this.totalComponents[i] == this.courseData[i];
 
         // 绘制端点圆圈
         ctx.beginPath();
@@ -444,9 +449,10 @@ export default {
         console.log('Canvas drawing completed');
       });
     },
-    navigateToBattlefieldIntro() {
+    navigateToBattlefieldIntro(couiseId=1) {
       const jobId = this.homepageData?.response?.personal_info?.job_id;
       console.log('okok');
+      this.$store.commit('setCourseId', couiseId);
       uni.navigateTo({
         // url: `/pages/battlefield/battlefield-intro`
         url: this.isCompleteTask 
@@ -488,7 +494,7 @@ export default {
           for (let i = 0; i < this.hexagons.length; i++) {
             const hexagon = this.hexagons[i];
             if (this.isPointInHexagon(adjustedX, adjustedY, hexagon.centerX, hexagon.centerY, hexagon.size)) {
-              this.navigateToBattlefieldIntro();
+              this.navigateToBattlefieldIntro(this.totalComponents[i]);
               break;
             }
           }

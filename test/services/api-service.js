@@ -418,5 +418,85 @@ export default {
 		}
 	},
 
+	async getNpcsByCourseId(courseId) {
+		try {
+			// const response = await uni.request({
+            //     url: `${API_ENDPOINT}/get_npcs_by_course/${courseId}`,
+            //     method: 'GET'
+            // });
+
+			// if (response.statusCode === 200) {
+			// 	return response.data;
+			// } else {
+			// 	throw new Error(`Failed to fetch NPCs by course ID: ${response.statusCode}`);
+			// }
+			const response = await this.getNpcMock(courseId);
+			return response.data;
+
+		} catch (error) {
+			console.error('Error fetching NPCs by course ID:', error);
+			throw error;
+		}
+	},
+	async getNpcMock(courseId) {
+		return new Promise((resolve) => {
+			const mockNpcs = {
+				4: [
+					{
+						characterName: "Jason",
+						health: 10,
+						avatar: "/static/battlefield/boss11.png",
+						voice: "en-US-DavisNeural",
+						style: "chat",
+						rate: "-10%",
+					},
+					{
+						characterName: "Sam",
+						health: 10,
+						avatar: "/static/battlefield/xiaoA1.png",
+						voice: "en-US-JasonNeural",
+						style: "friendly",
+						rate: "0%",
+					},
+					{
+						characterName: "Anna",
+						health: 10,
+						avatar: "/static/battlefield/xiaoB1.png",
+						voice: "en-US-JennyNeural",
+						style: "chat",
+						rate: "0%",
+					},
+				],
+				1: [
+					{
+						characterName: "领导",
+						health: 10,
+						avatar: "/static/battlefield/boss.png",
+						voice: "en-US-DavisNeural",
+						style: "chat",
+						rate: "-10%",
+					},
+					{
+						characterName: "同事A",
+						health: 10,
+						avatar: "/static/battlefield/xiaoA.png",
+						voice: "en-US-JasonNeural",
+						style: "friendly",
+						rate: "0%",
+					},
+					{
+						characterName: "同事B",
+						health: 10,
+						avatar: "/static/battlefield/xiaoB.png",
+						voice: "en-US-JennyNeural",
+						style: "chat",
+						rate: "0%",
+					},
+				],
+			};
+			resolve({ data: mockNpcs[courseId] || [] });
+		});
+	},
+
 	// Add more API methods here as needed
 };
