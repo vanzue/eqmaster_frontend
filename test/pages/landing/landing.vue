@@ -18,10 +18,10 @@
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
 			<view class="quizButton" @click="startQuiz">
-				<text class="quizText">Get started</text>
+				<text class="quizText">{{$t('pages.landing.get_started')}}</text>
 			</view>
 			<view class="loginButton" @click="login">
-				<text class="login-text">Login</text>
+				<text class="login-text">{{$t('pages.landing.login')}}</text>
 			</view>
 		</view>
 
@@ -83,9 +83,11 @@
 			if (options.username) {
 				this.username = options.username; // 将传递过来的用户名存储起来
 			}
+			console.log(`Locale ${uni.getLocale()}`);
 		},
 		mounted() { // 使用 mounted 钩子
 			console.log('页面已挂载，showSplash:', this.showSplash);
+			
 			// 设置闪屏持续时间（例如 3 秒）
 			setTimeout(() => {
 				console.log('开始渐隐');
