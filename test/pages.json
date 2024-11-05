@@ -36,7 +36,19 @@
 			}
 		},
 		{
+			"path": "pages/dashboard/dashboard_zh",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/dashboard/moment_analysis",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/dashboard/moment_analysis_zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -58,12 +70,30 @@
 			"style": {
 				"navigationStyle": "custom",
 				"app-plus": {
-				    "popGesture": "none"
+					"popGesture": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/result/loading_zh",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"popGesture": "none"
 				}
 			}
 		},
 		{
 			"path": "pages/result/result_en",
+			"style": {
+				"navigationStyle": "custom",
+				"style": {
+					"disableSwipeBack": true
+				}
+			}
+		},
+		{
+			"path": "pages/result/result_zh",
 			"style": {
 				"navigationStyle": "custom",
 				"style": {
@@ -103,6 +133,12 @@
 		},
 		{
 			"path": "pages/profile/profile_en",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/profile_zh",
 			"style": {
 				"navigationStyle": "custom"
 			}

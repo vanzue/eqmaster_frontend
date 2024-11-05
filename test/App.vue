@@ -16,8 +16,11 @@
 						const currentRoute = currentPages.length > 0 ? currentPages[currentPages.length - 1].route : '';
 						// console.log(currentRoute);
 						if (currentRoute === 'pages/landing/landing' || currentRoute === '') {
+							// uni.navigateTo({
+							// 	url: `/pages/dashboard/dashboard_en?currentView=dashboard`
+							// });
 							uni.navigateTo({
-								url: `/pages/dashboard/dashboard_en?currentView=dashboard`
+								url: `/pages/dashboard/dashboard_zh?currentView=dashboard`
 							});
 						}
 					}
