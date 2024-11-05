@@ -48,6 +48,12 @@
 			}
 		},
 		{
+			"path": "pages/battlefield/battlefield-playground-zh",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/battlefield/battlefield-intro",
 			"style": {
 				"navigationStyle": "custom"
