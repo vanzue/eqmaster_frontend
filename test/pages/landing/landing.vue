@@ -13,15 +13,15 @@
 		</view> -->
 
 		<!-- 添加背景图片 -->
-		<image class="background-image" src="/static/onboarding/landing B.png" mode="widthFix"></image>
+		<image class="background-image" src="/static/onboarding/landingB.png" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
 			<view class="quizButton" @click="startQuiz">
 				<text class="quizText">Get started</text>
 			</view>
-			<view class="loginButton" @click="login">
-				<text class="login-text">Login</text>
+			<view class="loginButton" @click="googleLogin">
+				<text class="login-text">Google Login</text>
 			</view>
 		</view>
 
@@ -77,6 +77,26 @@
 					url: '/pages/battlefield/battlefield-loading'
 				});
 			},
+			googleLogin() {
+				uni.login({
+				    provider: 'google',
+				    success: function (loginRes) {
+				        // 登录成功
+				        uni.getUserInfo({
+				            provider: 'google',
+				            success: function(info) {
+				                // 获取用户信息成功, info.authResult保存用户信息
+								console.log(info);
+								console.log('用户昵称为：' + info.userInfo.nickName);
+				            }
+				        })
+				    },
+				    fail: function (err) {
+				        // 登录授权失败
+				        // err.code是错误码
+				    }
+				});
+			}
 		},
 		onLoad(options) {
 			// 获取URL传递的参数
