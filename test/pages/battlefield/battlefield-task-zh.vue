@@ -147,7 +147,7 @@
 		width: 72rpx;
 		height: 72rpx;
 		border-radius: 50%;
-		background-color: #90E0E7;
+		background-color: #F2BC74;
 		color: #fff;
 		display: flex;
 		justify-content: center;
