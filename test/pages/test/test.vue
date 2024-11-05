@@ -264,7 +264,7 @@
 						// console.log("########initialize Scenario data:", res);
 						this.scenarioData = res.scene.scenes || res;
 						this.npcAvatar = getAvatar(this.scenarioData.role);
-						this.backgroundImageSrc = `/static/onboarding/bg${res.scenario_id}.png`;
+						this.backgroundImageSrc = `/static/onboarding/bgzh${res.scenario_id}.png`;
 						this.scenarioId = res.scenario_id;
 						this.handleScenarioData();
 						this.updateProgress();

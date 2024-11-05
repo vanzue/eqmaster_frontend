@@ -4,11 +4,11 @@
 
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">Welcome!👋</text>
+				<text class="greeting">嗨👋</text>
 			</view>
-			<text class="question">What can I call you?</text>
+			<text class="question">很开心见到你！你叫什么名字?</text>
 
-			<input class="name-input" placeholder="Your name" v-model="username" />
+			<input class="name-input" placeholder="设置你的用户名" v-model="username" />
 
 			<view class="button-container">
 				<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @tap="nextStep"></image>

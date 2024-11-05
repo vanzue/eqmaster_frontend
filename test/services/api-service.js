@@ -267,7 +267,7 @@ export default {
 		console.log('startScenario called with jobId:', jobId);
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/start_scenario/${jobId}?locale=en`,
+				url: `${API_ENDPOINT}/start_scenario/${jobId}?locale=None`,
 				method: 'POST'
 			});
 
@@ -305,7 +305,7 @@ export default {
 	async getCurrentScenario(jobId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_current_scenario/${jobId}?locale=en`,
+				url: `${API_ENDPOINT}/get_current_scenario/${jobId}?locale=None`,
 				method: 'POST'
 			});
 
@@ -324,7 +324,7 @@ export default {
 		// console.log('startScenario called with jobId:', jobId);
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/initialize_scenario?locale=en`,
+				url: `${API_ENDPOINT}/initialize_scenario?locale=None`,
 				method: 'POST',
 			});
 	
@@ -351,7 +351,7 @@ export default {
 				data: {
 					scenario_id: parseInt(scenarioId),
 					choices: String(num),
-					locale: "en"
+					locale: "none"
 				}
 			});
 	
@@ -399,7 +399,7 @@ export default {
 	async chooseScenario(choice, jobId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/choose_scenario?locale=en`,
+				url: `${API_ENDPOINT}/choose_scenario?locale=None`,
 				method: 'POST',
 				data: {
 					choice: choice,

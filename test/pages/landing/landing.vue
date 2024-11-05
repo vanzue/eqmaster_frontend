@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view v-if="showSplash" :class="{'splash-screen': true, 'splash-screen-hidden': splashHidden}">
-			<image class="splash-image" src="/static/splashEN2.png" mode="aspectFill"></image>
+			<image class="splash-image" src="/static/splashZH2.png" mode="aspectFill"></image>
 		</view>
 		<!-- <view class="splashBackground"></view>
 		<view v-if="showSplash" class="splash-screen">
@@ -13,15 +13,15 @@
 		</view> -->
 
 		<!-- 添加背景图片 -->
-		<image class="background-image" src="/static/onboarding/landing B.png" mode="widthFix"></image>
+		<image class="background-image" src="/static/onboarding/landing B1.png" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
 			<view class="quizButton" @click="startQuiz">
-				<text class="quizText">Get started</text>
+				<text class="quizText">开始体验</text>
 			</view>
 			<view class="loginButton" @click="login">
-				<text class="login-text">Login</text>
+				<text class="login-text">登陆已有账号</text>
 			</view>
 		</view>
 
