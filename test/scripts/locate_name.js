@@ -36,11 +36,11 @@ export function getAvatar(name) {
 }
 
 export function getBattlefieldAvatar(name) {
-	if (name == "Jason") {
-		return "/static/battlefield/boss11.png";
+	if (name == "领导") {
+		return "/static/battlefield/boss.png";
 	}
-	if (name == "Sam") {
-		return '/static/battlefield/xiaoA1.png';
+	if (name == "同事A") {
+		return '/static/battlefield/xiaoA.png';
 	}
-	return "/static/battlefield/xiaoB1.png";
+	return "/static/battlefield/xiaoB.png";
 }
