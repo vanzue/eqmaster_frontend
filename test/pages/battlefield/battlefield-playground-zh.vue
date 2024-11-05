@@ -636,7 +636,7 @@
 				await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
 					uni.navigateTo({
-						url: "/pages/battlefield/battlefield-summary",
+						url: "/pages/battlefield/battlefield-summary-zh",
 					});
 				}, 1000);
 			},
