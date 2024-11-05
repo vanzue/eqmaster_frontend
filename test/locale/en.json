@@ -8,5 +8,6 @@
   "pages.landing.greeting":  "Welcome!馃憢",
   "pages.landing.question":  "What can I call you?",
   "pages.landing.input_name":  "Your name",
-  "pages.landing.input_name_reminder":  "Enter your name please"
+  "pages.landing.input_name_reminder":  "Enter your name please",
+  "images.startTest": "/static/onboarding/startTest2.png"
 }
