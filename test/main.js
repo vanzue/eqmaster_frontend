@@ -2,12 +2,11 @@ import App from './App'
 import messages from './locale/index'
 
 let i18nConfig = {
-  // locale: uni.getLocale(),
-  local: 'zh-Hans',
+  locale: uni.getLocale(),
+  // local: 'zh-Hans',
   messages
 }
 
-console.log(`Locale: ${uni.getLocale()}`);
 
 // VUE2
 // #ifndef VUE3

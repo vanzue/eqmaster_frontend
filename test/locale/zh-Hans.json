@@ -4,5 +4,9 @@
 	"locale.zh-hans": "简体中文",
 	"locale.zh-hant": "繁体中文",
 	"pages.landing.get_started": "开始",
-	"pages.landing.login": "登录"
+	"pages.landing.login": "登录",
+	"pages.landing.greeting":  "嗨👋",
+	"pages.landing.question":  "很开心见到你！你叫什么名字？",
+	"pages.landing.input_name":  "请输入",
+	"pages.landing.input_name_reminder":  "请输入您的名字"
 }

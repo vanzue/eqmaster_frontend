@@ -83,7 +83,6 @@
 			if (options.username) {
 				this.username = options.username; // 将传递过来的用户名存储起来
 			}
-			console.log(`Locale ${uni.getLocale()}`);
 		},
 		mounted() { // 使用 mounted 钩子
 			console.log('页面已挂载，showSplash:', this.showSplash);
