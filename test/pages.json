@@ -6,19 +6,19 @@
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-loading",
+			"path": "pages/battlefield/battlefield-loading-zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-summary",
+			"path": "pages/battlefield/battlefield-summary-zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-task",
+			"path": "pages/battlefield/battlefield-task-zh",
 			"style": {
 				"navigationStyle": "custom"
 			}

@@ -450,8 +450,8 @@ export default {
       uni.navigateTo({
         // url: `/pages/battlefield/battlefield-intro`
         url: this.isCompleteTask 
-          ? `/pages/battlefield/battlefield-summary?isFromMap=${this.isFromMap}` 
-          : `/pages/battlefield/battlefield-intro`
+          ? `/pages/battlefield/battlefield-summary-zh?isFromMap=${this.isFromMap}` 
+          : `/pages/battlefield/battlefield-intro-zh`
       });
     },
     // 新增方法：绘制六边形

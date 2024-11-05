@@ -11,7 +11,7 @@
 		<view class="content">
 			<view class="task-header">
 				<!-- <text class="main-title">A Cross-Department Meeting</text> -->
-				<text class="sub-title">Tasks</text>
+				<text class="sub-title">通关任务</text>
 			</view>
 
 			<!-- 任务列表 -->
@@ -22,7 +22,7 @@
 							1
 						</text>
 					</view>
-					<text class="task-word">Cheer up Sam while avoiding further infuriating Jason.</text>
+					<text class="task-word">得到领导的夸赞 × 2</text>
 					<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 				</view>
 				<view class="task-item">
@@ -31,12 +31,20 @@
 							2
 						</text>
 					</view>
-					<text class="task-word">Encourage teammates to engage and get at least one to say, "I agree with you."</text>
+					<text class="task-word">一句话让每位同事心情愉悦</text>
+				</view>
+				<view class="task-item">
+					<view class="index-circle">
+						<text class="index-word">
+							3
+						</text>
+					</view>
+					<text class="task-word">点出让每位同事满意的菜品</text>
 				</view>
 			</view>
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage">Got it</button>
+			<button class="continue-btn" @click="navigateToNextPage">我知道了</button>
 		</view>
 	</view>
 </template>
