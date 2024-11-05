@@ -20,9 +20,9 @@
 			<view class="quizButton" @click="startQuiz">
 				<text class="quizText">Get started</text>
 			</view>
-			<view class="loginButton" @click="googleLogin">
+			<!-- <view class="loginButton" @click="googleLogin">
 				<text class="login-text">Google Login</text>
-			</view>
+			</view> -->
 		</view>
 
 		<!-- <view class="button button2" @click="startDialogue">
