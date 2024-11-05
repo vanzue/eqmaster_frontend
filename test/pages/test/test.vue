@@ -160,7 +160,7 @@
 			isLoading: {
 				immediate: true,
 				async handler(newValue) {
-					if(newValue) {
+					if (newValue) {
 						uni.showLoading({
 							title: 'loading...'
 						});
@@ -173,7 +173,7 @@
 			scenarioId: {
 				immediate: true,
 				async handler(val) {
-					if(val) {
+					if (val) {
 						// this.backgroundImageSrc = `/static/onboarding/bg${val}.png`;
 						setTimeout(() => {
 							this.isLoading = false;
@@ -477,7 +477,7 @@
 				//   )}&options=${encodeURIComponent(
 				//     JSON.stringify(this.selectedOptions)
 				//   )}&num=${this.num}`;
-				const loadingPageUrl = `/pages/result/loading`;
+				const loadingPageUrl = `/pages/result/loading_zh`;
 				uni.navigateTo({
 					url: loadingPageUrl,
 					fail: (err) => {
