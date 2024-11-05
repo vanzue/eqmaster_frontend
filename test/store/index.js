@@ -15,26 +15,26 @@ export default createStore({
 		intervalId: null, // 定时器ID
 		homeNavName: 'dashboard',
 		npcs: [{
-				characterName: "Jason",
+				characterName: "领导",
 				health: 10,
-				avatar: "/static/battlefield/boss11.png",
+				avatar: "/static/battlefield/boss.png",
 				voice: "en-US-DavisNeural",
 				style: "chat",
 				rate: "-10%",
 				
 			},
 			{
-				characterName: "Sam",
+				characterName: "同事A",
 				health: 10,
-				avatar: "/static/battlefield/xiaoA1.png",
+				avatar: "/static/battlefield/xiaoA.png",
 				voice: "en-US-JasonNeural",
 				style: "friendly",
 				rate: "0%",
 			},
 			{
-				characterName: "Anna",
+				characterName: "同事B",
 				health: 10,
-				avatar: "/static/battlefield/xiaoB1.png",
+				avatar: "/static/battlefield/xiaoB.png",
 				voice: "en-US-JennyNeural",
 				style: "chat",
 				rate: "0%",

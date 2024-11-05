@@ -5,7 +5,7 @@
 				@click="setShowCardPopup"></image>
 			<view class="card-header">
 				<view class="title">
-					Choose your advice card
+					选择锦囊卡片
 				</view>
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
@@ -17,9 +17,9 @@
 			<view class="card-center" @click.stop>
 				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
 					<view class="top">
-						<text>Best Answer</text>
+						<text>帮回卡</text>
 						<view class="top-content">
-							Refine your answer for smoother conversations.
+							快速调整你的回答，提升质量，让对话更流畅。
 						</view>
 					</view>
 					<view class="jewelry">
@@ -31,9 +31,9 @@
 				</view>
 				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
 					<view class="top">
-						<text>Get Hint</text>
+						<text>提示卡</text>
 						<view class="top-content">
-							Reveal helpful clues to guide your next move.
+							提供情绪引导或建议，帮助你更好地理解和回应。
 						</view>
 					</view>
 					<view class="jewelry">
@@ -46,7 +46,7 @@
 			</view>
 			<view class="card-button">
 				<button :disabled="!selectedCard || cardButtonLoading || !canAfford(selectedCard) || !eqScoresNum"
-					@click="exchangeClick">Confirm</button>
+					@click="exchangeClick">确定兑换</button>
 			</view>
 		</view>
 	</view>
@@ -153,7 +153,7 @@
 		width: 654rpx;
 		/* Set the width to 90% */
 		/* height: 810rpx; */
-		background-color: #D6FCF6;
+		background-color: #FDEDC8;
 		border-radius: 32rpx;
 		display: flex;
 		/* justify-content: center; */
@@ -179,7 +179,7 @@
 		align-items: center;
 		font-size: 40rpx;
 		font-weight: 500;
-		color: #2D6985;
+		color: #8C5225;
 		margin-top: 32rpx;
 	}
 
@@ -223,7 +223,7 @@
 		gap: 40rpx;
 		border-radius: 32rpx;
 		background: #FFFFFF;
-		box-shadow: 0 0 24rpx 0 #90E0E7;
+		box-shadow: 0px 0px 12px 0px #FED397;
 	}
 
 	.top {
@@ -261,14 +261,14 @@
 	}
 
 	.jewelry-num {
-		color: #2D6985;
+		color: #F2BC74;
 		font-size: 40rpx;
 		font-weight: 800;
 		text-align: left;
 	}
 
 	.jewelry-num-dark {
-		color: #2D6985;
+		color: #8C5225;
 		font-size: 40rpx;
 		font-weight: 900;
 		text-align: left;
@@ -284,7 +284,7 @@
 		left: -3px;
 		right: -3px;
 		bottom: -3px;
-		border: 3px solid #90E0E7;
+		border: 3px solid #F2BC74;
 		border-radius: 35rpx;
 		pointer-events: none;
 	}
@@ -299,7 +299,7 @@
 		width: 100%;
 		height: 88rpx;
 		line-height: 88rpx;
-		background-color: #90E0E7 !important;
+		background-color: #F2BC74 !important;
 		border-radius: 400rpx;
 		font-size: 30rpx;
 		font-weight: 600;

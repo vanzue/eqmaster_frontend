@@ -91,11 +91,11 @@ export default {
 	async uploadChatHistory(filePath, userId) {
 		try {
 			const response = await uni.uploadFile({
-				url: `${API_ENDPOINT}/analyze/history`,
+				url: `${API_ENDPOINT}/analyze/history?locale=en`,
 				filePath: filePath,
 				name: 'file',
 				formData: {
-					user_id: userId
+					user_id: userId,
 				}
 			});
 
@@ -319,7 +319,7 @@ export default {
 			throw error;
 		}
 	},
-	
+
 	async initializeScenario() {
 		// console.log('startScenario called with jobId:', jobId);
 		try {
@@ -327,7 +327,7 @@ export default {
 				url: `${API_ENDPOINT}/initialize_scenario?locale=None`,
 				method: 'POST',
 			});
-	
+
 			if (response.statusCode === 200) {
 				console.log('response:', response);
 				return response.data;
@@ -339,8 +339,8 @@ export default {
 			throw error;
 		}
 	},
-	
-	async retrieveScenario(scenarioId,num) {
+
+	async retrieveScenario(scenarioId, num) {
 		// console.log('startScenario called with jobId:', jobId);
 		console.log("#####retrieveScenarioResponse data:", scenarioId);
 		console.log("#####retrieveScenarioResponse data:", num);
@@ -354,7 +354,7 @@ export default {
 					locale: "none"
 				}
 			});
-	
+
 			if (response.statusCode === 200) {
 				console.log('response:', response);
 				return response.data;
@@ -366,8 +366,8 @@ export default {
 			throw error;
 		}
 	},
-	
-	async finalizeScenario(scores,job_id,dialogue_history) {
+
+	async finalizeScenario(scores, job_id, dialogue_history) {
 		// console.log('startScenario called with jobId:', jobId);
 		console.log("#####finalizeScenarioResponse data:", scores);
 		console.log("#####finalizeScenarioResponse data:", job_id);
@@ -383,7 +383,7 @@ export default {
 					locale: "en"
 				}
 			});
-	
+
 			if (response.statusCode === 200) {
 				console.log('response:', response);
 				return response.data;
