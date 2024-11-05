@@ -74,7 +74,7 @@
 			},
 			startDialogue() {
 				uni.navigateTo({
-					url: '/pages/battlefield/battlefield-loading'
+					url: '/pages/battlefield/battlefield-loading-zh'
 				});
 			},
 		},

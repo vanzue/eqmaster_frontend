@@ -500,7 +500,7 @@
 			},
 			navigateToBattlefieldIntro() {
 				uni.navigateTo({
-					url: `/pages/battlefield/battlefield-intro?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
+					url: `/pages/battlefield/battlefield-intro-zh?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
 
 				});
 			},
