@@ -54,7 +54,7 @@
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-intro",
+			"path": "pages/battlefield/battlefield-intro-zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
