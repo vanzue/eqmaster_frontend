@@ -103,7 +103,7 @@
 				return this.goodJudge ? '#A9E55B' : '#FFD044';
 			},
 			buttonText() {
-				return this.goodJudge ? 'Continue' : 'Try Again';
+				return this.goodJudge ? '继续' : '再试一次';
 			}
 		}
 	}

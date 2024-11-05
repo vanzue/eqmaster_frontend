@@ -37,7 +37,7 @@ export default {
 				console.log("get voice fail", error);
 			} finally {
 				uni.navigateTo({
-					url: '/pages/battlefield/battlefield-playground'
+					url: '/pages/battlefield/battlefield-playground-zh'
 				})
 			}
 		}

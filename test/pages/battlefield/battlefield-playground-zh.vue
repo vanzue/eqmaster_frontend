@@ -295,9 +295,9 @@
 			console.log("state userid", state.userId);
 			// 动态添加任务到 taskList
 			this.taskList.addTask(
-				new Task(0, "在不惹恼领导的情况下，鼓励同事A。", async (judgeResult) => {
-					const samMood = judgeResult.find(item => item.role === "Sam")?.mood;
-					const jasonMood = judgeResult.find(item => item.role === "Jason")?.mood;
+				new Task(0, "在不惹恼领导的情况下让同事A振作起来。", async (judgeResult) => {
+					const samMood = judgeResult.find(item => item.role === "同事A")?.mood;
+					const jasonMood = judgeResult.find(item => item.role === "领导")?.mood;
 
 					const taskResult = parseInt(samMood, 10) > 0 && parseInt(jasonMood, 10) >= 0;
 					// const allPositive = judgeResult.moods.some((item) => parseInt(item.mood, 10) > 0);
@@ -311,7 +311,7 @@
 				})
 			);
 			this.taskList.addTask(
-				new Task(1, "鼓励众人参与并让至少一个人说：\"我同意你的观点。\"", async (
+				new Task(1, "鼓励同事参与并让至少一个人说：\"我同意你的观点。\"", async (
 					judgeResult) => {
 					let res = "";
 
@@ -845,7 +845,7 @@
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage2 = {
-								role: "提示",
+								role: "tipping",
 								content: judgeResult.tips,
 								shouldAnimate: false,
 							};
@@ -961,7 +961,7 @@
 									this.taskList.doneTaskLength++;
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-										" Goals achieved!";
+										" 任务达成！";
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
 										this.isPass = true;
@@ -1446,7 +1446,7 @@
 		transform: translateX(-50%);
 		width: 420rpx;
 		height: 160rpx;
-		background-color: #d6fcf6;
+		background-color: #FDEDC8;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
