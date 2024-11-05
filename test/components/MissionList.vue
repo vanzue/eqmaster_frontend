@@ -3,7 +3,7 @@
 		<text class="content">
 			<view class="card-header">
 				<view class="title">
-					Tasks
+					通关任务
 					<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode=""
 						@click="closeCardBox"></image>
 				</view>
@@ -101,7 +101,7 @@
 		position: absolute;
 		height: 732rpx;
 		bottom: 0px;
-		background-color: #D6FCF6;
+		background-color: #FDEDC8;
 		display: flex;
 		flex-direction: column;
 	}
@@ -124,7 +124,7 @@
 		font-size: 40rpx;
 		font-weight: 700;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #2D6985;
+		color: #8C5225;
 	}
 
 	.card-close-image {
@@ -142,7 +142,7 @@
 		gap: 16rpx;
 		opacity: 0px;
 		margin-top: 40rpx;
-		color: #2D6985;
+		color: #8C5225;
 	}
 
 	.item {
@@ -161,7 +161,7 @@
 		line-height: 40rpx;
 		font-weight: 600;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #2D6985;
+		color: #8C5225;
 	}
 
 	.radiocheck-image {
@@ -197,7 +197,7 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: #E3E3E3 !important;
 		border-radius: 5px;
 		position: relative;
 		overflow: visible;

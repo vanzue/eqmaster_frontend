@@ -392,7 +392,7 @@
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle'; // 确保文本垂直居中
 					// const levelText = `Unit${this.numberToChineseCharacter(i + 1)}`;
-					const levelText = `第 ${i + 1} 关`;
+					const levelText = `关卡 ${i + 1}`;
 					ctx.fillText(levelText, textContainerX + textContainerWidth / 2, textContainerY - 18);
 
 					ctx.restore(); // 恢复之前保存的绘图状态
@@ -473,8 +473,8 @@
 				uni.navigateTo({
 					// url: `/pages/battlefield/battlefield-intro`
 					url: this.isCompleteTask ?
-						`/pages/battlefield/battlefield-summary?isFromMap=${this.isFromMap}` :
-						`/pages/battlefield/battlefield-intro`
+						`/pages/battlefield/battlefield-summary-zh?isFromMap=${this.isFromMap}` :
+						`/pages/battlefield/battlefield-intro-zh`
 				});
 			},
 			// 新增方法：绘制六边形
