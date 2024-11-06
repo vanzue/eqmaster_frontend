@@ -1333,7 +1333,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 50%;
-		width: 130rpx;
+		width: 140rpx;
 		padding: 10px 20px;
 		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);
