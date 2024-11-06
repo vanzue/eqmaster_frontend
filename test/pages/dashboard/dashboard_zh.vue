@@ -126,8 +126,8 @@
 						:starRatings="courseData.courses.map(course => course.result)" 
 						:totalComponents="4"
 						:isCompleteTask="!!courseData.course_level" -->
-						<SProgressBar v-if="courseData" :finishComponents="courseData.courses.length"
-							:starRatings="Array(courseData.courses.length).fill(gemCount)" :totalComponents="4"
+						<SProgressBar v-if="courseData" :finishComponents="1"
+							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" />
 					</view>
 				</scroll-view>
