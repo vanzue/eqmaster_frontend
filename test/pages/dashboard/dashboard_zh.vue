@@ -25,12 +25,12 @@
 								</text>
 								<text
 									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
-									{{ weakness }}
+									{{ illustrationData.weakness }}
 								</text>
-								<text class="detail-summary">{{ characteristics }}</text>
+								<text class="detail-summary">{{ illustrationData.characteristics }}</text>
 							</view>
 						</view>
-						<image class="character-image" :src="userCard" />
+						<image class="character-image" :src="illustrationData.animal_icon" />
 					</view>
 
 					<view style="margin-top: 24rpx;">
@@ -146,7 +146,7 @@
 	import AbilityProgressBar from '@/components/AbilityProgressBar.vue';
 	import {
 		illustrationSrc
-	} from '../../scripts/illustrationHelper';
+	} from '../../scripts/illustrationHelper_zh';
 
 	export default {
 
@@ -284,6 +284,9 @@
 			},
 			characteristics() {
 				return this.$store.getters.getCharacteristics;
+			},
+			illustrationData() {
+				return illustrationSrc(this.homepageData, this.$store);
 			},
 			formattedBirthday() {
 				if (this.birthday) {
