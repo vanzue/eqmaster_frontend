@@ -1029,7 +1029,7 @@
 										this.taskList.getTotalTaskLength();
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-										" Goals achieved";
+										" 任务达成";
 									taskCompleted = false;
 									this.task2CompletedStatusOne = true; //如果任务2完成
 									console.log("task2 success");
@@ -1333,7 +1333,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 50%;
-		width: 238rpx;
+		width: 130rpx;
 		padding: 10px 20px;
 		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);
@@ -1357,7 +1357,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 10%;
-		width: 120px;
+		width: 118px;
 		padding: 10px 20px;
 		/* transform: translateX(-50%); */
 		background-color: rgba(16, 16, 16, 0.4);
