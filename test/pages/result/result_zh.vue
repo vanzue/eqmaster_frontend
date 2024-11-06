@@ -10,7 +10,7 @@
 				<view class="background-curve">
 					<view class="animal-box">
 						<view class="animal-my-eq-type">
-							My EQ companion
+							我的EQ形象
 						</view>
 						<view class="animal-name"
 							:style="{ backgroundImage: `url(${illustrationData.animal_name_bg})` }">

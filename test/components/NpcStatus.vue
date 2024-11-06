@@ -85,7 +85,6 @@
 				}
 
 				this.showIndicator = true;
-				console.log("show the circle");
 
 				// 清除之前的定时器
 				if (this.indicatorTimeout) {
@@ -97,7 +96,6 @@
 					this.showIndicator = false;
 					this.indicatorTimeout = null;
 				}, 4000);
-				console.log("hide the circle");
 
 				// 更新 prevHealth
 				this.prevHealth = newVal;

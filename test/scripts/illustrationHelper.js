@@ -1,8 +1,9 @@
 export function illustrationSrc(homepageData, store) {
 	let returnObj = {
-		animal_name: 'Capypara',
+		animal_name: '水豚',
 		animal_icon: '/static/resulten/monkey.png',
 		animal_name_bg: '/static/resulten/animal-name-1.png',
+		// weakness指的是superPower
 		weakness: 'Weakness',
 		characteristics: '',
 	};
@@ -14,53 +15,53 @@ export function illustrationSrc(homepageData, store) {
 			scores.dimension4_score, scores.dimension5_score
 		);
 		console.log("max score is:", maxScore);
-// 1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
+		// 1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
 		if (maxScore === scores.dimension1_score) {
 			returnObj = {
-				animal_name: 'Ostrich',
+				animal_name: '鸵鸟',
 				animal_icon: '/static/resulten/ostrich.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: 'Perception',
-				characteristics: 'is your EQ superpower—you’re great at sensing subtle cues and moods.',
-				
-				
+				weakness: '感知力',
+				characteristics: '你的情绪稳定能力略有欠缺，需要进一步提升。较大的情绪波动会影响你的工作效率和人际关系哦。',
+
+
 			};
 		} else if (maxScore === scores.dimension2_score) {
 			returnObj = {
-				animal_name: 'Monkey',
+				animal_name: '猴子',
 				animal_icon: '/static/resulten/monkey.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: 'Self-regulation',
-				characteristics: 'is your EQ superpower—you control emotions well, even under stress.',
-				
-				
-				
+				weakness: '掌控力',
+				characteristics: '你的情绪稳定能力略有欠缺，需要进一步提升。较大的情绪波动会影响你的工作效率和人际关系哦。',
+
+
+
 			};
 		} else if (maxScore === scores.dimension3_score) {
 			returnObj = {
-				animal_name: 'Coyote',
+				animal_name: '狼',
 				animal_icon: '/static/resulten/coyote.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: 'Social Skill',
-				characteristics: 'is your EQ superpower—you build connections and encourage collaboration.',
+				weakness: '社交力',
+				characteristics: '你的情绪稳定能力略有欠缺，需要进一步提升。较大的情绪波动会影响你的工作效率和人际关系哦。',
 			};
 		} else if (maxScore === scores.dimension4_score) {
 			returnObj = {
-				animal_name: 'hedgehog',
+				animal_name: '刺猬',
 				animal_icon: '/static/resulten/hedgehog.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: 'Empathy',
-				characteristics: `is your EQ superpower—you easily notice and understand others' emotions.`,
-				
-				
+				weakness: '共情力',
+				characteristics: `你的情绪稳定能力略有欠缺，需要进一步提升。较大的情绪波动会影响你的工作效率和人际关系哦。`,
+
+
 			};
 		} else if (maxScore === scores.dimension5_score) {
 			returnObj = {
-				animal_name: 'Capypara',
+				animal_name: '水豚',
 				animal_icon: '/static/resulten/capybara.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: 'Motivation',
-				characteristics: 'is your EQ superpower—you bring energy and stay focused on your goals.',
+				weakness: '驱动力',
+				characteristics: '你的情绪稳定能力略有欠缺，需要进一步提升。较大的情绪波动会影响你的工作效率和人际关系哦。',
 			};
 		}
 

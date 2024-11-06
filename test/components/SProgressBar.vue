@@ -48,8 +48,8 @@
 				type: Array,
 				default: () => [
 					'老板肚子里的蛔虫',
-					'在团队遇到挫折时保持冷静',
-					'察言观色以化解冲突'
+					'被老板刁难',
+					'遇到无理同事'
 				]
 			},
 			isCompleteTask: {
@@ -349,7 +349,7 @@
 					}
 
 					// 计算文本容器的宽度和位置
-					const textContainerWidth = 120; // 调整此值以适应您的需求
+					const textContainerWidth = 140; // 调整此值以适应您的需求
 					const textContainerX = i % 2 === 0 ?
 						imageX + imageSize / 2 - textContainerWidth - 80 :
 						imageX + imageSize / 2 + 80;
