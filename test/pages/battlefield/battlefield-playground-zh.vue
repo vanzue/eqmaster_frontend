@@ -335,7 +335,7 @@
 			},
 			goToDashboard() {
 				uni.navigateTo({
-					url: "/pages/dashboard/dashboard_en",
+					url: "/pages/dashboard/dashboard_zh",
 				});
 			},
 			handleClickTaskList() {
