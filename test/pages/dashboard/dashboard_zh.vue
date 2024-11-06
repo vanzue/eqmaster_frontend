@@ -97,7 +97,7 @@
 							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
 							</image>
 							<text
-								class="dashboard2-score-value-large-g">{{ gemCount === homepageData?.response?.personal_info?.num_star ? gemCount : gemCount}}</text>
+								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
 						</view>
 						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
 						</image>
@@ -614,7 +614,7 @@
 			async uploadImage(filePath) {
 				try {
 					this.isLoading = true;
-					const result = await apiService.uploadChatHistory(filePath, this.userId);
+					const result = await apiService.uploadChatHistory(filePath, this.userId, 'zh');
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {

@@ -295,7 +295,7 @@
 			console.log("state userid", state.userId);
 			// 动态添加任务到 taskList
 			this.taskList.addTask(
-				new Task(0, "在不惹恼领导的情况下让同事A振作起来。", async (judgeResult) => {
+				new Task(0, "一句话让每位同事心情愉悦。", async (judgeResult) => {
 					const samMood = judgeResult.find(item => item.role === "同事A")?.mood;
 					const jasonMood = judgeResult.find(item => item.role === "领导")?.mood;
 
@@ -311,7 +311,7 @@
 				})
 			);
 			this.taskList.addTask(
-				new Task(1, "鼓励同事参与并让至少一个人说：\"我同意你的观点。\"", async (
+				new Task(1, "点出让每位同事满意的菜品。", async (
 					judgeResult) => {
 					let res = "";
 
@@ -335,7 +335,7 @@
 			},
 			goToDashboard() {
 				uni.navigateTo({
-					url: "/pages/dashboard/dashboard_en",
+					url: "/pages/dashboard/dashboard_zh",
 				});
 			},
 			handleClickTaskList() {
@@ -1010,7 +1010,7 @@
 			async checkBossComplimentTask2(dialog) {
 				let taskCompleted = false;
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
-					const goalKeyword = "我同意你的观点";
+					const goalKeyword = "你点的菜真不错";
 					console.log(dialog);
 					for (let chat of dialog) {
 						if (chat.content.includes(goalKeyword)) {

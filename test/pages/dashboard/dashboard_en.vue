@@ -43,7 +43,9 @@
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									 <text style="font-weight: bold;">Empathy</text> is a cornerstone in building trust; validating others’ feelings with phrases like "I can see why you feel that way" builds connection. 
+									<text style="font-weight: bold;">Empathy</text> is a cornerstone in building trust;
+									validating others’ feelings with phrases like "I can see why you feel that way"
+									builds connection.
 								</text>
 							</view>
 						</view>
@@ -125,16 +127,11 @@
 						:starRatings="courseData.courses.map(course => course.result)" 
 						:totalComponents="4"
 						:isCompleteTask="!!courseData.course_level" -->
-						<SProgressBar 
-							
-							v-if="courseData"
-							:finishComponents="courseData.courses.length"
-							:starRatings="Array(courseData.courses.length).fill(gemCount)"  
-							:totalComponents="4"
-							:isCompleteTask="gemCount"
-						/>
+						<SProgressBar v-if="courseData" :finishComponents="courseData.courses.length"
+							:starRatings="Array(courseData.courses.length).fill(gemCount)" :totalComponents="4"
+							:isCompleteTask="gemCount" />
 					</view>
-				</scroll-view >
+				</scroll-view>
 			</view>
 		</view>
 		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
@@ -355,7 +352,7 @@
 					return '/static/dashboard/en/capybara.png';
 				}
 			},
-			
+
 			truncatedSuggestion() {
 				const suggestion = this.homepageData?.response?.eq_scores?.overall_suggestion || '暂无建议';
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
@@ -372,7 +369,7 @@
 						return 'Empathy Forest';
 					case 'coyote': //狼
 						return 'Social Skill Dessert';
-					case 'ostrich'://鸵鸟
+					case 'ostrich': //鸵鸟
 						return 'Perception Savanna';
 					case 'monkey':
 						return 'Self-regulation Hill';
@@ -430,7 +427,7 @@
 					this.minanimal = "ostrich";
 				}
 				console.log(this.minanimal);
-				
+
 				switch (this.maxanimal) {
 					case 'capybara':
 						return '#EFC59E'; // Gold
@@ -520,9 +517,9 @@
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
 			this.userCard();
-			
 
-			
+
+
 
 			// 接收上一个页面传递的数据
 			// this.userId = option.userId || '717';
@@ -563,7 +560,7 @@
 		},
 		onShow() {
 			this.getAnalysisList(this.userId);
-			
+
 		},
 		methods: {
 			progressWidth(value) {
@@ -612,7 +609,7 @@
 			async uploadImage(filePath) {
 				try {
 					this.isLoading = true;
-					const result = await apiService.uploadChatHistory(filePath, this.userId);
+					const result = await apiService.uploadChatHistory(filePath, this.userId, 'en');
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
@@ -2042,7 +2039,7 @@
 	}
 
 	.dashboard2-scrollable-content {
-		padding-top: 300rpx; 
+		padding-top: 300rpx;
 		/* 其他样式 */
 	}
 
