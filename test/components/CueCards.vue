@@ -107,7 +107,6 @@
 			async exchangeClick() {
 				if (this.isExchanging) return; // 如果已经在请求中，则直接返回
 				this.isExchanging = true;
-				console.log("clicked!!!");
 				try {
 					const userId = this.$store.getters.getUserId;
 					if (this.selectedCard === 1 && this.diamondCount >= 60) {
@@ -127,7 +126,6 @@
 				}
 			},
 			async exchangeClickWithoutEmit() {
-				console.log("clicked!!!");
 				try {
 					const userId = this.$store.getters.getUserId;
 					if (this.selectedCard === 1 && this.diamondCount >= 60) {

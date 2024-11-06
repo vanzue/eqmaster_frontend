@@ -46,7 +46,6 @@
 		computed: {
 			isOddRequest() {
 				if (this.requestCount % 2 === 0) {
-					console.log("It's an even request!!!!")
 					return false;
 				}
 				return true;
