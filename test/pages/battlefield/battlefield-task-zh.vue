@@ -22,7 +22,7 @@
 							1
 						</text>
 					</view>
-					<text class="task-word">得到领导的夸赞</text>
+					<text class="task-word">一句话让每位同事心情愉悦</text>
 					<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 				</view>
 				<view class="task-item">
@@ -31,7 +31,7 @@
 							2
 						</text>
 					</view>
-					<text class="task-word">一句话让每位同事心情愉悦</text>
+					<text class="task-word">点出让每位同事满意的菜品</text>
 				</view>
 			</view>
 		</view>
