@@ -18,8 +18,33 @@ export function findLastName(str) {
 
 export function getAvatar(name, sceneNumber) {
     if (!name || !sceneNumber) return '/static/npc3.png';
+	var imageName = "";
+	if (name == "小李") {
+		imageName = "xiaoli";
+	}
+	if (name == "小王") {
+		imageName = "xiaowang";
+	}
+	if (name == "小张") {
+		imageName = "xiaozhang";
+	}
+	if (name == "张经理") {
+		imageName = "managerZhang";
+	}
+	if (name == "老板") {
+		imageName = "boss";
+	}
+	if (name == "同事") {
+		imageName = "colleague";
+	}
+	if (name == "主管") {
+		imageName = "zhuguan";
+	}
+	if (name == "HR") {
+		imageName = "HR";
+	}
     
-    const avatarPath = `/static/npc/${sceneNumber}${name}.png`;
+    const avatarPath = `/static/npc/${sceneNumber}${imageName}.png`;
 	// const avatarPath = `/static/npc/444.png`;
     return avatarPath;
 }
