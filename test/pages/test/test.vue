@@ -99,7 +99,7 @@
 	import {
 		findLastName,
 		getAvatar
-	} from "../../scripts/locate_name";
+	} from "../../scripts/locate_name_zh";
 	import OnboardingChatBubble from "/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
 	// import StateStack from "./StateStack";
@@ -271,7 +271,7 @@
 					.then((res) => {
 						// console.log("########initialize Scenario data:", res);
 						this.scenarioData = res.scene.scenes || res;
-						this.npcAvatar = getAvatar(this.scenarioData.role);
+						this.npcAvatar = getAvatar(this.scenarioData.role,res.scenario_id);
 						this.backgroundImageSrc = `/static/onboarding/bgzh${res.scenario_id}.png`;
 						this.scenarioId = res.scenario_id;
 						this.handleScenarioData();
@@ -377,7 +377,7 @@
 				if (this.background) {
 					this.npcName = findLastName(this.background);
 					console.log("Now npc name is:", this.npcName);
-					this.npcAvatar = getAvatar(this.npcName);
+					this.npcAvatar = getAvatar(this.npcName,this.scenarioId);
 				}
 			},
 			selectOption(index) {
@@ -455,7 +455,7 @@
 							this.scenarioData = result.scene.scenes;
 							// this.$store.commit('setScenarioResponse', result.scene.scenes);
 							this.npcName = this.scenarioData.role;
-							this.npcAvatar = getAvatar(this.npcName);
+							this.npcAvatar = getAvatar(this.npcName,this.scenarioId);
 							this.handleScenarioData();
 							this.requestCount++;
 							this.selectedOptionIndex = null;
