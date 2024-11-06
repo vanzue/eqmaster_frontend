@@ -58,6 +58,7 @@ export default {
 			});
 
 			if (response.statusCode === 200) {
+				console.log("get analysislist:", response.data);
 				return response.data;
 			} else {
 				throw new Error(`Failed to get analysis list: ${response.statusCode}`);
@@ -100,6 +101,7 @@ export default {
 			});
 
 			if (response.statusCode === 200) {
+				console.log("response data:", response.data);
 				return response.data;
 			} else {
 				throw new Error(`upload chat history failed: ${response.statusCode}`);

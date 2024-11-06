@@ -3,7 +3,7 @@
 		<view style="padding-top: 100rpx;padding-left: 40rpx;padding-right: 40rpx;">
 			<view class="analysis-header">
 				<image class="back" src="../../static/dashboard/left-arrow.png" @click="goback"></image>
-				<text class="title">聊天内容分析</text>
+				<text class="title">对话分析</text>
 				<image style="width: 64rpx;height:64rpx" src="../../static/dashboard/trash.png" @click="openModal">
 				</image>
 			</view>
@@ -21,7 +21,7 @@
 				</ul>
 			</scroll-view>
 			<view class="chat-history">
-				<text class="title">聊天记录</text>
+				<text class="title">对话记录</text>
 				<view class="chat-list">
 					<scroll-view scroll-y="true" style="height: 594rpx">
 						<view class="history-detail">
