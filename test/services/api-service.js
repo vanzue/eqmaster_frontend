@@ -88,10 +88,10 @@ export default {
 			throw error;
 		}
 	},
-	async uploadChatHistory(filePath, userId) {
+	async uploadChatHistory(filePath, userId, language) {
 		try {
 			const response = await uni.uploadFile({
-				url: `${API_ENDPOINT}/analyze/history?locale=en`,
+				url: `${API_ENDPOINT}/analyze/history?locale=${language}`,
 				filePath: filePath,
 				name: 'file',
 				formData: {
