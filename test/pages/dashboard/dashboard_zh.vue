@@ -16,8 +16,8 @@
 
 					<view class="character-view" @click="navigateToResult">
 						<view style="display: flex;flex-direction: column;width: 308rpx;">
-							<view :class="['animal-tag', animal]">
-								<text>{{ animal_zh }}</text>
+							<view :class="['animal-tag', illustrationData.animal]">
+								<text>{{ illustrationData.animal_name }}</text>
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
 								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">

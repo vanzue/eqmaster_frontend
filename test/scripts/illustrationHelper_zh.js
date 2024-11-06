@@ -1,5 +1,6 @@
 export function illustrationSrc(homepageData, store) {
 	let returnObj = {
+		animal: "",
 		animal_name: '卡皮巴拉',
 		animal_icon: '/static/resulten/monkey.png',
 		animal_name_bg: '/static/resulten/animal-name-1.png',
@@ -17,6 +18,7 @@ export function illustrationSrc(homepageData, store) {
 // 1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
 		if (maxScore === scores.dimension1_score) {
 			returnObj = {
+				animal: "ostrich",
 				animal_name: '鸵鸟',
 				animal_icon: '/static/resulten/ostrich.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
@@ -27,6 +29,7 @@ export function illustrationSrc(homepageData, store) {
 			};
 		} else if (maxScore === scores.dimension2_score) {
 			returnObj = {
+				animal: "monkey",
 				animal_name: '猴子',
 				animal_icon: '/static/resulten/monkey.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
@@ -38,6 +41,7 @@ export function illustrationSrc(homepageData, store) {
 			};
 		} else if (maxScore === scores.dimension3_score) {
 			returnObj = {
+				animal: "hedgehog",
 				animal_name: '刺猬',
 				animal_icon: '/static/resulten/hedgehog.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
@@ -48,6 +52,7 @@ export function illustrationSrc(homepageData, store) {
 			};
 		} else if (maxScore === scores.dimension4_score) {
 			returnObj = {
+				animal: "coyote",
 				animal_name: '土狼',
 				animal_icon: '/static/resulten/coyote.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
@@ -56,6 +61,7 @@ export function illustrationSrc(homepageData, store) {
 			};
 		} else if (maxScore === scores.dimension5_score) {
 			returnObj = {
+				animal: "capybara",
 				animal_name: '卡皮巴拉',
 				animal_icon: '/static/resulten/capybara.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
