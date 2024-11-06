@@ -148,11 +148,11 @@
 				// 	Motivation: 0
 				// },
 				scores: {
-					情绪侦查力: 0,
-					人际平衡术: 0,
-					情绪掌控力: 0,
-					社交得体度: 0,
-					沟通表达力: 0
+					感知力: 0,
+					共情力: 0,
+					掌控力: 0,
+					社交力: 0,
+					驱动力: 0
 				},
 			};
 		},
@@ -395,7 +395,6 @@
 					option.textColor = i === index ? "black" : "white";
 				});
 			},
-
 			nextPage() {
 				if (this.isLoading) return;
 				if (this.selectedOptionIndex == null) {
@@ -409,8 +408,9 @@
 				this.num = this.num + (this.selectedOptionIndex + 1).toString();
 				if (this.selectedOption.scores) {
 					Object.entries(this.selectedOption.scores).forEach(([dimension, score]) => {
-						if (this.scores.hasOwnProperty(dimension)) {
-							this.scores[dimension] += score;
+						const newDimension = this.resetScoresByName(dimension);
+						if (this.scores.hasOwnProperty(newDimension)) {
+							this.scores[newDimension] += score;
 						}
 					});
 				}
@@ -521,16 +521,16 @@
 					}
 				}
 			},
-			// Add a helper method to reset scores if needed
-			resetScores() {
-				this.scores = {
-					情绪侦查力: 0,
-					人际平衡术: 0,
-					情绪掌控力: 0,
-					社交得体度: 0,
-					沟通表达力: 0
+			resetScoresByName(name) {
+				const scoreMapping = {
+					人际平衡术: '共情力',
+					情绪侦查力: '感知力',
+					情绪掌控力: '掌控力',
+					沟通表达力: '驱动力',
+					社交得体度: '社交力'
 				};
-			}
+				return scoreMapping[name] || null;
+			},
 		},
 	};
 </script>
