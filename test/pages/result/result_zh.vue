@@ -240,7 +240,7 @@
 			progressWidth(value, isOne) {
 				if (!value) return {};
 
-				const maxScore = 20;
+				const maxScore = 25;
 				const percentage = (value / maxScore) * 100;
 				const color = isOne ? '#EA833D' : '#23A06B';
 				const width = `${percentage}%`;
