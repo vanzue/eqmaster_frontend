@@ -21,7 +21,7 @@ export function illustrationSrc(homepageData, store) {
 				animal_icon: '/static/resulten/ostrich.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
 				weakness: '感知力',
-				characteristics: '感知力强的人对于自我他人的情绪变化都非常敏锐，鸵鸟可以帮助你复杂环境中保持冷静。',
+				characteristics: '你像拥有第六感一样，总能敏锐地捕捉到细微的情绪变化和暗示。',
 				
 				
 			};
@@ -31,7 +31,7 @@ export function illustrationSrc(homepageData, store) {
 				animal_icon: '/static/resulten/monkey.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
 				weakness: '掌控力',
-				characteristics: '自我掌控力强的人常常陷入自我反思与约束，猴子可以帮助你更好地平衡整体能力。',
+				characteristics: '即使在压力之下，你也能稳稳掌控情绪，保持冷静自若。',
 				
 				
 				
@@ -42,7 +42,7 @@ export function illustrationSrc(homepageData, store) {
 				animal_icon: '/static/resulten/coyote.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
 				weakness: '社交力',
-				characteristics: '社交能力强的人有时会忽略独处反思的空间，土狼可以帮助你培养更沉稳的初始风格。',
+				characteristics: '你就像一座桥梁，轻松拉近彼此距离，激发大家携手合作，共同前行。',
 			};
 		} else if (maxScore === scores.dimension4_score) {
 			returnObj = {
@@ -50,7 +50,7 @@ export function illustrationSrc(homepageData, store) {
 				animal_icon: '/static/resulten/hedgehog.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
 				weakness: '共情力',
-				characteristics: `共情能力强的人容易受到他人情绪波动影响，刺猬可以教会你保护自己不受伤害。`,
+				characteristics: `你总能轻松洞察并理解他人的情绪，仿佛读懂他们的心思一般。`,
 				
 				
 			};
@@ -60,7 +60,7 @@ export function illustrationSrc(homepageData, store) {
 				animal_icon: '/static/resulten/capybara.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
 				weakness: '驱动力',
-				characteristics: '驱动力强的人会过于执着于目标导向，水豚可以应到你学会放轻松，适当从中抽离。',
+				characteristics: '你像一团火焰，燃烧着无穷的能量，始终专注于目标，不断点燃周围人的激情与动力。',
 			};
 		}
 
