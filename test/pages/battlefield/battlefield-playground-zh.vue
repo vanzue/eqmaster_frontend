@@ -1407,8 +1407,8 @@
 		z-index: 12;
 		top: 12%;
 		right: 3.2%;
-		width: 192rpx;
-		padding: 10px 5px;
+		/* width: 175rpx; */
+		padding: 10px 10px;
 		font-size: 26rpx;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		/* transform: translateX(-50%); */
