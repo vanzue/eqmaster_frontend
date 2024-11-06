@@ -120,6 +120,7 @@
 				scenarioData: null,
 				background: "",
 				jobId: "",
+				locale: "",
 				npcName: "",
 				npcAvatar: "",
 				description: "",
@@ -139,12 +140,19 @@
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标
 				dialogueHistory: [], // Modified structure for dialogue history
+				// scores: {
+				// 	Perception: 0,
+				// 	"Self Regulation": 0,
+				// 	Empathy: 0,
+				// 	"Social Skill": 0,
+				// 	Motivation: 0
+				// },
 				scores: {
-					Perception: 0,
-					"Self Regulation": 0,
-					Empathy: 0,
-					"Social Skill": 0,
-					Motivation: 0
+					情绪侦查力: 0,
+					人际平衡术: 0,
+					情绪掌控力: 0,
+					社交得体度: 0,
+					沟通表达力: 0
 				},
 			};
 		},
@@ -420,7 +428,7 @@
 				}
 
 				if (this.num.length === 5) {
-					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory)
+					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory,this.locale)
 						.then((result) => {
 							console.log("Final Scenario Results:", {
 								scores: this.scores,
@@ -516,11 +524,11 @@
 			// Add a helper method to reset scores if needed
 			resetScores() {
 				this.scores = {
-					Perception: 0,
-					"Self Regulation": 0,
-					Empathy: 0,
-					"Social Skill": 0,
-					Motivation: 0
+					情绪侦查力: 0,
+					人际平衡术: 0,
+					情绪掌控力: 0,
+					社交得体度: 0,
+					沟通表达力: 0
 				};
 			}
 		},
