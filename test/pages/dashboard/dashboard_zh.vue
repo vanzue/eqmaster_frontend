@@ -178,48 +178,49 @@
 				// 		contacts: []
 				// 	}
 				// },
-				analysisList: [{
-						id: 1,
-						chatHistory: {
-							messages: [{
-									user: "Ophelia",
-									message: "hello a",
-								},
-								{
-									user: "me",
-									message: "niaklskndf",
-								},
-								{
-									user: "Hamlet",
-									message: "wa haha",
-								}
-							]
-						},
-						analysis: {
-							summary: [{
-								"summary": "ssdf"
-							}],
-							suggestions: [
-								"1Import chat history to figure out what she shaid ajshdfkahdf"
-							]
-						}
-					},
-					{
-						id: 2,
-						chat_history: {
-							messages: [{
-								user: "",
-								message: "",
-							}]
-						},
-						analysis: {
-							title: "2Trying to respond more sdfa fliasdf   xxxxxx xxxx",
-							details: [
-								"1Import chat history to figure out what she shaid ajshdfkahdf",
-							]
-						}
-					}
-				],
+				// analysisList: [{
+				// 		id: 1,
+				// 		chatHistory: {
+				// 			messages: [{
+				// 					user: "Ophelia",
+				// 					message: "hello a",
+				// 				},
+				// 				{
+				// 					user: "me",
+				// 					message: "niaklskndf",
+				// 				},
+				// 				{
+				// 					user: "Hamlet",
+				// 					message: "wa haha",
+				// 				}
+				// 			]
+				// 		},
+				// 		analysis: {
+				// 			summary: [{
+				// 				"summary": "ssdf"
+				// 			}],
+				// 			suggestions: [
+				// 				"1Import chat history to figure out what she shaid ajshdfkahdf"
+				// 			]
+				// 		}
+				// 	},
+				// 	{
+				// 		id: 2,
+				// 		chat_history: {
+				// 			messages: [{
+				// 				user: "",
+				// 				message: "",
+				// 			}]
+				// 		},
+				// 		analysis: {
+				// 			title: "2Trying to respond more sdfa fliasdf   xxxxxx xxxx",
+				// 			details: [
+				// 				"1Import chat history to figure out what she shaid ajshdfkahdf",
+				// 			]
+				// 		}
+				// 	}
+				// ],
+				analysisList: [],
 				animal: '',
 				animal_zh: '',
 				minanimal: '',
