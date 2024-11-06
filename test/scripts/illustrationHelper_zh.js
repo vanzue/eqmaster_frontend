@@ -30,7 +30,7 @@ export function illustrationSrc(homepageData, store) {
 				animal_name: '猴子',
 				animal_icon: '/static/resulten/monkey.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: 'Self-regulation',
+				weakness: '掌控力',
 				characteristics: '自我掌控力强的人常常陷入自我反思与约束，猴子可以帮助你更好地平衡整体能力。',
 				
 				
