@@ -38,14 +38,6 @@ export function illustrationSrc(homepageData, store) {
 			};
 		} else if (maxScore === scores.dimension3_score) {
 			returnObj = {
-				animal_name: '土狼',
-				animal_icon: '/static/resulten/coyote.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: '社交力',
-				characteristics: '你就像一座桥梁，轻松拉近彼此距离，激发大家携手合作，共同前行。',
-			};
-		} else if (maxScore === scores.dimension4_score) {
-			returnObj = {
 				animal_name: '刺猬',
 				animal_icon: '/static/resulten/hedgehog.png',
 				animal_name_bg: '/static/resulten/animal-name-1.png',
@@ -53,6 +45,14 @@ export function illustrationSrc(homepageData, store) {
 				characteristics: `你总能轻松洞察并理解他人的情绪，仿佛读懂他们的心思一般。`,
 				
 				
+			};
+		} else if (maxScore === scores.dimension4_score) {
+			returnObj = {
+				animal_name: '土狼',
+				animal_icon: '/static/resulten/coyote.png',
+				animal_name_bg: '/static/resulten/animal-name-1.png',
+				weakness: '社交力',
+				characteristics: '你就像一座桥梁，轻松拉近彼此距离，激发大家携手合作，共同前行。',
 			};
 		} else if (maxScore === scores.dimension5_score) {
 			returnObj = {
