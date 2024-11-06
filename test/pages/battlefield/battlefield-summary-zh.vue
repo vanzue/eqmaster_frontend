@@ -121,7 +121,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.navigateTo({
-					url: `/pages/dashboard/dashboard_en`,
+					url: `/pages/dashboard/dashboard_zh`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
