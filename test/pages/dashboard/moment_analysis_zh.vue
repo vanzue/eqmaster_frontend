@@ -14,7 +14,7 @@
 					<view class="detail-summary" style="padding-left: 64rpx;">
 						{{analysisResult.analysis.summary.summary}}
 					</view>
-					<view class="detail-summary" style="padding: 8rpx 0px 8rpx 64rpx;">You can:</view>
+					<view class="detail-summary" style="padding: 8rpx 0px 8rpx 64rpx;">你可以:</view>
 					<li class="detail-item" v-for="suggestion in analysisResult.analysis.suggestions">
 						{{ suggestion.point }}
 					</li>
