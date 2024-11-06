@@ -176,35 +176,35 @@
 			caleOverviewScores() {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = [{
-							name: '情绪侦察力',
+							name: '感知力',
 							score: this.homepageData.response.eq_scores.dimension1_score,
 							detail: this.homepageData.response.eq_scores.dimension1_detail,
 							icon: '/static/resulten/awareness0.svg',
 							icon1: '/static/resulten/awareness1.svg',
 						},
 						{
-							name: '情绪掌控力',
+							name: '掌控力',
 							score: this.homepageData.response.eq_scores.dimension2_score,
 							detail: this.homepageData.response.eq_scores.dimension2_detail,
 							icon: '/static/resulten/regulation0.svg',
 							icon1: '/static/resulten/regulation0.svg',
 						},
 						{
-							name: '人际平衡术',
+							name: '共情力',
 							score: this.homepageData.response.eq_scores.dimension3_score,
 							detail: this.homepageData.response.eq_scores.dimension3_detail,
 							icon: '/static/resulten/socialskill0.svg',
 							icon1: '/static/resulten/socialskill1.svg'
 						},
 						{
-							name: '沟通表达力',
+							name: '社交力',
 							score: this.homepageData.response.eq_scores.dimension4_score,
 							detail: this.homepageData.response.eq_scores.dimension4_detail,
 							icon: '/static/resulten/empathy0.svg',
 							icon1: '/static/resulten/empathy1.svg'
 						},
 						{
-							name: '社交得体度',
+							name: '驱动力',
 							score: this.homepageData.response.eq_scores.dimension5_score,
 							detail: this.homepageData.response.eq_scores.dimension5_detail,
 							icon: '/static/resulten/motivation0.svg',

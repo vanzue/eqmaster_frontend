@@ -402,12 +402,12 @@
 					this.maxanimal = "monkey";
 					// return '/static/dashboard/en/hedgehog.png';
 				} else if (maxScore === scores?.dimension3_score) {
-					console.log("usercard src:", '狼')
-					this.maxanimal = "coyote";
 					// return '/static/dashboard/en/coyote.png';
-				} else if (maxScore === scores?.dimension4_score) {
 					console.log("usercard src:", '刺猬')
 					this.maxanimal = "hedgehog";
+				} else if (maxScore === scores?.dimension4_score) {
+					console.log("usercard src:", '狼')
+					this.maxanimal = "coyote";
 					// return '/static/dashboard/en/ostrich.png';
 				} else if (maxScore === scores?.dimension5_score) {
 					console.log("usercard src:", '水豚')
@@ -419,11 +419,11 @@
 					console.log("usercard src:", '水豚')
 					this.minanimal = "capybara";
 				} else if (minScore === scores?.dimension4_score) {
-					console.log("usercard src:", '刺猬')
-					this.minanimal = "hedgehog";
-				} else if (minScore === scores?.dimension3_score) {
 					console.log("usercard src:", '狼')
 					this.minanimal = "coyote";
+				} else if (minScore === scores?.dimension3_score) {
+					console.log("usercard src:", '刺猬')
+					this.minanimal = "hedgehog";
 				} else if (minScore === scores?.dimension2_score) {
 					console.log("usercard src:", '猴子')
 					this.minanimal = "monkey";

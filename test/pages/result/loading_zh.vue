@@ -127,25 +127,33 @@
 						.then(() => {
 							const homepageData = this.$store.state.homepageData;
 							if (!homepageData || !homepageData?.response?.eq_scores) {
-								throw new Error('Homepage data is empty');
+								attempts++;
+								if (attempts < maxAttempts) {
+									console.error('Homepage data is empty, retrying...');
+									setTimeout(fetchData, 3000); // Retry after 3 seconds
+								} else {
+									uni.showToast({
+										title: 'Failed to load data',
+										icon: 'none'
+									});
+								}
+							} else {
+								console.log('Homepage data fetched successfully');
+								this.clearAllIntervals();
+								// Proceed to the next page
+								const nextPageUrl = `/pages/result/result_zh`;
+								uni.redirectTo({
+									url: nextPageUrl,
+									success: () => console.log('Navigation initiated successfully'),
+									fail: (err) => console.error('Navigation failed:', err)
+								});
 							}
-
-							console.log('Homepage data fetched successfully');
-							this.clearAllIntervals();
-
-							const nextPageUrl = `/pages/result/result_zh`;
-							uni.redirectTo({
-								url: nextPageUrl,
-								success: () => console.log('Navigation initiated successfully'),
-								fail: (err) => console.error('Navigation failed:', err)
-							});
 						})
 						.catch((error) => {
 							console.error('Error fetching homepage data:', error);
 							attempts++;
 							if (attempts < maxAttempts) {
-								// Retry after 3 seconds
-								setTimeout(fetchData, 3000);
+								setTimeout(fetchData, 3000); // Retry after 3 seconds
 							} else {
 								uni.showToast({
 									title: 'Failed to load data',
