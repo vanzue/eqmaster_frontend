@@ -139,7 +139,7 @@
 <script>
 	import {
 		illustrationSrc
-	} from '@/scripts/illustrationHelper.js';
+	} from '@/scripts/illustrationHelper_zh.js';
 
 	export default {
 		data() {

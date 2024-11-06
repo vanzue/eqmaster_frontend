@@ -581,9 +581,10 @@
 		border-radius: 100rpx;
 		box-shadow: 0px -2px 8.1px 0px #757CE029;
 		background-color: #373742;
-		font-size: 23rpx;
+		font-size: 22rpx;
 		font-weight: 600;
 		color: #9EE44D;
+		white-space: nowrap;
 	}
 
 	.eqoach-bot {

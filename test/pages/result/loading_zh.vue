@@ -387,7 +387,7 @@
 		height: 20rpx;
 		background-color: #3d3d3d;
 		border-radius: 15rpx;
-		overflow: hidden;
+		overflow: hidden;margin-bottom: 20rpx;
 	}
 
 	.splash-progress-fill {
