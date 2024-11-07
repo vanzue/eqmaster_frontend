@@ -113,6 +113,7 @@ export default createStore({
 		},
 		setScenarioResponse(state, scenarioResponse) {
 		  state.scenarioResponse = scenarioResponse;
+		  console.log('@@@@@@@@@@@@Scenario response updated:', scenarioResponse);
 		},
 	},
 	getters: {
@@ -161,9 +162,11 @@ export default createStore({
 		getScenarioId(state) {
 			return state.scenarioId;
 		},
-    getScenarioResponse(state) {
-      return state.scenarioResponse;
-    },
+		getScenarioResponse(state) {
+			console.log('@@@@@@@@@@@@@Getting scenario response:', state.scenarioResponse);
+		  
+			return state.scenarioResponse;
+		},
 	},
 	actions: {
 		async fetchHomepageData({

@@ -125,6 +125,7 @@
 
 
 					console.log("#####################fetched scenario: ", scenarioResponse);
+					this.$store.commit('setScenarioResponse', scenarioResponse);
 
 					// Get scenarioId
 					const scenarioIdVal = scenarioResponse.scenario_id || 1;
