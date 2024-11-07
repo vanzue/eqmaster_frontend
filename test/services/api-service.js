@@ -8,6 +8,7 @@ export default {
 		try {
 			const response = await uni.request({
 				url: `${API_ENDPOINT}/get_homepage/${userId}`,
+				// url: `${API_ENDPOINT}/get_homepage/217`,
 				method: 'POST'
 			});
 
@@ -369,7 +370,7 @@ export default {
 		}
 	},
 
-	async finalizeScenario(scores, job_id, dialogue_history,locale) {
+	async finalizeScenario(scores, job_id, dialogue_history, locale) {
 		// console.log('startScenario called with jobId:', jobId);
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);

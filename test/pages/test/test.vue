@@ -164,9 +164,9 @@
 			scenarioId() {
 				return this.$store.getters.getScenarioId;
 			},
-			// scenarioData() {
-			// 	return this.$store.getters.getScenarioResponse;
-			// },
+			getscenarioDatafromstorage() {
+				return this.$store.getters.getScenarioResponse;
+			},
 		},
 		watch: {
 			isLoading: {
@@ -225,6 +225,7 @@
 				// await this.initializeData();
 				// await this.getScenarioId();
 				await this.getScenarioData();
+				console.error("#######3舒适话");
 			} catch (error) {
 				console.error("Error during created lifecycle:", error);
 				uni.showToast({
@@ -254,38 +255,22 @@
 				this.username = username;
 				this.jobId = jobId || "";
 			},
-			getScenarioIdFromStorage() {
-				return new Promise((resolve) => {
-					uni.getStorage({
-						key: "scenarioId",
-						success: (res) => {
-							resolve(res.data);
-							console.log("get scenarioid by local", res.data);
-						},
-						fail: () => {
-							resolve(null); // 如果未找到，返回 null
-							console.log("unable to get scenario id by local");
-						},
-					});
-				});
-			},
 			getScenarioData() {
-				const requestMethod = apiService.initializeScenario();
-				return requestMethod
-					.then((res) => {
-						// console.log("########initialize Scenario data:", res);
-						this.scenarioData = res.scene.scenes || res;
-						this.npcAvatar = getAvatar(this.scenarioData.role,res.scenario_id);
-						this.backgroundImageSrc = getImg(`/static/onboarding/bgzh${res.scenario_id}.png`);
-						this.scenarioId = res.scenario_id;
-						this.handleScenarioData();
-						this.updateProgress();
-						this.isFirstScene = false;
-					})
-					.catch((err) => {
-						console.error("Error getting scenario data:", err);
-						throw err; // Re-throw the error to be caught in navigateToTest3
-					});
+				const scenarioResponse = this.$store.getters.getScenarioResponse;
+				console.log("@%%%%%%%%requestMethod:", scenarioResponse);
+				// const requestMethod = uni.getStorage()
+				try {
+					this.scenarioData = scenarioResponse.scene.scenes;
+					this.npcAvatar = getAvatar(this.scenarioData.role, scenarioResponse.scenario_id);
+					this.backgroundImageSrc = getImg(`/static/onboarding/bgzh${scenarioResponse.scenario_id}.png`);
+					this.scenarioId = scenarioResponse.scenario_id;
+					this.handleScenarioData();
+					this.updateProgress();
+					this.isFirstScene = false;
+				} catch (err) {
+					console.error("Error getting scenario data:", err);
+					throw err;
+				}
 			},
 			handleScenarioData() {
 				console.log("handle scenario data", this.scenarioData);
