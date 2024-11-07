@@ -212,6 +212,7 @@
 				}, intervalDuration);
 			},
 			animateImage() {
+				const gap = 24;
 				this.interval = setInterval(() => {
 					// 更新两张图片的位置
 					this.splashImageLeft1 -= 10; // 每次移动10rpx
@@ -219,12 +220,12 @@
 
 					// 如果第一张图片完全离开屏幕，则将它的位置重置到第二张图片的后面
 					if (this.splashImageLeft1 <= -this.imageWidth) {
-						this.splashImageLeft1 = this.splashImageLeft2 + this.imageWidth;
+						this.splashImageLeft1 = this.splashImageLeft2 + this.imageWidth + gap;
 					}
 
 					// 如果第二张图片完全离开屏幕，则将它的位置重置到第一张图片的后面
 					if (this.splashImageLeft2 <= -this.imageWidth) {
-						this.splashImageLeft2 = this.splashImageLeft1 + this.imageWidth;
+						this.splashImageLeft2 = this.splashImageLeft1 + this.imageWidth + gap;
 					}
 				}, 30); // 每30毫秒更新一次位置
 			},
@@ -387,7 +388,8 @@
 		height: 20rpx;
 		background-color: #3d3d3d;
 		border-radius: 15rpx;
-		overflow: hidden;margin-bottom: 20rpx;
+		overflow: hidden;
+		margin-bottom: 20rpx;
 	}
 
 	.splash-progress-fill {
