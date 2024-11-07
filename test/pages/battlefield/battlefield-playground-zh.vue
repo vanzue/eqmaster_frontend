@@ -295,7 +295,7 @@
 			console.log("state userid", state.userId);
 			// 动态添加任务到 taskList
 			this.taskList.addTask(
-				new Task(0, "一句话让每位同事心情愉悦。", async (judgeResult) => {
+				new Task(0, "一句话让三个人心情愉悦", async (judgeResult) => {
 					const samMood = judgeResult.find(item => item.role === "同事A")?.mood;
 					const jasonMood = judgeResult.find(item => item.role === "领导")?.mood;
 
@@ -311,7 +311,7 @@
 				})
 			);
 			this.taskList.addTask(
-				new Task(1, "点出让每位同事满意的菜品。", async (
+				new Task(1, "让领导认可你点的菜（说出你点的菜真不错）", async (
 					judgeResult) => {
 					let res = "";
 

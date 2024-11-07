@@ -326,41 +326,6 @@
 			canNavigateToProfile() {
 				return this.profileName.trim() !== '' && this.selectedTags.length > 0;
 			},
-			userCard() {
-				const scores = this.homepageData?.response?.eq_scores;
-				console.log('jobid:', this.jobId);
-				console.log('results for backgrounds:', scores);
-				const maxScore = Math.max(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
-					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
-
-				// 根据最低分选择图片
-				if (maxScore === scores?.dimension1_score) {
-					console.log("usercard src:", '鸵鸟')
-					this.animal = "ostrich";
-					this.animal_zh = "鸵鸟";
-					return '/static/dashboard/en/ostrich.png';
-				} else if (maxScore === scores?.dimension2_score) {
-					console.log("usercard src:", '猴子')
-					this.animal = "monkey";
-					this.animal_zh = "猴子";
-					return '/static/dashboard/en/monkey.png';
-				} else if (maxScore === scores?.dimension3_score) {
-					console.log("usercard src:", '狼')
-					this.animal = "coyote";
-					this.animal_zh = "狼"
-					return '/static/dashboard/en/coyote.png';
-				} else if (maxScore === scores?.dimension4_score) {
-					console.log("usercard src:", '刺猬')
-					this.animal = "hedgehog";
-					this.animal_zh = "刺猬";
-					return '/static/dashboard/en/hedgehog.png';
-				} else if (maxScore === scores?.dimension5_score) {
-					console.log("usercard src:", '水豚')
-					this.animal = "capybara";
-					this.animal_zh = "水豚";
-					return '/static/dashboard/en/capybara.png';
-				}
-			},
 
 			truncatedSuggestion() {
 				const suggestion = this.homepageData?.response?.eq_scores?.overall_suggestion || '暂无建议';
@@ -525,7 +490,7 @@
 		onLoad(option) {
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
-			this.userCard();
+			// this.userCard();
 
 
 
