@@ -19,7 +19,7 @@
 				</view>
 			</view> -->
 			<view class="banner-container">
-				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/signa.png')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -60,7 +60,7 @@
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
 			<view class="banner-container">
-				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<image class="logo"  :src="getImg('/static/signa.png')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -108,6 +108,7 @@
 	} from "../../scripts/locate_name";
 	import OnboardingChatBubble from "/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
+	import { getImg } from "../../scripts/constants";
 	// import StateStack from "./StateStack";
 	// const stateStack = new StateStack();
 	export default {
@@ -116,6 +117,7 @@
 		},
 		data() {
 			return {
+				getImg,
 				currentPage: "test",
 				userId: "",
 				username: "",
@@ -139,7 +141,7 @@
 				scenarioId: 1, // Add this new property
 				isLoading: false,
 				chatHistory: [], // Keep this new property
-				backgroundImageSrc: '/static/onboarding/bg1.png',
+				backgroundImageSrc: getImg('/static/onboarding/bg1.png'),
 				requestCount: 0,
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标

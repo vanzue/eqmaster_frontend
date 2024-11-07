@@ -16,7 +16,7 @@
 						<image class="illustration1" :src="userCard" mode="widthFix"></image>
 						<!-- 添加白色卡片 -->
 						<view class="card">
-							<image class="illustration3" src="/static/diamond.png" mode="widthFix"></image>
+							<image class="illustration3" :src="getImg('/static/diamond.png')" mode="widthFix"></image>
 							<text
 								class="score-value-large">{{ Math.round(homepageData?.response?.eq_scores?.score || 0) }}</text>
 
@@ -27,7 +27,7 @@
 							</view>
 
 							<text class="card-description">{{ truncatedSuggestion }}</text>
-							<image class="illustration31" src="/static/fullbutton.png" mode="widthFix"
+							<image class="illustration31" :src="getImg('/static/fullbutton.png')" mode="widthFix"
 								@click="navigateToResult"></image>
 						</view>
 					</view>
@@ -38,7 +38,7 @@
 
 					<view class="dashboard1-card-j">
 						<text class="card-title1">今日锦囊</text>
-						<Tear leftImageSrc="/static/above left.png" rightBackImageSrc="/static/aboveright2.png"
+						<Tear leftImageSrc="getImg('/static/aboveleft.png')" rightBackImageSrc="/static/aboveright2.png"
 							rightFrontImageSrc="/static/aboveright1.png" leftText="自定义左侧文字"
 							rightText="FFI赞美法指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。"
 							pageText="" />
@@ -53,7 +53,7 @@
 					<!-- 添加白色卡片1 -->
 					<view class="card1">
 						<text class="card-title14">添加微信助手，获取深度职场分析！</text>
-						<image class="illustration33" src="/static/add.png" mode="widthFix" @click="openNewPopup">
+						<image class="illustration33" :src="getImg('/static/add.png')" mode="widthFix" @click="openNewPopup">
 						</image>
 						<image class="illustration34" src="/static/x.png" mode="widthFix"></image>
 					</view>
@@ -61,14 +61,14 @@
 
 
 					<view class="dashboard1-card-o">
-						<image class="illustration35" src="/static/CTA1.png" mode="widthFix" @click="openPopup"></image>
+						<image class="illustration35" :src="getImg('/static/CTA1.png')" mode="widthFix" @click="openPopup"></image>
 
 						<view class="peoplecontain">
 							<view v-for="(contact, index) in homepageData?.response?.contacts || []" :key="index"
 								:class="['cardjuese', index % 2 === 1 ? 'lower-card' : '']">
 								<view class="card-a" @click="toProfilePage1(contact)">
 									<view class="card1inner">
-										<image class="illustrationhead" src="/static/head.png" mode="widthFix"></image>
+										<image class="illustrationhead" :src="getImg('/static/head.png')" mode="widthFix"></image>
 										<view class="card2inner">
 											<text class="usercard-title1">{{ truncateName(contact?.name || '') }}</text>
 											<text
@@ -130,25 +130,25 @@
 
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
-						<image class="illustration36" src="/static/Frame1.png" mode="widthFix"></image>
-						<image class="illustration37" src="/static/Frame22.png" mode="widthFix"
+						<image class="illustration36" :src="getImg('/static/Frame1.png')" mode="widthFix"></image>
+						<image class="illustration37" :src="getImg('/static/Frame22.png')" mode="widthFix"
 							@click="navigateToDashboard"></image>
-						<image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
+						<image class="illustration38" :src="getImg('/static/Frame3.png')" mode="widthFix"></image>
 					</view>
 
 					<!-- New Popup -->
 					<view v-if="showNewPopup" class="popup-overlay">
 						<view class="popup-content" @click.stop>
 							<view class="popup-wordy">
-								<image class="popup-icon2" src="/static/addlater3.png" mode="widthFix"></image>
+								<image class="popup-icon2" :src="getImg('/static/addlater3.png')" mode="widthFix"></image>
 
 								<text class="popup-title"> 微信号复制成功</text>
 								<text class="popup-notitle"> 微信号:wxid 3cnxu4266mt012</text>
 								<text class="popup-notitle"> 是否立即跳转微信添加助手?</text>
 								<view class="popup-icon">
-									<image class="popup-icon1" src="/static/addlater.png" @click="closeNewPopup"
+									<image class="popup-icon1" :src="getImg('/static/addlater.png')" @click="closeNewPopup"
 										mode="widthFix"></image>
-									<image class="popup-icon1" src="/static/addlater1.png" mode="widthFix"
+									<image class="popup-icon1" :src="getImg('/static/addlater1.png')" mode="widthFix"
 										@click="openWeChat"></image>
 								</view>
 							</view>
@@ -160,12 +160,12 @@
 				<!-- Integrated dashboard2.vue content -->
 				<view class="dashboard2-card-o">
 					<view class="dashboard2-card">
-						<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
+						<image class="dashboard2-illustration3" :src="getImg('/static/diamond.png')" mode="widthFix"></image>
 						<text
 							class="dashboard2-score-value-large-y">{{ Math.round(homepageData?.response?.eq_scores?.score || 0) }}</text>
 					</view>
 					<view class="dashboard2-card">
-						<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
+						<image class="dashboard2-illustration3" :src="getImg('/static/dashboard2/star.jpg')" mode="widthFix">
 						</image>
 						<text class="dashboard2-score-value-large-g">{{ Math.round(5) }}</text>
 					</view>
@@ -205,10 +205,10 @@
 
 				<!-- <image class="dashboard2-illustration35" src="/static/dashboard2/plgon9.jpg" mode="widthFix" @click="navigateToBattlefieldIntro"></image> -->
 				<view class="dashboard2-card3">
-					<image class="dashboard2-illustration36" src="/static/dashboard2/icon2.jpg" mode="widthFix"
+					<image class="dashboard2-illustration36" :src="getImg('/static/dashboard2/icon2.jpg')" mode="widthFix"
 						@click="switchView('dashboard')"></image>
-					<image class="dashboard2-illustration37" src="/static/dashboard2/icon1.jpg" mode="widthFix"></image>
-					<image class="dashboard2-illustration38" src="/static/Frame3.png" mode="widthFix"
+					<image class="dashboard2-illustration37" :src="getImg('/static/dashboard2/icon1.jpg')" mode="widthFix"></image>
+					<image class="dashboard2-illustration38" :src="getImg('/static/Frame3.png')" mode="widthFix"
 						@click="navigateToProfilePage"></image>
 				</view>
 			</view>
@@ -220,13 +220,14 @@
 	import SProgressBar from '@/components/SProgressBar.vue'; // 根据实际路径调整
 	import apiService from '../../services/api-service';
 	import Tear from '@/components/Tear.vue';
-
+	import { getImg } from '../../scripts/constants';
 
 
 	export default {
 
 		data() {
 			return {
+				getImg,
 				currentView: 'dashboard2',
 				score: 28, // 示例分数，可根据需要动态改
 				maxScore: 100, // 假设最大分数为100
@@ -287,7 +288,7 @@
 					// 可以根需要添加更多卡片
 				],
 				showNewPopup: false,
-				tipImageSrc: '/static/tip.png', // Initial image source
+				tipImageSrc: getImg('/static/tip.png'), // Initial image source
 			};
 		},
 		computed: {
@@ -329,19 +330,19 @@
 				// 根据最低分选择图片
 				if (minScore === scores?.dimension1_score) {
 					console.log("usercard src:", '水豚')
-					return '/static/dashboard/shuitun.png';
+					return  getImg('/static/dashboard/shuitun.png');
 				} else if (minScore === scores?.dimension2_score) {
 					console.log("usercard src:", '刺猬')
-					return '/static/dashboard/ciwei.png';
+					return  getImg('/static/dashboard/ciwei.png');
 				} else if (minScore === scores?.dimension3_score) {
 					console.log("usercard src:", '狼')
-					return '/static/dashboard/lang.png';
+					return  getImg('/static/dashboard/lang.png');
 				} else if (minScore === scores?.dimension4_score) {
 					console.log("usercard src:", '鸵鸟')
-					return '/static/dashboard/tuoniao.png';
+					return  getImg('/static/dashboard/tuoniao.png');
 				} else if (minScore === scores?.dimension5_score) {
 					console.log("usercard src:", '猴子')
-					return '/static/dashboard/houzi.png';
+					return  getImg('/static/dashboard/houzi.png');
 				}
 			},
 			truncatedSuggestion() {
@@ -520,7 +521,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -567,7 +568,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -626,10 +627,10 @@
 				}
 			},
 			toggleTipImage() {
-				this.tipImageSrc = this.tipImageSrc === '/static/tip.png' ?
-					'/static/tipp.png' // Replace with the new image path
+				this.tipImageSrc = this.tipImageSrc === getImg('/static/tip.png') ?
+					 getImg('/static/tipp.png') // Replace with the new image path
 					:
-					'/static/tip.png';
+					 getImg('/static/tip.png');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name

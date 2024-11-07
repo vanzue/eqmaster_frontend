@@ -13,7 +13,7 @@
 		<!-- Test page content -->
 		<template v-if="currentPage === 'test'">
 			<view class="banner-container">
-				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/signa.png')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -102,6 +102,9 @@
 	} from "../../scripts/locate_name_zh";
 	import OnboardingChatBubble from "/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
+	import {
+		getImg
+	} from '../../scripts/constants.js';
 	// import StateStack from "./StateStack";
 	// const stateStack = new StateStack();
 	export default {
@@ -154,6 +157,7 @@
 					社交力: 0,
 					驱动力: 0
 				},
+				getImg,
 			};
 		},
 		computed: {
@@ -272,7 +276,7 @@
 						// console.log("########initialize Scenario data:", res);
 						this.scenarioData = res.scene.scenes || res;
 						this.npcAvatar = getAvatar(this.scenarioData.role,res.scenario_id);
-						this.backgroundImageSrc = `/static/onboarding/bgzh${res.scenario_id}.png`;
+						this.backgroundImageSrc = getImg(`/static/onboarding/bgzh${res.scenario_id}.png`);
 						this.scenarioId = res.scenario_id;
 						this.handleScenarioData();
 						this.updateProgress();

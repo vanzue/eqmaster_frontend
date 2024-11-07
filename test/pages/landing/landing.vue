@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view v-if="showSplash" :class="{'splash-screen': true, 'splash-screen-hidden': splashHidden}">
-			<image class="splash-image" src="/static/splashZH2.png" mode="aspectFill"></image>
+			<image class="splash-image" :src="getImg('/static/splashZH2.png')" mode="aspectFill"></image>
 		</view>
 		<!-- <view class="splashBackground"></view>
 		<view v-if="showSplash" class="splash-screen">
@@ -13,7 +13,7 @@
 		</view> -->
 
 		<!-- 添加背景图片 -->
-		<image class="background-image" src="/static/onboarding/landing B2.png" mode="widthFix"></image>
+		<image class="background-image" :src="getImg('/static/onboarding/landingB2.png')" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
@@ -22,6 +22,9 @@
 			</view>
 			<view class="loginButton" @click="login">
 				<text class="login-text">登陆已有账号</text>
+			</view>
+			<view class="loginButton" @click="startLoginWx">
+				<text class="login-text">微信登录</text>
 			</view>
 		</view>
 
@@ -35,12 +38,18 @@
 
 
 <script>
+	import {
+		getImg
+	} from '../../scripts/constants.js';
+	import API_ENDPOINT from '../../services/api-service.js';
 	export default {
 		data() {
 			return {
 				showSplash: true,
 				splashHidden: false, // 控制渐隐
-				username: '' // 用于存储从上一页接收的用户名
+				username: '', // 用于存储从上一页接收的用户名
+				getImg,
+				API_ENDPOINT,
 			};
 		},
 		computed: {
@@ -71,6 +80,65 @@
 				uni.navigateTo({
 					url: '/pages/login/login'
 				});
+			},
+			sendCodeToServer(code){
+				uni.request({
+				    url: API_ENDPOINT.baseURL + '/wxprogram/login',
+				    method: 'POST',
+				    data: {
+				        code: code
+				    },
+				    success: (res) => {
+						console.log(res)
+						if(res.data.message.session_key)
+						{
+							uni.setStorageSync('token',res.data.message.session_key)
+							uni.getUserInfo({
+								provider: 'weixin',
+								success: function (infoRes) {
+									console.log(infoRes.userInfo.nickName)
+									if(res.data.isNewUser)
+									{
+										uni.navigateTo({
+											url: `/pages/landing/experience?username=${infoRes.userInfo.nickName}`
+										});
+									}
+									else
+									{
+										uni.navigateTo({
+											url: `/pages/dashboard/dashboard?userId=${res.userId}&username=${encodeURIComponent(res.data.message.openid)}&jobId=${res.jobid}`
+										});
+									}
+								}
+							});
+							
+						}
+						else
+						{
+							 console.log('请求失败：', err);
+						}
+						
+				    },
+				    fail: (err) => {
+				        console.log('请求失败：', err);
+				    }
+				});
+			},
+			startLoginWx() {
+				uni.login({
+					"provider": "weixin",
+					"onlyAuthorize": true, // 微信登录仅请求授权认证
+					success: (event) => {
+						console.log(event);
+						const {code} = event;
+						//console.log(code)
+						this.sendCodeToServer(code); // 发送 code 到服务器
+					},
+					fail: function (err) {
+						console.log('登录失败：', res.errMsg);
+				    }
+				});
+				
 			},
 			startDialogue() {
 				uni.navigateTo({

@@ -3,9 +3,9 @@
 		<view class="splash-screen">
 			<text class="splash-text">Now, let's see your EQ report!</text>
 
-			<image class="splash-image" src="/static/cta-new.png" mode="widthFix"
+			<image class="splash-image" :src="getImg('/static/cta-new.png')" mode="widthFix"
 				:style="{ left: splashImageLeft1 + 'rpx' }"></image>
-			<image class="splash-image" src="/static/cta-new.png" mode="widthFix"
+			<image class="splash-image" :src="getImg('/static/cta-new.png')" mode="widthFix"
 				:style="{ left: splashImageLeft2 + 'rpx' }"></image>
 
 			<view class="progress-container">
@@ -21,10 +21,13 @@
 
 <script>
 	import apiService from '../../services/api-service';
-
+	import {
+			getImg
+		} from '../../scripts/constants.js';
 	export default {
 		data() {
 			return {
+				getImg,
 				score: 28, // 示例分数，可根据需要动态更改
 				maxScore: 100, // 假设最大分数为100
 				userId: '',

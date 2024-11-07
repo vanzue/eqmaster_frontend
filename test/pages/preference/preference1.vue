@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<image class="background-image" src="/static/picture1.png" mode="widthFix"></image>
+		<image class="background-image" :src="getImg('/static/picture1.png')" mode="widthFix"></image>
 
 		<view class="text-content">
 			<text class="question">🎂 你的生日是什么时候？</text>
@@ -20,13 +20,16 @@
 
 <script lang="uts">
 	import DatePicker from '@/components/DatePicker.vue';
-
+	import {
+			getImg
+	} from '../../scripts/constants.js';
 	export default {
 		components: {
 			DatePicker
 		},
 		data() {
 			return {
+				getImg,
 				year: '',
 				month: '',
 				day: '',

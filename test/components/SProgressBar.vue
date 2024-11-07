@@ -67,7 +67,31 @@
 				canvasHeight: 0,
 				yOffset: 10, // 新增：Y轴偏移量
 				isFromMap: true,
+				downImgNum:0,
+				imgDic: {}
 			};
+		},
+		onLoad(){
+			const completedImages = [
+			  '/static/level1completed.png',
+			  '/static/level2completed.png',
+			  '/static/level3completed.png',
+			  '/static/level4completed.png',
+			  '/static/level5completed.png'
+			];
+			const incompleteImages = [
+			  '/static/level1incomplete.png',
+			  '/static/level2incomplete.png',
+			  '/static/level3incomplete.png',
+			  '/static/level4incomplete.png',
+			  '/static/level5incomplete.png'
+			];
+			for(let i=0; i<completedImages.length; i++){
+			  this.loadAndDrawImageWx(completedImages[i])
+			}
+			for(let i=0; i<incompleteImages.length; i++){
+			  this.loadAndDrawImageWx(incompleteImages[i])
+			  }
 		},
 		mounted() {
 			uni.getSystemInfo({
@@ -84,6 +108,30 @@
 			this.drawSProgress();
 		},
 		methods: {
+			loadAndDrawImageWx(src) {
+				uni.downloadFile({
+				        url: getImg(src),
+				        success: (res) => {
+				          if (res.statusCode === 200) {
+				            const imgPath = res.tempFilePath;
+							// console.log(`index=${index} src=${src}`)
+							  this.imgDic[src] = imgPath
+							  this.downImgNum++
+							  if (this.downImgNum >=6) {
+								this.drawSProgress()
+							  }
+							// ctx.drawImage(imgPath,x, y, size, size);
+							// this.drawPath(ctx,index,x, y,size,isCompleted)
+							// ctx.draw();
+				          } else {
+				            console.error('Failed to download image'+src);
+				          }
+				        },
+				        fail: (err) => {
+				          console.error('Download image error:', err);
+				        }
+				      });
+			},
 			calculateBezierPoints() {
 				const width = this.canvasWidth;
 				const radius = this.circleRadius;
@@ -334,8 +382,7 @@
 					const imageY = endPoint.y - imageSize / 2 + yOffset;
 
 					try {
-						ctx.drawImage(imagePath, imageX, imageY, imageSize, imageSize);
-
+						ctx.drawImage(this.imgDic[imagePath], imageX, imageY, imageSize, imageSize);
 						// 只在激活（已完成）的关卡上添加红色实体六边形
 						if (isCompleted) {
 							this.hexagons[i] = {

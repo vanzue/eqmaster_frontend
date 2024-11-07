@@ -8,7 +8,7 @@
 		</view>
 
 		<view class="card">
-			<image class="card-image" src="/static/onboarding/startTest3.png" mode="aspectFit" />
+			<image class="card-image" :src="getImg('/static/onboarding/startTest3.png')" mode="aspectFit" />
 			<button class="start-button" @click="startTest" :class="{ 'is-loading': isLoading }">
 				<text v-if="!isLoading" class="arrow">开始测试 ↗</text>
 				<view v-else class="loader"></view>
@@ -20,7 +20,9 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import apiService from "../../services/api-service.js";
-
+	import {
+			getImg
+	} from '../../scripts/constants.js';
 	type BirthdayType = {
 		month : string;
 		day : number;
@@ -36,6 +38,7 @@
 				gender: "",
 				birthday: null as BirthdayType | null,
 				isLoading: false,
+				getImg,
 			};
 		},
 		onLoad(options : any) {

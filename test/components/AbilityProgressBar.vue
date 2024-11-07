@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { getImg } from '../scripts/constants';
 export default {
 	props: {
 		segment1Width: {
@@ -50,6 +51,11 @@ export default {
 			default: '#FFD700'
 		}
 	},
+	data() {
+		return {
+			getImg,
+			}
+		},
 	computed: {
 		totalWidth() {
 			return this.segment1Width + this.segment2Width + this.segment3Width;
@@ -61,7 +67,7 @@ export default {
 			};
 		},
 		getIndicatorIcon() {
-			return `/static/${this.animal}_progress.png`;
+			return getImg(`/static/${this.animal}_progress.png`);
 		}
 	},
 	methods: {

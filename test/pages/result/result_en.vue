@@ -24,11 +24,11 @@
 								EQ points
 							</view>
 							<view class="animal-score-desc"
-								:style="{ backgroundImage: `url(/static/resulten/animal-name-3.png)` }">
+								:style="{ backgroundImage: `url(${getImg('/static/resulten/animal-name-3.png')})`}">
 								{{homepageData?.response?.eq_scores?.score}}/100
 							</view>
 						</view>
-						<view class="animal-desc" :style="{ backgroundImage: 'url(/static/resulten/quote.png)' }">
+						<view class="animal-desc" :style="{ backgroundImage: `url(${getImg('/static/resulten/quote.png')})` }">
 							<view class="card-text-container">
 								<!-- <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
 								<text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text> -->
@@ -138,10 +138,13 @@
 	import {
 		illustrationSrc
 	} from '@/scripts/illustrationHelper.js';
-
+import {
+		getImg
+	} from '../../scripts/constants.js';
 	export default {
 		data() {
 			return {
+				getImg,
 				score: 28, // 示例分数，可根据需要动态更改
 				maxScore: 100, // 假设最大分数为100
 				gender: '',
@@ -346,7 +349,8 @@
 		/* Changed from visible to hidden */
 		/* justify-content: center;
 		align-items: center; */
-		background-image: url("/static/resulten/header-bg.png");
+		background-image: 
+		url("https://eqmaster.blob.core.windows.net/static/resulten/header-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;

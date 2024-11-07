@@ -18,11 +18,15 @@
 </template>
 
 <script>
+	import {
+		getImg
+	} from '../../scripts/constants.js';
 	export default {
 		data() {
 			return {
 				username: '',
-				backgroundImage: '/static/picture1.png',
+				backgroundImage: getImg('/static/picture1.png'),
+				getImg,
 			};
 		},
 		methods: {

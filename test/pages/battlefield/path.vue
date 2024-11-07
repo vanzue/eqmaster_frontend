@@ -2,10 +2,10 @@
 	<view class="container">
 		<view class="header">
 			<view class="icon-container">
-				<image mode="aspectFill" class="header-img h1" src="/static/course-diamond.png"></image>
+				<image mode="aspectFill" class="header-img h1" :src="getImg('/static/course-diamond.png')"></image>
 			</view>
 			<view class="icon-container">
-				<image mode="aspectFill" class="header-img h2" src="/static/course-star.png"></image>
+				<image mode="aspectFill" class="header-img h2" :src="getImg('/static/course-star.png')"></image>
 			</view>
 			<view class="icon-container">
 				<image mode="aspectFill" class="header-img h3" src="/static/course-hill.png"></image>
@@ -23,12 +23,21 @@
 			</view>
 		</view>
 		<view class="path">
-			<image class="img" mode="aspectFill" src="/static/course-background.png"></image>
+			<image class="img" mode="aspectFill" :src="getImg('/static/course-background.png')"></image>
 		</view>
 	</view>
 </template>
 
 <script>
+	import getImg from '../../scripts/constants.js';
+	export default {
+	
+		data() {
+			return {
+				getImg,
+				}
+			}
+		}
 </script>
 
 <style>

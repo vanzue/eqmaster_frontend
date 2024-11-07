@@ -56,7 +56,7 @@
 					</view>
 					<view class="history-list">
 						<view>
-							<image class="import-button" src="../../static/dashboard/import-button-zh.png"
+							<image class="import-button" :src="getImg('/static/dashboard/import-button-zh.png')"
 								mode="widthFix" @click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
@@ -77,10 +77,10 @@
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
-						<image class="illustration36" src="/static/Frame1.png" mode="widthFix"></image>
-						<image class="illustration37" src="/static/Frame22.png" mode="widthFix"
+						<image class="illustration36" :src="getImg('/static/Frame1.png')" mode="widthFix"></image>
+						<image class="illustration37" :src="getImg('/static/Frame22.png')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
-						<image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
+						<image class="illustration38" :src="getImg('/static/Frame3.png')" mode="widthFix"></image>
 					</view>
 				</view>
 			</view>
@@ -89,12 +89,12 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/diamond.png')" mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
+							<image class="dashboard2-illustration3" :src="getImg('/static/dashboard2/star.jpg')" mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
@@ -104,7 +104,7 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
+					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/card-course.png')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -147,11 +147,12 @@
 	import {
 		illustrationSrc
 	} from '../../scripts/illustrationHelper_zh';
-
+	import { getImg } from '../../scripts/constants';
 	export default {
 
 		data() {
 			return {
+				getImg,
 				// currentView: 'dashboard2',
 				score: 28, // 示例分数，可根据需要动态改
 				maxScore: 100, // 假设最大分数为100
@@ -256,7 +257,7 @@
 					// 可以根需要添加更多卡片
 				],
 				showNewPopup: false,
-				tipImageSrc: '/static/tip.png', // Initial image source
+				tipImageSrc: getImg('/static/tip.png'), // Initial image source
 				currentDate: new Date(),
 			};
 		},
@@ -707,7 +708,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -754,7 +755,7 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -813,10 +814,10 @@
 				}
 			},
 			toggleTipImage() {
-				this.tipImageSrc = this.tipImageSrc === '/static/tip.png' ?
-					'/static/tipp.png' // Replace with the new image path
+				this.tipImageSrc = this.tipImageSrc === getImg('/static/tip.png') ?
+					getImg('/static/tipp.png') // Replace with the new image path
 					:
-					'/static/tip.png';
+					getImg('/static/tip.png');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name

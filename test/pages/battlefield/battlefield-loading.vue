@@ -2,7 +2,7 @@
   <view class="background-image loading-container">
     <image
       class="background-image"
-      src="/static/battlefield/background1.png"
+      :src="getImg('/static/battlefield/background1.png')"
       mode="aspectFill"
     />
     <!-- Content -->
@@ -15,8 +15,12 @@
 <script>
 import { startField } from "../../scripts/battlefield-chat";
 import apiService from '../../services/api-service';
-
+import getImg from '../../scripts/constants.js';
 export default {
+	data() {
+		return {
+			getImg,}
+			},
   async mounted() {
     const result = await startField(4, "4");
     console.log("result from start field:", result);
