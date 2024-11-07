@@ -337,6 +337,7 @@
 				uni.navigateTo({
 					url: "/pages/dashboard/dashboard_zh",
 				});
+				this.$store.commit('initNpcsHealth');
 			},
 			handleClickTaskList() {
 				this.missionShow = true; // 显示任务
@@ -1407,8 +1408,8 @@
 		z-index: 12;
 		top: 12%;
 		right: 3.2%;
-		/* width: 175rpx; */
-		padding: 10px 10px;
+		width: 192rpx;
+		padding: 10px 5px;
 		font-size: 26rpx;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		/* transform: translateX(-50%); */
