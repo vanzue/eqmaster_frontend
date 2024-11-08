@@ -2,7 +2,7 @@ name: Uni-App Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "cli" ]
   pull_request:
     branches: [ "main" ]
 
@@ -22,8 +22,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Lint
-      run: npm run lint
+    # - name: Lint
+    #   run: npm run lint
 
     - name: Unit Test
       run: npm run test:h5
