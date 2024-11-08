@@ -42,7 +42,7 @@
 </template>
 
 <script>
-	import ProgressBar from '/components/ProgressBar.vue'; // 引入组件
+	import ProgressBar from '@/components/ProgressBar.vue'; // 引入组件
 	export default {
 		components: {
 			ProgressBar, // 注册组件

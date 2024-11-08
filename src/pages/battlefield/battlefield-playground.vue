@@ -175,14 +175,14 @@
 
 <script>
 	const recorderManager = uni.getRecorderManager();
-	import RewardBar from "/components/RewardBar.vue";
-	import NpcStatus from "/components/NpcStatus.vue";
-	import LargeAvatarBubble from "/components/LargeAvatarBubble.vue";
-	import Judge from "/components/Judge.vue";
-	import Tipping from "/components/Tipping.vue";
-	import TippingChatBox from "/components/TippingChatBox.vue";
-	import SelfChatBox from "/components/SelfChatBox.vue";
-	import NpcChatBox from "/components/NpcChatBox.vue";
+	import RewardBar from "@/components/RewardBar.vue";
+	import NpcStatus from "@/components/NpcStatus.vue";
+	import LargeAvatarBubble from "@/components/LargeAvatarBubble.vue";
+	import Judge from "@/components/Judge.vue";
+	import Tipping from "@/components/Tipping.vue";
+	import TippingChatBox from "@/components/TippingChatBox.vue";
+	import SelfChatBox from "@/components/SelfChatBox.vue";
+	import NpcChatBox from "@/components/NpcChatBox.vue";
 	import MissionList from "../../components/MissionList.vue";
 	import CueCardsVue from "../../components/CueCards.vue";
 	import {
@@ -193,7 +193,7 @@
 		continueChat,
 		evalBattlefield,
 		checkShowToolTips,
-	} from "/scripts/battlefield-chat";
+	} from "@/scripts/battlefield-chat";
 	import {
 		getBattlefieldAvatar
 	} from "../../scripts/locate_name";

@@ -100,7 +100,7 @@
 		findLastName,
 		getAvatar
 	} from "../../scripts/locate_name_zh";
-	import OnboardingChatBubble from "/components/OnboardingChatBubble.vue";
+	import OnboardingChatBubble from "@/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
 	// import StateStack from "./StateStack";
 	// const stateStack = new StateStack();
@@ -521,7 +521,7 @@
 </script>
 
 <style scoped>
-	@import url("/pages/test/common.css");
+	@import url("@/pages/test/common.css");
 
 
 	/* ... 其他样式保持不变 ... */
