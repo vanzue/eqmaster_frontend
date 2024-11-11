@@ -48,6 +48,22 @@
 			npcs() {
 				return this.$store.getters.getNpcs;
 			},
+			couseId() {
+				return this.$store.getters.getCourseId;
+			},
+		},
+		watch: {
+			couseId: {
+				immediate: true,
+				async handler(val) {
+					if(!val) {
+						uni.navigateTo({
+							url: '/pages/dashboard/dashboard_en' // Replace this with the actual path to your next page
+						});
+					}
+				},
+				// deep: true,
+			},
 		},
 		methods: {
 			navigateToNextPage() {

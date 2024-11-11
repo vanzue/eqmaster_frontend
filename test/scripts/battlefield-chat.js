@@ -36,6 +36,7 @@ function sendRequest(
 			data: body,
 			success: (res) => {
 				resolve(res.data);
+				
 			},
 			fail: (err) => {
 				reject(err);

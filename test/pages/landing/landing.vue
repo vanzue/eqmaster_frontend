@@ -13,15 +13,20 @@
 		</view> -->
 
 		<!-- 添加背景图片 -->
-		<image class="background-image" src="/static/onboarding/landing B.png" mode="widthFix"></image>
+		<image class="background-image" src="/static/onboarding/landingB.png" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
 			<view class="quizButton" @click="startQuiz">
 				<text class="quizText">Get started</text>
 			</view>
-			<view class="loginButton" @click="login">
-				<text class="login-text">Login</text>
+			<view class="loginButton" @click="googleLogin">
+				<image class="google-image" src="/static/onboarding/google_button.png"></image>
+				<text class="login-text-apple">Google Login</text>
+			</view>
+			<view class="loginButton" @click="appleleLogin">
+				<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
+				<text class="login-text-apple">Sign in with Apple</text>
 			</view>
 		</view>
 
@@ -75,6 +80,60 @@
 			startDialogue() {
 				uni.navigateTo({
 					url: '/pages/battlefield/battlefield-loading'
+				});
+			},
+			googleLogin() {
+				uni.login({
+				    provider: 'google',
+				    success: (loginRes) => {
+				        // 登录成功
+				        uni.getUserInfo({
+				            provider: 'google',
+				            success: (info) => {
+				                // 获取用户信息成功, info.authResult保存用户信息
+								// console.log(info);
+								// console.log('用户昵称为：' + info.userInfo.nickName);
+								uni.setStorageSync('username', info.userInfo.nickName);
+								this.$store.commit('setUsername', info.userInfo.nickName);
+								uni.navigateTo({
+									url: `/pages/preference/preference3`
+								});
+				            }
+				        })
+				    },
+				    fail: (err) => {
+				        // 登录授权失败
+				        // err.code是错误码
+						uni.showToast({
+							title: 'Authorization failed, please try again',
+							icon: 'none'
+						});
+				    }
+				});
+			},
+			appleleLogin() {
+				uni.login({
+				    provider: 'apple',
+				    success: function (loginRes) {
+				        // 登录成功
+				        uni.getUserInfo({
+				            provider: 'apple',
+				            success: function(info) {
+				                // 获取用户信息成功, info.authResult保存用户信息
+								console.log(info);
+								uni.setStorageSync('username', info.userInfo.nickName);
+								this.$store.commit('setUsername', info.userInfo.nickName);
+								uni.navigateTo({
+									url: `/pages/preference/preference3`
+								});
+				            }
+				        })
+				    },
+				    fail: function (err) {
+						console.log(err)
+				        // 登录授权失败
+				        // err.code是错误码
+				    }
 				});
 			},
 		},
@@ -208,5 +267,29 @@
 		line-height: 40rpx;
 		font-weight: 400;
 		font-family: Arial;
+	}
+
+	.loginButton {
+		background-color: white;
+		width: 654rpx;
+		height: 80rpx;
+		border-radius: 64rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 16rpx;
+		margin-top: 40rpx;
+	}
+	.google-image {
+		width: 32rpx;
+		height: 32rpx;
+		margin-right: 20rpx;
+	}
+	.apple-image {
+		width: 80rpx;
+		height: 80rpx;
+	}
+	.login-text-apple {
+		color: #252529;
 	}
 </style>
