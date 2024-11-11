@@ -13,7 +13,7 @@
 							我的EQ形象
 						</view>
 						<view class="animal-name"
-							:style="{ backgroundImage: `url(${getImg(illustrationData.animal_name_bg) })` }">
+							:style="{ backgroundImage: `url(${illustrationData.animal_name_bg })` }">
 							<view class="animal-score-desc">
 								{{ illustrationData.animal_name }}
 							</view>
@@ -290,7 +290,7 @@ import {
 <style scoped>
 	@font-face {
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		src: url('/static/fonts/Poppins-Italic.ttf') format('truetype');
+		src: url('https://eqmaster.blob.core.windows.net/static/fonts/Poppins-Italic.ttf?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D') format('truetype');
 		font-weight: normal;
 		font-style: normal;
 	}

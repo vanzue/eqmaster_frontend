@@ -54,7 +54,7 @@
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
 			<view class="banner-container">
-				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/signa.png')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>

@@ -5,17 +5,23 @@
 			<image class="tip-mark" src="/static/battlefield/tip-yellow-zh.svg"></image>
 			<text class="tip-text">Tip: {{ tip }}</text>
 		</view>
-		<image class="tip-mark-yellow" src="/static/battlefield/tips-icon-zh.png"></image>
+		<image class="tip-mark-yellow" :src="getImg('/static/battlefield/tips-icon-zh.png') "></image>
 	</view>
 </template>
 
 <script>
+	import { getImg } from '../scripts/constants';
 	export default {
 		props: {
 			tip: {
 				type: String,
 				required: true
 			}
+		},
+		data() {
+			return {
+				getImg,
+			};
 		}
 	};
 </script>

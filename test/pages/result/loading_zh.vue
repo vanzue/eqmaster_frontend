@@ -2,12 +2,12 @@
 	<view class="container" @touchmove.prevent>
 		<view class="splash-screen">
 			<text class="splash-text">接下来，\n一起来看看你的职场人格类型吧!</text>
-
-			<image class="splash-image" :src="getImg('/static/cta-new.png')" mode="widthFix"
-				:style="{ left: splashImageLeft1 + 'rpx' }"></image>
-			<image class="splash-image":src="getImg('/static/cta-new.png')" mode="widthFix"
-				:style="{ left: splashImageLeft2 + 'rpx' }"></image>
-
+			<view class="image-container">
+				<image class="splash-image" :src="getImg('/static/cta-new.png')" mode="widthFix"
+					:style="{ left: splashImageLeft1 + 'rpx' }"></image>
+				<image class="splash-image":src="getImg('/static/cta-new.png')" mode="widthFix"
+					:style="{ left: splashImageLeft2 + 'rpx' }"></image>
+			</view>
 			<view class="progress-container">
 				<text class="splash-progress-text">{{ progress }}%</text>
 				<view class="splash-progress-bar">
@@ -215,22 +215,7 @@ import {
 				}, intervalDuration);
 			},
 			animateImage() {
-				const gap = 24;
-				this.interval = setInterval(() => {
-					// 更新两张图片的位置
-					this.splashImageLeft1 -= 10; // 每次移动10rpx
-					this.splashImageLeft2 -= 10;
-
-					// 如果第一张图片完全离开屏幕，则将它的位置重置到第二张图片的后面
-					if (this.splashImageLeft1 <= -this.imageWidth) {
-						this.splashImageLeft1 = this.splashImageLeft2 + this.imageWidth + gap;
-					}
-
-					// 如果第二张图片完全离开屏幕，则将它的位置重置到第一张图片的后面
-					if (this.splashImageLeft2 <= -this.imageWidth) {
-						this.splashImageLeft2 = this.splashImageLeft1 + this.imageWidth + gap;
-					}
-				}, 30); // 每30毫秒更新一次位置
+				
 			},
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
@@ -400,7 +385,12 @@ import {
 		background-color: #9EE44D;
 		border-radius: 15rpx;
 	}
-
+	.image-container {
+	position: relative;
+	width: 100%;
+	height: 200px; /* 根据需要调整高度 */
+	overflow: hidden;
+	}
 	.splash-image {
 		width: 2000rpx;
 		/* 放大图片的宽度 */
@@ -410,6 +400,19 @@ import {
 		/* 在图像上方添加一些空间 */
 		position: absolute;
 		/* 绝对定位以便移动 */
+		animation: slide 10s linear infinite;
+	}
+	.splash-image:nth-child(2) {
+		left: 2000rpx; /* 根据需要调整宽度 */
+	}
+
+	@keyframes slide {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-2000rpx); /* 根据需要调整宽度 */
+	}
 	}
 
 	.status-text {

@@ -1,10 +1,10 @@
 // 定义常量URL
 const BASE_URL =
-	"https://eqmaster.aipowernft.com/eqmaster/chat/battlefield_agent";
+	"https://eqmaster.aipowernft.com/chat/battlefield_agent";
 const EVAL_URL =
-	"https://eqmaster.aipowernft.com/eqmaster/eval/battlefield_agent";
+	"https://eqmaster.aipowernft.com/eval/battlefield_agent";
 const TOOLTIP_URL =
-	"https://eqmaster.aipowernft.com/eqmaster/course_exists";
+	"https://eqmaster.aipowernft.com/course_exists";
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
 
 import state from "../store/index.js";

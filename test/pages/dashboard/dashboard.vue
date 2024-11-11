@@ -38,7 +38,7 @@
 
 					<view class="dashboard1-card-j">
 						<text class="card-title1">今日锦囊</text>
-						<Tear leftImageSrc="getImg('/static/aboveleft.png')" rightBackImageSrc="/static/aboveright2.png"
+						<Tear leftImageSrc="'/static/aboveleft.png'" rightBackImageSrc="/static/aboveright2.png"
 							rightFrontImageSrc="/static/aboveright1.png" leftText="自定义左侧文字"
 							rightText="FFI赞美法指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。"
 							pageText="" />

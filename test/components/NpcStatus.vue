@@ -21,6 +21,7 @@
 </template>
 
 <script>
+	import { getImg } from '../scripts/constants';
 	export default {
 		name: 'NpcStatus',
 		props: {
@@ -30,7 +31,7 @@
 			},
 			avatar: {
 				type: String,
-				default: '/static/battlefield/boss.png' // 默认头像路径
+				default: getImg('/static/battlefield/boss.png') // 默认头像路径
 			},
 			characterName: {
 				type: String,
