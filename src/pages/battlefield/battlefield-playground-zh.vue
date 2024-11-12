@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
-			<image class="background-image" :src="getImg('/static/battlefield/background1.png')" mode="aspectFill" />
+			<image class="background-image" :src="getImg('/static/battlefield/background.png')" mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
@@ -15,7 +15,7 @@
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-				Review all tasks
+				查看所有任务
 			</view>
 
 			<view class="npc-group" :class="{ shadowed: shouldShadow }">
@@ -28,7 +28,7 @@
 					:scroll-into-view="scrollIntoViewId">
 					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
-                ['Jason', 'Sam', 'Anna'].includes(
+                ['领导', '同事A', '同事B'].includes(
                   chat.role
                 )
               " :key="'npc-' + index" :index="index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
@@ -72,7 +72,7 @@
 					<view class="wave"></view>
 				</view>
 
-				<text class="cancel-text">Release to send, slide up to cancel</text>
+				<text class="cancel-text">松开以发送，向上滑动以取消</text>
 			</view>
 
 			<view
@@ -88,7 +88,7 @@
           isTooltipVisible &&
           showRecordTooltip
         " class="recordTooltip">
-				Hold to record
+				长按录音
 			</view>
 			<!-- #endif -->
 
@@ -99,7 +99,7 @@
           isTooltipVisible &&
           showRecordTooltip
         " class="keyboardToolTip">
-				Enter your reply
+				请输入您的回复
 			</view>
 			<!-- #endif -->
 			<!-- tooltip for hint -->
@@ -109,7 +109,7 @@
           isTooltipVisible &&
           showHintTooltip
         " class="hintTooltip">
-				Need help? Here's your advice packet
+				需要帮助吗？这是您的建议包
 			</view>
 
 
@@ -141,11 +141,11 @@
 				<view class="input-container-wrapper">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-						<textarea placeholder="Type your response" v-model="inputContent" auto-height
+						<textarea placeholder="请输入您的回复" v-model="inputContent" auto-height
 							@blur="inputRecordingBlur" />
 					</view>
 					<view class="send-sms-container">
-						<image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur">
+						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png" @click="inputRecordingBlur">
 						</image>
 					</view>
 				</view>
@@ -175,14 +175,14 @@
 
 <script>
 	const recorderManager = uni.getRecorderManager();
-	import RewardBar from "/components/RewardBar.vue";
-	import NpcStatus from "/components/NpcStatus.vue";
-	import LargeAvatarBubble from "/components/LargeAvatarBubble.vue";
-	import Judge from "/components/Judge.vue";
-	import Tipping from "/components/Tipping.vue";
-	import TippingChatBox from "/components/TippingChatBox.vue";
-	import SelfChatBox from "/components/SelfChatBox.vue";
-	import NpcChatBox from "/components/NpcChatBox.vue";
+	import RewardBar from "@/components/RewardBar.vue";
+	import NpcStatus from "@/components/NpcStatus.vue";
+	import LargeAvatarBubble from "@/components/LargeAvatarBubble.vue";
+	import Judge from "@/components/Judge.vue";
+	import Tipping from "@/components/Tipping.vue";
+	import TippingChatBox from "@/components/TippingChatBox.vue";
+	import SelfChatBox from "@/components/SelfChatBox.vue";
+	import NpcChatBox from "@/components/NpcChatBox.vue";
 	import MissionList from "../../components/MissionList.vue";
 	import CueCardsVue from "../../components/CueCards.vue";
 	import {
@@ -193,7 +193,7 @@
 		continueChat,
 		evalBattlefield,
 		checkShowToolTips,
-	} from "/scripts/battlefield-chat";
+	} from "@/scripts/battlefield-chat";
 	import {
 		getBattlefieldAvatar
 	} from "../../scripts/locate_name";
@@ -238,7 +238,7 @@
 				showTippingCard: false, // Controls the tipping card visibility
 				talkingNpc: 0,
 				displayedNpcChatIndex: 0, // Tracks the last displayed NPC chat
-				npcDialog: "NPC dialogue here", // Replace with actual dialogue
+				npcDialog: "这里是NPC的对话", // 替换为实际对话
 				someoneTalk: true,
 				chattingHistory: [],
 				allHistory: [],
@@ -296,14 +296,14 @@
 			console.log("state userid", state.userId);
 			// 动态添加任务到 taskList
 			this.taskList.addTask(
-				new Task(0, "Cheer up Sam while avoiding further infuriating Jason.", async (judgeResult) => {
-					const samMood = judgeResult.find(item => item.role === "Sam")?.mood;
-					const jasonMood = judgeResult.find(item => item.role === "Jason")?.mood;
+				new Task(0, "一句话让三个人心情愉悦", async (judgeResult) => {
+					const samMood = judgeResult.find(item => item.role === "同事A")?.mood;
+					const jasonMood = judgeResult.find(item => item.role === "领导")?.mood;
 
 					const taskResult = parseInt(samMood, 10) > 0 && parseInt(jasonMood, 10) >= 0;
 					// const allPositive = judgeResult.moods.some((item) => parseInt(item.mood, 10) > 0);
 					if (taskResult && !this.taskList.getTask(0).once) {
-						this.judgeTitle = `Well done！ ${this.taskList.getTask(0).title} (${
+						this.judgeTitle = `做得好！ ${this.taskList.getTask(0).title} (${
             this.taskList.doneTaskLength + 1
           }/${this.taskList.taskLength})`;
 						return true;
@@ -312,7 +312,7 @@
 				})
 			);
 			this.taskList.addTask(
-				new Task(1, "Encourage teammates to engage and get at least one to say, \"I agree with you.\"", async (
+				new Task(1, "让领导认可你点的菜（说出你点的菜真不错）", async (
 					judgeResult) => {
 					let res = "";
 
@@ -321,7 +321,7 @@
 					});
 					const bMood = parseInt(res ? res : 0, 10);
 					if (bMood < 0 && !this.taskList.getTask(1).once) {
-						this.judgeTitle = `Well done！ ${this.taskList.getTask(1).title} (${
+						this.judgeTitle = `做得好！！ ${this.taskList.getTask(1).title} (${
             this.taskList.doneTaskLength + 1
           }/${this.taskList.taskLength})`;
 						return true;
@@ -335,9 +335,10 @@
 				this.isLoadingShow = value;
 			},
 			goToDashboard() {
-				uni.reLaunch({
-					url: "/pages/dashboard/dashboard_en",
+				uni.navigateTo({
+					url: "/pages/dashboard/dashboard_zh",
 				});
+				this.$store.commit('initNpcsHealth');
 			},
 			handleClickTaskList() {
 				this.missionShow = true; // 显示任务
@@ -437,7 +438,7 @@
 						this.isLoadingShow = true;
 					}
 					try {
-						const nextRound = await continueChat(this.allHistory, "4");
+						const nextRound = await continueChat(this.allHistory, "1");
 						console.log("next round data", nextRound);
 
 						nextRound.dialog = nextRound.dialog.map(item => ({
@@ -636,7 +637,7 @@
 				});
 				await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
-					uni.reLaunch({
+					uni.navigateTo({
 						url: "/pages/battlefield/battlefield-summary-zh",
 					});
 				}, 1000);
@@ -693,7 +694,7 @@
 							console.log("record is none, canceling...");
 							this.resetRecording(); // 重置录音状态
 							uni.showToast({
-								title: "Did not hear clearly",
+								title: "没有听清楚",
 								icon: "none",
 							});
 							this.anasLoadingObj.loading = false;
@@ -709,12 +710,12 @@
 						this.$nextTick(() => {
 							setTimeout(() => {
 								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = "Analyzing";
+								this.anasLoadingObj.text = "正在分析中";
 							}, 50);
 						});
 						this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "4");
+						const judgeResult = await reply(validChats, "1");
 
 
 						await this.handleRecorderReply(judgeResult);
@@ -749,7 +750,7 @@
 						void this.$el.offsetWidth;
 
 						newMessage.shouldAnimate = true;
-						this.anasLoadingObj.text = "Analyzing";
+						this.anasLoadingObj.text = "正在分析中";
 
 						// 使用 requestAnimationFrame 确保动画在下一帧开始
 						requestAnimationFrame(() => {
@@ -761,7 +762,7 @@
 					try {
 						this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "4");
+						const judgeResult = await reply(validChats, "1");
 						// console.log("validChat:", validChat);
 						console.log("judge Result:", judgeResult);
 						this.gemCount = this.calculateStars();
@@ -784,15 +785,17 @@
 				this.cardButtonLoading = true;
 				console.log("Exchangeclick:", this.allHistory);
 				const validChats = filterChatHistory(this.allHistory);
+				console.log(validChats);
 				let replyContent = null;
 				this.userJudgeContent = "";
 				try {
 					if (selectedCard == 1) {
 						this.anasLoadingObj = {
 							loading: true,
-							text: "Generating",
+							text: "生成中",
 						};
-						replyContent = await helpReply(validChats, "4");
+						replyContent = await helpReply(validChats, "1");
+						console.log(replyContent);
 						if (replyContent.responsive) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
@@ -808,7 +811,7 @@
 								void this.$el.offsetWidth;
 
 								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = "Analyzing";
+								this.anasLoadingObj.text = "正在分析中"; // 中文翻译
 
 								// 使用 requestAnimationFrame 确保动画在下一帧开始
 								requestAnimationFrame(() => {
@@ -821,8 +824,15 @@
 							this.sendMessageNavShow = false;
 							await new Promise(resolve => setTimeout(resolve, 3000));
 							const validChatsRepy = filterChatHistory(this.allHistory);
-							const judgeResultRepy = await reply(validChatsRepy, "4");
+							const judgeResultRepy = await reply(validChatsRepy, "1");
 							await this.handleRecorderReply(judgeResultRepy);
+						} else {
+							this.sendMessageNavShow = false;
+							uni.showToast({
+								title: "回复异常",
+								icon: "none",
+								duration: 2000,
+							});
 						}
 					}
 					if (selectedCard == 2) {
@@ -831,7 +841,7 @@
 							loading: true,
 							text: "Generating",
 						};
-						const judgeResult = await hint(validChats, "4");
+						const judgeResult = await hint(validChats, "1");
 						console.log("get tips from backend:", judgeResult);
 						if (judgeResult.tips) {
 							await this.$store.dispatch('fetchHomepageData');
@@ -847,7 +857,7 @@
 								void this.$el.offsetWidth;
 
 								newMessage2.shouldAnimate = true;
-								this.anasLoadingObj.text = "Analyzing";
+								this.anasLoadingObj.text = "正在分析中";
 
 								// 使用 requestAnimationFrame 确保动画在下一帧开始
 								requestAnimationFrame(() => {
@@ -875,19 +885,19 @@
 						// 遍历 judgeResult.moods 并根据角色调整 this.mood 的值
 						judgeResult.moods.forEach((item) => {
 							const moodValue = parseInt(item.mood, 10);
-							if (item.role === "Jason") {
+							if (item.role === "领导") {
 								this.npcs[0].health = Math.min(
 									this.npcs[0].health +
 									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
 									20
 								);
-							} else if (item.role === "Sam") {
+							} else if (item.role === "同事A") {
 								this.npcs[1].health = Math.min(
 									this.npcs[1].health +
 									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
 									20
 								);
-							} else if (item.role === "Anna") {
+							} else if (item.role === "同事B") {
 								this.npcs[2].health = Math.min(
 									this.npcs[2].health +
 									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
@@ -910,7 +920,7 @@
 					}
 				} catch (error) {
 					uni.showToast({
-						title: "Something error happened",
+						title: "发生了一些错误",
 						icon: "none",
 						duration: 2000,
 					});
@@ -953,13 +963,13 @@
 									this.taskList.doneTaskLength++;
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-										" Goals achieved!";
+										" 任务达成！";
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
 										this.isPass = true;
 									}
 								} else {
-									this.judgeTitle = "Goal achieved";
+									this.judgeTitle = "任务达成";
 									this.isCompleteTask = true;
 								}
 							} else {
@@ -989,7 +999,7 @@
 								this.showHintTooltip = false;
 							}
 							console.log("tooltip for hint", this.isTooltipVisible);
-							this.judgeTitle = "You can make it better!";
+							this.judgeTitle = "还有提升空间!";
 							this.isCompleteTask = false;
 							this.judgeContent = judgeResult.comments;
 							this.state = "judgeTry";
@@ -1002,7 +1012,7 @@
 			async checkBossComplimentTask2(dialog) {
 				let taskCompleted = false;
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
-					const goalKeyword = "I agree with you";
+					const goalKeyword = "你点的菜真不错";
 					console.log(dialog);
 					for (let chat of dialog) {
 						if (chat.content.includes(goalKeyword)) {
@@ -1021,12 +1031,12 @@
 										this.taskList.getTotalTaskLength();
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-										" Goals achieved";
+										" 任务达成";
 									taskCompleted = false;
 									this.task2CompletedStatusOne = true; //如果任务2完成
 									console.log("task2 success");
 								} else {
-									this.judgeTitle = "Goal achieved";
+									this.judgeTitle = "任务达成";
 									this.isCompleteTask = true;
 									taskCompleted = true;
 								}
@@ -1131,9 +1141,9 @@
 				const userAndNpcChats = validChats.filter(
 					(chat) =>
 					chat.role === "user" ||
-					chat.role === "Jason" ||
-					chat.role === "Sam" ||
-					chat.role === "Anna" ||
+					chat.role === "领导" ||
+					chat.role === "同事A" ||
+					chat.role === "同事B" ||
 					chat.role === "tipping"
 				);
 				console.log("displayedMessages");
@@ -1158,7 +1168,7 @@
 				const userChats = this.chattingHistory.filter(
 					(chat) => chat.role === "user"
 				);
-				const npcChats = this.chattingHistory.filter((chat) => ["Jason", "Sam", "Anna"].includes(chat.role));
+				const npcChats = this.chattingHistory.filter((chat) => ["领导", "同事A", "同事B"].includes(chat.role));
 
 				// 只保留来自 'user' 的最新一条
 				const latestUserChat = userChats.slice(-1); // 取最后一条
@@ -1290,7 +1300,7 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 20px;
-		background: #d6fcf6;
+		background: #FDEDC8;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -1300,7 +1310,9 @@
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
-		background: linear-gradient(180deg, #d6fcf6 0%, #90e0e7 100%);
+		box-shadow: 0px 0px 12px 0px #FED397;
+		border: 1px solid #F2BC74;
+		/* background: linear-gradient(180deg, #d6fcf6 0%, #90e0e7 100%); */
 	}
 
 	.middle-container {
@@ -1323,7 +1335,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 50%;
-		width: 238rpx;
+		width: 140rpx;
 		padding: 10px 20px;
 		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);
@@ -1347,7 +1359,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 10%;
-		width: 120px;
+		width: 118px;
 		padding: 10px 20px;
 		/* transform: translateX(-50%); */
 		background-color: rgba(16, 16, 16, 0.4);
@@ -1436,7 +1448,7 @@
 		transform: translateX(-50%);
 		width: 420rpx;
 		height: 160rpx;
-		background-color: #d6fcf6;
+		background-color: #FDEDC8;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -1542,7 +1554,7 @@
 	.input-container-wrapper {
 		position: fixed;
 		display: flex;
-		width: 70%;
+		width: 100%;
 		/* left: 10%; */
 		bottom: 200rpx;
 		justify-content: center;
@@ -1551,7 +1563,7 @@
 
 	.input-container {
 		/* position: fixed; */
-		width: 100%;
+		width: 550rpx;
 		/* left: 10%; */
 		/* bottom: 200rpx; */
 		/* 将其固定在屏幕底部 */
@@ -1561,14 +1573,23 @@
 		/* padding: 20rpx 0; */
 		border-radius: 40rpx;
 		/* 增加一些内边距 */
-		background-color: #d6fcf6;
-		border: 2px solid #90E0E7;
+		background-color: #FDEDC8;
+		border: 2px solid #F2BC74;
 		/* 可选的背景色，用于强调输入框 */
 	}
 
-	.send-sms-icon {
+	.send-sms-container {
 		width: 88rpx;
 		height: 88rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #F2BC74;
+		border-radius: 50%;
+	}
+	.send-sms-icon {
+		width: 28rpx;
+		height: 32rpx;
 	}
 
 	textarea {

@@ -86,8 +86,8 @@
 </template>
 
 <script>
-	import RewardBar from "/components/RewardBar.vue";
-	import NpcComment from "/components/NpcComment.vue"; // ���入组件
+	import RewardBar from "@/components/RewardBar.vue";
+	import NpcComment from "@/components/NpcComment.vue"; // ���入组件
 	import api from "../../services/api-service";
 	import { getImg } from "../../scripts/constants";
 	export default {
