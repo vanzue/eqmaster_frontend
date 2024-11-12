@@ -4,11 +4,11 @@
 
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">嗨👋</text>
+				<text class="greeting">{{$t('pages.landing.greeting')}}</text>
 			</view>
-			<text class="question">很开心见到你！你叫什么名字?</text>
+			<text class="question">{{$t('pages.landing.question')}}</text>
 
-			<input class="name-input" placeholder="设置你的用户名" v-model="username" />
+			<input class="name-input" placeholder="$t('pages.landing.input_name')" v-model="username" />
 
 			<view class="button-container">
 				<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @tap="nextStep"></image>
@@ -36,7 +36,7 @@
 					});
 				} else {
 					uni.showToast({
-						title: 'Enter your name please',
+						title: this.$t('pages.landing.input_name_reminder'),
 						icon: 'none'
 					});
 				}

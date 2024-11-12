@@ -27,6 +27,12 @@
 				}).catch((error) => {
 					console.error('Error fetching homepage data:', error);
 				});
+
+				// restore user locale preference
+				const locale = this.$store.getters.getLocale('locale');
+				console.log(`locale in store: ${locale}`);
+				uni.setLocale(locale);
+				
 			} else {
 				uni.navigateTo({
 					url: `/pages/landing/landing`
