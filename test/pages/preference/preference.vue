@@ -76,7 +76,7 @@
 					// 保存性别信息
 					uni.setStorageSync('gender', this.selectedGender);
 					// 导航到下一页，并传递所有参数
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/preference/preference1?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.selectedGender}`
 					});
 				} else {

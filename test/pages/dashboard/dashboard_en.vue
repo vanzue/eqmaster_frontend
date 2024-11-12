@@ -578,7 +578,7 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			navigateToGuide() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
 				});
 			},
@@ -587,7 +587,7 @@
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/moment_analysis?analysisId=${analysis.id}`
 						});
 					},
@@ -713,7 +713,7 @@
 				this.closePopup();
 			},
 			navigateToBattlefieldIntro() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/battlefield/battlefield-intro-zh?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
 
 				});
@@ -741,7 +741,7 @@
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
+								uni.reLaunch({
 									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
 								});
 							} else {
@@ -788,7 +788,7 @@
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
+								uni.reLaunch({
 									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(contact?.name || '')}&jobId=${this.jobId}&relation=${encodeURIComponent(contact?.contact_relationship || '')}&tags=${encodeURIComponent(contact?.tag || '')}&contactId=${res.data.contact_id}`
 								});
 							} else {
@@ -810,14 +810,14 @@
 				}
 			},
 			navigateToResult() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/result/result_en`
 				});
 			},
 			openWeChat() {
 				try {
 					// Attempt to open WeChat using the URL scheme
-					uni.navigateTo({
+					uni.reLaunch({
 						url: 'weixin://',
 						success: () => {
 							console.log('WeChat opened successfully');

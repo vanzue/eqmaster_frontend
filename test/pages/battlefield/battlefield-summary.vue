@@ -121,7 +121,7 @@
 					username: this.username,
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard_en`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
@@ -133,7 +133,7 @@
 					username: this.username,
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/battlefield/battlefield-intro-zh`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
@@ -141,7 +141,7 @@
 			},
 
 			navigateToNextPage() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: "/pages/battlefield/battlefield-task-zh", // Replace this with the actual path to your next page
 				});
 			},

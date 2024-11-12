@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="text-content">
-			<text class="question">🤔 In which situations would you like to enhance your EQ?</text>
+			<text class="question">?? In which situations would you like to enhance your EQ?</text>
 			<!-- <text class="question1">个性化偏好</text> -->
 		</view>
 
@@ -64,7 +64,7 @@
 			// this.userId = options.userId;
 			const username = uni.getStorageSync('username');
 			if (!username) {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/landing/experience',
 					fail: (err) => {
 						console.error('Navigation to experience page failed:', err);
@@ -120,7 +120,7 @@
 					// const url = `/pages/preference/preference3?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
 					const url = `/pages/preference/preference3`;
 					console.log('Navigating to:', url);
-					uni.navigateTo({
+					uni.reLaunch({
 						url: url,
 						fail: (err) => {
 							console.error('Navigation failed:', err);

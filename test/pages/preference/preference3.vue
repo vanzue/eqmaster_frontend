@@ -44,7 +44,7 @@
 		onLoad(options : any) {
 			const username = uni.getStorageSync('username');
 			if (!username) {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/landing/experience',
 					fail: (err) => {
 						console.error('Navigation to experience page failed:', err);
@@ -101,7 +101,7 @@
 
 					const testPageUrl = `/pages/test/test`;
 
-					uni.navigateTo({
+					uni.reLaunch({
 						url: testPageUrl,
 					});
 				} catch (err) {

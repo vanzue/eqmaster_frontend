@@ -317,7 +317,7 @@ import {
 				console.log("logOutClick");
 				this.logoutShow = false;
 				await this.clearLocalUserId();
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/landing/landing`
 				});
 			},

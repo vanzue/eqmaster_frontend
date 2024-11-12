@@ -3,7 +3,7 @@
 		<image class="background-image" :src="getImg('/static/picture1.png')" mode="widthFix"></image>
 
 		<view class="text-content">
-			<text class="question">🎂 你的生日是什么时候？</text>
+			<text class="question">?? 你的生日是什么时候？</text>
 			<!-- <text class="question1">完善个人信息</text> -->
 		</view>
 		
@@ -58,7 +58,7 @@
 				};
 				// Navigate to the next page with all data passed as URL parameters
 				const nextPageUrl = `/pages/preference/preference2?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(selectedDate))}`;
-				uni.navigateTo({
+				uni.reLaunch({
 					url: nextPageUrl,
 				});
 			},

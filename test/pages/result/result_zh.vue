@@ -96,7 +96,9 @@
 				<view class="improved-container">
 					<view class="improved">
 						<view class="improved-title">提升指南</view>
+						
 						<view class="improved-content">
+							
 							<view class="improved-content-item">
 								<view class="improved-content-title">
 									<image class="improved-show-icon"
@@ -214,9 +216,10 @@ import {
 							icon1: '/static/resulten/motivation1.svg'
 						}
 					];
-
+					
 					// Sort scores in descending order
 					scores.sort((a, b) => b.score - a.score);
+					console.log("-----------------------------");
 					console.log(scores);
 					return scores;
 				}
@@ -647,7 +650,6 @@ import {
 		/* height: 184px; */
 		gap: 0px;
 		border-radius: 24rpx;
-		opacity: 0px;
 		background: linear-gradient(90deg, #2C6E5F 0.52%, #50856E 99.36%);
 	}
 

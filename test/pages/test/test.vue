@@ -191,7 +191,7 @@
 							this.isLoading = false;
 						}, 300); // Adjust the delay as needed
 					} else {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: '/pages/preference/preference3'
 						});
 						uni.hideLoading();
@@ -239,7 +239,7 @@
 				const userId = uni.getStorageSync('userId');
 				const jobId = uni.getStorageSync('jobId');
 				if (!userId || !jobId) {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '/pages/landing/experience'
 					});
 					return;
@@ -247,7 +247,7 @@
 				this.userId = userId || "";
 				const username = uni.getStorageSync('username');
 				if (!username) {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '/pages/landing/experience'
 					});
 					return;
@@ -475,7 +475,7 @@
 				//     JSON.stringify(this.selectedOptions)
 				//   )}&num=${this.num}`;
 				const loadingPageUrl = `/pages/result/loading_zh`;
-				uni.navigateTo({
+				uni.reLaunch({
 					url: loadingPageUrl,
 					fail: (err) => {
 						console.error("Navigation failed:", err);

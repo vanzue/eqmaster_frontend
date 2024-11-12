@@ -265,11 +265,11 @@ import {
 					username: this.username,
 					jobId: this.homepageData.response.personal_info.job_id
 				});
-				// uni.navigateTo({
+				// uni.reLaunch({
 				// 	url: `/pages/dashboard/dashboard_en?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				// });
 				this.$store.commit('setHomeNavName', 'dashboard2');
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard_en`
 				});
 			},
@@ -277,7 +277,7 @@ import {
 				this.isExpanded = true; // 只展开，不再收起
 			},
 			navigateToHome() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard_en`
 				});
 			}

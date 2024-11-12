@@ -51,12 +51,12 @@
 		},
 		methods: {
 			navigateToNextPage() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-task-zh' // Replace this with the actual path to your next page
 				});
 			},
 			goToDashboard() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: "/pages/dashboard/dashboard_en",
 				});
 			},

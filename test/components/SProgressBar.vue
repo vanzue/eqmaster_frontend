@@ -520,7 +520,7 @@
 			navigateToBattlefieldIntro() {
 				const jobId = this.homepageData?.response?.personal_info?.job_id;
 				console.log('okok');
-				uni.navigateTo({
+				uni.reLaunch({
 					// url: `/pages/battlefield/battlefield-intro`
 					url: this.isCompleteTask ?
 						`/pages/battlefield/battlefield-summary-zh?isFromMap=${this.isFromMap}` :

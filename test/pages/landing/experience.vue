@@ -4,7 +4,7 @@
 
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">嗨👋</text>
+				<text class="greeting">嗨??</text>
 			</view>
 			<text class="question">很开心见到你！你叫什么名字?</text>
 
@@ -35,7 +35,7 @@
 					console.log("user input name:", this.username);
 					this.$store.commit('setUsername', this.username);
 					uni.setStorageSync('username', this.username);
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/preference/preference3`
 					});
 				} else {

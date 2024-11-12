@@ -41,7 +41,7 @@ export default {
 			} catch (error) {
 				console.log("get voice fail", error);
 			} finally {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-playground-zh'
 				})
 			}

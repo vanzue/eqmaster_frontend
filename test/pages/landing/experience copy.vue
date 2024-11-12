@@ -7,7 +7,7 @@
 		<!-- 内容区域 -->
 		<view class="content">
 			<view class="text-content">
-				<text class="greeting">嗨👋</text>
+				<text class="greeting">嗨??</text>
 			</view>
 			<text class="question">很开心见到你！你叫什么名字？</text>
 			<text class="question1">完善个人信息</text>
@@ -50,7 +50,7 @@
 					uni.setStorageSync('username', this.username);
 					uni.setStorageSync('userId', userId);
 					// 导航到下一页，并传递参数
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/preference/preference?userId=${userId}&username=${encodeURIComponent(this.username)}`
 					});
 				} else {

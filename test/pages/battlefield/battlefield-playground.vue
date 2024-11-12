@@ -335,7 +335,7 @@
 				this.isLoadingShow = value;
 			},
 			goToDashboard() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: "/pages/dashboard/dashboard_en",
 				});
 			},
@@ -636,7 +636,7 @@
 				});
 				await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: "/pages/battlefield/battlefield-summary-zh",
 					});
 				}, 1000);
