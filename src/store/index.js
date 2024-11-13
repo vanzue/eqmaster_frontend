@@ -8,6 +8,7 @@ export default createStore({
 		userId: 0, //用户ID
 		username: '', //用户名
 		userInfo: {}, //用户信息
+		locale: 'en',
 		jobId: '',
 		selectedOptions: {},
 		homepageData: {},
@@ -63,6 +64,9 @@ export default createStore({
 		},
 		setUserInfo(state, userInfo) {
 			state.userInfo = userInfo;
+		},
+		setLocale(state, locale) {
+			state.locale = locale;
 		},
 		setJobId(state, jobId) {
 			state.jobId = jobId;
@@ -125,6 +129,9 @@ export default createStore({
 		},
 		getUserInfo(state) {
 			return state.userInfo;
+		},
+		getLocale(state) {
+			return state.locale;
 		},
 		getJobId(state) {
 			return state.jobId;

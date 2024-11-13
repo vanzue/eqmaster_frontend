@@ -12,8 +12,9 @@
 			<image class="splashImage" src="/static/onboarding/IP.png" mode="widthFix"></image>
 		</view> -->
 
-		<!-- 添加背景图片 -->
-		<image class="background-image" :src="getImg('/static/onboarding/landingB2.png')" mode="widthFix"></image>
+		<!-- 添加背景图片 
+		<image class="background-image" :src="getImg('/static/onboarding/landingB2.png')" mode="widthFix"></image>-->
+		<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
