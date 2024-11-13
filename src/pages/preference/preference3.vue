@@ -2,15 +2,15 @@
 	<view class="container">
 		<view class="text-content">
 			<text class="question">{{
-        scenarioText || "让我们看看你现在适合什么情商段位!"
+        scenarioText || $t('pages.preference.preference3.question')
       }}</text>
 			<!-- <text class="question1">个性化偏好</text> -->
 		</view>
 
 		<view class="card">
-			<image class="card-image" :src="getImg('/static/onboarding/startTest3.png')" mode="aspectFit" />
+			<image class="card-image" ::src="getImg($t('images.onboarding.startTest'))" mode="aspectFit" />
 			<button class="start-button" @click="startTest" :class="{ 'is-loading': isLoading }">
-				<text v-if="!isLoading" class="arrow">开始测试 ↗</text>
+				<text v-if="!isLoading" class="arrow">{{ $t('pages.preference.preference3.start_test') }}</text>
 				<view v-else class="loader"></view>
 			</button>
 		</view>

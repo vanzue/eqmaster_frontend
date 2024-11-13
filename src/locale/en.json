@@ -5,10 +5,15 @@
     "locale.zh-hant": "繁体中文",
     "pages.landing.get_started": "Get started",
     "pages.landing.login": "Login",
-    "pages.landing.greeting":  "Welcome!馃憢",
+    "pages.landing.greeting":  "Welcome!👋",
     "pages.landing.question":  "What can I call you?",
     "pages.landing.input_name":  "Your name",
     "pages.landing.input_name_reminder":  "Enter your name please",
+    
     "images.startTest": "/static/onboarding/startTest2.png",
-    "images.onboarding.landing": "/static/onboarding/landing_en.png"
+    "images.onboarding.landing": "/static/onboarding/landing_en.png",
+
+    "pages.preference.preference3.question": "Let's see what EQ level you are suitable for now!",
+    "images.onboarding.startTest": "/static/onboarding/startTest.png",
+    "pages.preference.preference3.start_test": "Start Test ↗"
   }
