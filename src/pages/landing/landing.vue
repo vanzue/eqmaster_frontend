@@ -19,10 +19,10 @@
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
 			<view class="quizButton" @click="startQuiz">
-				<text class="quizText">开始体验</text>
+				<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
 			</view>
 			<view class="loginButton" @click="login">
-				<text class="login-text">登陆已有账号</text>
+				<text class="login-text">{{ $t('pages.landing.login') }}</text>
 			</view>
 			<view class="loginButton" @click="startLoginWx">
 				<text class="login-text">微信登录</text>
