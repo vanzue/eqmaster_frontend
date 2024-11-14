@@ -8,7 +8,7 @@
 		</view>
 
 		<view class="card">
-			<image class="card-image" ::src="getImg($t('images.onboarding.startTest'))" mode="aspectFit" />
+			<image class="card-image" :src="getImg($t('images.onboarding.startTest'))" mode="aspectFit" />
 			<button class="start-button" @click="startTest" :class="{ 'is-loading': isLoading }">
 				<text v-if="!isLoading" class="arrow">{{ $t('pages.preference.preference3.start_test') }}</text>
 				<view v-else class="loader"></view>
