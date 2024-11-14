@@ -8,7 +8,7 @@ export default createStore({
 		userId: 0, //用户ID
 		username: '', //用户名
 		userInfo: {}, //用户信息
-		locale: 'en',
+		locale: process.env.DEFAULT_LOCALE,
 		jobId: '',
 		selectedOptions: {},
 		homepageData: {},
