@@ -249,8 +249,9 @@ export default {
 
 	async createProfile(profileData) {
 		try {
+			const locale = uni.getLocale();
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/create_profile`,
+				url: `${API_ENDPOINT}/create_profile?locale=${locale}`,
 				method: 'POST',
 				data: profileData
 			});

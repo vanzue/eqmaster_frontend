@@ -16,7 +16,7 @@ export default [
       },
     },
   },
-  ...pluginVue.configs["flat/essential"],
+  ...pluginVue.configs["vue3/essential"],
   {
     rules: {
       "vue/multi-word-component-names": "off",
