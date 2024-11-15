@@ -413,7 +413,7 @@
 				}
 
 				if (this.num.length === 5) {
-					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory,this.locale)
+					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory)
 						.then((result) => {
 							console.log("Final Scenario Results:", {
 								scores: this.scores,

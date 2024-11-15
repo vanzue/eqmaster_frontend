@@ -520,7 +520,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: `https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -567,7 +567,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: `https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {

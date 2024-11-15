@@ -328,7 +328,7 @@ export default {
 		// console.log('startScenario called with jobId:', jobId);
 		try {
 			const response = await uni.request({
-				url: url.getUrl(`/initialize_scenario?locale=None`),
+				url: url.getUrl(`/initialize_scenario`),
 				method: 'POST',
 			});
 
@@ -355,7 +355,7 @@ export default {
 				data: {
 					scenario_id: parseInt(scenarioId),
 					choices: String(num),
-					locale: "none"
+					locale: uni.getLocale()
 				}
 			});
 
@@ -371,11 +371,12 @@ export default {
 		}
 	},
 
-	async finalizeScenario(scores, job_id, dialogue_history, locale) {
+	async finalizeScenario(scores, job_id, dialogue_history) {
 		// console.log('startScenario called with jobId:', jobId);
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);
 		// console.log("#####finalizeScenarioResponse data:", dialogue_history);
+		const locale = uni.getLocale();
 		console.log("#####locale:", locale);
 		try {
 			const response = await uni.request({
