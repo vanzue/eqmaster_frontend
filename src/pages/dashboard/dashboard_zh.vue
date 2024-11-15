@@ -583,7 +583,7 @@
 			async uploadImage(filePath) {
 				try {
 					this.isLoading = true;
-					const result = await apiService.uploadChatHistory(filePath, this.userId, 'zh');
+					const result = await apiService.uploadChatHistory(filePath, this.userId);
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {

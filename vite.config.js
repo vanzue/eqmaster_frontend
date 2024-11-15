@@ -6,6 +6,6 @@ export default defineConfig({
     uni(),
   ],
   define: {
-		'process.env.DEFAULT_LOCALE': '"en"', // en, zh-Hans
+		'process.env.DEFAULT_LOCALE': '"en"', // en, zh
 	},
 })
