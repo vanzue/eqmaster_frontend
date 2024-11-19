@@ -100,7 +100,7 @@
 				            provider: 'google',
 				            success: (info) => {
 				                // 获取用户信息成功, info.authResult保存用户信息
-								// console.log(info);
+								console.log(info);
 								// console.log('用户昵称为：' + info.userInfo.nickName);
 								uni.setStorageSync('username', info.userInfo.nickName);
 								this.$store.commit('setUsername', info.userInfo.nickName);
@@ -152,7 +152,7 @@
 				        // 登录成功
 				        uni.getUserInfo({
 				            provider: 'weixin',
-				            success: function(info) {
+				            success: (info) => {
 				                console.log(info);
 								uni.setStorageSync('username', info.userInfo.nickName);
 								this.$store.commit('setUsername', info.userInfo.nickName);
