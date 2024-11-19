@@ -3,18 +3,51 @@ const JSZip = require('../static/jszip.min.js');
 export const IMGURL="https://eqmaster.blob.core.chinacloudapi.cn";
 export const TOKEN="?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D";
 const platform =getPlatform();
+let isDownloading = false;
 
 export function getImg(picnName){
+  let filePath;
+
   if (finishload) {
     // #ifdef MP-WEIXIN
-    return `${wx.env.USER_DATA_PATH}${picnName}`;
+    filePath = `${wx.env.USER_DATA_PATH}/static/${picnName}`;
     // #endif
 
     // #ifdef APP-PLUS
-    return `_doc{picnName}`;
+    filePath = `_doc/static/${picnName}`;
     // #endif
+
+    if (fileExists(filePath)) {
+      return filePath;
+    } else {
+      if (!isDownloading) {
+        isDownloading = true;
+        clearStaticDir();
+        downLoadZip();
+      }
+      return IMGURL + picnName + TOKEN;
+    }
   }
-	return IMGURL+picnName+TOKEN;
+  return IMGURL + picnName + TOKEN;
+}
+function fileExists(filePath) {
+  // #ifdef MP-WEIXIN
+  const fs = wx.getFileSystemManager();
+  try {
+    fs.accessSync(filePath);
+    return true;
+  } catch (e) {
+    return false;
+  }
+  // #endif
+
+  // #ifdef APP-PLUS
+  try {
+    plus.io.resolveLocalFileSystemURL(filePath, () => true, () => false);
+  } catch (e) {
+    return false;
+  }
+  // #endif
 }
 function getPlatform() {
   if (typeof wx !== 'undefined' && wx.getSystemInfoSync) {
@@ -134,12 +167,15 @@ function unzipFileWx(filePath) {
         return Promise.all(promises);
       }).then(() => {
         finishload = true;
+        isDownloading = false;
         console.log('All files extracted and saved');
       }).catch((err) => {
+        isDownloading = false;
         console.error('Error loading zip:', err);
       });
     },
     fail: (err) => {
+      isDownloading = false;
       console.error('Read file error:', err);
     }
   });
@@ -167,6 +203,7 @@ function unzipFileApp(filePath) {
             }
           });
         }).catch((err) => {
+          isDownloading = false;
           console.error('Error loading zip:', err);
         });
       };

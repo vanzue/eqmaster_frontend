@@ -112,7 +112,16 @@
 				  }
 			},
 			loadAndDrawImageWx(src) {
-				uni.downloadFile({
+				const filePath = getImg(src);
+
+				if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.gif')) {
+					this.imgDic[src] = filePath;
+					this.downImgNum++;
+					if (this.downImgNum >= 6) {
+					this.drawSProgress();
+					}
+				} else {
+					uni.downloadFile({
 				        url: getImg(src),
 				        success: (res) => {
 				          if (res.statusCode === 200) {
@@ -134,6 +143,8 @@
 				          console.error('Download image error:', err);
 				        }
 				      });
+				}
+				
 			},
 			calculateBezierPoints() {
 				const width = this.canvasWidth;
