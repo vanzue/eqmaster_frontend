@@ -40,7 +40,8 @@
 
 <script>
 	import {
-		getImg
+		getImg,
+		downLoadZip
 	} from '../../scripts/constants.js';
 	import API_ENDPOINT from '../../services/api-service.js';
 	export default {
@@ -148,6 +149,7 @@
 			},
 		},
 		onLoad(options) {
+			downLoadZip()
 			// 获取URL传递的参数
 			if (options.username) {
 				this.username = options.username; // 将传递过来的用户名存储起来
