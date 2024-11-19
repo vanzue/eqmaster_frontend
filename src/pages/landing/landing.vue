@@ -20,8 +20,22 @@
 			<view class="quizButton" @click="startQuiz">
 				<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
 			</view>
-			<view class="loginButton" @click="login">
-				<text class="login-text">{{ $t('pages.landing.login') }}</text>
+		</view>
+		<view class="third-party">
+			<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
+			<view class="third-party-login">
+				<view class="loginButton" @click="googleLogin">
+					<image class="google-image" src="/static/onboarding/google_button.png"></image>
+					<!-- <text class="login-text-apple">Google Login</text> -->
+				</view>
+				<view class="loginButton" @click="wetchLogin">
+					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
+					<!-- <text class="login-text-apple">Wetch Login</text> -->
+				</view>
+				<!-- <view class="loginButton" @click="appleleLogin">
+					<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
+					<text class="login-text-apple">Sign in with Apple</text>
+				</view> -->
 			</view>
 		</view>
 
@@ -76,6 +90,84 @@
 				uni.navigateTo({
 					url: '/pages/battlefield/battlefield-loading-zh'
 				});
+			},
+			googleLogin() {
+				uni.login({
+				    provider: 'google',
+				    success: (loginRes) => {
+				        // 登录成功
+				        uni.getUserInfo({
+				            provider: 'google',
+				            success: (info) => {
+				                // 获取用户信息成功, info.authResult保存用户信息
+								// console.log(info);
+								// console.log('用户昵称为：' + info.userInfo.nickName);
+								uni.setStorageSync('username', info.userInfo.nickName);
+								this.$store.commit('setUsername', info.userInfo.nickName);
+								uni.navigateTo({
+									url: `/pages/preference/preference3`
+								});
+				            }
+				        })
+				    },
+				    fail: (err) => {
+				        // 登录授权失败
+				        // err.code是错误码
+						uni.showToast({
+							title: 'Authorization failed, please try again',
+							icon: 'none'
+						});
+				    }
+				});
+			},
+			appleleLogin() {
+				uni.login({
+				    provider: 'apple',
+				    success: function (loginRes) {
+				        // 登录成功
+				        uni.getUserInfo({
+				            provider: 'apple',
+				            success: function(info) {
+				                // 获取用户信息成功, info.authResult保存用户信息
+								console.log(info);
+								uni.setStorageSync('username', info.userInfo.nickName);
+								this.$store.commit('setUsername', info.userInfo.nickName);
+								uni.navigateTo({
+									url: `/pages/preference/preference3`
+								});
+				            }
+				        })
+				    },
+				    fail: function (err) {
+						console.log(err)
+				        // 登录授权失败
+				        // err.code是错误码
+				    }
+				});
+			},
+			wetchLogin() {
+				uni.login({
+				    provider: 'weixin',
+				    success: function (loginRes) {
+				        // 登录成功
+				        uni.getUserInfo({
+				            provider: 'weixin',
+				            success: function(info) {
+				                console.log(info);
+								uni.setStorageSync('username', info.userInfo.nickName);
+								this.$store.commit('setUsername', info.userInfo.nickName);
+								uni.navigateTo({
+									url: `/pages/preference/preference3`
+								});
+				            }
+				        })
+				    },
+				    fail: function (err) {
+				        // 登录授权失败
+				        // err.code是错误码
+				    }
+				});
+
 			},
 		},
 		onLoad(options) {
@@ -208,5 +300,54 @@
 		line-height: 40rpx;
 		font-weight: 400;
 		font-family: Arial;
+	}
+	.third-party {
+		position: absolute;
+		bottom: 50rpx;
+		display: block;
+		z-index: 100;
+		justify-content: center;
+		text-align: center;
+		width: 100%;
+	}
+	.third-party-text {
+		color: #4f4e4e;
+		display: flex;
+		align-items: center;
+	}
+	.line {
+		flex: 1; /* 使线条占据剩余空间 */
+		height: 1px; /* 线条的高度 */
+		background-color: #4f4e4e; /* 线条的颜色 */
+		margin: 0 10px; /* 线条与文字之间的间距 */
+	}
+	.third-party-login {
+		display: flex;
+		gap: 100rpx;
+		justify-content: center;
+	}
+	.loginButton {
+		/* background-color: white; */
+		width: 80rpx;
+		height: 80rpx;
+		border-radius: 64rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 16rpx;
+		margin-top: 40rpx;
+		border: 1rpx solid #4f4e4e; /* 添加灰色的边框 */
+	}
+	.google-image {
+		width: 32rpx;
+		height: 32rpx;
+		/* margin-right: 20rpx; */
+	}
+	.apple-image {
+		width: 80rpx;
+		height: 80rpx;
+	}
+	.login-text-apple {
+		color: #252529;
 	}
 </style>
