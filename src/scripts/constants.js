@@ -244,3 +244,31 @@ function saveFileApp(filename, content) {
     });
   });
 }
+
+
+export function clearStaticDir() {
+  // #ifdef MP-WEIXIN
+  const fs = wx.getFileSystemManager();
+  const staticDir = `${wx.env.USER_DATA_PATH}/static`;
+  fs.rmdir({
+    dirPath: staticDir,
+    recursive: true,
+    success: () => {
+      console.log('Static directory cleared.');
+    },
+    fail: (err) => {
+      console.error('Failed to clear static directory:', err);
+    }
+  });
+  // #endif
+
+  // #ifdef APP-PLUS
+  plus.io.resolveLocalFileSystemURL('_doc/static', (entry) => {
+    entry.removeRecursively(() => {
+      console.log('Static directory cleared.');
+    }, (err) => {
+      console.error('Failed to clear static directory:', err);
+    });
+  });
+  // #endif
+}
