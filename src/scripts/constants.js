@@ -7,11 +7,11 @@ const platform =getPlatform();
 export function getImg(picnName){
   if (finishload) {
     // #ifdef MP-WEIXIN
-    return `${wx.env.USER_DATA_PATH}/static/${picnName}`;
+    return `${wx.env.USER_DATA_PATH}${picnName}`;
     // #endif
 
     // #ifdef APP-PLUS
-    return `_doc/static/${picnName}`;
+    return `_doc{picnName}`;
     // #endif
   }
 	return IMGURL+picnName+TOKEN;
