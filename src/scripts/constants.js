@@ -30,6 +30,24 @@ export function getImg(picnName){
   }
   return IMGURL + picnName + TOKEN;
 }
+
+function checkJsonContent(filePath) {
+
+  const fs = wx.getFileSystemManager();
+
+  fs.readFile({
+    filePath: filePath, // 文件路径
+    encoding: 'utf8', // 文件编码
+    success(res) {
+      console.log('文件内容:', res.data); // res.data即为文件内容
+    },
+    fail(err) {
+      console.error('读取文件失败', err);
+    }
+  });
+
+}
+
 function fileExists(filePath) {
   // #ifdef MP-WEIXIN
   const fs = wx.getFileSystemManager();
@@ -63,6 +81,7 @@ export function downLoadZip() {
   if (startLoad) return;
   startLoad = true;
   console.log('downLoadZip');
+  clearStaticDir();
   checkAndDownloadZip();
 }
 
@@ -91,6 +110,7 @@ function checkAndDownloadWx() {
     fail: () => {
       console.log('Static directory does not exist, starting download.');
       downloadZip();
+      downloadJson();
     }
   });
 }
@@ -126,6 +146,26 @@ function downloadZip() {
   });
 }
 
+function downloadJson() {
+  console.log(IMGURL + "/static/onboarding.zip" + TOKEN);
+  uni.downloadFile({
+    url: IMGURL + "/static/onboarding.zip" + TOKEN,
+    success: (res) => {
+      if (res.statusCode === 200) {
+        const filePath = res.tempFilePath;
+        console.log('ZIP file downloaded:', filePath);
+        // 解压 ZIP 文件
+        unzipFile(filePath);
+      } else {
+        console.error('Download failed:', res.statusCode);
+      }
+    },
+    fail: (err) => {
+      console.error('Download error:', err);
+    }
+  });
+}
+
 let finishload=false;
 
 function unzipFile(filePath) {
@@ -139,7 +179,7 @@ function unzipFile(filePath) {
 }
 
 function unzipFileWx(filePath) {
-  console.log('微信小程序');
+  console.log('微信小程序解压文件路径 ' + filePath);
   const fs = wx.getFileSystemManager();
   fs.readFile({
     filePath,
@@ -225,6 +265,7 @@ function saveFile(filename, content) {
 function saveFileWx(filename, content) {
   const fs = wx.getFileSystemManager();
   const savePath = `${wx.env.USER_DATA_PATH}/${filename}`;
+  console.log('savePath: ' + savePath);
   const dir = savePath.substring(0, savePath.lastIndexOf('/'));
   fs.access({
     path: dir,
@@ -257,6 +298,9 @@ function writeFileWx(filePath, content) {
     success() {
       // console.log('File saved:', filePath);
       // 使用保存的文件
+      if(filePath.endsWith('json')) {
+        checkJsonContent(filePath);
+      }
     },
     fail(err) {
       console.error('Save file error:', err);
