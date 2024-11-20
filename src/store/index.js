@@ -3,12 +3,14 @@ import {
 } from 'vuex';
 import apiService from "@/services/api-service";
 
+const DEFAULT_LOCALE = 'zh'; // en, zh
+
 export default createStore({
 	state: {
 		userId: 0, //用户ID
 		username: '', //用户名
 		userInfo: {}, //用户信息
-		locale: process.env.DEFAULT_LOCALE,
+		locale: DEFAULT_LOCALE,
 		jobId: '',
 		selectedOptions: {},
 		homepageData: {},
