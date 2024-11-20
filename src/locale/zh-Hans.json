@@ -4,6 +4,10 @@
 	"locale.zh-hans": "简体中文",
 	"locale.zh-hant": "繁体中文",
 
+	"components.Nav.home": "主页",
+	"components.Nav.Battlefield": "修罗场",
+	"components.Nav.Profile": "我的",
+
 	"pages.landing.get_started": "开始体验",
 	"pages.landing.login": "登陆已有账号",
 
@@ -11,10 +15,91 @@
 	"pages.landing.question":  "很开心见到你！你叫什么名字？",
 	"pages.landing.input_name":  "设置你的用户名",
 	"pages.landing.input_name_reminder":  "请输入您的名字",
+
+	"images.onboarding.splash" : "/static/splashZH2.png",
 	"images.startTest": "/static/onboarding/startTest-zh.png",
     "images.onboarding.landing": "/static/onboarding/landing_zh.png",
 
 	"pages.preference.preference3.question": "让我们看看你现在适合什么情商段位!",
 	"images.onboarding.startTest": "/static/onboarding/startTest3.png",
-	"pages.preference.preference3.start_test": "开始测试 ↗"
+	"pages.preference.preference3.start_test": "开始测试 ↗",
+
+	"pages.dashboard.morning": "早",
+	"pages.dashboard.superpower": "你的超能力是：",
+	"pages.dashboard.tip": "今日锦囊",
+	"pages.dashboard.tip.title": "FFI赞美法",
+	"pages.dashboard.tip.text": "指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。",
+	"pages.dashboard.tip.moments": "聊天回忆",
+	"pages.dashboard.tip.advice": "AI战略家帮你回顾聊天片段",
+	"pages.dashboard.emotion.capybara": "驱动力赛道",
+	"pages.dashboard.emotion.hedgehog": "共情力花园",
+	"pages.dashboard.emotion.coyote": "社交力集市",
+	"pages.dashboard.emotion.ostrich": "感知力迷宫",
+	"pages.dashboard.emotion.monkey": "掌控力灯塔",
+	"pages.dashboard.emotion.emotion": "Emotion",
+	"images.dashboard.import-button": "/static/dashboard/import-button-zh.png",
+
+
+
+	"pages.result.loading.splash": "接下来，\n一起来看看你的职场人格类型吧!",
+    "pages.result.loading.status": "正在生成你专属的情商报告",
+	"pages.result.result.title": "我的检测结果",
+	"pages.result.result.type": "我的EQ形象",
+	"pages.result.result.score": "情商得分",
+	"pages.result.result.overview": "问题诊断",
+	"pages.result.result.advices": "提升指南",
+	"pages.result.result.keys": "详细报告",
+	"pages.result.result.guide": "开启高情商之旅",
+	"pages.result.result.perception": "感知力",
+	"pages.result.result.regulation": "掌控力",
+	"pages.result.result.social": "共情力",
+	"pages.result.result.empathy": "社交力",
+	"pages.result.result.motivation": "驱动力",
+
+	"pages.profile.header": "你已经来到这里:",
+	"pages.profile.days": "天",
+	"pages.profile.diamonds": "钻石",
+	"pages.profile.stars": "星星",
+	"pages.profile.bot.desc": "添加获得更多分析!",
+	"pages.profile.bot.add": "添加",
+	"pages.profile.logout": "退出登录 / 切换账号",
+	"pages.profile.popup.header": "退出登录?",
+	"pages.profile.popup.ok": "确认",
+	"pages.profile.popup.cancel": "取消",
+
+	"pages.battlefield.intro.continue": "继续",
+	"pages.battlefield.intro.unit1.title": "第一关",
+	"pages.battlefield.intro.unit1.subtitle": "老板肚子里的蛔虫",
+	"pages.battlefield.intro.unit1.time": "3-4分钟",
+	"pages.battlefield.intro.unit1.desc": "在一个精致的会所包厢里，你与一位高层领导和两名同事共进晚餐。看似轻松的聚会，实际上领导在暗中观察你们，准备决定谁将参与重要项目。你必须讨好领导，同时平衡同事关系，因为一个小小的失误可能改变你的未来。",
+
+	"pages.battlefield.task.subtitle": "通关任务",
+	"pages.battlefield.task.task1": "一句话让每位同事心情愉悦",
+	"pages.battlefield.task.task2": "点出让每位同事满意的菜品",
+	"pages.battlefield.task.continue": "我知道了",
+
+	"pages.battlefield.loading.title": "聚餐中",
+
+	"illustration.animal.ostrich.name": "鸵鸟",
+	"illustration.animal.ostrich.weakness": "感知力",
+	"illustration.animal.ostrich.characteristics": "你像拥有第六感一样，总能敏锐地捕捉到细微的情绪变化和暗示。",
+	"illustration.animal.monkey.name": "猴子",
+	"illustration.animal.monkey.weakness": "掌控力",
+	"illustration.animal.monkey.characteristics": "即使在压力之下，你也能稳稳掌控情绪，保持冷静自若。",
+	"illustration.animal.hedgehog.name": "刺猬",
+	"illustration.animal.hedgehog.weakness": "共情力",
+	"illustration.animal.hedgehog.characteristics": "你总能轻松洞察并理解他人的情绪，仿佛读懂他们的心思一般。",
+	"illustration.animal.coyote.name": "土狼",
+	"illustration.animal.coyote.weakness": "社交力",
+	"illustration.animal.coyote.characteristics": "你就像一座桥梁，轻松拉近彼此距离，激发大家携手合作，共同前行。",
+	"illustration.animal.capybara.name": "卡皮巴拉",
+	"illustration.animal.capybara.weakness": "驱动力",
+	"illustration.animal.capybara.characteristics": "你像一团火焰，燃烧着无穷的能量，始终专注于目标，不断点燃周围人的激情与动力。",
+
+	"components.SProgressBar.unit": "关卡",
+	"components.SProgressBar.unit1.name": "老板肚子里的蛔虫",
+	"components.SProgressBar.unit2.name": "被老板刁难",
+	"components.SProgressBar.unit3.name": "遇到无理同事",
+
+	"": ""
 }

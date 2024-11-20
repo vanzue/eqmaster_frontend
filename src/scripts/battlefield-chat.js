@@ -25,10 +25,12 @@ function sendRequest(
 			chat_content: JSON.stringify(formattedChatContent),
 		};
 
+		body['lang_type'] = uni.getLocale();
+
 		console.log("body:", body);
 
 		uni.request({
-			url: url,
+			url: `${url}?locale=${uni.getLocale()}`,
 			method: "POST",
 			header: {
 				"Content-Type": "application/json",
@@ -202,7 +204,7 @@ export async function continueChat(chatHistory, courseId) {
 export async function checkShowToolTips(personId) {
 	return new Promise((resolve, reject) => {
 		// 构造完整的请求 URL
-		const url = `${TOOLTIP_URL}/${personId}`; // 使用传入的 personId
+		const url = `${TOOLTIP_URL}/${personId}?locale=${uni.getLocale()}`; // 使用传入的 personId
 
 		uni.request({
 			url: url, // 使用构造的 URL

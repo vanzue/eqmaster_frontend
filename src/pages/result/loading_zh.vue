@@ -1,7 +1,7 @@
 <template>
 	<view class="container" @touchmove.prevent>
 		<view class="splash-screen">
-			<text class="splash-text">接下来，\n一起来看看你的职场人格类型吧!</text>
+			<text class="splash-text">{{ $t('pages.result.loading.splash') }}</text>
 
 			<image class="splash-image" src="/static/cta-new.png" mode="widthFix"
 				:style="{ left: splashImageLeft1 + 'rpx' }"></image>
@@ -13,7 +13,7 @@
 				<view class="splash-progress-bar">
 					<view class="splash-progress-fill" :style="{ width: progress + '%' }"></view>
 				</view>
-				<text class="status-text">正在生成你专属的情商报告</text>
+				<text class="status-text">{{ $t('pages.result.loading.status') }}</text>
 			</view>
 		</view>
 	</view>
