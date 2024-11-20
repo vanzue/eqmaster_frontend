@@ -123,11 +123,11 @@
 			appleleLogin() {
 				uni.login({
 				    provider: 'apple',
-				    success: function (loginRes) {
+				    success: (loginRes) => {
 				        // 登录成功
 				        uni.getUserInfo({
 				            provider: 'apple',
-				            success: function(info) {
+				            success: (info) => {
 				                // 获取用户信息成功, info.authResult保存用户信息
 								console.log(info);
 								uni.setStorageSync('username', info.userInfo.nickName);
@@ -138,7 +138,7 @@
 				            }
 				        })
 				    },
-				    fail: function (err) {
+				    fail: (err) => {
 						console.log(err)
 				        // 登录授权失败
 				        // err.code是错误码
@@ -148,7 +148,7 @@
 			wetchLogin() {
 				uni.login({
 				    provider: 'weixin',
-				    success: function (loginRes) {
+				    success: (loginRes) => {
 				        // 登录成功
 				        uni.getUserInfo({
 				            provider: 'weixin',
@@ -162,9 +162,13 @@
 				            }
 				        })
 				    },
-				    fail: function (err) {
+				    fail: (err) => {
 				        // 登录授权失败
 				        // err.code是错误码
+						uni.showToast({
+							title: 'Authorization failed, please try again',
+							icon: 'none'
+						});
 				    }
 				});
 
