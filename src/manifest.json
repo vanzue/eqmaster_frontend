@@ -97,7 +97,12 @@
             "minified" : true
         },
         "usingComponents" : true,
-        "lazyCodeLoading" : "requiredComponents"
+        "lazyCodeLoading" : "requiredComponents",
+		"permission": {
+		      "scope.userInfo": {
+		        "desc": "用于完善会员资料"
+		      }
+		    }
     },
     "mp-alipay" : {
         "usingComponents" : true
