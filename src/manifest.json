@@ -67,7 +67,7 @@
                     },
                     "weixin" : {
                         "appid" : "wx73e5286134ea7057",
-                        "appsecret": "a13303e1deb859738cde4fb0794da190",
+                        // "appsecret": "a13303e1deb859738cde4fb0794da190",
                         "UniversalLinks" : "https://eqmaster.aipowernft.com/profile/"
                     }
                 }

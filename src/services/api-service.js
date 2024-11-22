@@ -423,5 +423,51 @@ export default {
 		}
 	},
 
+	async appGoogleLogin(unionid='', nickname='', headimgurl='', email='') {
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/google/login`,
+				method: 'POST',
+				data: {
+					email: email,
+					headimgurl: headimgurl,
+					nickname: nickname,
+					unionid: unionid
+				}
+			});
+
+			if (response.statusCode === 200) {
+				return response.data;
+			} else {
+				throw new Error(`Failed to weixin login: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.log(error);
+			console.error('Error weixin login:', error);
+			throw error;
+		}
+	},
+
+	async appWeixinLogin(code) {
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/app2wx/login`,
+				method: 'POST',
+				data: {
+					code: code
+				}
+			});
+
+			if (response.statusCode === 200) {
+				return response.data;
+			} else {
+				throw new Error(`Failed to weixin login: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error weixin login:', error);
+			throw error;
+		}
+	},
+
 	// Add more API methods here as needed
 };
