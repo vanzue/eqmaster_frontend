@@ -102,11 +102,11 @@
 				            success: async (info) => {
 				                // 获取用户信息成功, info.authResult保存用户信息
 								const loginResponse = await apiService.appGoogleLogin(info.userInfo.unionid, info.userInfo.nickname, info.userInfo.headimgurl, info.userInfo.email);
-								console.log(loginResponse);
+								// console.log(loginResponse);
 								if(loginResponse) {
 									// console.log('用户昵称为：' + info.userInfo.nickName);
-									uni.setStorageSync('username', loginResponse.nickname);
-									this.$store.commit('setUsername', loginResponse.nickname);
+									uni.setStorageSync('username', loginResponse.name);
+									this.$store.commit('setUsername', loginResponse.name);
 									uni.setStorageSync('userId', loginResponse.userid);
 									uni.setStorageSync('jobId', loginResponse.jobid);
 									this.$store.commit('setUserId', loginResponse.userid);
@@ -160,8 +160,8 @@
 				    success: async (loginRes) => {
 						const loginResponse = await apiService.appWeixinLogin(loginRes.code);
 						if(loginResponse) {
-							uni.setStorageSync('username', loginResponse.nickname);
-							this.$store.commit('setUsername', loginResponse.nickname);
+							uni.setStorageSync('username', loginResponse.name);
+							this.$store.commit('setUsername', loginResponse.name);
 							uni.setStorageSync('userId', loginResponse.userid);
 							uni.setStorageSync('jobId', loginResponse.jobid);
 							this.$store.commit('setUserId', loginResponse.userid);
