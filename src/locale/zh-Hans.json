@@ -16,12 +16,12 @@
 	"pages.landing.input_name":  "设置你的用户名",
 	"pages.landing.input_name_reminder":  "请输入您的名字",
 
-	"images.onboarding.splash" : "/static/splashZH2.png",
-	"images.startTest": "/static/onboarding/startTest-zh.png",
-    "images.onboarding.landing": "/static/onboarding/landing_zh.png",
+	"images.onboarding.splash" : "/static/web/splashZH2.webp",
+	"images.startTest": "/static/web/onboarding/startTest-zh.webp",
+    "images.onboarding.landing": "/static/web/onboarding/landing_zh.webp",
 
 	"pages.preference.preference3.question": "让我们看看你现在适合什么情商段位!",
-	"images.onboarding.startTest": "/static/onboarding/startTest3.png",
+	"images.onboarding.startTest": "/static/web/onboarding/startTest3.webp",
 	"pages.preference.preference3.start_test": "开始测试 ↗",
 
 	"pages.dashboard.morning": "早",

@@ -25,7 +25,7 @@
 		data() {
 			return {
 				username: '',
-				backgroundImage: getImg('/static/picture1.png'),
+				backgroundImage: getImg('/static/web/picture1.webp'),
 				getImg,
 			};
 		},

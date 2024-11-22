@@ -2,7 +2,7 @@
   <view class="background-image loading-container">
     <image
       class="background-image"
-      :src="getImg('/static/battlefield/background.png')"
+      :src="getImg('/static/web/battlefield/background.webp')"
       mode="aspectFill"
     />
     <!-- Content -->

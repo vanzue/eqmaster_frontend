@@ -24,11 +24,11 @@
 								{{ $t('pages.result.result.score') }}
 							</view>
 							<view class="animal-score-desc"
-								:style="{ backgroundImage: `url(${getImg('/static/resulten/animal-name-3.png')})` }">
+								:style="{ backgroundImage: `url(${getImg('/static/web/resulten/animal-name-3.webp')})` }">
 								{{homepageData?.response?.eq_scores?.score}}/100
 							</view>
 						</view>
-						<view class="animal-desc" :style="{ backgroundImage: `url(${getImg('/static/resulten/quote.png')})` }">
+						<view class="animal-desc" :style="{ backgroundImage: `url(${getImg('/static/web/resulten/quote.webp')})` }">
 							<view class="card-text-container">
 								<!-- <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
 								<text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text> -->

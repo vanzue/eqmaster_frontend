@@ -57,7 +57,7 @@
 					</view>
 					<view class="history-list">
 						<view>
-							<image class="import-button" :src="getImg('/static/dashboard/import-button.png')" mode="widthFix"
+							<image class="import-button" :src="getImg('/static/web/dashboard/import-button.webp')" mode="widthFix"
 								@click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
@@ -78,10 +78,10 @@
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
-						<image class="illustration36" :src="getImg('/static/Frame1.png')" mode="widthFix"></image>
-						<image class="illustration37" :src="getImg('/static/Frame22.png')" mode="widthFix"
+						<image class="illustration36" :src="getImg('/static/web/Frame1.webp')" mode="widthFix"></image>
+						<image class="illustration37" :src="getImg('/static/web/Frame22.webp')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
-						<image class="illustration38" :src="getImg('/static/Frame3.png')" mode="widthFix"></image>
+						<image class="illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"></image>
 					</view>
 				</view>
 			</view>
@@ -90,12 +90,12 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/diamond.png')" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/dashboard2/star.jpg')" mode="widthFix">
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount === homepageData?.response?.personal_info?.num_star ? gemCount : gemCount}}</text>
@@ -105,7 +105,7 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/card-course.png')})` }">
+					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -256,7 +256,7 @@
 					// 可以根需要添加更多卡片
 				],
 				showNewPopup: false,
-				tipImageSrc: getImg('/static/tip.png'), // Initial image source
+				tipImageSrc: getImg('/static/web/tip.webp'), // Initial image source
 				currentDate: new Date(),
 			};
 		},
@@ -334,23 +334,23 @@
 				if (maxScore === scores?.dimension1_score) {
 					console.log("usercard src:", '鸵鸟')
 					this.animal = "ostrich";
-					return getImg('/static/dashboard/en/ostrich.png');
+					return getImg('/static/web/dashboard/en/ostrich.webp');
 				} else if (maxScore === scores?.dimension2_score) {
 					console.log("usercard src:", '猴子')
 					this.animal = "monkey";
-					return getImg('/static/dashboard/en/monkey.png');
+					return getImg('/static/web/dashboard/en/monkey.webp');
 				} else if (maxScore === scores?.dimension3_score) {
 					console.log("usercard src:", '狼')
 					this.animal = "coyote";
-					return getImg('/static/dashboard/en/coyote.png');
+					return getImg('/static/web/dashboard/en/coyote.webp');
 				} else if (maxScore === scores?.dimension4_score) {
 					console.log("usercard src:", '刺猬')
 					this.animal = "hedgehog";
-					return getImg('/static/dashboard/en/hedgehog.png');
+					return getImg('/static/web/dashboard/en/hedgehog.webp');
 				} else if (maxScore === scores?.dimension5_score) {
 					console.log("usercard src:", '水豚')
 					this.animal = "capybara";
-					return getImg('/static/dashboard/en/capybara.png');
+					return getImg('/static/web/dashboard/en/capybara.webp');
 				}
 			},
 
@@ -840,10 +840,10 @@
 				}
 			},
 			toggleTipImage() {
-				this.tipImageSrc = this.tipImageSrc === getImg('/static/tip.png') ?
-					getImg('/static/tipp.png') // Replace with the new image path
+				this.tipImageSrc = this.tipImageSrc === getImg('/static/web/tip.webp') ?
+					getImg('/static/web/tipp.webp') // Replace with the new image path
 					:
-					getImg('/static/tip.png');
+					getImg('/static/web/tip.webp');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name

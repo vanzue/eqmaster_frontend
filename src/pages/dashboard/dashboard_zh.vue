@@ -77,10 +77,10 @@
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
-						<image class="illustration36" :src="getImg('/static/Frame1.png')" mode="widthFix"></image>
-						<image class="illustration37" :src="getImg('/static/Frame22.png')" mode="widthFix"
+						<image class="illustration36" :src="getImg('/static/web/Frame1.webp')" mode="widthFix"></image>
+						<image class="illustration37" :src="getImg('/static/web/Frame22.webp')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
-						<image class="illustration38" :src="getImg('/static/Frame3.png')" mode="widthFix"></image>
+						<image class="illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"></image>
 					</view>
 				</view>
 			</view>
@@ -89,12 +89,12 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/diamond.png')" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/dashboard2/star.jpg')" mode="widthFix">
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
@@ -104,7 +104,7 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/card-course.png')})` }">
+					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -257,7 +257,7 @@
 					// 可以根需要添加更多卡片
 				],
 				showNewPopup: false,
-				tipImageSrc: getImg('/static/tip.png'), // Initial image source
+				tipImageSrc: getImg('/static/web/tip.webp'), // Initial image source
 				currentDate: new Date(),
 			};
 		},
@@ -814,10 +814,10 @@
 				}
 			},
 			toggleTipImage() {
-				this.tipImageSrc = this.tipImageSrc === getImg('/static/tip.png') ?
-					getImg('/static/tipp.png') // Replace with the new image path
+				this.tipImageSrc = this.tipImageSrc === getImg('/static/web/tip.webp') ?
+					getImg('/static/web/tipp.webp') // Replace with the new image path
 					:
-					getImg('/static/tip.png');
+					getImg('/static/web/tip.webp');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name

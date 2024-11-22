@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<image class="background-image" :src="getImg('/static/picture1.png')" mode="widthFix"></image>
+		<image class="background-image" :src="getImg('/static/web/picture1.webp')" mode="widthFix"></image>
 
 		<view class="text-content">
 			<text class="question">?? 你的生日是什么时候？</text>

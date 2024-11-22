@@ -43,19 +43,19 @@
 				selectedGender: null,
 				userId: '',
 				username: '',
-				backgroundImage: getImg('/static/picture1.png'), // 确保背景图片路径正确
+				backgroundImage: getImg('/static/web/picture1.webp'), // 确保背景图片路径正确
 				genderIcons: {
 					female: {
-						default: getImg('/static/2.png'),
-						selected: getImg('/static/2-selected.png')
+						default: getImg('/static/web/2.webp'),
+						selected: getImg('/static/web/2-selected.webp')
 					},
 					male: {
-						default: getImg('/static/3.png'),
-						selected: getImg('/static/3-selected.png')
+						default: getImg('/static/web/3.webp'),
+						selected: getImg('/static/web/3-selected.webp')
 					},
 					other: {
-						default: getImg('/static/4.png'),
-						selected: getImg('/static/4-selected.png')
+						default: getImg('/static/web/4.webp'),
+						selected: getImg('/static/web/4-selected.webp')
 					}
 				}
 			};

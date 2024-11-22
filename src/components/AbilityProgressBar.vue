@@ -67,7 +67,7 @@ export default {
 			};
 		},
 		getIndicatorIcon() {
-			return getImg(`/static/${this.animal}_progress.png`);
+			return getImg(`/static/web/${this.animal}_progress.webp`);
 		}
 	},
 	methods: {

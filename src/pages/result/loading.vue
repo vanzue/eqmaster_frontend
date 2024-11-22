@@ -3,9 +3,9 @@
 		<view class="splash-screen">
 			<text class="splash-text">Now, let's see your EQ report!</text>
 			<view class="image-container">
-				<image class="splash-image" :src="getImg('/static/cta-new.png')" mode="widthFix"
+				<image class="splash-image" :src="getImg('/static/web/cta-new.webp')" mode="widthFix"
 					:style="{ left: splashImageLeft1 + 'rpx' }"></image>
-				<image class="splash-image" :src="getImg('/static/cta-new.png')" mode="widthFix"
+				<image class="splash-image" :src="getImg('/static/web/cta-new.webp')" mode="widthFix"
 					:style="{ left: splashImageLeft2 + 'rpx' }"></image>
 			</view>
 			<view class="progress-container">

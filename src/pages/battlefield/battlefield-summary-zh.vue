@@ -7,8 +7,8 @@
    </view> -->
 			<image class="head-image" :src="
           this.isPass
-            ? getImg('/static/battlefield/IP-green.png')
-            : getImg('/static/battlefield/IP-grey.png')
+            ? getImg('/static/web/battlefield/IP-green.webp')
+            : getImg('/static/web/battlefield/IP-grey.webp')
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
@@ -17,7 +17,7 @@
 				<reward-bar :style="{ backgroundColor: 'transparent', width: '300rpx' }" :gemCount="this.gemCount"
 					gem-icon-width="40px" gem-icon-height="40px"></reward-bar>
 				<view class="diamond-wrapper">
-					<image class="diamond-image" :src="getImg('/static/battlefield/diamond.png')" mode="aspectFill"></image>
+					<image class="diamond-image" :src="getImg('/static/web/battlefield/diamond.webp')" mode="aspectFill"></image>
 					<text class="diamond-text">
 						{{ this.isPass ? "+10" : "+3" }}
 					</text>
@@ -43,11 +43,11 @@
 					</view>
 
 					<view class="sub-card">
-						<npc-comment :name="'老板'" :avatar="getImg('/static/battlefield/boss.png')" :comment="comments[0]"
+						<npc-comment :name="'老板'" :avatar="getImg('/static/web/battlefield/boss.webp')" :comment="comments[0]"
 							:npcHealth="Number(npcHealthValues[0])"></npc-comment>
-						<npc-comment :name="'同事A'" :avatar="getImg('/static/battlefield/xiaoA.png')" :comment="comments[1]"
+						<npc-comment :name="'同事A'" :avatar="getImg('/static/web/battlefield/xiaoA.webp')" :comment="comments[1]"
 							:npcHealth="npcHealthValues[1]"></npc-comment>
-						<npc-comment :name="'同事B'" :avatar="getImg('/static/battlefield/xiaoB.png')" :comment="comments[2]"
+						<npc-comment :name="'同事B'" :avatar="getImg('/static/web/battlefield/xiaoB.webp')" :comment="comments[2]"
 							:npcHealth="npcHealthValues[2]"></npc-comment>
 					</view>
 
@@ -57,12 +57,12 @@
 			<view class="card third-card">
 				<view class="third-card-title">
 					<text class="tips-title">本关情商技巧</text>
-					<image class="tips-icon" :src="getImg('/static/battlefield/eqtips.png')" mode="widthFix"></image>
+					<image class="tips-icon" :src="getImg('/static/web/battlefield/eqtips.webp')" mode="widthFix"></image>
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
 					<text>{{ suggestion }}</text>
-					<image class="tips-icon1"  :src="getImg('/static/battlefield/eqtips1.png')" mode="widthFix"></image>
+					<image class="tips-icon1"  :src="getImg('/static/web/battlefield/eqtips1.webp')" mode="widthFix"></image>
 
 				</view>
 

@@ -33,7 +33,13 @@ export function getImg(picnName) {
   //     return  IMGURL + picnName + TOKEN;
   //   }
   // }
-  return IMGURL + picnName + TOKEN;
+  let filePath = IMGURL + picnName + TOKEN;
+
+  // #ifdef WEB
+  filePath = picnName;
+  // #endif
+
+  return filePath;
 }
 
 function checkJsonContent(filePath) {
