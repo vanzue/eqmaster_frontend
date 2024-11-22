@@ -47,12 +47,7 @@
 			},
 			levelNames: {
 				type: Array,
-				default: () => [
-					'老板肚子里的蛔虫',
-					'被老板刁难',
-					'遇到无理同事'
-				]
-			},
+			}, 
 			isCompleteTask: {
 				type: Boolean,
 				default: false
@@ -73,7 +68,15 @@
 				getImg
 			};
 		},
-		
+		computed: {
+			localLevelNames() {
+				return this.levelNames || [
+					this.$t('components.SProgressBar.unit1.name'),
+					this.$t('components.SProgressBar.unit2.name'),
+					this.$t('components.SProgressBar.unit3.name'),
+				];
+			}
+		},
 		mounted() {
 			uni.getSystemInfo({
 				success: (res) => {
@@ -453,7 +456,7 @@
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle'; // 确保文本垂直居中
 					// const levelText = `Unit${this.numberToChineseCharacter(i + 1)}`;
-					const levelText = `关卡 ${i + 1}`;
+					const levelText = `${this.$t('components.SProgressBar.unit')} ${i + 1}`;
 					ctx.fillText(levelText, textContainerX + textContainerWidth / 2, textContainerY - 18);
 
 					ctx.restore(); // 恢复之前保存的绘图状态
@@ -463,7 +466,7 @@
 					ctx.fillStyle = 'white'; // 或者您想要的其他颜色
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
-					const levelName = this.levelNames[i] || `Level ${i + 1}`;
+					const levelName = this.localLevelNames[i] || `Level ${i + 1}`;
 
 					// 添加文本换行逻辑
 					const maxWidth = textContainerWidth; // 留一些边距

@@ -2,14 +2,15 @@ import {
 	createStore
 } from 'vuex';
 import apiService from "@/services/api-service";
+
+const DEFAULT_LOCALE = 'zh'; // en, zh
 import { getImg } from '../scripts/constants';
-const defaultLocale = typeof process !== 'undefined' ? process.env.DEFAULT_LOCALE : 'zh-CN'; // 默认语言
 export default createStore({
 	state: {
 		userId: 0, //用户ID
 		username: '', //用户名
 		userInfo: {}, //用户信息
-		locale: defaultLocale,
+		locale: DEFAULT_LOCALE,
 		jobId: '',
 		selectedOptions: {},
 		homepageData: {},

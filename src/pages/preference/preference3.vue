@@ -122,9 +122,10 @@
 					})();
 
 					console.log("####scenario id:############", scenarioId);
-					const scenarioResponse = scenarioId !== undefined ?
-						await apiService.startScenarioWithId(this.jobId, scenarioId) :
-						await apiService.startScenario(this.jobId);
+					// const scenarioResponse = scenarioId !== undefined ?
+					// 	await apiService.startScenarioWithId(this.jobId, scenarioId) :
+					// 	await apiService.startScenario(this.jobId);
+					const scenarioResponse = await apiService.initializeScenario();
 
 
 					console.log("#####################fetched scenario: ", scenarioResponse);

@@ -12,7 +12,7 @@
 					<view class="have-been-view-center">
 						<view class="have-been-header">
 							<image src="/static/user_icon.png" class="have-been-header-icon"></image>
-							<text class="have-been-header-text">You have been here:</text>
+							<text class="have-been-header-text">{{ $t('pages.profile.header') }}</text>
 						</view>
 						<view class="day">
 							<view class="day-content">
@@ -68,7 +68,7 @@
 
 		</scroll-view>
 		<view class="log-out" @click="logoutShow = true">
-			log out / switch user
+			{{ $t('pages.profile.logout') }}
 		</view>
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 

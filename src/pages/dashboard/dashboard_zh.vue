@@ -11,7 +11,7 @@
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
-					<text class="score-title-head">早, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
+					<text class="score-title-head">{{ $t('pages.dashboard.morning') }}, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
 					<view class="character-view" @click="navigateToResult">
@@ -21,7 +21,7 @@
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
 								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">
-									你的超能力是：
+									{{ $t('pages.dashboard.superpower') }}
 								</text>
 								<text
 									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
@@ -34,7 +34,7 @@
 					</view>
 
 					<view style="margin-top: 24rpx;">
-						<text class="card-title1">今日锦囊</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip') }}</text>
 						<view class="calendar">
 							<view class="left-calendar">
 								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
@@ -43,20 +43,20 @@
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									<text style="font-weight: bold;">FFI赞美法</text>
-									指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。
+									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
+									{{ $t('pages.dashboard.tip.text') }}
 								</text>
 							</view>
 						</view>
 					</view>
 
 					<view class="network-title-container">
-						<text class="card-title1">聊天回忆</text>
-						<text class="card-title15">AI战略家帮你回顾聊天片段</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip.moments') }}</text>
+						<text class="card-title15">{{ $t('pages.dashboard.tip.advice') }}</text>
 					</view>
 					<view class="history-list">
 						<view>
-							<image class="import-button" :src="getImg('/static/dashboard/import-button-zh.png')"
+							<image class="import-button" :src="getImg($t('images.dashboard.import-button'))"
 								mode="widthFix" @click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
@@ -287,7 +287,7 @@
 				return this.$store.getters.getCharacteristics;
 			},
 			illustrationData() {
-				return illustrationSrc(this.homepageData, this.$store);
+				return illustrationSrc(this.homepageData, this.$store, this.$t);
 			},
 			formattedBirthday() {
 				if (this.birthday) {
@@ -300,7 +300,7 @@
 				const options = {
 					month: 'short'
 				}; // 'long' for full month name
-				const monthFormatter = new Intl.DateTimeFormat('zh-CN', options);
+				const monthFormatter = new Intl.DateTimeFormat(uni.getLocale(), options);
 				return monthFormatter.format(this.currentDate).toUpperCase();
 			},
 			currentDate() {
@@ -339,15 +339,15 @@
 			getEmotionText() {
 				switch (this.minanimal) {
 					case 'capybara': //水豚
-						return '驱动力赛道';
+						return this.$t('pages.dashboard.emotion.capybara');
 					case 'hedgehog': //刺猬
-						return '共情力花园';
+					return this.$t('pages.dashboard.emotion.hedgehog');
 					case 'coyote': //狼
-						return '社交力集市';
+					return this.$t('pages.dashboard.emotion.coyote');
 					case 'ostrich': //鸵鸟
-						return '感知力迷宫';
+					return this.$t('pages.dashboard.emotion.ostrich');
 					case 'monkey':
-						return '掌控力灯塔';
+					return this.$t('pages.dashboard.emotion.monkey');
 					default:
 						return 'Emotion'; // Default text if animal is not recognized
 				}
@@ -470,7 +470,7 @@
 		async created() {
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
-			const result = illustrationSrc(this.homepageData, this.$store);
+			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
 			// const evalResult = uni.getStorage({
 			// 	key: "evalResult",
 			// 	success: (res) => {
@@ -584,7 +584,7 @@
 			async uploadImage(filePath) {
 				try {
 					this.isLoading = true;
-					const result = await apiService.uploadChatHistory(filePath, this.userId, 'zh');
+					const result = await apiService.uploadChatHistory(filePath, this.userId);
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
@@ -708,7 +708,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -755,7 +755,7 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {

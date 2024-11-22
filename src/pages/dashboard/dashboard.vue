@@ -521,7 +521,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -568,7 +568,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {

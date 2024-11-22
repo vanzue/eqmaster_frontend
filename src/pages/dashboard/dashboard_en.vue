@@ -34,7 +34,7 @@
 					</view>
 
 					<view style="margin-top: 24rpx;">
-						<text class="card-title1">Daily Tip</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip') }}</text>
 						<view class="calendar">
 							<view class="left-calendar">
 								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
@@ -52,8 +52,8 @@
 					</view>
 
 					<view class="network-title-container">
-						<text class="card-title1">Moments</text>
-						<text class="card-title15">Reflect on your chat moments for analysis and advice.</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip.moments') }}</text>
+						<text class="card-title15">{{ $t('pages.dashboard.tip.advice') }}</text>
 					</view>
 					<view class="history-list">
 						<view>
@@ -610,7 +610,7 @@
 			async uploadImage(filePath) {
 				try {
 					this.isLoading = true;
-					const result = await apiService.uploadChatHistory(filePath, this.userId, 'en');
+					const result = await apiService.uploadChatHistory(filePath, this.userId);
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
@@ -734,7 +734,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -781,7 +781,7 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster.aipowernft.com/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {

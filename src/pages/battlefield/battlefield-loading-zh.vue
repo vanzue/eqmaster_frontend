@@ -7,7 +7,7 @@
     />
     <!-- Content -->
     <view class="loading-text-container">
-      <text class="loading-text">聚餐中</text>
+      <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text>
     </view>
   </view>
 </template>
