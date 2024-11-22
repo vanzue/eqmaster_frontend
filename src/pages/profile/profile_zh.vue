@@ -12,19 +12,19 @@
 					<view class="have-been-view-center">
 						<view class="have-been-header">
 							<image src="/static/user_icon.png" class="have-been-header-icon"></image>
-							<text class="have-been-header-text">你已经来到这里:</text>
+							<text class="have-been-header-text">{{ $t('pages.profile.header') }}</text>
 						</view>
 						<view class="day">
 							<view class="day-content">
 								<view class="day-text">1</view>
-								<text class="day-text-days">天</text>
+								<text class="day-text-days">{{ $t('pages.profile.days') }}</text>
 							</view>
 						</view>
 						<view class="diamonds-stars">
 							<view class="diamonds">
 								<image class="diamonds-icon" src="/static/baoshi.png"></image>
 								<view class="diamonds-source">
-									<view class="diamonds-source-text">钻石</view>
+									<view class="diamonds-source-text">{{ $t('pages.profile.diamonds') }}</view>
 									<view class="diamonds-source-number">
 										{{ homepageData?.response?.personal_info?.num_diamond }}
 									</view>
@@ -33,7 +33,7 @@
 							<view class="stars">
 								<image class="diamonds-icon" src="/static/xinxin.png"></image>
 								<view class="diamonds-source">
-									<view class="diamonds-source-text">星星</view>
+									<view class="diamonds-source-text">{{ $t('pages.profile.stars') }}</view>
 									<view class="diamonds-source-number">
 										{{ homepageData?.response?.personal_info?.num_star }}
 									</view>
@@ -49,11 +49,11 @@
 						<image class="eqoach-bot-icon" src="/static/eqoach-icon.png"></image>
 						<view class="eqoach-bot-center">
 							<view class="eqoach-bot-title">EQoach bot</view>
-							<view class="eqoach-bot-desc">添加获得更多分析!</view>
+							<view class="eqoach-bot-desc">{{ $t('pages.profile.bot.desc') }}</view>
 						</view>
 						<view class="eqoach-bot-add">
 							<button class="eqoach-bot-add-btn"
-								@click="showEqoachPopup = true; saveqrcodeLoding = false;">添加</button>
+								@click="showEqoachPopup = true; saveqrcodeLoding = false;">{{ $t('pages.profile.bot.add') }}</button>
 						</view>
 					</view>
 					<view class="delete-btn" :style="{ 
@@ -68,7 +68,7 @@
 
 		</scroll-view>
 		<view class="log-out" @click="logoutShow = true">
-			退出登录 / 切换账号
+			{{ $t('pages.profile.logout') }}
 		</view>
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 
@@ -87,7 +87,7 @@
 						<view class="eqoach-center-text">
 							在 Line 上添加 EQoach bot
 						</view>
-						<image class="eqoach-center-code-image" src="/static/eqoach-code.png" ref="qrCodeImage"></image>
+						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-code.webp')" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>
@@ -108,9 +108,9 @@
 
 		<view v-if="logoutShow" class="popup-overlay">
 			<view class="logout-popup-content" @click.stop>
-				<view class="logout-header">退出登录?</view>
-				<view class="logout-center" @click="logOutClick()">确认</view>
-				<view class="logout-button" @click="logoutShow = false">取消</view>
+				<view class="logout-header">{{ $t('pages.profile.popup.header') }}</view>
+				<view class="logout-center" @click="logOutClick()">{{ $t('pages.profile.popup.ok') }}</view>
+				<view class="logout-button" @click="logoutShow = false">{{ $t('pages.profile.popup.cancel') }}</view>
 			</view>
 		</view>
 	</view>
@@ -119,13 +119,16 @@
 <script>
 	import apiService from '../../services/api-service';
 	import Nav from '../../components/Nav.vue';
-
+	import {
+			getImg
+		} from '../../scripts/constants.js';
 	export default {
 		components: {
 			Nav
 		},
 		data() {
 			return {
+				getImg,
 				name: '',
 				intervalId: null,
 				swipeOffset: 0,
@@ -314,7 +317,7 @@
 				console.log("logOutClick");
 				this.logoutShow = false;
 				await this.clearLocalUserId();
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/landing/landing`
 				});
 			},
@@ -358,7 +361,8 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		background-image: url("/static/profile-bg.png");
+		background-image:
+		url("https://eqmaster.blob.core.windows.net/static/profile-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -399,7 +403,7 @@
 		/* display: flex; */
 		/* width: auto; */
 		height: 654rpx;
-		background-image: url("/static/have-been-bg.png");
+		background-image:url("https://eqmaster.blob.core.windows.net/static/have-been-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;

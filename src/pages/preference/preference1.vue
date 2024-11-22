@@ -1,9 +1,9 @@
 <template>
 	<view class="container">
-		<image class="background-image" src="/static/picture1.png" mode="widthFix"></image>
+		<image class="background-image" :src="getImg('/static/web/picture1.webp')" mode="widthFix"></image>
 
 		<view class="text-content">
-			<text class="question">🎂 你的生日是什么时候？</text>
+			<text class="question">?? 你的生日是什么时候？</text>
 			<!-- <text class="question1">完善个人信息</text> -->
 		</view>
 		
@@ -20,13 +20,16 @@
 
 <script lang="uts">
 	import DatePicker from '@/components/DatePicker.vue';
-
+	import {
+			getImg
+	} from '../../scripts/constants.js';
 	export default {
 		components: {
 			DatePicker
 		},
 		data() {
 			return {
+				getImg,
 				year: '',
 				month: '',
 				day: '',
@@ -55,7 +58,7 @@
 				};
 				// Navigate to the next page with all data passed as URL parameters
 				const nextPageUrl = `/pages/preference/preference2?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(selectedDate))}`;
-				uni.navigateTo({
+				uni.reLaunch({
 					url: nextPageUrl,
 				});
 			},

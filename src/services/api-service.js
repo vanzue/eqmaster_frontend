@@ -1,5 +1,6 @@
-const API_ENDPOINT = 'https://nft-b2b2c-apim-azsc-eus-int.azure-api.net/eqmaster';
-// const API_ENDPOINT = 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/';
+import url from './url';
+import { API_ENDPOINT } from './url';
+
 
 export default {
 	baseURL: API_ENDPOINT, // 将 baseURL 添加到导出的对象中
@@ -7,7 +8,7 @@ export default {
 	async getHomepageData(userId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_homepage/${userId}`,
+				url: url.getUrl(`/get_homepage/${userId}`),
 				// url: `${API_ENDPOINT}/get_homepage/217`,
 				method: 'POST'
 			});
@@ -54,7 +55,7 @@ export default {
 	async getAnalysisList(userId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/${userId}/analysisList`,
+				url: url.getUrl(`/${userId}/analysisList`),
 				method: 'GET',
 			});
 
@@ -72,7 +73,7 @@ export default {
 	async updateDiamonds(userId, count) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/update/diamond`,
+				url: url.getUrl(`/update/diamond`),
 				method: 'POST',
 				data: {
 					person_id: userId,
@@ -90,10 +91,10 @@ export default {
 			throw error;
 		}
 	},
-	async uploadChatHistory(filePath, userId, language) {
+	async uploadChatHistory(filePath, userId) {
 		try {
 			const response = await uni.uploadFile({
-				url: `${API_ENDPOINT}/analyze/history?locale=${language}`,
+				url: url.getUrl(`/analyze/history`),
 				filePath: filePath,
 				name: 'file',
 				formData: {
@@ -116,7 +117,7 @@ export default {
 	async deleteMoment(chatId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/delete_chats/${chatId}`,
+				url: url.getUrl(`/delete_chats/${chatId}`),
 				method: 'DELETE',
 			});
 
@@ -134,7 +135,7 @@ export default {
 	async createContactProfile(data) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/create_contact_profile`,
+				url: url.getUrl(`/create_contact_profile`),
 				method: 'POST',
 				data: data
 			});
@@ -153,7 +154,7 @@ export default {
 	async getResult(jobId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_result/${jobId}`,
+				url: url.getUrl(`/get_result/${jobId}`),
 				method: 'GET'
 			});
 
@@ -171,7 +172,7 @@ export default {
 	async getBattlefield(userId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_battlefield/${userId}`,
+				url: url.getUrl(`/get_battlefield/${userId}`),
 				method: 'GET'
 			});
 
@@ -189,7 +190,7 @@ export default {
 	async getVoice(wording, voice, style, rate) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/ttsaz`,
+				url: url.getUrl(`/ttsaz`),
 				method: 'POST',
 				data: {
 					text: wording,
@@ -212,7 +213,7 @@ export default {
 	async getContactProfile(contactId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_contact_profile/${contactId}`,
+				url: url.getUrl(`/get_contact_profile/${contactId}`),
 				method: 'GET'
 			});
 
@@ -231,7 +232,7 @@ export default {
 	async uploadImage(filePath) {
 		try {
 			const uploadFileRes = await uni.uploadFile({
-				url: `${API_ENDPOINT}/upload_image`,
+				url: url.getUrl(`/upload_image`),
 				filePath: filePath,
 				name: 'file'
 			});
@@ -249,9 +250,8 @@ export default {
 
 	async createProfile(profileData) {
 		try {
-			const locale = uni.getLocale();
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/create_profile?locale=${locale}`,
+				url: url.getUrl(`/create_profile`),
 				method: 'POST',
 				data: profileData
 			});
@@ -271,7 +271,7 @@ export default {
 		console.log('startScenario called with jobId:', jobId);
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/start_scenario/${jobId}?locale=None`,
+				url: url.getUrl(`/start_scenario/${jobId}`),
 				method: 'POST'
 			});
 
@@ -290,7 +290,7 @@ export default {
 	async startScenarioWithId(jobId, scenarioId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/start_scenario_by_scenario_id/${jobId}/${scenarioId}`,
+				url: url.getUrl(`/start_scenario_by_scenario_id/${jobId}/${scenarioId}`),
 				method: 'POST'
 			});
 
@@ -309,7 +309,7 @@ export default {
 	async getCurrentScenario(jobId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_current_scenario/${jobId}?locale=None`,
+				url: url.getUrl(`/get_current_scenario/${jobId}`),
 				method: 'POST'
 			});
 
@@ -328,7 +328,7 @@ export default {
 		// console.log('startScenario called with jobId:', jobId);
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/initialize_scenario?locale=None`,
+				url: url.getUrl(`/initialize_scenario`),
 				method: 'POST',
 			});
 
@@ -350,12 +350,12 @@ export default {
 		console.log("#####retrieveScenarioResponse data:", num);
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/retrieve_scene`,
+				url: url.getUrl(`/retrieve_scene`),
 				method: 'POST',
 				data: {
 					scenario_id: parseInt(scenarioId),
 					choices: String(num),
-					locale: "none"
+					locale: uni.getLocale()
 				}
 			});
 
@@ -371,15 +371,16 @@ export default {
 		}
 	},
 
-	async finalizeScenario(scores, job_id, dialogue_history, locale) {
+	async finalizeScenario(scores, job_id, dialogue_history) {
 		// console.log('startScenario called with jobId:', jobId);
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);
 		// console.log("#####finalizeScenarioResponse data:", dialogue_history);
+		const locale = uni.getLocale();
 		console.log("#####locale:", locale);
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/finalize_scenario`,
+				url: url.getUrl(`/finalize_scenario`),
 				method: 'POST',
 				data: {
 					scores: scores,
@@ -404,7 +405,7 @@ export default {
 	async chooseScenario(choice, jobId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/choose_scenario?locale=None`,
+				url: url.getUrl(`/choose_scenario`),
 				method: 'POST',
 				data: {
 					choice: choice,

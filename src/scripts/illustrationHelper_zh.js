@@ -1,9 +1,10 @@
-export function illustrationSrc(homepageData, store) {
+import { getImg } from "./constants";
+export function illustrationSrc(homepageData, store, t) {
 	let returnObj = {
 		animal: "",
 		animal_name: '卡皮巴拉',
-		animal_icon: '/static/resulten/monkey.png',
-		animal_name_bg: '/static/resulten/animal-name-1.png',
+		animal_icon: getImg('/static/web/resulten/monkey.webp'),
+		animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 		weakness: 'Weakness',
 		characteristics: '',
 	};
@@ -19,61 +20,59 @@ export function illustrationSrc(homepageData, store) {
 		if (maxScore === scores.dimension1_score) {
 			returnObj = {
 				animal: "ostrich",
-				animal_name: '鸵鸟',
-				animal_icon: '/static/dashboard/en/ostrich.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: '感知力',
-				characteristics: '你像拥有第六感一样，总能敏锐地捕捉到细微的情绪变化和暗示。',
+				animal_name: t('illustration.animal.ostrich.name'),
+				animal_icon: getImg('/static/web/dashboard/en/ostrich.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
+				weakness: t('illustration.animal.ostrich.weakness'),
+				characteristics: t('illustration.animal.ostrich.characteristics'),
 
 
 			};
 		} else if (maxScore === scores.dimension2_score) {
 			returnObj = {
 				animal: "monkey",
-				animal_name: '猴子',
-				animal_icon: '/static/dashboard/en/monkey.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: '掌控力',
-				characteristics: '即使在压力之下，你也能稳稳掌控情绪，保持冷静自若。',
-
-
+				animal_name: t('illustration.animal.monkey.name'),
+				animal_icon: getImg('/static/web/dashboard/en/monkey.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
+				weakness: t('illustration.animal.monkey.weakness'),
+				characteristics: t('illustration.animal.monkey.characteristics'),
 
 			};
 		} else if (maxScore === scores.dimension3_score) {
 			returnObj = {
 				animal: "hedgehog",
-				animal_name: '刺猬',
-				animal_icon: '/static/dashboard/en/hedgehog.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: '共情力',
-				characteristics: `你总能轻松洞察并理解他人的情绪，仿佛读懂他们的心思一般。`,
+				animal_name: t('illustration.animal.hedgehog.name'),
+				animal_icon: getImg('/static/web/dashboard/en/hedgehog.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
+				weakness: t('illustration.animal.hedgehog.weakness'),
+				characteristics: t('illustration.animal.hedgehog.characteristics'),
 
 
 			};
 		} else if (maxScore === scores.dimension4_score) {
 			returnObj = {
 				animal: "coyote",
-				animal_name: '土狼',
-				animal_icon: '/static/dashboard/en/coyote.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: '社交力',
-				characteristics: '你就像一座桥梁，轻松拉近彼此距离，激发大家携手合作，共同前行。',
+				animal_name: t('illustration.animal.coyote.name'),
+				animal_icon: getImg('/static/web/dashboard/en/coyote.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
+				weakness: t('illustration.animal.coyote.weakness'),
+				characteristics: t('illustration.animal.coyote.characteristics'),
 			};
 		} else if (maxScore === scores.dimension5_score) {
 			returnObj = {
 				animal: "capybara",
-				animal_name: '卡皮巴拉',
-				animal_icon: '/static/dashboard/en/capybara.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
-				weakness: '驱动力',
-				characteristics: '你像一团火焰，燃烧着无穷的能量，始终专注于目标，不断点燃周围人的激情与动力。',
+				animal_name: t('illustration.animal.capybara.name'),
+				animal_icon: getImg('/static/web/dashboard/en/capybara.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
+				weakness: t('illustration.animal.capybara.weakness'),
+				characteristics: t('illustration.animal.capybara.characteristics'),
 			};
 		}
 
 		// Update store if it's provided
 		if (store) {
 			store.commit('setWeakness', returnObj.weakness);
-			store.commit('setCharateristics', returnObj.characteristics);
+			store.commit('setChar~ateristics', returnObj.characteristics);
 		}
 	}
 

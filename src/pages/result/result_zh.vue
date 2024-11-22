@@ -4,16 +4,16 @@
 			<view class="content">
 				<view class="header">
 					<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
-					<text class="score-title-head">我的检测结果</text>
+					<text class="score-title-head">{{ $t('pages.result.result.title') }}</text>
 					<image class="header-icon" src="/static/battlefield/share.png"></image>
 				</view>
 				<view class="background-curve">
 					<view class="animal-box">
 						<view class="animal-my-eq-type">
-							我的EQ形象
+							{{ $t('pages.result.result.type') }}
 						</view>
 						<view class="animal-name"
-							:style="{ backgroundImage: `url(${illustrationData.animal_name_bg})` }">
+							:style="{ backgroundImage: `url(${illustrationData.animal_name_bg })` }">
 							<view class="animal-score-desc">
 								{{ illustrationData.animal_name }}
 							</view>
@@ -21,14 +21,14 @@
 						<image class="animal-icon" :src="illustrationData.animal_icon"></image>
 						<view class="animal-score">
 							<view class="animal-score-title">
-								情商得分
+								{{ $t('pages.result.result.score') }}
 							</view>
 							<view class="animal-score-desc"
-								:style="{ backgroundImage: `url(/static/resulten/animal-name-3.png)` }">
+								:style="{ backgroundImage: `url(${getImg('/static/web/resulten/animal-name-3.webp')})` }">
 								{{homepageData?.response?.eq_scores?.score}}/100
 							</view>
 						</view>
-						<view class="animal-desc" :style="{ backgroundImage: 'url(/static/resulten/quote.png)' }">
+						<view class="animal-desc" :style="{ backgroundImage: `url(${getImg('/static/web/resulten/quote.webp')})` }">
 							<view class="card-text-container">
 								<!-- <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
 								<text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text> -->
@@ -41,7 +41,7 @@
 
 				<view class="overview-container">
 					<view class="overview">
-						<view class="overview-title">问题诊断</view>
+						<view class="overview-title">{{ $t('pages.result.result.overview') }}</view>
 						<view class="overview-content">
 							<image class="overview-content-icon" src="/static/resulten/pattern.svg"></image>
 							<view class="overview-content-item">
@@ -95,8 +95,9 @@
 
 				<view class="improved-container">
 					<view class="improved">
-						<view class="improved-title">提升指南</view>
+						<view class="improved-title">{{ $t('pages.result.result.advices') }}</view>
 						<view class="improved-content">
+							
 							<view class="improved-content-item">
 								<view class="improved-content-title">
 									<image class="improved-show-icon"
@@ -110,7 +111,7 @@
 							</view>
 						</view>
 
-						<view class="improved-title key-strength-title">详细报告</view>
+						<view class="improved-title key-strength-title">{{ $t('pages.result.result.keys') }}</view>
 						<view v-for="(score, index) in caleOverviewScores" :key="index"
 							class="improved-content key-strength-content">
 							<view v-if="index < caleOverviewScores.length - 1">
@@ -129,7 +130,7 @@
 					</view>
 				</view>
 				<view class="guide-button-container">
-					<button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
+					<button class="guide-button" @click="navigateToGuide">{{ $t('pages.result.result.guide') }}</button>
 				</view>
 			</view>
 		</scroll-view>
@@ -140,10 +141,13 @@
 	import {
 		illustrationSrc
 	} from '@/scripts/illustrationHelper_zh.js';
-
+import {
+		getImg
+	} from '../../scripts/constants.js';
 	export default {
 		data() {
 			return {
+				getImg,
 				score: 28, // 示例分数，可根据需要动态更改
 				maxScore: 100, // 假设最大分数为100
 				gender: '',
@@ -171,49 +175,50 @@
 				return '未设置';
 			},
 			illustrationData() {
-				return illustrationSrc(this.homepageData, this.$store);
+				return illustrationSrc(this.homepageData, this.$store, this.$t);
 			},
 			caleOverviewScores() {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = [{
-							name: '感知力',
+							name: this.$t('pages.result.result.perception'),
 							score: this.homepageData.response.eq_scores.dimension1_score,
 							detail: this.homepageData.response.eq_scores.dimension1_detail,
 							icon: '/static/resulten/awareness0.svg',
 							icon1: '/static/resulten/awareness1.svg',
 						},
 						{
-							name: '掌控力',
+							name: this.$t('pages.result.result.regulation'),
 							score: this.homepageData.response.eq_scores.dimension2_score,
 							detail: this.homepageData.response.eq_scores.dimension2_detail,
 							icon: '/static/resulten/regulation0.svg',
 							icon1: '/static/resulten/regulation0.svg',
 						},
 						{
-							name: '共情力',
+							name: this.$t('pages.result.result.social'),
 							score: this.homepageData.response.eq_scores.dimension3_score,
 							detail: this.homepageData.response.eq_scores.dimension3_detail,
 							icon: '/static/resulten/socialskill0.svg',
 							icon1: '/static/resulten/socialskill1.svg'
 						},
 						{
-							name: '社交力',
+							name: this.$t('pages.result.result.empathy'),
 							score: this.homepageData.response.eq_scores.dimension4_score,
 							detail: this.homepageData.response.eq_scores.dimension4_detail,
 							icon: '/static/resulten/empathy0.svg',
 							icon1: '/static/resulten/empathy1.svg'
 						},
 						{
-							name: '驱动力',
+							name: this.$t('pages.result.result.motivation'),
 							score: this.homepageData.response.eq_scores.dimension5_score,
 							detail: this.homepageData.response.eq_scores.dimension5_detail,
 							icon: '/static/resulten/motivation0.svg',
 							icon1: '/static/resulten/motivation1.svg'
 						}
 					];
-
+					
 					// Sort scores in descending order
 					scores.sort((a, b) => b.score - a.score);
+					console.log("-----------------------------");
 					console.log(scores);
 					return scores;
 				}
@@ -287,7 +292,7 @@
 <style scoped>
 	@font-face {
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		src: url('/static/fonts/Poppins-Italic.ttf') format('truetype');
+		src: url('https://eqmaster.blob.core.windows.net/static/fonts/Poppins-Italic.ttf?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D') format('truetype');
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -348,7 +353,7 @@
 		/* Changed from visible to hidden */
 		/* justify-content: center;
 		align-items: center; */
-		background-image: url("/static/resulten/header-bg.png");
+		background-image: url("https://eqmaster.blob.core.windows.net/static/resulten/header-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -644,7 +649,6 @@
 		/* height: 184px; */
 		gap: 0px;
 		border-radius: 24rpx;
-		opacity: 0px;
 		background: linear-gradient(90deg, #2C6E5F 0.52%, #50856E 99.36%);
 	}
 

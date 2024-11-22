@@ -13,7 +13,7 @@
 		<!-- Test page content -->
 		<template v-if="currentPage === 'test'">
 			<view class="banner-container">
-				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -21,7 +21,7 @@
 			<view class="text-box" @tap="navigateToTest1" :class="{ 'disabled': isLoading }" v-if="background">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
-					<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
+					<image class="icon-image" src="/static/icon3.webp" mode="aspectFit" />
 				</view>
 			</view>
 		</template>
@@ -54,7 +54,7 @@
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
 			<view class="banner-container">
-				<image class="logo" src="/static/signa.png" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -102,6 +102,9 @@
 	} from "../../scripts/locate_name_zh";
 	import OnboardingChatBubble from "@/components/OnboardingChatBubble.vue";
 	import apiService from "@/services/api-service";
+	import {
+		getImg
+	} from '../../scripts/constants.js';
 	// import StateStack from "./StateStack";
 	// const stateStack = new StateStack();
 	export default {
@@ -154,6 +157,7 @@
 					社交力: 0,
 					驱动力: 0
 				},
+				getImg,
 			};
 		},
 		computed: {
@@ -187,7 +191,7 @@
 							this.isLoading = false;
 						}, 300); // Adjust the delay as needed
 					} else {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: '/pages/preference/preference3'
 						});
 						uni.hideLoading();
@@ -235,7 +239,7 @@
 				const userId = uni.getStorageSync('userId');
 				const jobId = uni.getStorageSync('jobId');
 				if (!userId || !jobId) {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '/pages/landing/experience'
 					});
 					return;
@@ -243,7 +247,7 @@
 				this.userId = userId || "";
 				const username = uni.getStorageSync('username');
 				if (!username) {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '/pages/landing/experience'
 					});
 					return;
@@ -258,7 +262,7 @@
 				try {
 					this.scenarioData = scenarioResponse.scene.scenes;
 					this.npcAvatar = getAvatar(this.scenarioData.role, scenarioResponse.scenario_id);
-					this.backgroundImageSrc = `/static/onboarding/bgzh${scenarioResponse.scenario_id}.png`;
+					this.backgroundImageSrc = getImg(`/static/onboarding/bgzh${scenarioResponse.scenario_id}.webp`);
 					this.scenarioId = scenarioResponse.scenario_id;
 					this.handleScenarioData();
 					this.updateProgress();
@@ -413,7 +417,7 @@
 				}
 
 				if (this.num.length === 5) {
-					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory,this.locale)
+					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory)
 						.then((result) => {
 							console.log("Final Scenario Results:", {
 								scores: this.scores,
@@ -471,7 +475,7 @@
 				//     JSON.stringify(this.selectedOptions)
 				//   )}&num=${this.num}`;
 				const loadingPageUrl = `/pages/result/loading_zh`;
-				uni.navigateTo({
+				uni.reLaunch({
 					url: loadingPageUrl,
 					fail: (err) => {
 						console.error("Navigation failed:", err);

@@ -2,12 +2,12 @@
   <view class="background-image loading-container">
     <image
       class="background-image"
-      src="/static/battlefield/background.png"
+      :src="getImg('/static/web/battlefield/background.webp')"
       mode="aspectFill"
     />
     <!-- Content -->
     <view class="loading-text-container">
-      <text class="loading-text">聚餐中</text>
+      <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text>
     </view>
   </view>
 </template>
@@ -15,8 +15,13 @@
 <script>
 import { startField } from "../../scripts/battlefield-chat";
 import apiService from '../../services/api-service';
-
+import { getImg } from "../../scripts/constants";
 export default {
+	data() {
+		return {
+			getImg,}
+			},
+			
   async mounted() {
     const result = await startField(1, "1");
     console.log("result from start field:", result);
@@ -36,7 +41,7 @@ export default {
 			} catch (error) {
 				console.log("get voice fail", error);
 			} finally {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-playground-zh'
 				})
 			}

@@ -110,11 +110,18 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx216f07aba6aad308",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "lazyCodeLoading" : "requiredComponents",
+		"permission": {
+		      "scope.userInfo": {
+		        "desc": "用于完善会员资料"
+		      }
+		    }
     },
     "mp-alipay" : {
         "usingComponents" : true

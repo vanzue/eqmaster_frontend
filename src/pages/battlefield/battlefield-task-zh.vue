@@ -11,7 +11,7 @@
 		<view class="content">
 			<view class="task-header">
 				<!-- <text class="main-title">A Cross-Department Meeting</text> -->
-				<text class="sub-title">通关任务</text>
+				<text class="sub-title">{{ $t('pages.battlefield.task.subtitle') }}</text>
 			</view>
 
 			<!-- 任务列表 -->
@@ -22,7 +22,7 @@
 							1
 						</text>
 					</view>
-					<text class="task-word">一句话让每位同事心情愉悦</text>
+					<text class="task-word">{{ $t('pages.battlefield.task.task1') }}</text>
 					<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 				</view>
 				<view class="task-item">
@@ -31,12 +31,12 @@
 							2
 						</text>
 					</view>
-					<text class="task-word">点出让每位同事满意的菜品</text>
+					<text class="task-word">{{ $t('pages.battlefield.task.task2') }}</text>
 				</view>
 			</view>
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage">我知道了</button>
+			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.task.continue') }}</button>
 		</view>
 	</view>
 </template>
@@ -49,12 +49,12 @@
 		},
 		methods: {
 			navigateToNextPage() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-loading-zh'
 				});
 			},
 			goback() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-intro-zh'
 				});
 			}

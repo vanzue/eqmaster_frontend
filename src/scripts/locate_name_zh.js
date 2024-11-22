@@ -1,3 +1,5 @@
+import { getImg } from "./constants";
+
 export function findLastName(str) {
 	const regex = /(Sam|Anna)(?!.*(Sam|Anna))/;
 	const match = str.match(regex);
@@ -17,7 +19,7 @@ export function findLastName(str) {
 // }
 
 export function getAvatar(name, sceneNumber) {
-    if (!name || !sceneNumber) return '/static/npc3.png';
+    if (!name || !sceneNumber) return getImg('/static/web/npc3.webp');
 	var imageName = "";
 	if (name == "小李") {
 		imageName = "xiaoli";
@@ -44,17 +46,17 @@ export function getAvatar(name, sceneNumber) {
 		imageName = "HR";
 	}
     
-    const avatarPath = `/static/npc/${sceneNumber}${imageName}.png`;
+    const avatarPath = getImg(`/static/web/npc/${sceneNumber}${imageName}.webp`);
 	// const avatarPath = `/static/npc/444.png`;
     return avatarPath;
 }
 
 export function getBattlefieldAvatar(name) {
 	if (name == "领导") {
-		return "/static/battlefield/boss.png";
+		return getImg("/static/web/battlefield/boss.webp");
 	}
 	if (name == "同事A") {
-		return '/static/battlefield/xiaoA.png';
+		return getImg('/static/web/battlefield/xiaoA.webp');
 	}
-	return "/static/battlefield/xiaoB.png";
+	return getImg("/static/web/battlefield/xiaoB.webp");
 }

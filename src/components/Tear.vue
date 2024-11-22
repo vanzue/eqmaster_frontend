@@ -1,7 +1,7 @@
 <template>
   <view class="tear-container">
     <view class="tear-calendar1" @tap="tearPage">
-      <image class="tear-background-image1" :src="leftImageSrc" mode="widthFit" />
+      <image class="tear-background-image1" :src="getImg(leftImageSrc)" mode="widthFit" />
       <view class="left-text-container">
         <text class="tear-calendar-text1 left-text-month">{{ currentMonth }}</text>
         <text class="tear-calendar-text1 left-text-day">{{ currentDay }}</text>
@@ -9,12 +9,12 @@
     </view>
 	
     <view class="tear-calendar" @tap="tearPage">
-      <image class="tear-background-image" :src="rightBackImageSrc" mode="widthFit" />
+      <image class="tear-background-image" :src="getImg(rightBackImageSrc)" mode="widthFit" />
       <view class="tear-right-text-container">
         <text class="tear-calendar-text right-text">{{ rightText }}</text>
       </view>
       <view :class="['tear-page', { 'tearing': isTearing }]">
-        <image class="tear-page-image" :src="rightFrontImageSrc" mode="widthFit" />
+        <image class="tear-page-image" :src="getImg(rightFrontImageSrc)" mode="widthFit" />
         <text class="tear-calendar-text page-text">{{ pageText }}</text>
       </view>
     </view>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { getImg } from '../scripts/constants';
 export default {
   props: {
     leftImageSrc: {
@@ -59,7 +60,8 @@ export default {
   data() {
     return {
       isTearing: false,
-      currentDate: new Date()
+      currentDate: new Date(),
+	  getImg
     };
   },
   computed: {

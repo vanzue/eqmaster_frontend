@@ -93,18 +93,14 @@
 			"path": "pages/result/result_en",
 			"style": {
 				"navigationStyle": "custom",
-				"style": {
 					"disableSwipeBack": true
-				}
 			}
 		},
 		{
 			"path": "pages/result/result_zh",
 			"style": {
 				"navigationStyle": "custom",
-				"style": {
 					"disableSwipeBack": true
-				}
 			}
 		},
 		{
@@ -167,10 +163,7 @@
 			"path": "components/Tear",
 			"style": {}
 		},
-		{
-			"path": "App",
-			"style": {}
-		},
+		
 		{
 			"path": "components/AbilityProgressBar",
 			"style": {}
@@ -185,10 +178,27 @@
 	},
 	"condition": {
 		"current": 0,
-		"list": [{
-			"name": "",
-			"path": "",
-			"query": ""
-		}]
+		"list": [
+            {
+                "name": "H5",
+                "path": "pages/result/result_en",
+                "query": "platform=h5"
+            },
+            {
+                "name": "WeChat",
+                "path": "pages/result/result_en",
+                "query": "platform=wechat"
+            },
+			{
+                "name": "H5",
+                "path": "pages/result/result_zh",
+                "query": "platform=h5"
+            },
+            {
+                "name": "WeChat",
+                "path": "pages/result/result_zh",
+                "query": "platform=wechat"
+            }
+        ]
 	}
 }

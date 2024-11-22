@@ -5,19 +5,19 @@
 				<image class="nav-image"
 					:src="selectedView === 'Home' ? '/static/nav/home1.png' : '/static/nav/home.png'" mode="widthFix">
 				</image>
-				<text class="nav-text" :class="{ 'highlight': selectedView === 'Home' }">主页</text>
+				<text class="nav-text" :class="{ 'highlight': selectedView === 'Home' }">{{ $t('components.Nav.home') }}</text>
 			</view>
 			<view class="nav-item" @click="navigateToProfilePage('Battlefield')">
 				<image class="nav-image" :class="{ 'highlight': selectedView === 'Battlefield' }"
 					:src="selectedView === 'Battlefield' ? '/static/nav/battlefield1.png' : '/static/nav/battlefield.png'"
 					mode="widthFix"></image>
-				<text class="nav-text" :class="{ 'highlight': selectedView === 'Battlefield' }">修罗场</text>
+				<text class="nav-text" :class="{ 'highlight': selectedView === 'Battlefield' }">{{ $t('components.Nav.Battlefield') }}</text>
 			</view>
 			<view class="nav-item" @click="navigateToProfilePage('Profile')">
 				<image class="nav-image" :class="{ 'highlight': selectedView === 'Profile' }"
 					:src="selectedView === 'Profile' ? '/static/nav/profile1.png' : '/static/nav/profile.png'"
 					mode="widthFix"></image>
-				<text class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">我的</text>
+				<text class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">{{ $t('components.Nav.Profile') }}</text>
 			</view>
 		</view>
 	</div>
@@ -49,7 +49,7 @@
 				const currentRoute = currentPages[currentPages.length - 1].route;
 				if (val === 'Home') {
 					if (currentRoute !== 'pages/dashboard/dashboard_zh') {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/dashboard_zh` // 添加查询参数
 						});
 					}
@@ -58,7 +58,7 @@
 				}
 				if (val === 'Battlefield') {
 					if (currentRoute !== 'pages/dashboard/dashboard_zh') {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/dashboard_zh` // 添加查询参数
 						});
 					}
@@ -67,7 +67,7 @@
 
 				}
 				if (val === 'Profile') {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/profile/profile_zh` // 添加查询参数
 					});
 				}

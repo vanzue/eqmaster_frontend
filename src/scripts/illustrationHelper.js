@@ -1,8 +1,9 @@
+import { getImg } from "./constants";
 export function illustrationSrc(homepageData, store) {
 	let returnObj = {
 		animal_name: '水豚',
-		animal_icon: '/static/resulten/monkey.png',
-		animal_name_bg: '/static/resulten/animal-name-1.png',
+		animal_icon: getImg('/static/web/resulten/monkey.webp'),
+		animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 		// weakness指的是superPower
 		weakness: 'Weakness',
 		characteristics: '',
@@ -19,40 +20,40 @@ export function illustrationSrc(homepageData, store) {
 		if (maxScore === scores.dimension1_score) {
 			returnObj = {
 				animal_name: '鸵鸟',
-				animal_icon: '/static/resulten/ostrich.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/web/resulten/ostrich.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 				weakness: '感知力',
 				characteristics: '你的情商超能力在于你能敏锐地察觉细微的线索和情绪。',
 			};
 		} else if (maxScore === scores.dimension2_score) {
 			returnObj = {
 				animal_name: '猴子',
-				animal_icon: '/static/resulten/monkey.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/web/resulten/monkey.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 				weakness: '掌控力',
 				characteristics: '你的情商超能力在于你能很好地控制情绪，即使在压力下。',
 			};
 		} else if (maxScore === scores.dimension3_score) {
 			returnObj = {
 				animal_name: '刺猬',
-				animal_icon: '/static/resulten/hedgehog.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/web/resulten/hedgehog.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 				weakness: '共情力',
 				characteristics: '你的情商超能力在于你能轻易察觉和理解他人的情绪。',
 			};
 		} else if (maxScore === scores.dimension4_score) {
 			returnObj = {
 				animal_name: '狼',
-				animal_icon: '/static/resulten/coyote.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/web/resulten/coyote.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 				weakness: '社交力',
 				characteristics: '你的情商超能力在于你能建立联系并鼓励合作。',
 			};
 		} else if (maxScore === scores.dimension5_score) {
 			returnObj = {
 				animal_name: '水豚',
-				animal_icon: '/static/resulten/capybara.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/web/resulten/capybara.webp'),
+				animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 				weakness: '驱动力',
 				characteristics: '是你的情商超能力——你带来活力并专注于你的目标。',
 			};

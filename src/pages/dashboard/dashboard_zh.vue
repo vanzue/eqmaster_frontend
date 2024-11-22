@@ -11,7 +11,7 @@
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
-					<text class="score-title-head">早, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
+					<text class="score-title-head">{{ $t('pages.dashboard.morning') }}, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
 					<view class="character-view" @click="navigateToResult">
@@ -21,7 +21,7 @@
 							</view>
 							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
 								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">
-									你的超能力是：
+									{{ $t('pages.dashboard.superpower') }}
 								</text>
 								<text
 									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
@@ -34,7 +34,7 @@
 					</view>
 
 					<view style="margin-top: 24rpx;">
-						<text class="card-title1">今日锦囊</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip') }}</text>
 						<view class="calendar">
 							<view class="left-calendar">
 								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
@@ -43,20 +43,20 @@
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									<text style="font-weight: bold;">FFI赞美法</text>
-									指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。
+									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
+									{{ $t('pages.dashboard.tip.text') }}
 								</text>
 							</view>
 						</view>
 					</view>
 
 					<view class="network-title-container">
-						<text class="card-title1">聊天回忆</text>
-						<text class="card-title15">AI战略家帮你回顾聊天片段</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip.moments') }}</text>
+						<text class="card-title15">{{ $t('pages.dashboard.tip.advice') }}</text>
 					</view>
 					<view class="history-list">
 						<view>
-							<image class="import-button" src="../../static/dashboard/import-button-zh.png"
+							<image class="import-button" :src="getImg($t('images.dashboard.import-button'))"
 								mode="widthFix" @click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
@@ -77,10 +77,10 @@
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
-						<image class="illustration36" src="/static/Frame1.png" mode="widthFix"></image>
-						<image class="illustration37" src="/static/Frame22.png" mode="widthFix"
+						<image class="illustration36" :src="getImg('/static/web/Frame1.webp')" mode="widthFix"></image>
+						<image class="illustration37" :src="getImg('/static/web/Frame22.webp')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
-						<image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
+						<image class="illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"></image>
 					</view>
 				</view>
 			</view>
@@ -89,12 +89,12 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
@@ -104,7 +104,7 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
+					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -126,7 +126,7 @@
 						:starRatings="courseData.courses.map(course => course.result)" 
 						:totalComponents="4"
 						:isCompleteTask="!!courseData.course_level" -->
-						<SProgressBar v-if="courseData" :finishComponents="1"
+						<SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" />
 					</view>
@@ -147,11 +147,12 @@
 	import {
 		illustrationSrc
 	} from '../../scripts/illustrationHelper_zh';
-
+	import { getImg } from '../../scripts/constants';
 	export default {
 
 		data() {
 			return {
+				getImg,
 				// currentView: 'dashboard2',
 				score: 28, // 示例分数，可根据需要动态改
 				maxScore: 100, // 假设最大分数为100
@@ -256,7 +257,7 @@
 					// 可以根需要添加更多卡片
 				],
 				showNewPopup: false,
-				tipImageSrc: '/static/tip.png', // Initial image source
+				tipImageSrc: getImg('/static/web/tip.webp'), // Initial image source
 				currentDate: new Date(),
 			};
 		},
@@ -286,7 +287,7 @@
 				return this.$store.getters.getCharacteristics;
 			},
 			illustrationData() {
-				return illustrationSrc(this.homepageData, this.$store);
+				return illustrationSrc(this.homepageData, this.$store, this.$t);
 			},
 			formattedBirthday() {
 				if (this.birthday) {
@@ -299,7 +300,7 @@
 				const options = {
 					month: 'short'
 				}; // 'long' for full month name
-				const monthFormatter = new Intl.DateTimeFormat('zh-CN', options);
+				const monthFormatter = new Intl.DateTimeFormat(uni.getLocale(), options);
 				return monthFormatter.format(this.currentDate).toUpperCase();
 			},
 			currentDate() {
@@ -338,15 +339,15 @@
 			getEmotionText() {
 				switch (this.minanimal) {
 					case 'capybara': //水豚
-						return '驱动力赛道';
+						return this.$t('pages.dashboard.emotion.capybara');
 					case 'hedgehog': //刺猬
-						return '共情力花园';
+					return this.$t('pages.dashboard.emotion.hedgehog');
 					case 'coyote': //狼
-						return '社交力集市';
+					return this.$t('pages.dashboard.emotion.coyote');
 					case 'ostrich': //鸵鸟
-						return '感知力迷宫';
+					return this.$t('pages.dashboard.emotion.ostrich');
 					case 'monkey':
-						return '掌控力灯塔';
+					return this.$t('pages.dashboard.emotion.monkey');
 					default:
 						return 'Emotion'; // Default text if animal is not recognized
 				}
@@ -469,7 +470,7 @@
 		async created() {
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
-			const result = illustrationSrc(this.homepageData, this.$store);
+			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
 			// const evalResult = uni.getStorage({
 			// 	key: "evalResult",
 			// 	success: (res) => {
@@ -551,7 +552,7 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			navigateToGuide() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
 				});
 			},
@@ -560,7 +561,7 @@
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
@@ -583,7 +584,7 @@
 			async uploadImage(filePath) {
 				try {
 					this.isLoading = true;
-					const result = await apiService.uploadChatHistory(filePath, this.userId, 'zh');
+					const result = await apiService.uploadChatHistory(filePath, this.userId);
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
@@ -686,7 +687,7 @@
 				this.closePopup();
 			},
 			navigateToBattlefieldIntro() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/battlefield/battlefield-intro?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
 
 				});
@@ -707,14 +708,14 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
+								uni.reLaunch({
 									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
 								});
 							} else {
@@ -754,14 +755,14 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: 'https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile',
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
+								uni.reLaunch({
 									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(contact?.name || '')}&jobId=${this.jobId}&relation=${encodeURIComponent(contact?.contact_relationship || '')}&tags=${encodeURIComponent(contact?.tag || '')}&contactId=${res.data.contact_id}`
 								});
 							} else {
@@ -783,14 +784,14 @@
 				}
 			},
 			navigateToResult() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/result/result_zh`
 				});
 			},
 			openWeChat() {
 				try {
 					// Attempt to open WeChat using the URL scheme
-					uni.navigateTo({
+					uni.reLaunch({
 						url: 'weixin://',
 						success: () => {
 							console.log('WeChat opened successfully');
@@ -813,10 +814,10 @@
 				}
 			},
 			toggleTipImage() {
-				this.tipImageSrc = this.tipImageSrc === '/static/tip.png' ?
-					'/static/tipp.png' // Replace with the new image path
+				this.tipImageSrc = this.tipImageSrc === getImg('/static/web/tip.webp') ?
+					getImg('/static/web/tipp.webp') // Replace with the new image path
 					:
-					'/static/tip.png';
+					getImg('/static/web/tip.webp');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name
