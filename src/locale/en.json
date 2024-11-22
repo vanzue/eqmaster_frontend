@@ -36,7 +36,7 @@
     "pages.dashboard.emotion.ostrich": "Perception Savanna",
     "pages.dashboard.emotion.monkey": "Self-regulation Hill",
     "pages.dashboard.emotion.emotion": "Emotion",
-    "images.dashboard.import-button": "/static/dashboard/import-button.png",
+    "images.dashboard.import-button": "/static/web/dashboard/import-button.webp",
 
     "pages.result.loading.splash": "Next\n Let's take a look at your workplace personality type!",
     "pages.result.loading.status": "Generating your own EQ report",
