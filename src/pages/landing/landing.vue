@@ -24,9 +24,11 @@
 			<view class="loginButton" @click="login">
 				<text class="login-text">{{ $t('pages.landing.login') }}</text>
 			</view>
+			<!-- #ifdef MP-WEIXIN -->
 			<view class="loginButton" @click="startLoginWx">
 				<text class="login-text">微信登录</text>
 			</view>
+			<!-- #endif -->
 		</view>
 
 		<!-- <view class="button button2" @click="startDialogue">
@@ -83,42 +85,33 @@
 					url: '/pages/login/login'
 				});
 			},
-			sendCodeToServer(code){
+			sendCodeToServer(code,iv,encryptedData){
+				
 				uni.request({
 				    url: API_ENDPOINT.baseURL + '/wxprogram/login',
 				    method: 'POST',
 				    data: {
-				        code: code
+				        code: code,
+						iv: iv,
+						encryptedData: encryptedData
 				    },
 				    success: (res) => {
 						console.log(res)
-						if(res.data.message.session_key)
+						uni.setStorageSync('userId', res.data.user_id);
+						uni.setStorageSync('jobId', res.data.job_id);
+						if(res.data.isNewUser)
 						{
-							uni.setStorageSync('token',res.data.message.session_key)
-							uni.getUserInfo({
-								provider: 'weixin',
-								success: function (infoRes) {
-									console.log(infoRes.userInfo.nickName)
-									if(res.data.isNewUser)
-									{
-										uni.navigateTo({
-											url: `/pages/landing/experience?username=${infoRes.userInfo.nickName}`
-										});
-									}
-									else
-									{
-										uni.navigateTo({
-											url: `/pages/dashboard/dashboard?userId=${res.userId}&username=${encodeURIComponent(res.data.message.openid)}&jobId=${res.jobid}`
-										});
-									}
-								}
+							uni.navigateTo({
+								url: `/pages/landing/experience`
 							});
-							
 						}
 						else
 						{
-							 console.log('请求失败：', err);
+							uni.navigateTo({
+								url: `/pages/dashboard/dashboard?userId=${res.data.userId}&username=${res.data.name}&jobId=${res.data.jobid}`
+							});
 						}
+							
 						
 				    },
 				    fail: (err) => {
@@ -128,13 +121,18 @@
 			},
 			startLoginWx() {
 				uni.login({
-					"provider": "weixin",
+					"provider": "weixin",   
 					"onlyAuthorize": true, // 微信登录仅请求授权认证
 					success: (event) => {
 						console.log(event);
 						const {code} = event;
-						//console.log(code)
-						this.sendCodeToServer(code); // 发送 code 到服务器
+					uni.getUserInfo({
+						provider: 'weixin',
+						success:  (infoRes) =>{
+							this.sendCodeToServer(code,infoRes.iv,infoRes.encryptedData);
+						}
+					});
+						//this.sendCodeToServer(code); // 发送 code 到服务器
 					},
 					fail: function (err) {
 						console.log('登录失败：', res.errMsg);
@@ -149,7 +147,7 @@
 			},
 		},
 		onLoad(options) {
-			downLoadZip()
+			// downLoadZip()
 			// 获取URL传递的参数
 			if (options.username) {
 				this.username = options.username; // 将传递过来的用户名存储起来

@@ -141,7 +141,7 @@
 				scenarioId: 1, // Add this new property
 				isLoading: false,
 				chatHistory: [], // Keep this new property
-				backgroundImageSrc: getImg('/static/onboarding/bg1.png'),
+				backgroundImageSrc: getImg('/static/onboarding/bg1.webp'),
 				requestCount: 0,
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标
@@ -248,7 +248,7 @@
 
 					// Get scenarioId
 					this.scenarioId = scenarioResponse.scenario_id || 1;
-					this.backgroundImageSrc = `/static/onboarding/bg${scenarioResponse.scenario_id}.png`;
+					this.backgroundImageSrc = `/static/onboarding/bg${scenarioResponse.scenario_id}.webp`;
 				} catch (error) {
 					console.error("Error fetching scenarioId:", error);
 					uni.showToast({

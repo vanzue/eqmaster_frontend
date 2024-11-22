@@ -262,7 +262,7 @@
 				try {
 					this.scenarioData = scenarioResponse.scene.scenes;
 					this.npcAvatar = getAvatar(this.scenarioData.role, scenarioResponse.scenario_id);
-					this.backgroundImageSrc = getImg(`/static/onboarding/bgzh${scenarioResponse.scenario_id}.png`);
+					this.backgroundImageSrc = getImg(`/static/onboarding/bgzh${scenarioResponse.scenario_id}.webp`);
 					this.scenarioId = scenarioResponse.scenario_id;
 					this.handleScenarioData();
 					this.updateProgress();
