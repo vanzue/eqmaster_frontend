@@ -33,16 +33,17 @@
 					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
 					<!-- <text class="login-text-apple">Wetch Login</text> -->
 				</view>
+				<!-- #ifdef MP-WEIXIN -->
+				<view class="loginButton" @click="startLoginWx">
+					<text class="login-text">微信小程序登录</text>
+				</view>
+				<!-- #endif -->
 				<!-- <view class="loginButton" @click="appleleLogin">
 					<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
 					<text class="login-text-apple">Sign in with Apple</text>
 				</view> -->
 			</view>
-			<!-- #ifdef MP-WEIXIN -->
-			<view class="loginButton" @click="startLoginWx">
-				<text class="login-text">微信登录</text>
-			</view>
-			<!-- #endif -->
+			
 		</view>
 
 		<!-- <view class="button button2" @click="startDialogue">
@@ -111,8 +112,10 @@
 				    },
 				    success: (res) => {
 						console.log(res)
-						uni.setStorageSync('userId', res.data.user_id);
-						uni.setStorageSync('jobId', res.data.job_id);
+						uni.setStorageSync('userId', res.data.userid);
+						uni.setStorageSync('jobId', res.data.jobid);
+						this.$store.commit('setUserId', res.data.userid);
+						this.$store.commit('setJobId',  res.data.jobid);
 						if(res.data.isNewUser)
 						{
 							uni.navigateTo({
@@ -122,7 +125,7 @@
 						else
 						{
 							uni.navigateTo({
-								url: `/pages/dashboard/dashboard?userId=${res.data.userId}&username=${res.data.name}&jobId=${res.data.jobid}`
+								url: `/pages/dashboard/dashboard?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
 							});
 						}
 							
