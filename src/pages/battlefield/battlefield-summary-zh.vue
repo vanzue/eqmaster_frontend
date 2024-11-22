@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" >
 		<scroll-view scroll-y style="height: 100%">
 			<!-- <view class="debug-info">
     如需调试信息，可取消注释以下行
@@ -7,8 +7,8 @@
    </view> -->
 			<image class="head-image" :src="
           this.isPass
-            ? '/static/battlefield/IP-green.png'
-            : '/static/battlefield/IP-grey.png'
+            ? getImg('/static/battlefield/IP-green.png')
+            : getImg('/static/battlefield/IP-grey.png')
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
@@ -17,7 +17,7 @@
 				<reward-bar :style="{ backgroundColor: 'transparent', width: '300rpx' }" :gemCount="this.gemCount"
 					gem-icon-width="40px" gem-icon-height="40px"></reward-bar>
 				<view class="diamond-wrapper">
-					<image class="diamond-image" src="/static/battlefield/diamond.png" mode="aspectFill"></image>
+					<image class="diamond-image" :src="getImg('/static/battlefield/diamond.png')" mode="aspectFill"></image>
 					<text class="diamond-text">
 						{{ this.isPass ? "+10" : "+3" }}
 					</text>
@@ -43,11 +43,11 @@
 					</view>
 
 					<view class="sub-card">
-						<npc-comment :name="'老板'" :avatar="'/static/battlefield/boss.png'" :comment="comments[0]"
+						<npc-comment :name="'老板'" :avatar="getImg('/static/battlefield/boss.png')" :comment="comments[0]"
 							:npcHealth="Number(npcHealthValues[0])"></npc-comment>
-						<npc-comment :name="'同事A'" :avatar="'/static/battlefield/xiaoA.png'" :comment="comments[1]"
+						<npc-comment :name="'同事A'" :avatar="getImg('/static/battlefield/xiaoA.png')" :comment="comments[1]"
 							:npcHealth="npcHealthValues[1]"></npc-comment>
-						<npc-comment :name="'同事B'" :avatar="'/static/battlefield/xiaoB.png'" :comment="comments[2]"
+						<npc-comment :name="'同事B'" :avatar="getImg('/static/battlefield/xiaoB.png')" :comment="comments[2]"
 							:npcHealth="npcHealthValues[2]"></npc-comment>
 					</view>
 
@@ -57,12 +57,12 @@
 			<view class="card third-card">
 				<view class="third-card-title">
 					<text class="tips-title">本关情商技巧</text>
-					<image class="tips-icon" src="/static/battlefield/eqtips.png" mode="widthFix"></image>
+					<image class="tips-icon" :src="getImg('/static/battlefield/eqtips.png')" mode="widthFix"></image>
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
 					<text>{{ suggestion }}</text>
-					<image class="tips-icon1" src="/static/battlefield/eqtips1.png" mode="widthFix"></image>
+					<image class="tips-icon1"  :src="getImg('/static/battlefield/eqtips1.png')" mode="widthFix"></image>
 
 				</view>
 
@@ -89,6 +89,7 @@
 	import RewardBar from "@/components/RewardBar.vue";
 	import NpcComment from "@/components/NpcComment.vue"; // ���入组件
 	import api from "../../services/api-service";
+	import { getImg } from "../../scripts/constants";
 	export default {
 		components: {
 			NpcComment, // 注册组件
@@ -96,6 +97,7 @@
 		},
 		data() {
 			return {
+				getImg,
 				comments: [
 					"你这小子真是越来越懂我了，简直像我肚子里的蛔虫。每次点的菜都能踩准我的心思，不多不少，恰到好处。",
 					"厉害啊，“蛔虫”。不过我们这种小人物的口味可没人在乎咯。",
@@ -221,7 +223,7 @@
 		width: 100%;
 		min-height: 100vh;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-			url("/static/battlefield/background.png");
+			url("https://eqmaster.blob.core.windows.net/static/battlefield/background.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-color: #2F2F38;
 		display: flex;
 		flex-direction: column;

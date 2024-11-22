@@ -87,7 +87,7 @@
 						<view class="eqoach-center-text">
 							Add EQoach bot for line
 						</view>
-						<image class="eqoach-center-code-image" src="/static/eqoach-code.png" ref="qrCodeImage"></image>
+						<image class="eqoach-center-code-image" :src="getImg('/static/eqoach-code.png')" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>
@@ -119,13 +119,16 @@
 <script>
 	import apiService from '../../services/api-service';
 	import Nav from '../../components/Nav.vue';
-
+import {
+			getImg
+		} from '../../scripts/constants.js';
 	export default {
 		components: {
 			Nav
 		},
 		data() {
 			return {
+				getImg,
 				name: '',
 				intervalId: null,
 				swipeOffset: 0,
@@ -314,7 +317,7 @@
 				console.log("logOutClick");
 				this.logoutShow = false;
 				await this.clearLocalUserId();
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/landing/landing`
 				});
 			},
@@ -358,7 +361,8 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		background-image: url("/static/profile-bg.png");
+		background-image:
+		url("https://eqmaster.blob.core.windows.net/static/profile-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -399,7 +403,8 @@
 		/* display: flex; */
 		/* width: auto; */
 		height: 654rpx;
-		background-image: url("/static/have-been-bg.png");
+		background-image:
+		url("https://eqmaster.blob.core.windows.net/static/have-been-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;

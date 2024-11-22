@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "jszip": "^3.10.1",
     "uuid": "^10.0.0"
   }
 }

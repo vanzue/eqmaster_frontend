@@ -4,7 +4,7 @@ import {
 import apiService from "@/services/api-service";
 
 const DEFAULT_LOCALE = 'zh'; // en, zh
-
+import { getImg } from '../scripts/constants';
 export default createStore({
 	state: {
 		userId: 0, //用户ID
@@ -20,7 +20,7 @@ export default createStore({
 		npcs: [{
 				characterName: "领导",
 				health: 10,
-				avatar: "/static/battlefield/boss.png",
+				avatar: getImg("/static/battlefield/boss.png"),
 				voice: "zh-CN-XiaoruiNeural",
 				style: "serious",
 				rate: "0%",
@@ -29,7 +29,7 @@ export default createStore({
 			{
 				characterName: "同事A",
 				health: 10,
-				avatar: "/static/battlefield/xiaoA.png",
+				avatar:  getImg("/static/battlefield/xiaoA.png"),
 				voice: "zh-CN-YunxiNeural",
 				style: "friendly",
 				rate: "10%",
@@ -37,7 +37,7 @@ export default createStore({
 			{
 				characterName: "同事B",
 				health: 10,
-				avatar: "/static/battlefield/xiaoB.png",
+				avatar:  getImg("/static/battlefield/xiaoB.png"),
 				voice: "zh-CN-XiaoxiaoNeural",
 				style: "angry",
 				rate: "10%",

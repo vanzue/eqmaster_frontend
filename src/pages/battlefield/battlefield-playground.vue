@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
-			<image class="background-image" src="/static/battlefield/background1.png" mode="aspectFill" />
+			<image class="background-image" :src="getImg('/static/battlefield/background1.png')" mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
@@ -205,7 +205,7 @@
 	import TaskList from "../../models/TaskList";
 	import state from "../../state";
 	import apiService from '../../services/api-service';
-
+	import { getImg } from "../../scripts/constants";
 	export default {
 		components: {
 			RewardBar,
@@ -221,6 +221,7 @@
 		},
 		data() {
 			return {
+				getImg,
 				// userId: state.userId,
 				judgeTitle: "",
 				judgeContent: "",
@@ -334,7 +335,7 @@
 				this.isLoadingShow = value;
 			},
 			goToDashboard() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: "/pages/dashboard/dashboard_en",
 				});
 			},
@@ -635,7 +636,7 @@
 				});
 				await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: "/pages/battlefield/battlefield-summary-zh",
 					});
 				}, 1000);

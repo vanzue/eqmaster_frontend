@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view v-if="showSplash" :class="{'splash-screen': true, 'splash-screen-hidden': splashHidden}">
-			<image class="splash-image" :src="$t('images.onboarding.splash')" src="/static/splashZH2.png" mode="aspectFill"></image>
+			<image class="splash-image"  :src="getImg($t('images.onboarding.splash'))" mode="aspectFill"></image>
 		</view>
 		<!-- <view class="splashBackground"></view>
 		<view v-if="showSplash" class="splash-screen">
@@ -12,8 +12,9 @@
 			<image class="splashImage" src="/static/onboarding/IP.png" mode="widthFix"></image>
 		</view> -->
 
-		<!-- 添加背景图片 -->
-		<image class="background-image" :src="$t('images.onboarding.landing')" mode="widthFix"></image>
+		<!-- 添加背景图片 
+		<image class="background-image" :src="getImg('/static/onboarding/landingB2.png')" mode="widthFix"></image>-->
+		<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
 		<view class="start-button">
@@ -37,6 +38,11 @@
 					<text class="login-text-apple">Sign in with Apple</text>
 				</view> -->
 			</view>
+			<!-- #ifdef MP-WEIXIN -->
+			<view class="loginButton" @click="startLoginWx">
+				<text class="login-text">微信登录</text>
+			</view>
+			<!-- #endif -->
 		</view>
 
 		<!-- <view class="button button2" @click="startDialogue">
@@ -49,12 +55,19 @@
 
 
 <script>
+	import {
+		getImg,
+		downLoadZip
+	} from '../../scripts/constants.js';
+	import API_ENDPOINT from '../../services/api-service.js';
 	export default {
 		data() {
 			return {
 				showSplash: true,
 				splashHidden: false, // 控制渐隐
-				username: '' // 用于存储从上一页接收的用户名
+				username: '', // 用于存储从上一页接收的用户名
+				getImg,
+				API_ENDPOINT,
 			};
 		},
 		computed: {
@@ -85,6 +98,61 @@
 				uni.navigateTo({
 					url: '/pages/login/login'
 				});
+			},
+			sendCodeToServer(code,iv,encryptedData){
+				
+				uni.request({
+				    url: API_ENDPOINT.baseURL + '/wxprogram/login',
+				    method: 'POST',
+				    data: {
+				        code: code,
+						iv: iv,
+						encryptedData: encryptedData
+				    },
+				    success: (res) => {
+						console.log(res)
+						uni.setStorageSync('userId', res.data.user_id);
+						uni.setStorageSync('jobId', res.data.job_id);
+						if(res.data.isNewUser)
+						{
+							uni.navigateTo({
+								url: `/pages/landing/experience`
+							});
+						}
+						else
+						{
+							uni.navigateTo({
+								url: `/pages/dashboard/dashboard?userId=${res.data.userId}&username=${res.data.name}&jobId=${res.data.jobid}`
+							});
+						}
+							
+						
+				    },
+				    fail: (err) => {
+				        console.log('请求失败：', err);
+				    }
+				});
+			},
+			startLoginWx() {
+				uni.login({
+					"provider": "weixin",   
+					"onlyAuthorize": true, // 微信登录仅请求授权认证
+					success: (event) => {
+						console.log(event);
+						const {code} = event;
+					uni.getUserInfo({
+						provider: 'weixin',
+						success:  (infoRes) =>{
+							this.sendCodeToServer(code,infoRes.iv,infoRes.encryptedData);
+						}
+					});
+						//this.sendCodeToServer(code); // 发送 code 到服务器
+					},
+					fail: function (err) {
+						console.log('登录失败：', res.errMsg);
+				    }
+				});
+				
 			},
 			startDialogue() {
 				uni.navigateTo({
@@ -175,6 +243,7 @@
 			},
 		},
 		onLoad(options) {
+			// downLoadZip()
 			// 获取URL传递的参数
 			if (options.username) {
 				this.username = options.username; // 将传递过来的用户名存储起来

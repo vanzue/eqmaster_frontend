@@ -49,12 +49,12 @@
 		},
 		methods: {
 			navigateToNextPage() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-loading-zh'
 				});
 			},
 			goback() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-intro-zh'
 				});
 			}

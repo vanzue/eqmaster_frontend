@@ -6,6 +6,7 @@
 
 
 <script>
+	import { getImg } from '../scripts/constants';
 	export default {
 		props: {
 			finishComponents: {
@@ -62,6 +63,9 @@
 				canvasHeight: 0,
 				yOffset: 10, // 新增：Y轴偏移量
 				isFromMap: true,
+				downImgNum:0,
+				imgDic: {},
+				getImg
 			};
 		},
 		computed: {
@@ -80,7 +84,7 @@
 					this.canvasHeight = (this.circleRadius * 4 * (this.totalComponents + 1)) + this
 						.verticalOffset * 2;
 					this.calculateBezierPoints();
-					this.drawSProgress();
+					this.loadimg();
 				},
 			});
 		},
@@ -88,6 +92,63 @@
 			this.drawSProgress();
 		},
 		methods: {
+			loadimg(){
+				const completedImages = [
+					'/static/level1completed.png',
+					'/static/level2completed.png',
+					'/static/level3completed.png',
+					'/static/level4completed.png',
+					'/static/level5completed.png'
+				];
+				const incompleteImages = [
+					'/static/level1incomplete.png',
+					'/static/level2incomplete1.png',
+					'/static/level3incomplete1.png',
+					'/static/level4incomplete.png',
+					'/static/level5incomplete.png'
+				];
+				for(let i=0; i<completedImages.length; i++){
+				  this.loadAndDrawImageWx(completedImages[i])
+				}
+				for(let i=0; i<incompleteImages.length; i++){
+				  this.loadAndDrawImageWx(incompleteImages[i])
+				  }
+			},
+			loadAndDrawImageWx(src) {
+				const filePath = getImg(src);
+
+				if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.gif')) {
+					this.imgDic[src] = filePath;
+					this.downImgNum++;
+					if (this.downImgNum >= 6) {
+					this.drawSProgress();
+					}
+				} else {
+					uni.downloadFile({
+				        url: getImg(src),
+				        success: (res) => {
+				          if (res.statusCode === 200) {
+				            const imgPath = res.tempFilePath;
+							// console.log(`index=${index} src=${src}`)
+							  this.imgDic[src] = imgPath
+							  this.downImgNum++
+							  if (this.downImgNum >=6) {
+								this.drawSProgress()
+							  }
+							// ctx.drawImage(imgPath,x, y, size, size);
+							// this.drawPath(ctx,index,x, y,size,isCompleted)
+							// ctx.draw();
+				          } else {
+				            console.error('Failed to download image'+src);
+				          }
+				        },
+				        fail: (err) => {
+				          console.error('Download image error:', err);
+				        }
+				      });
+				}
+				
+			},
 			calculateBezierPoints() {
 				const width = this.canvasWidth;
 				const radius = this.circleRadius;
@@ -265,7 +326,7 @@
 
 						// Draw logo
 						const logoSize = 30; // Adjust size as needed
-						const logoPath = '/static/lock.png'; // Replace with your logo path
+						const logoPath = getImg('/static/lock.png'); // Replace with your logo path
 						ctx.drawImage(logoPath, lineStartX - 15, lineY - logoSize / 1.7, logoSize, logoSize);
 
 						// Draw "LEVEL 2" text
@@ -338,8 +399,7 @@
 					const imageY = endPoint.y - imageSize / 2 + yOffset;
 
 					try {
-						ctx.drawImage(imagePath, imageX, imageY, imageSize, imageSize);
-
+						ctx.drawImage(this.imgDic[imagePath], imageX, imageY, imageSize, imageSize);
 						// 只在激活（已完成）的关卡上添加红色实体六边形
 						if (isCompleted) {
 							this.hexagons[i] = {
@@ -474,7 +534,7 @@
 			navigateToBattlefieldIntro() {
 				const jobId = this.homepageData?.response?.personal_info?.job_id;
 				console.log('okok');
-				uni.navigateTo({
+				uni.reLaunch({
 					// url: `/pages/battlefield/battlefield-intro`
 					url: this.isCompleteTask ?
 						`/pages/battlefield/battlefield-summary-zh?isFromMap=${this.isFromMap}` :
@@ -556,7 +616,7 @@
 		justify-content: flex-start;
 		align-items: center;
 		flex-direction: column;
-		background-color: #f5f5f5;
+		background-color: #2F2F38;
 		margin-right: 3rpx;
 	}
 

@@ -1,9 +1,10 @@
+import { getImg } from "./constants";
 export function illustrationSrc(homepageData, store, t) {
 	let returnObj = {
 		animal: "",
 		animal_name: '卡皮巴拉',
-		animal_icon: '/static/resulten/monkey.png',
-		animal_name_bg: '/static/resulten/animal-name-1.png',
+		animal_icon: getImg('/static/resulten/monkey.png'),
+		animal_name_bg: getImg('/static/resulten/animal-name-1.png'),
 		weakness: 'Weakness',
 		characteristics: '',
 	};
@@ -20,8 +21,8 @@ export function illustrationSrc(homepageData, store, t) {
 			returnObj = {
 				animal: "ostrich",
 				animal_name: t('illustration.animal.ostrich.name'),
-				animal_icon: '/static/dashboard/en/ostrich.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/dashboard/en/ostrich.png'),
+				animal_name_bg: getImg('/static/resulten/animal-name-1.png'),
 				weakness: t('illustration.animal.ostrich.weakness'),
 				characteristics: t('illustration.animal.ostrich.characteristics'),
 
@@ -31,8 +32,8 @@ export function illustrationSrc(homepageData, store, t) {
 			returnObj = {
 				animal: "monkey",
 				animal_name: t('illustration.animal.monkey.name'),
-				animal_icon: '/static/dashboard/en/monkey.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/dashboard/en/monkey.png'),
+				animal_name_bg: getImg('/static/resulten/animal-name-1.png'),
 				weakness: t('illustration.animal.monkey.weakness'),
 				characteristics: t('illustration.animal.monkey.characteristics'),
 
@@ -41,8 +42,8 @@ export function illustrationSrc(homepageData, store, t) {
 			returnObj = {
 				animal: "hedgehog",
 				animal_name: t('illustration.animal.hedgehog.name'),
-				animal_icon: '/static/dashboard/en/hedgehog.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/dashboard/en/hedgehog.png'),
+				animal_name_bg: getImg('/static/resulten/animal-name-1.png'),
 				weakness: t('illustration.animal.hedgehog.weakness'),
 				characteristics: t('illustration.animal.hedgehog.characteristics'),
 
@@ -52,8 +53,8 @@ export function illustrationSrc(homepageData, store, t) {
 			returnObj = {
 				animal: "coyote",
 				animal_name: t('illustration.animal.coyote.name'),
-				animal_icon: '/static/dashboard/en/coyote.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/dashboard/en/coyote.png'),
+				animal_name_bg: getImg('/static/resulten/animal-name-1.png'),
 				weakness: t('illustration.animal.coyote.weakness'),
 				characteristics: t('illustration.animal.coyote.characteristics'),
 			};
@@ -61,8 +62,8 @@ export function illustrationSrc(homepageData, store, t) {
 			returnObj = {
 				animal: "capybara",
 				animal_name: t('illustration.animal.capybara.name'),
-				animal_icon: '/static/dashboard/en/capybara.png',
-				animal_name_bg: '/static/resulten/animal-name-1.png',
+				animal_icon: getImg('/static/dashboard/en/capybara.png'),
+				animal_name_bg: getImg('/static/resulten/animal-name-1.png'),
 				weakness: t('illustration.animal.capybara.weakness'),
 				characteristics: t('illustration.animal.capybara.characteristics'),
 			};

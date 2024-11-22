@@ -49,7 +49,7 @@
 				const currentRoute = currentPages[currentPages.length - 1].route;
 				if (val === 'Home') {
 					if (currentRoute !== 'pages/dashboard/dashboard_zh') {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/dashboard_zh` // 添加查询参数
 						});
 					}
@@ -58,7 +58,7 @@
 				}
 				if (val === 'Battlefield') {
 					if (currentRoute !== 'pages/dashboard/dashboard_zh') {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/dashboard_zh` // 添加查询参数
 						});
 					}
@@ -67,7 +67,7 @@
 
 				}
 				if (val === 'Profile') {
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/profile/profile_zh` // 添加查询参数
 					});
 				}

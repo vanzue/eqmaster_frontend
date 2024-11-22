@@ -8,7 +8,7 @@
 			</view>
 			<text class="question">{{$t('pages.landing.question')}}</text>
 
-			<input class="name-input" :placeholder="$t('pages.landing.input_name')" v-model="username" />
+			<input class="name-input" type="nickname" @blur="bindblur" :placeholder="$t('pages.landing.input_name')" v-model="username" />
 
 			<view class="button-container">
 				<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @tap="nextStep"></image>
@@ -18,20 +18,28 @@
 </template>
 
 <script>
+	import {
+		getImg
+	} from '../../scripts/constants.js';
 	export default {
 		data() {
 			return {
 				username: '',
-				backgroundImage: '/static/picture1.png',
+				backgroundImage: getImg('/static/picture1.png'),
+				getImg,
 			};
 		},
+		
 		methods: {
+			bindblur(e){
+				this.userName = e.detail.value; // 获取微信昵称
+			},
 			nextStep() {
 				if (this.username.trim()) {
 					console.log("user input name:", this.username);
 					this.$store.commit('setUsername', this.username);
 					uni.setStorageSync('username', this.username);
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/preference/preference3`
 					});
 				} else {

@@ -56,7 +56,7 @@
 					</view>
 					<view class="history-list">
 						<view>
-							<image class="import-button" :src="$t('images.dashboard.import-button')"
+							<image class="import-button" :src="getImg($t('images.dashboard.import-button'))"
 								mode="widthFix" @click="chooseImage">
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
@@ -77,10 +77,10 @@
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
-						<image class="illustration36" src="/static/Frame1.png" mode="widthFix"></image>
-						<image class="illustration37" src="/static/Frame22.png" mode="widthFix"
+						<image class="illustration36" :src="getImg('/static/Frame1.png')" mode="widthFix"></image>
+						<image class="illustration37" :src="getImg('/static/Frame22.png')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
-						<image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
+						<image class="illustration38" :src="getImg('/static/Frame3.png')" mode="widthFix"></image>
 					</view>
 				</view>
 			</view>
@@ -89,12 +89,12 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/diamond.png" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/diamond.png')" mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" src="/static/dashboard2/star.jpg" mode="widthFix">
+							<image class="dashboard2-illustration3" :src="getImg('/static/dashboard2/star.jpg')" mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
@@ -104,7 +104,7 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: 'url(/static/card-course.png)' }">
+					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/card-course.png')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -126,7 +126,7 @@
 						:starRatings="courseData.courses.map(course => course.result)" 
 						:totalComponents="4"
 						:isCompleteTask="!!courseData.course_level" -->
-						<SProgressBar v-if="courseData" :finishComponents="1"
+						<SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" />
 					</view>
@@ -147,11 +147,12 @@
 	import {
 		illustrationSrc
 	} from '../../scripts/illustrationHelper_zh';
-
+	import { getImg } from '../../scripts/constants';
 	export default {
 
 		data() {
 			return {
+				getImg,
 				// currentView: 'dashboard2',
 				score: 28, // 示例分数，可根据需要动态改
 				maxScore: 100, // 假设最大分数为100
@@ -256,7 +257,7 @@
 					// 可以根需要添加更多卡片
 				],
 				showNewPopup: false,
-				tipImageSrc: '/static/tip.png', // Initial image source
+				tipImageSrc: getImg('/static/tip.png'), // Initial image source
 				currentDate: new Date(),
 			};
 		},
@@ -551,7 +552,7 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			navigateToGuide() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
 				});
 			},
@@ -560,7 +561,7 @@
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
@@ -686,7 +687,7 @@
 				this.closePopup();
 			},
 			navigateToBattlefieldIntro() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/battlefield/battlefield-intro?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
 
 				});
@@ -707,14 +708,14 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: `https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile?locale=${uni.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
+								uni.reLaunch({
 									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
 								});
 							} else {
@@ -754,14 +755,14 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: `https://eqmaster-gfh8gvfsfwgyb7cb.eastus-01.azurewebsites.net/create_contact_profile?locale=${uni.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
+								uni.reLaunch({
 									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(contact?.name || '')}&jobId=${this.jobId}&relation=${encodeURIComponent(contact?.contact_relationship || '')}&tags=${encodeURIComponent(contact?.tag || '')}&contactId=${res.data.contact_id}`
 								});
 							} else {
@@ -783,14 +784,14 @@
 				}
 			},
 			navigateToResult() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/result/result_zh`
 				});
 			},
 			openWeChat() {
 				try {
 					// Attempt to open WeChat using the URL scheme
-					uni.navigateTo({
+					uni.reLaunch({
 						url: 'weixin://',
 						success: () => {
 							console.log('WeChat opened successfully');
@@ -813,10 +814,10 @@
 				}
 			},
 			toggleTipImage() {
-				this.tipImageSrc = this.tipImageSrc === '/static/tip.png' ?
-					'/static/tipp.png' // Replace with the new image path
+				this.tipImageSrc = this.tipImageSrc === getImg('/static/tip.png') ?
+					getImg('/static/tipp.png') // Replace with the new image path
 					:
-					'/static/tip.png';
+					getImg('/static/tip.png');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name

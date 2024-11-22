@@ -63,11 +63,12 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-4020920240930001",
     "@dcloudio/uni-mp-xhs": "3.0.0-4020920240930001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4020920240930001",
+    "jszip": "^3.10.1",
     "puppeteer": "^23.7.0",
+    "uuid": "^10.0.0",
     "vue": "^3.4.21",
     "vue-i18n": "^9.1.9",
-    "vuex": "^4.1.0",
-    "uuid": "^10.0.0"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",

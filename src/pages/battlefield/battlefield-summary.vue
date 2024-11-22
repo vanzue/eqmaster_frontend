@@ -7,8 +7,8 @@
    </view> -->
 			<image class="head-image" :src="
           this.isPass
-            ? '/static/battlefield/IP-green.png'
-            : '/static/battlefield/IP-grey.png'
+            ? getImg('/static/battlefield/IP-green.png')
+            : getImg('/static/battlefield/IP-grey.png')
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
@@ -17,7 +17,7 @@
 				<reward-bar :style="{ backgroundColor: 'transparent', width: '300rpx' }" :gemCount="this.gemCount"
 					gem-icon-width="40px" gem-icon-height="40px"></reward-bar>
 				<view class="diamond-wrapper">
-					<image class="diamond-image" src="/static/battlefield/diamond.png" mode="aspectFill"></image>
+					<image class="diamond-image" :src="getImg('/static/battlefield/diamond.png')" mode="aspectFill"></image>
 					<text class="diamond-text">
 						{{ this.isPass ? "+10" : "+3" }}
 					</text>
@@ -43,11 +43,11 @@
 					</view>
 
 					<view class="sub-card">
-						<npc-comment :name="'Jason'" :avatar="'/static/battlefield/Jason.png'" :comment="comments[0]"
+						<npc-comment :name="'Jason'" :avatar="getImg('/static/battlefield/Jason.png')" :comment="comments[0]"
 							:npcHealth="Number(npcHealthValues[0])"></npc-comment>
-						<npc-comment :name="'Sam'" :avatar="'/static/battlefield/Sam.png'" :comment="comments[1]"
+						<npc-comment :name="'Sam'" :avatar="getImg('/static/battlefield/Sam.png')" :comment="comments[1]"
 							:npcHealth="npcHealthValues[1]"></npc-comment>
-						<npc-comment :name="'Anna'" :avatar="'/static/battlefield/Anna.png'" :comment="comments[2]"
+						<npc-comment :name="'Anna'" :avatar="getImg('/static/battlefield/Anna.png')" :comment="comments[2]"
 							:npcHealth="npcHealthValues[2]"></npc-comment>
 					</view>
 
@@ -57,12 +57,12 @@
 			<view class="card third-card">
 				<view class="third-card-title">
 					<text class="tips-title">Tips for you</text>
-					<image class="tips-icon" src="/static/battlefield/eqtips.png" mode="widthFix"></image>
+					<image class="tips-icon" :src="getImg('/static/battlefield/eqtips.png')" mode="widthFix"></image>
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
 				<view class="suggestion">
 					<text>{{ suggestion }}</text>
-					<image class="tips-icon1" src="/static/battlefield/eqtips1.png" mode="widthFix"></image>
+					<image class="tips-icon1" :src="getImg('/static/battlefield/eqtips1.png')" mode="widthFix"></image>
 
 				</view>
 
@@ -88,7 +88,7 @@
 <script>
 	import RewardBar from "/components/RewardBar.vue";
 	import NpcComment from "/components/NpcComment.vue"; // ���入组件
-	import api from "../../services/api-service";
+	import { getImg } from "../../scripts/constants";
 	export default {
 		components: {
 			NpcComment, // 注册组件
@@ -121,7 +121,7 @@
 					username: this.username,
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard_en`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
@@ -133,7 +133,7 @@
 					username: this.username,
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/battlefield/battlefield-intro-zh`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
@@ -141,7 +141,7 @@
 			},
 
 			navigateToNextPage() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: "/pages/battlefield/battlefield-task-zh", // Replace this with the actual path to your next page
 				});
 			},
@@ -222,7 +222,7 @@
 		width: 100%;
 		min-height: 100vh;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-			url("/static/battlefield/background1.png");
+			url("https://eqmaster.blob.core.windows.net/static/battlefield/background1.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
 		background-color: #2F2F38;
 		display: flex;
 		flex-direction: column;

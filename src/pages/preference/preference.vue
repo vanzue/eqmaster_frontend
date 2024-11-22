@@ -33,25 +33,29 @@
 
 
 <script>
+	import {
+			getImg
+	} from '../../scripts/constants.js';
 	export default {
 		data() {
 			return {
+				getImg,
 				selectedGender: null,
 				userId: '',
 				username: '',
-				backgroundImage: '/static/picture1.png', // 确保背景图片路径正确
+				backgroundImage: getImg('/static/picture1.png'), // 确保背景图片路径正确
 				genderIcons: {
 					female: {
-						default: '/static/2.png',
-						selected: '/static/2-selected.png'
+						default: getImg('/static/2.png'),
+						selected: getImg('/static/2-selected.png')
 					},
 					male: {
-						default: '/static/3.png',
-						selected: '/static/3-selected.png'
+						default: getImg('/static/3.png'),
+						selected: getImg('/static/3-selected.png')
 					},
 					other: {
-						default: '/static/4.png',
-						selected: '/static/4-selected.png'
+						default: getImg('/static/4.png'),
+						selected: getImg('/static/4-selected.png')
 					}
 				}
 			};
@@ -72,7 +76,7 @@
 					// 保存性别信息
 					uni.setStorageSync('gender', this.selectedGender);
 					// 导航到下一页，并传递所有参数
-					uni.navigateTo({
+					uni.reLaunch({
 						url: `/pages/preference/preference1?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.selectedGender}`
 					});
 				} else {
