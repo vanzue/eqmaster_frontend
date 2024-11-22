@@ -31,7 +31,7 @@
 			},
 			avatar: {
 				type: String,
-				default: getImg('/static/battlefield/boss.png') // 默认头像路径
+				default: getImg('/static/web/battlefield/boss.webp') // 默认头像路径
 			},
 			characterName: {
 				type: String,

@@ -9,7 +9,7 @@
 			<view class="cards">
 				<!-- 帮回卡 -->
 				<view class="card" :class="{ selected: selectedCard === 'help' }" @click="selectCard('help')">
-					<image class="card-background" :src="getImg('/static/battlefield/tipping-left.png')" mode="scaleToFill">
+					<image class="card-background" :src="getImg('/static/web/battlefield/tipping-left.webp')" mode="scaleToFill">
 					</image>
 					<view class="card-content">
 						<text class="card-title">帮回卡</text>
@@ -17,7 +17,7 @@
 							快速调整你的回答，提升质量，让对话更流畅。
 						</text>
 						<view class="card-cost">
-							<image class="diamond" :src="getImg('/static/battlefield/diamond.png')"></image>
+							<image class="diamond" :src="getImg('/static/web/battlefield/diamond.webp')"></image>
 							<text>60</text>
 						</view>
 					</view>
@@ -25,7 +25,7 @@
 
 				<!-- 提示卡 -->
 				<view class="card" :class="{ selected: selectedCard === 'hint' }" @click="selectCard('hint')">
-					<image class="card-background" :src="getImg('/static/battlefield/tipping-right.png')" mode="scaleToFill">
+					<image class="card-background" :src="getImg('/static/web/battlefield/tipping-right.webp')" mode="scaleToFill">
 					</image>
 					<view class="card-content">
 						<text class="card-title">提示卡</text>
@@ -33,7 +33,7 @@
 							提供情绪引导或建议，帮助你更好地理解和回应。
 						</text>
 						<view class="card-cost">
-							<image class="diamond" :src="getImg('/static/battlefield/diamond.png')"></image>
+							<image class="diamond" :src="getImg('/static/web/battlefield/diamond.webp')"></image>
 							<text>20</text>
 						</view>
 					</view>

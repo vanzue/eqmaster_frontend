@@ -87,7 +87,7 @@
 						<view class="eqoach-center-text">
 							Add EQoach bot for line
 						</view>
-						<image class="eqoach-center-code-image" :src="getImg('/static/eqoach-code.png')" ref="qrCodeImage"></image>
+						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-code.webp')" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>

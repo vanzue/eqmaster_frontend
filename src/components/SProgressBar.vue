@@ -326,7 +326,7 @@
 
 						// Draw logo
 						const logoSize = 30; // Adjust size as needed
-						const logoPath = getImg('/static/lock.png'); // Replace with your logo path
+						const logoPath = getImg('/static/web/lock.webp'); // Replace with your logo path
 						ctx.drawImage(logoPath, lineStartX - 15, lineY - logoSize / 1.7, logoSize, logoSize);
 
 						// Draw "LEVEL 2" text

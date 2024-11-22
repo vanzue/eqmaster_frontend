@@ -35,7 +35,7 @@
 			return {
 				username: '',
 				getImg,
-				backgroundImage: getImg('/static/picture1.png'), // 确保背景图片路径正确
+				backgroundImage: getImg('/static/web/picture1.webp'), // 确保背景图片路径正确
 			};
 		},
 		mounted() {

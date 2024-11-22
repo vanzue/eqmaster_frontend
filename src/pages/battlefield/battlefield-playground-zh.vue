@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
-			<image class="background-image" :src="getImg('/static/battlefield/background.png')" mode="aspectFill" />
+			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')" mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">

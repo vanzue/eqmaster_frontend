@@ -19,7 +19,7 @@
 				</view>
 			</view> -->
 			<view class="banner-container">
-				<image class="logo" :src="getImg('/static/signa.png')" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -60,7 +60,7 @@
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
 			<view class="banner-container">
-				<image class="logo"  :src="getImg('/static/signa.png')" mode="aspectFit" />
+				<image class="logo"  :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -141,7 +141,7 @@
 				scenarioId: 1, // Add this new property
 				isLoading: false,
 				chatHistory: [], // Keep this new property
-				backgroundImageSrc: getImg('/static/onboarding/bg1.webp'),
+				backgroundImageSrc: getImg('/static/web/onboarding/bg1.webp'),
 				requestCount: 0,
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标

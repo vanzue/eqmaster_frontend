@@ -13,7 +13,7 @@
 		<!-- Test page content -->
 		<template v-if="currentPage === 'test'">
 			<view class="banner-container">
-				<image class="logo" :src="getImg('/static/signa.png')" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>
@@ -21,7 +21,7 @@
 			<view class="text-box" @tap="navigateToTest1" :class="{ 'disabled': isLoading }" v-if="background">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
-					<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
+					<image class="icon-image" src="/static/icon3.webp" mode="aspectFit" />
 				</view>
 			</view>
 		</template>
@@ -54,7 +54,7 @@
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
 			<view class="banner-container">
-				<image class="logo" :src="getImg('/static/signa.png')" mode="aspectFit" />
+				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
 				</view>

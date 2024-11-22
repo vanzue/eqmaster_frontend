@@ -13,7 +13,7 @@
 		</view> -->
 
 		<!-- 添加背景图片 
-		<image class="background-image" :src="getImg('/static/onboarding/landingB2.png')" mode="widthFix"></image>-->
+		<image class="background-image" :src="getImg('/static/web/onboarding/landingB2.webp')" mode="widthFix"></image>-->
 		<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
 
 		<!-- 开始体验按钮 -->
