@@ -169,15 +169,22 @@
 				        // 登录成功
 				        uni.getUserInfo({
 				            provider: 'google',
-				            success: (info) => {
+				            success: async (info) => {
 				                // 获取用户信息成功, info.authResult保存用户信息
-								console.log(info);
-								// console.log('用户昵称为：' + info.userInfo.nickName);
-								uni.setStorageSync('username', info.userInfo.nickName);
-								this.$store.commit('setUsername', info.userInfo.nickName);
-								uni.navigateTo({
-									url: `/pages/preference/preference3`
-								});
+								const loginResponse = await API_ENDPOINT.appGoogleLogin(info.userInfo.unionid, info.userInfo.nickname, info.userInfo.headimgurl, info.userInfo.email);
+								// console.log(loginResponse);
+								if(loginResponse) {
+									// console.log('用户昵称为：' + info.userInfo.nickName);
+									uni.setStorageSync('username', loginResponse.name);
+									this.$store.commit('setUsername', loginResponse.name);
+									uni.setStorageSync('userId', loginResponse.userid);
+									uni.setStorageSync('jobId', loginResponse.jobid);
+									this.$store.commit('setUserId', loginResponse.userid);
+									this.$store.commit('setJobId', loginResponse.jobid);
+									uni.navigateTo({
+										url: `/pages/preference/preference3`
+									});
+								}
 				            }
 				        })
 				    },
@@ -218,26 +225,28 @@
 			},
 			wetchLogin() {
 				uni.login({
-				    provider: 'weixin',
-				    success: (loginRes) => {
-				        // 登录成功
-				        uni.getUserInfo({
-				            provider: 'weixin',
-				            success: (info) => {
-				                console.log(info);
-								uni.setStorageSync('username', info.userInfo.nickName);
-								this.$store.commit('setUsername', info.userInfo.nickName);
-								uni.navigateTo({
-									url: `/pages/preference/preference3`
-								});
-				            }
-				        })
+				    "provider": "weixin",
+				    "onlyAuthorize": true, // 微信登录仅请求授权认证
+				    success: async (loginRes) => {
+						const loginResponse = await API_ENDPOINT.appWeixinLogin(loginRes.code);
+						if(loginResponse) {
+							uni.setStorageSync('username', loginResponse.name);
+							this.$store.commit('setUsername', loginResponse.name);
+							uni.setStorageSync('userId', loginResponse.userid);
+							uni.setStorageSync('jobId', loginResponse.jobid);
+							this.$store.commit('setUserId', loginResponse.userid);
+							this.$store.commit('setJobId', loginResponse.jobid);
+							uni.navigateTo({
+								url: `/pages/preference/preference3`
+							});
+						}
 				    },
 				    fail: (err) => {
+						console.log(err);
 				        // 登录授权失败
 				        // err.code是错误码
 						uni.showToast({
-							title: 'Authorization failed, please try again',
+							title: 'Authorization failed, The client is not installed',
 							icon: 'none'
 						});
 				    }
