@@ -8,13 +8,14 @@ const TOOLTIP_URL =
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
 
 import state from "../store/index.js";
+import url from "../services/url.js";
 
 function sendRequest(
 	person_id,
 	course_id,
 	chat_content,
 	outerBody,
-	url = BASE_URL
+	base_url = BASE_URL
 ) {
 	return new Promise((resolve, reject) => {
 		const formattedChatContent = formatChatContent(chat_content);
@@ -25,12 +26,12 @@ function sendRequest(
 			chat_content: JSON.stringify(formattedChatContent),
 		};
 
-		body['lang_type'] = uni.getLocale();
+		body['lang_type'] = url.getLocale();
 
 		console.log("body:", body);
 
 		uni.request({
-			url: `${url}?locale=${uni.getLocale()}`,
+			url: `${base_url}?locale=${url.getLocale()}`,
 			method: "POST",
 			header: {
 				"Content-Type": "application/json",
@@ -204,7 +205,7 @@ export async function continueChat(chatHistory, courseId) {
 export async function checkShowToolTips(personId) {
 	return new Promise((resolve, reject) => {
 		// 构造完整的请求 URL
-		const url = `${TOOLTIP_URL}/${personId}?locale=${uni.getLocale()}`; // 使用传入的 personId
+		const url = `${TOOLTIP_URL}/${personId}?locale=${url.getLocale()}`; // 使用传入的 personId
 
 		uni.request({
 			url: url, // 使用构造的 URL
