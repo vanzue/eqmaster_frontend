@@ -355,7 +355,7 @@ export default {
 				data: {
 					scenario_id: parseInt(scenarioId),
 					choices: String(num),
-					locale: uni.getLocale()
+					locale: url.getLocale()
 				}
 			});
 
@@ -376,7 +376,7 @@ export default {
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);
 		// console.log("#####finalizeScenarioResponse data:", dialogue_history);
-		const locale = uni.getLocale();
+		const locale = url.getLocale();
 		console.log("#####locale:", locale);
 		try {
 			const response = await uni.request({
