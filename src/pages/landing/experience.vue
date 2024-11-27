@@ -32,7 +32,7 @@
 		
 		methods: {
 			bindblur(e){
-				this.userName = e.detail.value; // 获取微信昵称
+				this.username = e.detail.value; // 获取微信昵称
 			},
 			nextStep() {
 				if (this.username.trim()) {
