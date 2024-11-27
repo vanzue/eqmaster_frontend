@@ -18,7 +18,7 @@
 				查看所有任务
 			</view>
 			
-			<view class="text-area">语音识别内容：1111{{transcript}}</view>
+			<view class="text-area">语音识别内容：{{transcript}}</view>
 			
 
 			<view class="npc-group" :class="{ shadowed: shouldShadow }">
@@ -124,14 +124,14 @@
 
 				<!-- #ifndef H5 -->
 				<view class="middle-container">
-					<view class="action-item action-item-middle" @touchstart="streamRecord"
+<!-- 					<view class="action-item action-item-middle" @touchstart="streamRecord"
 						@touchend="endStreamRecord" @touchmove="handleTouchMove" @click="hideTooltip">
 						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
-					</view>
-<!-- 					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
+					</view> -->
+					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
 						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
 						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
-					</view> -->
+					</view>
 				</view>
 				<!-- #endif -->
 				<view class="action-item" v-if="!isRecording">
@@ -365,10 +365,6 @@
 					return
 				  }
 				  this.transcript = res.result
-				  
-				  
-				  
-				  
 				}
 			  
 			//   voicManager.onStop = async (res) => {

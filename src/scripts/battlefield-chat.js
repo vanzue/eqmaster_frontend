@@ -1,6 +1,6 @@
 // 定义常量URL
 const BASE_URL =
-	"https://eqmaster.aipowernft.com/chat/battlefield_agent";
+	"https://eqmaster.aipowernft.com/chat/battlefield";
 const EVAL_URL =
 	"https://eqmaster.aipowernft.com/eval/battlefield_agent";
 const TOOLTIP_URL =
@@ -23,14 +23,16 @@ function sendRequest(
 			person_id: state.getters.getUserId,
 			course_id: parseInt(course_id) || 4,
 			chat_content: JSON.stringify(formattedChatContent),
+			locale:  "zh"
 		};
 
-		body['lang_type'] = uni.getLocale();
+		// body['lang_type'] = uni.getLocale();
 
 		console.log("body:", body);
 
 		uni.request({
-			url: `${url}?locale=${uni.getLocale()}`,
+			// url: `${url}?locale=${uni.getLocale()}`,
+			url: url, 
 			method: "POST",
 			header: {
 				"Content-Type": "application/json",
@@ -237,6 +239,7 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 		status: isPass ? "completed" : "incompleted", // 添加 isPass
 		result: gemCount, // 添加 gemCount
 		person_star: diamonds, // 添加 diamonds
+		locale: "zh"
 	};
 	console.log("evalBattlefield chatHistory: ", chatHistory);
 	console.log("evalBattlefield body: ", body);
