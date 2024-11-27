@@ -266,7 +266,24 @@ export default {
 			throw error;
 		}
 	},
+	async updateName(profileData) {
+		try {
+			const response = await uni.request({
+				url: url.getUrl(`/update_name`),
+				method: 'POST',
+				data: profileData
+			});
 
+			if (response.statusCode === 200) {
+				return response.data;
+			} else {
+				throw new Error(`Failed to update name: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error update name:', error);
+			throw error;
+		}
+	},
 	async startScenario(jobId) {
 		console.log('startScenario called with jobId:', jobId);
 		try {
