@@ -25,6 +25,7 @@
 		<view class="third-party">
 			<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
 			<view class="third-party-login">
+				<!-- #ifndef MP-WEIXIN -->
 				<view class="loginButton" @click="googleLogin">
 					<image class="google-image" src="/static/onboarding/google_button.png"></image>
 					<!-- <text class="login-text-apple">Google Login</text> -->
@@ -33,9 +34,10 @@
 					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
 					<!-- <text class="login-text-apple">Wetch Login</text> -->
 				</view>
+				<!-- #endif -->
 				<!-- #ifdef MP-WEIXIN -->
 				<view class="loginButton" @click="startLoginWx">
-					<text class="login-text">微信小程序登录</text>
+					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
 				</view>
 				<!-- #endif -->
 				<!-- <view class="loginButton" @click="appleleLogin">

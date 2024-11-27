@@ -76,23 +76,24 @@
 				try {
 					this.userId = uni.getStorageSync('userId'); // 从本地缓存读取userId
 					this.jobId = uni.getStorageSync('jobId'); // 从本地缓存读取userId
-					if (!this.userId || !this.jobId) {
-						const response = await apiService.createProfile({
-							name: this.username,
-							job_level: this.jobLevel || "",
-							gender: this.gender,
-							concerns: this.selectedOptions || ["Fitting in"],
+						//const response = await apiService.createProfile({
+						//	name: this.username,
+						//	job_level: this.jobLevel || "",
+						//	gender: this.gender,
+						//	concerns: this.selectedOptions || ["Fitting in"],
+						//});
+						const response = await apiService.updateName({
+							person_id: this.userId.toString(),
+							new_name: this.username
 						});
-
 						// console.log("Backend response:", response);
 
-						this.jobId = response.job_id;
-						this.userId = response.user_id;
-						uni.setStorageSync('userId', response.user_id);
-						uni.setStorageSync('jobId', response.job_id);
-						this.$store.commit('setUserId', response.user_id);
-						this.$store.commit('setJobId', response.jobId);
-					}
+						//this.jobId = response.job_id;
+						//this.userId = response.user_id;
+						//uni.setStorageSync('userId', response.user_id);
+						//uni.setStorageSync('jobId', response.job_id);
+						//this.$store.commit('setUserId', response.user_id);
+						//this.$store.commit('setJobId', response.jobId);
 
 					await this.getScenarioId();
 					// const scenarioResponse = await apiService.initializeScenario();
