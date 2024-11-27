@@ -19,3 +19,5 @@ dist
 *.njsproj
 *.sln
 *.sw?
+.hbuilderx/launch.json
+yarn.lock
