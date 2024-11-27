@@ -8,7 +8,7 @@ export default {
 	async getHomepageData(userId) {
 		try {
 			const response = await uni.request({
-				url: `${API_ENDPOINT}/get_homepage/${userId}`,
+				url: url.getUrl(`/get_homepage/${userId}`),
 				// url: `${API_ENDPOINT}/get_homepage/217`,
 				method: 'POST'
 			});
