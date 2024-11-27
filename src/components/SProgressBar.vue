@@ -94,18 +94,18 @@
 		methods: {
 			loadimg(){
 				const completedImages = [
-					'/static/level1completed.png',
-					'/static/level2completed.png',
-					'/static/level3completed.png',
-					'/static/level4completed.png',
-					'/static/level5completed.png'
+					'/static/web/level1completed.webp',
+					'/static/web/level2completed.webp',
+					'/static/web/level3completed.webp',
+					'/static/web/level4completed.webp',
+					'/static/web/level5completed.webp'
 				];
 				const incompleteImages = [
-					'/static/level1incomplete.png',
-					'/static/level2incomplete1.png',
-					'/static/level3incomplete1.png',
-					'/static/level4incomplete.png',
-					'/static/level5incomplete.png'
+					'/static/web/level1incomplete.webp',
+					'/static/web/level2incomplete1.webp',
+					'/static/web/level3incomplete1.webp',
+					'/static/web/level4incomplete.webp',
+					'/static/web/level5incomplete.webp'
 				];
 				for(let i=0; i<completedImages.length; i++){
 				  this.loadAndDrawImageWx(completedImages[i])
@@ -117,7 +117,7 @@
 			loadAndDrawImageWx(src) {
 				const filePath = getImg(src);
 
-				if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.gif')) {
+				if (filePath.endsWith('.webp') || filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.gif')) {
 					this.imgDic[src] = filePath;
 					this.downImgNum++;
 					if (this.downImgNum >= 6) {
@@ -139,11 +139,11 @@
 							// this.drawPath(ctx,index,x, y,size,isCompleted)
 							// ctx.draw();
 				          } else {
-				            console.error('Failed to download image'+src);
+				            console.error('Failed to download image '+src);
 				          }
 				        },
 				        fail: (err) => {
-				          console.error('Download image error:', err);
+				          console.error('Download image error: ', err);
 				        }
 				      });
 				}
@@ -340,18 +340,18 @@
 
 				// 定义完成和未完成的图片路径数组
 				const completedImages = [
-					'/static/level1completed.png',
-					'/static/level2completed.png',
-					'/static/level3completed.png',
-					'/static/level4completed.png',
-					'/static/level5completed.png'
+					'/static/web/level1completed.webp',
+					'/static/web/level2completed.webp',
+					'/static/web/level3completed.webp',
+					'/static/web/level4completed.webp',
+					'/static/web/level5completed.webp'
 				];
 				const incompleteImages = [
-					'/static/level1incomplete.png',
-					'/static/level2incomplete1.png',
-					'/static/level3incomplete1.png',
-					'/static/level4incomplete.png',
-					'/static/level5incomplete.png'
+					'/static/web/level1incomplete.webp',
+					'/static/web/level2incomplete1.webp',
+					'/static/web/level3incomplete1.webp',
+					'/static/web/level4incomplete.webp',
+					'/static/web/level5incomplete.webp'
 				];
 
 				// 绘制所有端点、线段和图片

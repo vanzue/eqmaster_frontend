@@ -25,6 +25,7 @@
 		<view class="third-party">
 			<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
 			<view class="third-party-login">
+				<!-- #ifndef MP-WEIXIN -->
 				<view class="loginButton" @click="googleLogin">
 					<image class="google-image" src="/static/onboarding/google_button.png"></image>
 					<!-- <text class="login-text-apple">Google Login</text> -->
@@ -33,9 +34,10 @@
 					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
 					<!-- <text class="login-text-apple">Wetch Login</text> -->
 				</view>
+				<!-- #endif -->
 				<!-- #ifdef MP-WEIXIN -->
 				<view class="loginButton" @click="startLoginWx">
-					<text class="login-text">微信小程序登录</text>
+					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
 				</view>
 				<!-- #endif -->
 				<!-- <view class="loginButton" @click="appleleLogin">
@@ -170,10 +172,15 @@
 				        uni.getUserInfo({
 				            provider: 'google',
 				            success: async (info) => {
+				                uni.showLoading({
+				                    title: 'Loading...',
+				                    mask: true
+				                });
 				                // 获取用户信息成功, info.authResult保存用户信息
 								const loginResponse = await API_ENDPOINT.appGoogleLogin(info.userInfo.unionid, info.userInfo.nickname, info.userInfo.headimgurl, info.userInfo.email);
 								// console.log(loginResponse);
 								if(loginResponse) {
+									uni.hideLoading();
 									// console.log('用户昵称为：' + info.userInfo.nickName);
 									uni.setStorageSync('username', loginResponse.name);
 									this.$store.commit('setUsername', loginResponse.name);
@@ -191,6 +198,7 @@
 				    fail: (err) => {
 				        // 登录授权失败
 				        // err.code是错误码
+						uni.hideLoading();
 						uni.showToast({
 							title: 'Authorization failed, please try again',
 							icon: 'none'
@@ -226,10 +234,15 @@
 			wetchLogin() {
 				uni.login({
 				    "provider": "weixin",
-				    "onlyAuthorize": true, // 微信登录仅请求授权认证
-				    success: async (loginRes) => {
-						const loginResponse = await API_ENDPOINT.appWeixinLogin(loginRes.code);
+				    // "onlyAuthorize": true, // 微信登录仅请求授权认证
+				    success: async (event) => {
+						uni.showLoading({
+							title: 'Loading...',
+							mask: true
+						});
+						const loginResponse = await API_ENDPOINT.appWeixinLogin(event.code);
 						if(loginResponse) {
+							uni.hideLoading();
 							uni.setStorageSync('username', loginResponse.name);
 							this.$store.commit('setUsername', loginResponse.name);
 							uni.setStorageSync('userId', loginResponse.userid);
@@ -245,6 +258,7 @@
 						console.log(err);
 				        // 登录授权失败
 				        // err.code是错误码
+						uni.hideLoading();
 						uni.showToast({
 							title: 'Authorization failed, The client is not installed',
 							icon: 'none'
