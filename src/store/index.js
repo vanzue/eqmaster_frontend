@@ -3,7 +3,7 @@ import {
 } from 'vuex';
 import apiService from "@/services/api-service";
 
-const DEFAULT_LOCALE = 'zh'; // en, zh
+const DEFAULT_LOCALE = 'zh-Hans'; // en, zh-Hans
 import { getImg } from '../scripts/constants';
 export default createStore({
 	state: {
