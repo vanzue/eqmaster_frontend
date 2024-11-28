@@ -14,7 +14,7 @@
     "pages.landing.question":  "What can I call you?",
     "pages.landing.input_name":  "Your name",
     "pages.landing.input_name_reminder":  "Enter your name please",
-    
+    "pages.landing.get_wechatlogin": "Login",
     "images.onboarding.splash" : "/static/web/splashEN1.webp",
     "images.startTest": "/static/web/onboarding/startTest2.webp",
     "images.onboarding.landing": "/static/web/onboarding/landing_en.webp",
