@@ -954,7 +954,8 @@
 						(item) => parseInt(item.mood, 10) < 0
 					);
 					// if (totalScore >= 0) {
-					if (!hasNegativeMood) {
+					// if (!hasNegativeMood) {
+					if (taskCheck === 2 || taskCheck === 3) {
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
 						this.answerNotGoodNum = 0;
@@ -1034,7 +1035,7 @@
 					const goalKeyword = "你点的菜真不错";
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 1) {
+						if (taskCheck === 1|| taskCheck === 3) {
 						// if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;

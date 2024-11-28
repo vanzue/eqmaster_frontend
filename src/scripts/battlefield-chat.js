@@ -33,6 +33,7 @@ function sendRequest(
 
 		uni.request({
 			url: `${base_url}?locale=${locale.getShortLocale()}`,
+			// url: url,
 			method: "POST",
 			header: {
 				"Content-Type": "application/json",

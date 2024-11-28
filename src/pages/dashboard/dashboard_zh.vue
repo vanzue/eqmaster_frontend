@@ -131,13 +131,15 @@
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
 						<SProgressBar
-						:finish-components="courseData.next_course_id"
+						:finish-components="courseData.course_result.length+1"
 						:total-components="courseData.course_list.length"
-						:star-ratings="courseData.course_result.map(item => item.stars)"
-						:level-names="courseData.course_list.map(item => item.name)"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)"
 						/>
 						<!-- 
 
+						
+						
 						
 						:finish-components="2"
 						:total-components="4"

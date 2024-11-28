@@ -7,7 +7,7 @@
     />
     <!-- Content -->
     <view class="loading-text-container">
-      <text class="loading-text">{{ this.courseInfo.course_data.loadingwordy }}</text>
+      <text class="loading-text">{{ this.courseInfo.course_data.location }}</text>
       <!-- <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text> -->
     </view>
   </view>

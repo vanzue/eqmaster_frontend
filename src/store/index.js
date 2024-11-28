@@ -214,6 +214,7 @@ export default createStore({
 			state
 		}) {
 			try {
+				console
 				const courseData = await apiService.getBattlefield(this.state.userId);
 				if (!courseData) {
 					throw new Error('No course data received');
