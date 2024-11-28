@@ -2,7 +2,7 @@ import App from './App'
 import messages from './locale/index'
 
 let i18nConfig = {
-  locale: uni.getLocale(),
+  locale: 'en',
   messages
 }
 

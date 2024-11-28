@@ -7,9 +7,12 @@
 				<text class="greeting">{{$t('pages.landing.greeting')}}</text>
 			</view>
 			<text class="question">{{$t('pages.landing.question')}}</text>
-
+			<!-- #ifdef MP-WEIXIN -->
 			<input class="name-input" type="nickname" @blur="bindblur" :placeholder="$t('pages.landing.input_name')" v-model="username" />
-
+			<!-- #endif -->
+			<!-- #ifndef MP-WEIXIN -->
+			<input class="name-input"  :placeholder="$t('pages.landing.input_name')" v-model="username" />
+			<!-- #endif -->
 			<view class="button-container">
 				<image class="continue-button" src="/static/arrowright.png" mode="aspectFit" @tap="nextStep"></image>
 			</view>
