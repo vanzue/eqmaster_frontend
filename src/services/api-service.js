@@ -1,3 +1,4 @@
+import locale from '../locale';
 import url from './url';
 import { API_ENDPOINT } from './url';
 
@@ -287,7 +288,24 @@ export default {
 			throw error;
 		}
 	},
+	async updateName(profileData) {
+		try {
+			const response = await uni.request({
+				url: url.getUrl(`/update_name`),
+				method: 'POST',
+				data: profileData
+			});
 
+			if (response.statusCode === 200) {
+				return response.data;
+			} else {
+				throw new Error(`Failed to update name: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error update name:', error);
+			throw error;
+		}
+	},
 	async startScenario(jobId) {
 		console.log('startScenario called with jobId:', jobId);
 		try {
@@ -376,7 +394,7 @@ export default {
 				data: {
 					scenario_id: parseInt(scenarioId),
 					choices: String(num),
-					locale: uni.getLocale()
+					locale: locale.getShortLocale()
 				}
 			});
 
@@ -397,7 +415,7 @@ export default {
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);
 		// console.log("#####finalizeScenarioResponse data:", dialogue_history);
-		const locale = uni.getLocale();
+		const locale = locale.getShortLocale();
 		console.log("#####locale:", locale);
 		try {
 			const response = await uni.request({

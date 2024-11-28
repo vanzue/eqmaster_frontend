@@ -223,7 +223,7 @@
 		width: 100%;
 		min-height: 100vh;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-			url("https://eqmaster.blob.core.windows.net/static/battlefield/background.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
+			url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/battlefield/background.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-color: #2F2F38;
 		display: flex;
 		flex-direction: column;

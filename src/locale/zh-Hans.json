@@ -10,7 +10,7 @@
 
 	"pages.landing.get_started": "开始体验",
 	"pages.landing.login": "登陆已有账号",
-
+	"pages.landing.get_wechatlogin": "微信登录",
 	"pages.landing.greeting":  "嗨👋",
 	"pages.landing.question":  "很开心见到你！你叫什么名字？",
 	"pages.landing.input_name":  "设置你的用户名",
@@ -66,6 +66,7 @@
 	"pages.profile.popup.header": "退出登录?",
 	"pages.profile.popup.ok": "确认",
 	"pages.profile.popup.cancel": "取消",
+	"pages.profile.language": "语言",
 
 	"pages.battlefield.intro.continue": "继续",
 	"pages.battlefield.intro.unit1.title": "第一关",

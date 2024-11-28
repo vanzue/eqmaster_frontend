@@ -70,8 +70,41 @@
 		<view class="log-out" @click="logoutShow = true">
 			{{ $t('pages.profile.logout') }}
 		</view>
+
+		<view class="language" @click="showLanguagePopup = true">
+			{{ $t('pages.profile.language') }}
+		</view>
+
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 
+		
+		 <!-- 语言选择弹框 -->
+		<view v-if="showLanguagePopup" class="popup-overlay">
+			<view class="popup-content" @click.stop>
+				<view class="card-box">
+					<view class="card-header">
+						<view class="title">
+							<image class="card-close-image" src="/static/code_close.png" mode=""
+								@click="showLanguagePopup = false">
+							</image>
+						</view>
+					</view>
+					<view class="locale" @click.stop>
+						<view class="locale-text">
+							{{ $t('pages.profile.language') }}
+						</view>
+						<view class="locale-list">
+							<view class="locale-item" v-for="(item, index) in locales" :key="index" @click="onLocaleChange(item)">
+								<text class="text">{{item.text}}</text>
+								<text class="icon-check" v-if="item.code == applicationLocale"></text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+
+		
 		<!-- 二维码弹框 -->
 		<view v-if="showEqoachPopup" class="popup-overlay">
 			<view class="popup-content" @click.stop>
@@ -117,6 +150,7 @@
 </template>
 
 <script>
+	import locale from '@/locale';
 	import apiService from '../../services/api-service';
 	import Nav from '../../components/Nav.vue';
 	import {
@@ -135,6 +169,7 @@
 				deleteOpacity: 0,
 				startX: 0,
 				showEqoachPopup: false,
+				showLanguagePopup: false,
 				logoutShow: false,
 				saveqrcodeLoding: false,
 				progressInterval: null,
@@ -153,6 +188,7 @@
 				//   }
 				// },
 				isDelEqoashBot: false,
+				applicationLocale: '',
 			};
 		},
 		computed: {
@@ -164,6 +200,18 @@
 			},
 			username() {
 				return this.$store.getters.getUsername;
+			},
+			locales() {
+				return [
+					{
+					text: this.$t('locale.en'),
+					code: 'en'
+					},
+					{
+						text: this.$t('locale.zh-hans'),
+						code: 'zh-Hans'
+					},
+				]
 			},
 		},
 		onLoad(option) {
@@ -193,6 +241,10 @@
 			//   this.getHomepageData(this.userId);
 			// }, 50000); // 每50秒调用一次
 
+			this.applicationLocale = locale.getLocale();
+			uni.onLocaleChange((e) => {
+				this.applicationLocale = e.locale;
+			})
 		},
 		onUnload() {
 			// 页面卸载时清除定时器
@@ -204,6 +256,12 @@
 			}
 		},
 		methods: {
+			onLocaleChange(e) {
+				uni.setLocale(e.code);
+				this.$i18n.locale = e.code;
+				this.$store.commit('setLocale', e.code);
+				this.showLanguagePopup = false;
+			},
 			async getHomepageData() {
 				try {
 					this.isLoading = true;
@@ -362,7 +420,7 @@
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 		background-image:
-		url("https://eqmaster.blob.core.windows.net/static/profile-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
+		url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/profile-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -403,7 +461,7 @@
 		/* display: flex; */
 		/* width: auto; */
 		height: 654rpx;
-		background-image:url("https://eqmaster.blob.core.windows.net/static/have-been-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
+		background-image:url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/have-been-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -635,6 +693,19 @@
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
+	.language {
+		width: 100%;
+		height: 80rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		margin-top: 80rpx;
+		bottom: 100rpx;
+		color: #9EE44D;
+		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	}
+
 
 	/* 二维码弹框 */
 	.popup-overlay {
@@ -821,5 +892,35 @@
 
 	.card-button button[disabled] {
 		opacity: 50%;
+	}
+
+	.locale-text {
+		font-size: 42rpx;
+		color: #FFFFFF;
+	}
+
+	.locale-item {
+		display: flex;
+		flex-direction: row;
+		padding: 10px 0;
+	}
+
+	.locale-item .text {
+		flex: 1;
+		color: #FFFFFF;
+	}
+	
+	.icon-check {
+		margin-right: 5px;
+		border: 2px solid #FFFFFF;
+		border-left: 0;
+		border-top: 0;
+		height: 12px;
+		width: 6px;
+		transform-origin: center;
+		/* #ifndef APP-NVUE */
+		transition: all 0.3s;
+		/* #endif */
+		transform: rotate(45deg);
 	}
 </style>

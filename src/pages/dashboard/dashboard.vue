@@ -222,6 +222,8 @@
 	import Tear from '@/components/Tear.vue';
 	import { getImg } from '../../scripts/constants';
 
+	import url from '../../services/url';
+
 
 	export default {
 
@@ -521,7 +523,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -568,7 +570,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${uni.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
