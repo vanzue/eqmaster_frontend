@@ -242,7 +242,7 @@
 			wetchLogin() {
 				uni.login({
 				    "provider": "weixin",
-				    // "onlyAuthorize": true, // 微信登录仅请求授权认证
+				    "onlyAuthorize": true, // 微信登录仅请求授权认证
 				    success: async (event) => {
 						uni.showLoading({
 							title: 'Loading...',
