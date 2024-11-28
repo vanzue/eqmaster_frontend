@@ -13,7 +13,7 @@ export default {
     },
 
     getLocale() {
-        let locale = uni.getLocale();
+        let locale = 'en';
         if (locale.startsWith('zh')) {
             locale = 'zh';
         } else {
