@@ -150,6 +150,7 @@
 </template>
 
 <script>
+	import locale from '@/locale';
 	import apiService from '../../services/api-service';
 	import Nav from '../../components/Nav.vue';
 	import {
@@ -240,7 +241,7 @@
 			//   this.getHomepageData(this.userId);
 			// }, 50000); // 每50秒调用一次
 
-			this.applicationLocale = uni.getLocale();
+			this.applicationLocale = locale.getLocale();
 			uni.onLocaleChange((e) => {
 				this.applicationLocale = e.locale;
 			})
@@ -258,6 +259,7 @@
 			onLocaleChange(e) {
 				uni.setLocale(e.code);
 				this.$i18n.locale = e.code;
+				this.$store.commit('setLocale', e.code);
 				this.showLanguagePopup = false;
 			},
 			async getHomepageData() {

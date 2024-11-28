@@ -148,7 +148,8 @@
 		illustrationSrc
 	} from '../../scripts/illustrationHelper_zh';
 	import { getImg } from '../../scripts/constants';
-	import url from '../../services/url';
+	import locale from '@/locale';
+
 	export default {
 
 		data() {
@@ -301,7 +302,7 @@
 				const options = {
 					month: 'short'
 				}; // 'long' for full month name
-				const monthFormatter = new Intl.DateTimeFormat(uni.getLocale(), options);
+				const monthFormatter = new Intl.DateTimeFormat(locale.getLocale(), options);
 				return monthFormatter.format(this.currentDate).toUpperCase();
 			},
 			currentDate() {
@@ -709,7 +710,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${url.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -756,7 +757,7 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${url.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
