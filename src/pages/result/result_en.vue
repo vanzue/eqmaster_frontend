@@ -288,7 +288,7 @@ import {
 <style scoped>
 	@font-face {
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		src: url('https://eqmaster.blob.core.windows.net/static/fonts/Poppins-Italic.ttf?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D') format('truetype');
+		src: url('https://eqmaster.blob.core.chinacloudapi.cn/static/web/fonts/Poppins-Italic.ttf?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D') format('truetype');
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -350,7 +350,7 @@ import {
 		/* justify-content: center;
 		align-items: center; */
 		background-image: 
-		url("https://eqmaster.blob.core.windows.net/static/resulten/header-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
+		url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/resulten/header-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
