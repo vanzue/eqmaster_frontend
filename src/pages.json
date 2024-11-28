@@ -1,7 +1,7 @@
 {
 	"pages": [
 		{
-			"path": "pages/battlefield/battlefield-intro-zh",
+			"path": "pages/dashboard/dashboard_zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -42,12 +42,12 @@
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/dashboard/dashboard_zh",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/dashboard/dashboard_zh",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/dashboard/moment_analysis",
 			"style": {
@@ -72,12 +72,12 @@
 				"navigationStyle": "custom"
 			}
 		},
-		// {
-		// 	"path": "pages/battlefield/battlefield-intro-zh",
-		// 	"style": {
-		// 		"navigationStyle": "custom"
-		// 	}
-		// },
+		{
+			"path": "pages/battlefield/battlefield-intro-zh",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
 		{
 			"path": "pages/result/loading",
 			"style": {

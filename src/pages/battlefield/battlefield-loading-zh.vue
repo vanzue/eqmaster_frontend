@@ -7,7 +7,8 @@
     />
     <!-- Content -->
     <view class="loading-text-container">
-      <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text>
+      <text class="loading-text">{{ this.courseInfo.course_data.loadingwordy }}</text>
+      <!-- <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text> -->
     </view>
   </view>
 </template>
@@ -21,21 +22,35 @@ export default {
 		return {
 			getImg,}
 			},
+  computed: {
+			courseInfo() {
+				return this.$store.getters.getCourseInfo;
+			},
+		},
 			
   async mounted() {
     const result = await startField(1, "1");
     console.log("result from start field:", result);
-    uni.setStorage({
-      key: "chats",
-      data: result.dialog,
-    });
+    // uni.setStorage({
+    //   key: "chats",
+    //   data: result.response.dialog,
+    //   // task_check: result.task_check, 
+    // });
+	uni.setStorage({
+	  key: "chats",
+	  data: {
+	    dialog: result.response.dialog,
+	    task_check: result.task_check
+	  }
+	});
 			try {
 				const npcs = this.$store.getters.getNpcs;
 				const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
 				
-				const promises = result.dialog.map(async (item) => {
+				// const promises = result.dialog.map(async (item) => {
+				const promises = result.response.dialog.map(async (item) => {
 					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);		
-					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
+					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.response.message });
 				})
 				await Promise.all(promises);
 			} catch (error) {

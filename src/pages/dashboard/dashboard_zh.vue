@@ -126,9 +126,32 @@
 						:starRatings="courseData.courses.map(course => course.result)" 
 						:totalComponents="4"
 						:isCompleteTask="!!courseData.course_level" -->
-						<SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
+
+						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
-							:isCompleteTask="gemCount" />
+							:isCompleteTask="gemCount" /> -->
+						<SProgressBar
+						:finish-components="courseData.next_course_id"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.stars)"
+						:level-names="courseData.course_list.map(item => item.name)"
+						/>
+						<!-- 
+
+						
+						:finish-components="2"
+						:total-components="4"
+						:star-ratings="[2, 2, 1]"
+						:level-names="['Level 1', 'Level 2', 'Level 3']"
+
+						finish-components: 已完成的关卡数
+						total-components: 总关卡数
+						user-id: 用户ID
+						username: 用户名
+						star-ratings: 每个关卡的星级评分
+						level-names: 每个关卡的名称
+						is-complete-task: 是否完成所有任务
+						-->
 					</view>
 				</scroll-view>
 			</view>
@@ -226,7 +249,7 @@
 				animal_zh: '',
 				minanimal: '',
 				maxanimal: '',
-				courseData: {},
+				// courseData: {},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -283,6 +306,11 @@
 			courseData() {
 				return this.$store.getters.getcourseData;
 			},
+			// courseData() {
+			// 	const data = this.$store.getters.getcourseData;
+			// 	console.log('CourseData getter called:', data); // 添加日志
+			// 	return data;
+			// },
 			characteristics() {
 				return this.$store.getters.getCharacteristics;
 			},
@@ -470,7 +498,9 @@
 		async created() {
 			await this.getAnalysisList();
 			this.$store.dispatch('fetchcourseData');
+			// console.log('…………^-^Course Data:', this.courseData)
 			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
+			
 			// const evalResult = uni.getStorage({
 			// 	key: "evalResult",
 			// 	success: (res) => {
@@ -484,13 +514,15 @@
 			// 		this.suggestion = res.data.db_course.tips.join('\n');
 			// 	},
 			// });
-			console.log('Course Data:', this.courseData)
+			
 
 			// await this.getBattlefield();
 		},
 		onLoad(option) {
 			// console.log('Received options:', option);
 			this.$store.dispatch('fetchHomepageData');
+			// this.$store.dispatch('fetchcourseData');
+			// console.log('…………^-^Course Data:', this.courseData)
 			// this.userCard();
 
 

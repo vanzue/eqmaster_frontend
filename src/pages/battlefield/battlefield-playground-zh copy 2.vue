@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
-			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')" mode="aspectFill" />
+			<image class="background-image" :src="getImg('/static/battlefield/background.png')" mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
@@ -18,7 +18,8 @@
 				查看所有任务
 			</view>
 			
-			<view class="text-area">语音识别内容：{{text}}</view>
+			<view class="text-area">语音识别内容：1111{{transcript}}</view>
+			
 
 			<view class="npc-group" :class="{ shadowed: shouldShadow }">
 				<npc-status v-for="npc in npcs" :key="npc.characterName" :health="npc.health" :avatar="npc.avatar"
@@ -123,10 +124,14 @@
 
 				<!-- #ifndef H5 -->
 				<view class="middle-container">
-					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
-						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
+					<view class="action-item action-item-middle" @touchstart="streamRecord"
+						@touchend="endStreamRecord" @touchmove="handleTouchMove" @click="hideTooltip">
 						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
 					</view>
+<!-- 					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
+						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
+						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
+					</view> -->
 				</view>
 				<!-- #endif -->
 				<view class="action-item" v-if="!isRecording">
@@ -176,10 +181,10 @@
 </template>
 
 <script>
+	const recorderManager = uni.getRecorderManager();
 	const plugin = requirePlugin("WechatSI");
-	const recorderManager = plugin.getRecordRecognitionManager();
+	const voicManager = plugin.getRecordRecognitionManager();
 	
-	// const recorderManager = uni.getRecorderManager();
 	import RewardBar from "@/components/RewardBar.vue";
 	import NpcStatus from "@/components/NpcStatus.vue";
 	import LargeAvatarBubble from "@/components/LargeAvatarBubble.vue";
@@ -226,9 +231,8 @@
 		},
 		data() {
 			return {
+				transcript: "",
 				getImg,
-				text:"",
-				currentText: "",
 				// userId: state.userId,
 				judgeTitle: "",
 				judgeContent: "",
@@ -341,6 +345,92 @@
 			setIsLoadingShow(value) {
 				this.isLoadingShow = value;
 			},
+			streamRecord() {
+			  voicManager.start({
+				lang: 'zh_CN',
+			  })
+			},
+			endStreamRecord() {
+			  voicManager.stop()
+			},
+			initRecord() {
+			  voicManager.onRecognize = (res) => {
+				this.transcript = res.result
+			  }
+			  
+				voicManager.onStop = (res) => {
+				  let text = res.result
+				  if(text === '') {
+					console.log('没有说话')
+					return
+				  }
+				  this.transcript = res.result
+				  
+				  
+				  
+				  
+				}
+			  
+			//   voicManager.onStop = async (res) => {
+			// 	console.log("Recorder stop", res);
+
+			// 	this.anasLoadingObj = {
+			// 		loading: true,
+			// 		text: "",
+			// 	};
+				
+			// 	// 如果录音被取消，则不进行上传或其他处理
+			// 	if (this.isCanceling) {
+			// 		console.log("Recording was canceled, no further action taken.");
+			// 		this.resetRecording(); // 重置录音状态
+			// 		this.anasLoadingObj.loading = false;
+			// 		return; // 直接返回，避免后续逻辑执行
+			// 	}
+				
+			// 	try {
+			// 		const transcript1 = await this.uploadAndRecognizeSpeech(res.result);
+			// 		if (transcript1.length === 0) {
+			// 			this.isCanceling = true;
+			// 			console.log("record is none, canceling...");
+			// 			this.resetRecording(); // 重置录音状态
+			// 			uni.showToast({
+			// 				title: "没有听清楚",
+			// 				icon: "none",
+			// 			});
+			// 			this.anasLoadingObj.loading = false;
+			// 			return;
+			// 		}
+					
+			// 		const newMessage = {
+			// 			role: "user",
+			// 			content: transcript,
+			// 			shouldAnimate: false,
+			// 		};
+			// 		this.chattingHistory.push(newMessage);
+			// 		this.allHistory.push(newMessage);
+					
+			// 		this.$nextTick(() => {
+			// 			setTimeout(() => {
+			// 				newMessage.shouldAnimate = true;
+			// 				this.anasLoadingObj.text = "正在分析中";
+			// 			}, 50);
+			// 		});
+					
+			// 		this.sendMessageNavShow = false;
+			// 		const validChats = filterChatHistory(this.allHistory);
+			// 		const judgeResult = await reply(validChats, "1");
+			// 		await this.handleRecorderReply(judgeResult);
+			// 		this.anasLoadingObj.loading = false;
+			// 	} catch (error) {
+			// 		this.anasLoadingObj.loading = false;
+			// 		this.sendMessageNavShow = true;
+			// 		if (this.chattingHistory.length > 0) {
+			// 			this.chattingHistory.pop();
+			// 		}
+			// 	}
+			// }
+			},
+			
 			goToDashboard() {
 				uni.navigateTo({
 					url: "/pages/dashboard/dashboard_zh",
@@ -383,7 +473,8 @@
 			handleRecordingDone() {
 				console.log("handling touch move...");
 				if (!this.isRecording) return;
-				recorderManager.stop();
+				// recorderManager.stop();
+				voicManager.stop();
 				clearInterval(this.countdownInterval);
 				this.isRecording = false;
 
@@ -505,7 +596,8 @@
 					encodeBitRate: 16000, // 编码码率
 					format: "wav", // 设置录音格式为 wav
 				};
-				recorderManager.start({
+				// recorderManager.start(options);
+				  voicManager.start({
 					lang: 'zh_CN',
 				  });
 				this.userJudgeContent = "";
@@ -673,73 +765,71 @@
 				// If needed, handle clicks in other states
 			},
 
-			initRecorderManager() {
-				recorderManager.onRecognize(() => {
-					this.text = res.result;
-				});
-				recorderManager.onStop(async (res) => {
-					console.log("Recorder stop", res);
-					let text = res.result;
-					
-					this.anasLoadingObj = {
-						loading: true,
-						text: "",
-					};
-					// 如果录音被取消，则不进行上传或其他处理
-					if (this.isCanceling) {
-						console.log("Recording was canceled, no further action taken.");
-						this.resetRecording(); // 重置录音状态
-						this.anasLoadingObj.loading = false;
-						return; // 直接返回，避免后续逻辑执行
-					}
-					// const path = res.tempFilePath;
+			// initRecorderManager() {
+			// 	if (!recorderManager) {
+			// 		return;
+			// 	}
+			// 	recorderManager.onStart(() => {
+			// 		console.log("Recorder start");
+			// 	});
+			// 	recorderManager.onStop(async (res) => {
+			// 		console.log("Recorder stop", res);
 
-					try {
-						// const transcript = await this.uploadAndRecognizeSpeech(path);
-						if (this.text.length === 0) {
-							this.isCanceling = true;
-							console.log("record is none, canceling...");
-							this.resetRecording(); // 重置录音状态
-							uni.showToast({
-								title: "没有听清楚",
-								icon: "none",
-							});
-							this.anasLoadingObj.loading = false;
-							return; // 直接返回，避免后续逻辑执行
-						}
-						const newMessage = {
-							role: "user",
-							content: transcript,
-							shouldAnimate: false,
-						};
-						this.chattingHistory.push(newMessage);
-						this.allHistory.push(newMessage);
-						this.$nextTick(() => {
-							setTimeout(() => {
-								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = "正在分析中";
-							}, 50);
-						});
-						this.sendMessageNavShow = false;
-						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "1");
+			// 		this.anasLoadingObj = {
+			// 			loading: true,
+			// 			text: "",
+			// 		};
+			// 		// 如果录音被取消，则不进行上传或其他处理
+			// 		if (this.isCanceling) {
+			// 			console.log("Recording was canceled, no further action taken.");
+			// 			this.resetRecording(); // 重置录音状态
+			// 			this.anasLoadingObj.loading = false;
+			// 			return; // 直接返回，避免后续逻辑执行
+			// 		}
+			// 		const path = res.tempFilePath;
+
+			// 		try {
+			// 			const transcript = await this.uploadAndRecognizeSpeech(path);
+			// 			if (transcript.length === 0) {
+			// 				this.isCanceling = true;
+			// 				console.log("record is none, canceling...");
+			// 				this.resetRecording(); // 重置录音状态
+			// 				uni.showToast({
+			// 					title: "没有听清楚",
+			// 					icon: "none",
+			// 				});
+			// 				this.anasLoadingObj.loading = false;
+			// 				return; // 直接返回，避免后续逻辑执行
+			// 			}
+			// 			const newMessage = {
+			// 				role: "user",
+			// 				content: transcript,
+			// 				shouldAnimate: false,
+			// 			};
+			// 			this.chattingHistory.push(newMessage);
+			// 			this.allHistory.push(newMessage);
+			// 			this.$nextTick(() => {
+			// 				setTimeout(() => {
+			// 					newMessage.shouldAnimate = true;
+			// 					this.anasLoadingObj.text = "正在分析中";
+			// 				}, 50);
+			// 			});
+			// 			this.sendMessageNavShow = false;
+			// 			const validChats = filterChatHistory(this.allHistory);
+			// 			const judgeResult = await reply(validChats, "1");
 
 
-						await this.handleRecorderReply(judgeResult);
-						this.anasLoadingObj.loading = false;
-					} catch (error) {
-						this.anasLoadingObj.loading = false;
-						this.sendMessageNavShow = true;
-						if (this.chattingHistory.length > 0) {
-							this.chattingHistory.pop();
-						}
-					}
-				});
-				
-				
-			},
-			
-			
+			// 			await this.handleRecorderReply(judgeResult);
+			// 			this.anasLoadingObj.loading = false;
+			// 		} catch (error) {
+			// 			this.anasLoadingObj.loading = false;
+			// 			this.sendMessageNavShow = true;
+			// 			if (this.chattingHistory.length > 0) {
+			// 				this.chattingHistory.pop();
+			// 			}
+			// 		}
+			// 	});
+			// },
 			async inputRecordingBlur() {
 				this.showInput = false;
 				console.log(this.taskList);
@@ -778,6 +868,7 @@
 						console.log("judge Result:", judgeResult);
 						this.gemCount = this.calculateStars();
 						console.log("-----------#####after judge:", this.gemCount);
+						
 						await this.handleRecorderReply(judgeResult);
 						this.inputContent = "";
 						this.anasLoadingObj.loading = false;
@@ -1083,6 +1174,7 @@
 			},
 		},
 		onLoad(option) {
+			// this.initRecord();
 			console.log("loaded", option);
 			uni.getStorage({
 				key: "chats",
@@ -1096,7 +1188,8 @@
 				},
 			});
 			this.jobId = option.jobId || "154ee592-287b-4675-b8bd-8f88de348476";
-			this.initRecorderManager();
+			this.initRecord();
+			// this.initRecorderManager();
 			uni.getSystemInfo({
 				success: (res) => {
 					this.systemInfo = res;
@@ -1748,15 +1841,6 @@
 		flex-direction: column;
 		z-index: 1000;
 	}
-	
-	.text-area {
-	  margin-top: 30rpx;
-	  padding: 20rpx;
-	  min-height: 100rpx;
-	  border: 1px solid #eee;
-	  border-radius: 10rpx;
-	  z-index: 1001;
-	}
 
 	.judge-loading-container,
 	.judge-mission-container {
@@ -1771,6 +1855,15 @@
 		align-items: center;
 		flex-direction: column;
 		z-index: 1000;
+	}
+	
+	.text-area {
+	  margin-top: 30rpx;
+	  padding: 20rpx;
+	  min-height: 100rpx;
+	  border: 1px solid #eee;
+	  border-radius: 10rpx;
+	  z-index: 1001;
 	}
 
 	.loading-spinner {

@@ -50,6 +50,7 @@ export default createStore({
 		audios: new Map(),
     scenario_id: 1,
     scenarioResponse: {},
+		courseInfo: {}, // 添加新的state属性
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -121,6 +122,9 @@ export default createStore({
 		  state.scenarioResponse = scenarioResponse;
 		  console.log('@@@@@@@@@@@@Scenario response updated:', scenarioResponse);
 		},
+		setCourseInfo(state, courseInfo) {
+			state.courseInfo = courseInfo;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -176,6 +180,9 @@ export default createStore({
 		  
 			return state.scenarioResponse;
 		},
+		getCourseInfo(state) {
+			return state.courseInfo;
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -202,21 +209,31 @@ export default createStore({
 		},
 		async fetchcourseData({
 			commit,
-			rootState
+			state
 		}) {
 			try {
-				if (!rootState.userId) {
-					throw new Error('User ID is not set');
-				}
-				const courseData = await apiService.getBattlefield(rootState.userId);
+				const courseData = await apiService.getBattlefield(this.state.userId);
 				if (!courseData) {
 					throw new Error('No course data received');
 				}
+				console.log("Fetched course data:", courseData);
 				commit('setcourseDatas', courseData);
-				console.log("##########commit course Data:", courseData);
+				console.log("Committed course data:", state.courseData);
 			} catch (error) {
 				console.error('Error fetching course Data:', error);
-				// 可以在这里添加一些错误处理逻辑，比如显示一个错误消息给用户
+			}
+		},
+		async fetchCourseInfo({ commit }, courseId) {
+			try {
+				const courseInfo = await apiService.getCourseInfo(courseId);
+				if (!courseInfo) {
+					throw new Error('No course info received');
+				}
+				console.log("Fetched course info:", courseInfo);
+				commit('setCourseInfo', courseInfo);
+			} catch (error) {
+				console.error('Error fetching course info:', error);
+				throw error;
 			}
 		},
 		clearAllState({
@@ -239,6 +256,7 @@ export default createStore({
 			const username = uni.getStorageSync('username');
 			localStorage.clear();
 			uni.setStorageSync('username', username);
-		}
+		},
+
 	}
 })
