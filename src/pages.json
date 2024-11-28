@@ -1,10 +1,17 @@
 {
-	"pages": [{
-			"path": "pages/landing/landing",
+	"pages": [
+		{
+			"path": "pages/dashboard/dashboard_zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
+		// {
+		// 	"path": "pages/landing/landing",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/battlefield/battlefield-loading-zh",
 			"style": {
@@ -35,12 +42,12 @@
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/dashboard/dashboard_zh",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/dashboard/dashboard_zh",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/dashboard/moment_analysis",
 			"style": {
