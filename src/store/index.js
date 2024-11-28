@@ -2,8 +2,8 @@ import {
 	createStore
 } from 'vuex';
 import apiService from "@/services/api-service";
+import {DEFAULT_LOCALE} from "@/locale";
 
-const DEFAULT_LOCALE = 'zh-Hans'; // en, zh-Hans
 import { getImg } from '../scripts/constants';
 export default createStore({
 	state: {
@@ -69,6 +69,8 @@ export default createStore({
 		},
 		setLocale(state, locale) {
 			state.locale = locale;
+			console.log(`setStorageSync locale: ${locale}`);
+			uni.setStorageSync("locale", locale);
 		},
 		setJobId(state, jobId) {
 			state.jobId = jobId;

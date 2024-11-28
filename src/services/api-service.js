@@ -1,3 +1,4 @@
+import locale from '../locale';
 import url from './url';
 import { API_ENDPOINT } from './url';
 
@@ -372,7 +373,7 @@ export default {
 				data: {
 					scenario_id: parseInt(scenarioId),
 					choices: String(num),
-					locale: url.getLocale()
+					locale: locale.getShortLocale()
 				}
 			});
 
@@ -393,7 +394,7 @@ export default {
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);
 		// console.log("#####finalizeScenarioResponse data:", dialogue_history);
-		const locale = url.getLocale();
+		const locale = locale.getShortLocale();
 		console.log("#####locale:", locale);
 		try {
 			const response = await uni.request({
