@@ -25,7 +25,7 @@
 			<!-- #endif -->
 			<!-- #ifdef MP-WEIXIN -->
 			<view class="quizButton" @click="startLoginWx">
-				<text class="quizText">微信登录</text>
+				<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
 			</view>
 			<!-- #endif -->
 		</view>
