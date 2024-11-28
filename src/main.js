@@ -1,8 +1,13 @@
 import App from './App'
-import messages from './locale/index'
+import {messages, DEFAULT_LOCALE} from "@/locale";
+
+const locale = uni.getStorageSync('locale') || DEFAULT_LOCALE;
+
+console.log(`locale in storage ${locale}`);
+uni.setStorageSync('locale', locale);
 
 let i18nConfig = {
-  locale: 'en',
+  locale: locale,
   messages
 }
 

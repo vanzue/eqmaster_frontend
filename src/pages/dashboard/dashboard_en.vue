@@ -149,7 +149,7 @@
 		illustrationSrc
 	} from '../../scripts/illustrationHelper';
 	import { getImg } from '../../scripts/constants';
-	import url from '../../services/url';
+	import locale from '@/locale';
 
 	export default {
 
@@ -735,8 +735,9 @@
 					console.log('Sending data to create contact profile:', requestData);
 
 					// 发送请求创建联系人档案
+					
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${url.getLocale()}`,
+						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {

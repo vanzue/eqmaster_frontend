@@ -150,6 +150,7 @@
 </template>
 
 <script>
+	import locale from '@/locale';
 	import apiService from '../../services/api-service';
 	import Nav from '../../components/Nav.vue';
 	import {
@@ -240,7 +241,7 @@
 			//   this.getHomepageData(this.userId);
 			// }, 50000); // 每50秒调用一次
 
-			this.applicationLocale = uni.getLocale();
+			this.applicationLocale = locale.getLocale();
 			uni.onLocaleChange((e) => {
 				this.applicationLocale = e.locale;
 			})
@@ -258,6 +259,7 @@
 			onLocaleChange(e) {
 				uni.setLocale(e.code);
 				this.$i18n.locale = e.code;
+				this.$store.commit('setLocale', e.code);
 				this.showLanguagePopup = false;
 			},
 			async getHomepageData() {
@@ -418,7 +420,7 @@
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 		background-image:
-		url("https://eqmaster.blob.core.windows.net/static/profile-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
+		url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/profile-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -459,7 +461,7 @@
 		/* display: flex; */
 		/* width: auto; */
 		height: 654rpx;
-		background-image:url("https://eqmaster.blob.core.windows.net/static/have-been-bg.png?sp=r&st=2024-10-30T07:28:21Z&se=2025-10-30T15:28:21Z&sv=2022-11-02&sr=c&sig=U3yHYWEQBvY3MnZO6kUh%2Fc0LiaLuvuPFp1YB4nnAL8E%3D");
+		background-image:url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/have-been-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
