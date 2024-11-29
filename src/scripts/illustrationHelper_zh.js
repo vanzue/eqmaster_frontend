@@ -12,12 +12,15 @@ export function illustrationSrc(homepageData, store, t) {
 	if (homepageData && homepageData.response && homepageData.response.eq_scores) {
 		const scores = homepageData.response.eq_scores;
 		const maxScore = Math.max(
-			scores.dimension1_score, scores.dimension2_score, scores.dimension3_score,
-			scores.dimension4_score, scores.dimension5_score
+			Number(scores.perception_score) || 0, 
+			Number(scores.self_regulation_score) || 0, 
+			Number(scores.social_skill_score) || 0,
+			Number(scores.empathy_score) || 0, 
+			Number(scores.motivation_score) || 0
 		);
 		console.log("max score is:", maxScore);
 		// 1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
-		if (maxScore === scores.dimension1_score) {
+		if (maxScore === scores.perception_score) {
 			returnObj = {
 				animal: "ostrich",
 				animal_name: t('illustration.animal.ostrich.name'),
@@ -28,7 +31,7 @@ export function illustrationSrc(homepageData, store, t) {
 
 
 			};
-		} else if (maxScore === scores.dimension2_score) {
+		} else if (maxScore === scores.self_regulation_score) {
 			returnObj = {
 				animal: "monkey",
 				animal_name: t('illustration.animal.monkey.name'),
@@ -38,7 +41,7 @@ export function illustrationSrc(homepageData, store, t) {
 				characteristics: t('illustration.animal.monkey.characteristics'),
 
 			};
-		} else if (maxScore === scores.dimension3_score) {
+		} else if (maxScore === scores.social_skill_score) {
 			returnObj = {
 				animal: "hedgehog",
 				animal_name: t('illustration.animal.hedgehog.name'),
@@ -49,7 +52,7 @@ export function illustrationSrc(homepageData, store, t) {
 
 
 			};
-		} else if (maxScore === scores.dimension4_score) {
+		} else if (maxScore === scores.empathy_score) {
 			returnObj = {
 				animal: "coyote",
 				animal_name: t('illustration.animal.coyote.name'),
@@ -58,7 +61,7 @@ export function illustrationSrc(homepageData, store, t) {
 				weakness: t('illustration.animal.coyote.weakness'),
 				characteristics: t('illustration.animal.coyote.characteristics'),
 			};
-		} else if (maxScore === scores.dimension5_score) {
+		} else if (maxScore === scores.motivation_score) {
 			returnObj = {
 				animal: "capybara",
 				animal_name: t('illustration.animal.capybara.name'),
