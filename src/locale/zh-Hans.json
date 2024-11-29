@@ -69,7 +69,7 @@
 	"pages.profile.language": "语言",
 
 	"pages.battlefield.intro.continue": "继续",
-	"pages.battlefield.intro.unit1.title": "第一关",
+	"pages.battlefield.intro.unit1.title": "关卡 ",
 	"pages.battlefield.intro.unit1.subtitle": "缓解会议中的紧张气氛",
 	"pages.battlefield.intro.unit1.time": "3-4分钟",
 	"pages.battlefield.intro.unit1.desc": "Jason 参加了你的团队会议，他对项目缺乏反馈感到沮丧。Sam 感到不安，气氛变得紧张，而 Anna 保持冷静。你会如何应对以缓解这种情况？",
@@ -130,5 +130,10 @@
 	"components.SProgressBar.unit2.name": "在团队遭遇挫折时保持冷静",
 	"components.SProgressBar.unit3.name": "通过阅读房间来解决冲突",
 
+	"scores.dimensions.perception": "感知力",
+	"scores.dimensions.empathy": "共情力",
+	"scores.dimensions.self_regulation": "自我调节",
+	"scores.dimensions.social_skill": "社交能力",
+	"scores.dimensions.motivation": "驱动力",
 	"": ""
 }

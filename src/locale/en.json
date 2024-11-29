@@ -66,7 +66,7 @@
     "pages.profile.language": "Language",
 
     "pages.battlefield.intro.continue": "Continue",
-    "pages.battlefield.intro.unit1.title": "Unit 1",
+    "pages.battlefield.intro.unit1.title": "Unit ",
     "pages.battlefield.intro.unit1.subtitle": "Managing Tensions in a Meeting",
     "pages.battlefield.intro.unit1.time": "3-4min",
     "pages.battlefield.intro.unit1.desc": "Jason joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as Sam feels uneasy, and Anna stays calm. How will you respond to ease the situation?",
@@ -127,5 +127,10 @@
     "components.SProgressBar.unit2.name": "Staying calm in team setbacks",
     "components.SProgressBar.unit3.name": "Reading the room to resolve conflicts",
 
+    "scores.dimensions.perception": "Perception",
+    "scores.dimensions.empathy": "Empathy",
+    "scores.dimensions.self_regulation": "Self Regulation",
+    "scores.dimensions.social_skill": "Social Skill",
+    "scores.dimensions.motivation": "Motivation",
     "": ""
   }

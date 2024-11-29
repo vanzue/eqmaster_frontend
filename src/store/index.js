@@ -195,12 +195,11 @@ export default createStore({
 				const homepageData = await apiService.getHomepageData(this.state.userId);
 				console.log("#####store homepage data:", homepageData);
 
-				if(!homepageData.response.eq_scores){
-					throw new Error('EQ scores not found in homepage data');
+				if (homepageData.response && homepageData.response.eq_scores) {
+					commit('setHomepageData', homepageData);
+					commit('setGemCount', homepageData.response.personal_info.num_star)
 				}
 
-				commit('setHomepageData', homepageData);
-				commit('setGemCount', homepageData.response.personal_info.num_star)
 				// commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {

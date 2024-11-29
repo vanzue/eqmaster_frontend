@@ -11,7 +11,7 @@
 
 		<!-- Content -->
 		<view class="content">
-			<text class="title content-item">第 {{ this.courseInfo.course_data.course_level }} 关</text>
+			<text class="title content-item"> {{ this.courseInfo.course_data.course_level }} </text>
 			<text class="subtitle content-item">{{ this.courseInfo.course_data.title }}</text>
 			<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
 			<view class="description content-item" id="desc">

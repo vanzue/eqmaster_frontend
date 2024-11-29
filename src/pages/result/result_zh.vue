@@ -181,36 +181,36 @@ import {
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = [{
 							name: this.$t('pages.result.result.perception'),
-							score: this.homepageData.response.eq_scores.dimension1_score,
-							detail: this.homepageData.response.eq_scores.dimension1_detail,
+							score: this.homepageData.response.eq_scores.perception_score,
+							detail: this.homepageData.response.eq_scores.perception_detail,
 							icon: '/static/resulten/awareness0.svg',
 							icon1: '/static/resulten/awareness1.svg',
 						},
 						{
 							name: this.$t('pages.result.result.regulation'),
-							score: this.homepageData.response.eq_scores.dimension2_score,
-							detail: this.homepageData.response.eq_scores.dimension2_detail,
+							score: this.homepageData.response.eq_scores.self_regulation_score,
+							detail: this.homepageData.response.eq_scores.self_regulation_detail,
 							icon: '/static/resulten/regulation0.svg',
 							icon1: '/static/resulten/regulation0.svg',
 						},
 						{
 							name: this.$t('pages.result.result.social'),
-							score: this.homepageData.response.eq_scores.dimension3_score,
-							detail: this.homepageData.response.eq_scores.dimension3_detail,
+							score: this.homepageData.response.eq_scores.social_skill_score,
+							detail: this.homepageData.response.eq_scores.social_skill_detail,
 							icon: '/static/resulten/socialskill0.svg',
 							icon1: '/static/resulten/socialskill1.svg'
 						},
 						{
 							name: this.$t('pages.result.result.empathy'),
-							score: this.homepageData.response.eq_scores.dimension4_score,
-							detail: this.homepageData.response.eq_scores.dimension4_detail,
+							score: this.homepageData.response.eq_scores.empathy_score,
+							detail: this.homepageData.response.eq_scores.empathy_detail,
 							icon: '/static/resulten/empathy0.svg',
 							icon1: '/static/resulten/empathy1.svg'
 						},
 						{
 							name: this.$t('pages.result.result.motivation'),
-							score: this.homepageData.response.eq_scores.dimension5_score,
-							detail: this.homepageData.response.eq_scores.dimension5_detail,
+							score: this.homepageData.response.eq_scores.motivation_score,
+							detail: this.homepageData.response.eq_scores.motivation_detail,
 							icon: '/static/resulten/motivation0.svg',
 							icon1: '/static/resulten/motivation1.svg'
 						}

@@ -11,7 +11,6 @@
 				// this.$store.dispatch('fetchHomepageData');
 				this.$store.dispatch('fetchHomepageData').then(() => {
 					const homepageData = this.$store.getters.getHomepageData;
-					// console.log(homepageData);
 					if (homepageData.response && homepageData.response.eq_scores) {
 						const currentPages = getCurrentPages();
 						const currentRoute = currentPages.length > 0 ? currentPages[currentPages.length - 1].route : '';
@@ -24,6 +23,10 @@
 								url: `/pages/dashboard/dashboard_zh?currentView=dashboard`
 							});
 						}
+					} else {
+						uni.navigateTo({
+							url: `/pages/preference/preference3`
+						});
 					}
 				}).catch((error) => {
 					console.error('Error fetching homepage data:', error);
