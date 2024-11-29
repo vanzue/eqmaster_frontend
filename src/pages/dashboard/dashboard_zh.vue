@@ -117,7 +117,7 @@
 					</view>
 				</view>
 
-				<!-- 其他可滚动内容放在这里 -->
+				<!-- 其他可滚动内容放在这里1 -->
 				<scroll-view scroll-y class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
