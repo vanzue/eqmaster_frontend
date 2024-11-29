@@ -416,8 +416,8 @@ export default {
 		// console.log("#####finalizeScenarioResponse data:", scores);
 		// console.log("#####finalizeScenarioResponse data:", job_id);
 		// console.log("#####finalizeScenarioResponse data:", dialogue_history);
-		const locale = locale.getShortLocale();
-		console.log("#####locale:", locale);
+		const _locale = locale.getShortLocale();
+		console.log("#####locale:", _locale);
 		try {
 			const response = await uni.request({
 				url: url.getUrl(`/finalize_scenario`),
@@ -426,7 +426,7 @@ export default {
 					scores: scores,
 					job_id: job_id,
 					dialogue_history: dialogue_history,
-					locale: locale
+					locale: _locale
 				}
 			});
 
