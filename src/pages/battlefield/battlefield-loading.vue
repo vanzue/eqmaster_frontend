@@ -21,15 +21,21 @@ export default {
 	data() {
 		return {
 			getImg,}
-			},
-  computed: {
-			courseInfo() {
-				return this.$store.getters.getCourseInfo;
-			},
 		},
+		
+	computed: {
+		// courseInfo() {
+		// 	return this.$store.getters.getCourseInfo;
+		// },
+	},
+
 			
   async mounted() {
-    const result = await startField(1, "1");
+	const course_id = this.$store.getters.getCourseInfo;
+	const user_id = this.$store.getters.getUserId;
+	console.log("44444444441CourseInfo", course_id.course_data.id);
+	console.log("4444444444user_id", user_id);
+    const result = await startField(user_id, course_id);
     console.log("result from start field:", result);
     // uni.setStorage({
     //   key: "chats",

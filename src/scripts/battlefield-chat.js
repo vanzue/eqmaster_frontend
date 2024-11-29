@@ -19,15 +19,20 @@ function sendRequest(
 ) {
 	return new Promise((resolve, reject) => {
 		const formattedChatContent = formatChatContent(chat_content);
+		
+		const course_id = state.getters.getCourseInfo;
+		const user_id = state.getters.getUserId;
+		console.log("44444444441CourseInfo", course_id.course_data.id);
+		
 		console.log("formattedChatContent:", formattedChatContent);
 		const body = outerBody || {
 			person_id: state.getters.getUserId,
-			course_id: parseInt(course_id) || 4,
+			course_id: course_id.course_data.id,
 			chat_content: JSON.stringify(formattedChatContent),
-			locale:  "zh"
+			locale:  "en"
 		};
 
-		body['lang_type'] = locale.getShortLocale();
+		// body['lang_type'] = locale.getShortLocale();
 
 		console.log("body:", body);
 

@@ -15,10 +15,8 @@
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-				{{ $t('"pages.battlefield.playground.review"') }}
+				{{ $t('pages.battlefield.playground.review') }}
 			</view>
-
-			<!-- <view class="text-area">语音识别内容：1111{{transcript}}</view> -->
 
 			<view class="npc-group" :class="{ shadowed: shouldShadow }">
 				<npc-status v-for="npc in npcs" :key="npc.characterName" :health="npc.health" :avatar="npc.avatar"
@@ -30,8 +28,7 @@
 					:scroll-into-view="scrollIntoViewId">
 					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
-                // ['领导', '同事A', '同事B'].includes(
-				['Jason', 'Sam', 'Anna'].includes(
+                ['Jason', 'Sam', 'Anna'].includes(
                   chat.role
                 )
               " :key="'npc-' + index" :index="index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
@@ -148,13 +145,12 @@
 							@blur="inputRecordingBlur" />
 					</view>
 					<view class="send-sms-container">
-						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png" @click="inputRecordingBlur">
+						<image class="send-sms-icon" src="/static/battlefield/sendsms.png" @click="inputRecordingBlur">
 						</image>
 					</view>
 				</view>
 			</view>
 
-			<!-- 任务完成卡 -->
 			<view class="judge-container" v-if="state === 'judge' || state === 'judgeTry'">
 				<judge :title="judgeTitle" :wording="judgeContent" @judge="gotoNextRound" :good-judge="isGoodReply"
 					:isCompleteTask="isCompleteTask" :currentTask="currentTask" @setIsLoadingShow="setIsLoadingShow">
@@ -178,16 +174,7 @@
 </template>
 
 <script>
-	let recorderManager;
-	// #ifdef MP-WEIXIN
-	const plugin = requirePlugin("WechatSI");
-	recorderManager = plugin.getRecordRecognitionManager();
-	// #endif
-
-	// #ifdef APP-PLUS || H5 || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-	recorderManager = uni.getRecorderManager();
-	// #endif
-
+	const recorderManager = uni.getRecorderManager();
 	import RewardBar from "@/components/RewardBar.vue";
 	import NpcStatus from "@/components/NpcStatus.vue";
 	import LargeAvatarBubble from "@/components/LargeAvatarBubble.vue";
@@ -236,7 +223,6 @@
 			return {
 				getImg,
 				// userId: state.userId,
-				transcript: "",
 				judgeTitle: "",
 				judgeContent: "",
 				userJudgeContent: "",
@@ -252,10 +238,9 @@
 				showTippingCard: false, // Controls the tipping card visibility
 				talkingNpc: 0,
 				displayedNpcChatIndex: 0, // Tracks the last displayed NPC chat
-				npcDialog: "这里是NPC的对话", // 替换为实际对话
+				npcDialog: "NPC dialogue here", // Replace with actual dialogue
 				someoneTalk: true,
 				chattingHistory: [],
-				taskcheck:0,
 				allHistory: [],
 				showInput: false,
 				focusInput: false,
@@ -339,6 +324,7 @@
 						this.judgeTitle = `Well done！ ${this.taskList.getTask(1).title} (${
             this.taskList.doneTaskLength + 1
           }/${this.taskList.taskLength})`;
+						return true;
 					}
 					return false;
 				})
@@ -349,10 +335,9 @@
 				this.isLoadingShow = value;
 			},
 			goToDashboard() {
-				uni.navigateTo({
-					url: "/pages/dashboard/dashboard_zh",
+				uni.reLaunch({
+					url: "/pages/dashboard/dashboard_en",
 				});
-				this.$store.commit('initNpcsHealth');
 			},
 			handleClickTaskList() {
 				this.missionShow = true; // 显示任务
@@ -452,11 +437,10 @@
 						this.isLoadingShow = true;
 					}
 					try {
-						const nextRound = await continueChat(this.allHistory, "1");
-						// nextRound = nextRound.response;
+						const nextRound = await continueChat(this.allHistory, "4");
 						console.log("next round data", nextRound);
 
-						nextRound.dialog = nextRound.response.dialog.map(item => ({
+						nextRound.dialog = nextRound.dialog.map(item => ({
 							role: item.role,
 							content: item.content ?? item.words,
 						}));
@@ -475,7 +459,6 @@
 
 						console.log("current chatting history:", this.chattingHistory);
 						this.chattingHistory = nextRound.dialog;
-						this.taskcheck = nextRound.taskcheck;
 						this.allHistory = [...this.allHistory, ...nextRound.dialog];
 						console.log("after concat, chatting history:", this.chattingHistory);
 
@@ -514,9 +497,7 @@
 					encodeBitRate: 16000, // 编码码率
 					format: "wav", // 设置录音格式为 wav
 				};
-				recorderManager.start({
-					lang: 'zh_CN',
-				  });
+				recorderManager.start(options);
 				this.userJudgeContent = "";
 			},
 			handleRecordingDone() {
@@ -558,29 +539,29 @@
 				this.isTooltipVisible = false;
 			},
 
-			// async uploadAndRecognizeSpeech(filePath) {
-			// 	try {
-			// 		const response = await uni.uploadFile({
-			// 			url: "https://eqmaster.azurewebsites.net/upload-audio/", // 替换为你的 FastAPI 服务地址
-			// 			filePath: filePath, // 录音的 WAV 文件路径
-			// 			name: "file", // 与 FastAPI 后端的字段名保持一致
-			// 			header: {
-			// 				"Content-Type": "multipart/form-data", // 确保使用 multipart/form-data 进行文件上传
-			// 			},
-			// 		});
+			async uploadAndRecognizeSpeech(filePath) {
+				try {
+					const response = await uni.uploadFile({
+						url: "https://eqmaster.azurewebsites.net/upload-audio/", // 替换为你的 FastAPI 服务地址
+						filePath: filePath, // 录音的 WAV 文件路径
+						name: "file", // 与 FastAPI 后端的字段名保持一致
+						header: {
+							"Content-Type": "multipart/form-data", // 确保使用 multipart/form-data 进行文件上传
+						},
+					});
 
-			// 		const resData = JSON.parse(response.data); // 解析返回的 JSON 数据
-			// 		const transcript = resData.transcript; // 获取返回的识别文本
-			// 		return transcript; // 成功返回识别结果
-			// 	} catch (error) {
-			// 		throw error;
-			// 	}
-			// },
+					const resData = JSON.parse(response.data); // 解析返回的 JSON 数据
+					const transcript = resData.transcript; // 获取返回的识别文本
+					return transcript; // 成功返回识别结果
+				} catch (error) {
+					throw error;
+				}
+			},
 
 			async dismissNpcTalk() {
 				let foundNpcMessage = false;
 				const history = this.chattingHistory;
-				console.log("this.displayedNpcChatIndex, history",this.displayedNpcChatIndex, history);
+				console.log(this.displayedNpcChatIndex, history);
 				for (let i = this.displayedNpcChatIndex + 1; i < history.length; i++) {
 					if (history[i].role !== "user") {
 						// Found the next NPC message
@@ -596,12 +577,7 @@
 					// No more NPC messages; change state to 'userTalk'
 					console.log("no more npc, now user turn.");
 					this.state = "userTalk";
-					// const validChats = filterChatHistory(this.allHistory);
-					// const judgeResult = await reply(validChats, "1");
-					// const taskCheck = judgeResult.task_check;
-					// const taskCheck = judgeResult.task_check;
-					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
-					await this.checkBossComplimentTask2(history, this.taskcheck);
+					await this.checkBossComplimentTask2(history);
 				}
 			},
 
@@ -660,8 +636,8 @@
 				});
 				await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
-					uni.navigateTo({
-						url: "/pages/battlefield/battlefield-summary-zh",
+					uni.reLaunch({
+						url: "/pages/battlefield/battlefield-summary",
 					});
 				}, 1000);
 			},
@@ -688,62 +664,69 @@
 			},
 
 			initRecorderManager() {
-				// 设置录音识别回调
-				recorderManager.onRecognize = (res) => {
-					this.transcript = res.result;
+				if (!recorderManager) {
+					return;
 				}
-				
-				recorderManager.onStop = async (res) => {
-					let text = res.result;
-					
-					// 检查是否有录音内容
-					if (!text || text.trim() === '') {
-						console.log('没有检测到语音内容');
-						this.isCanceling = true;
-						this.resetRecording();
-						uni.showToast({
-							title: "没有听清楚",
-							icon: "none"
-						});
-						this.anasLoadingObj.loading = false;
-						return;
-					}
+				recorderManager.onStart(() => {
+					console.log("Recorder start");
+				});
+				recorderManager.onStop(async (res) => {
+					console.log("Recorder stop", res);
 
-					// 更新transcript并添加到聊天历史
-					this.transcript = text;
-					const newMessage = {
-						role: "user", 
-						content: text,
-						shouldAnimate: false
+					this.anasLoadingObj = {
+						loading: true,
+						text: "",
 					};
-					
-					this.chattingHistory.push(newMessage);
-					this.allHistory.push(newMessage);
-
-					// 添加动画效果
-					this.$nextTick(() => {
-						setTimeout(() => {
-							newMessage.shouldAnimate = true;
-							this.anasLoadingObj.text = "正在分析中";
-						}, 50);
-					});
-
-					// 发送消息进行处理
-					this.sendMessageNavShow = false;
-					try {
-						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "1");
-						await this.handleRecorderReply(judgeResult);
-					} catch (error) {
-						console.error('处理录音回复出错:', error);
-						uni.showToast({
-							title: "处理消息失败",
-							icon: "none"
-						});
-					} finally {
+					// 如果录音被取消，则不进行上传或其他处理
+					if (this.isCanceling) {
+						console.log("Recording was canceled, no further action taken.");
+						this.resetRecording(); // 重置录音状态
 						this.anasLoadingObj.loading = false;
+						return; // 直接返回，避免后续逻辑执行
 					}
-				}
+					const path = res.tempFilePath;
+
+					try {
+						const transcript = await this.uploadAndRecognizeSpeech(path);
+						if (transcript.length === 0) {
+							this.isCanceling = true;
+							console.log("record is none, canceling...");
+							this.resetRecording(); // 重置录音状态
+							uni.showToast({
+								title: this.$t('pages.battlefield.playground.not_clear'),
+								icon: "none",
+							});
+							this.anasLoadingObj.loading = false;
+							return; // 直接返回，避免后续逻辑执行
+						}
+						const newMessage = {
+							role: "user",
+							content: transcript,
+							shouldAnimate: false,
+						};
+						this.chattingHistory.push(newMessage);
+						this.allHistory.push(newMessage);
+						this.$nextTick(() => {
+							setTimeout(() => {
+								newMessage.shouldAnimate = true;
+								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');
+							}, 50);
+						});
+						this.sendMessageNavShow = false;
+						const validChats = filterChatHistory(this.allHistory);
+						const judgeResult = await reply(validChats, "4");
+
+
+						await this.handleRecorderReply(judgeResult);
+						this.anasLoadingObj.loading = false;
+					} catch (error) {
+						this.anasLoadingObj.loading = false;
+						this.sendMessageNavShow = true;
+						if (this.chattingHistory.length > 0) {
+							this.chattingHistory.pop();
+						}
+					}
+				});
 			},
 			async inputRecordingBlur() {
 				this.showInput = false;
@@ -778,8 +761,7 @@
 					try {
 						this.sendMessageNavShow = false;
 						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "1");
-						// judgeResult = judgeResult.response;
+						const judgeResult = await reply(validChats, "4");
 						// console.log("validChat:", validChat);
 						console.log("judge Result:", judgeResult);
 						this.gemCount = this.calculateStars();
@@ -802,7 +784,6 @@
 				this.cardButtonLoading = true;
 				console.log("Exchangeclick:", this.allHistory);
 				const validChats = filterChatHistory(this.allHistory);
-				console.log(validChats);
 				let replyContent = null;
 				this.userJudgeContent = "";
 				try {
@@ -811,8 +792,7 @@
 							loading: true,
 							text: this.$t('pages.battlefield.playground.generating'),
 						};
-						replyContent = await helpReply(validChats, "1");
-						console.log(replyContent);
+						replyContent = await helpReply(validChats, "4");
 						if (replyContent.responsive) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
@@ -828,7 +808,7 @@
 								void this.$el.offsetWidth;
 
 								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing'); // 中文翻译
+								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');
 
 								// 使用 requestAnimationFrame 确保动画在下一帧开始
 								requestAnimationFrame(() => {
@@ -841,15 +821,8 @@
 							this.sendMessageNavShow = false;
 							await new Promise(resolve => setTimeout(resolve, 3000));
 							const validChatsRepy = filterChatHistory(this.allHistory);
-							const judgeResultRepy = await reply(validChatsRepy, "1");
+							const judgeResultRepy = await reply(validChatsRepy, "4");
 							await this.handleRecorderReply(judgeResultRepy);
-						} else {
-							this.sendMessageNavShow = false;
-							uni.showToast({
-								title: "回复异常",
-								icon: "none",
-								duration: 2000,
-							});
 						}
 					}
 					if (selectedCard == 2) {
@@ -858,7 +831,7 @@
 							loading: true,
 							text: this.$t('pages.battlefield.playground.generating'),
 						};
-						const judgeResult = await hint(validChats, "1");
+						const judgeResult = await hint(validChats, "4");
 						console.log("get tips from backend:", judgeResult);
 						if (judgeResult.tips) {
 							await this.$store.dispatch('fetchHomepageData');
@@ -894,12 +867,8 @@
 			},
 			async handleRecorderReply(judgeResult) {
 				try {
-					console.log("1111111judgeResult:", judgeResult);
 					if (judgeResult) {
-						const taskCheck = judgeResult.task_check;
-						console.log("t222222222askCheck:", taskCheck);
-						judgeResult = judgeResult.response;
-						await this.checkBossComplimentTask1(judgeResult, taskCheck);
+						await this.checkBossComplimentTask1(judgeResult);
 
 						this.updateScrollIntoView();
 
@@ -952,26 +921,21 @@
 					return false; // 添加返回值，表示处理失败
 				}
 			},
-			async checkBossComplimentTask1(judgeResult, taskCheck) {
+			async checkBossComplimentTask1(judgeResult) {
 				if (judgeResult) {
-					
-					// const hasNegativeMood = judgeResult.moods.some(
-					// 	(item) => parseInt(item.mood, 10) < 0
-					// );
+					const hasNegativeMood = judgeResult.moods.some(
+						(item) => parseInt(item.mood, 10) < 0
+					);
 					// if (totalScore >= 0) {
-					// if (!hasNegativeMood) {
-					if (taskCheck === 1 || taskCheck === 3) {
-						console.log("taskCheck11111111111111",taskCheck);
+					if (!hasNegativeMood) {
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
 						this.answerNotGoodNum = 0;
-						// const allPositive = judgeResult.moods.every(
-						// 	(item) => parseInt(item.mood, 10) > 0
-						// );
-						// console.log(allPositive);
-						
-						// if (allPositive) {
-						if (taskCheck === 1 || taskCheck === 3) {
+						const allPositive = judgeResult.moods.every(
+							(item) => parseInt(item.mood, 10) > 0
+						);
+						console.log(allPositive);
+						if (allPositive) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
 								// console.log("allPositive:", allPositive);
@@ -1005,7 +969,6 @@
 							await this.gotoNextRound();
 						}
 					} else {
-						// if (taskCheck === 0 || taskCheck === 1) {
 						if (this.answerNotGoodNum < 2) {
 							this.answerNotGoodNum++;
 							this.isGoodReply = true;
@@ -1036,14 +999,13 @@
 					}
 				}
 			},
-			async checkBossComplimentTask2(dialog, taskCheck) {
+			async checkBossComplimentTask2(dialog) {
 				let taskCompleted = false;
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
 					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 2|| taskCheck === 3) {
-						// if (chat.content.includes(goalKeyword)) {
+						if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;
 								this.state = "judge";
@@ -1105,8 +1067,7 @@
 				key: "chats",
 				success: (res) => {
 					console.log("chatting histories,", res.data);
-					console.log("chatting historiestask_check,", res.data.task_check);
-					this.chattingHistory = res.data.dialog.map((item) => ({
+					this.chattingHistory = res.data.map((item) => ({
 						...item,
 						content: item.words || item.content,
 					}));
@@ -1198,7 +1159,6 @@
 					(chat) => chat.role === "user"
 				);
 				const npcChats = this.chattingHistory.filter((chat) => ["Jason", "Sam", "Anna"].includes(chat.role));
-				// const npcChats = this.chattingHistory.filter((chat) => ["领导", "同事A", "同事B"].includes(chat.role));
 
 				// 只保留来自 'user' 的最新一条
 				const latestUserChat = userChats.slice(-1); // 取最后一条

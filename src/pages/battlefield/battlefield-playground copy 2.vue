@@ -327,7 +327,7 @@
 				})
 			);
 			this.taskList.addTask(
-				new Task(1, "Encourage teammates to engage and get at least one to say, \"I agree with you.\"", async (
+				new Task(1, "让领导认可你点的菜（说出你点的菜真不错）", async (
 					judgeResult) => {
 					let res = "";
 
@@ -336,9 +336,10 @@
 					});
 					const bMood = parseInt(res ? res : 0, 10);
 					if (bMood < 0 && !this.taskList.getTask(1).once) {
-						this.judgeTitle = `Well done！ ${this.taskList.getTask(1).title} (${
+						this.judgeTitle = `做得好！！ ${this.taskList.getTask(1).title} (${
             this.taskList.doneTaskLength + 1
           }/${this.taskList.taskLength})`;
+						return true;
 					}
 					return false;
 				})

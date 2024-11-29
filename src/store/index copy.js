@@ -18,7 +18,7 @@ export default createStore({
 		intervalId: null, // 定时器ID
 		homeNavName: 'dashboard',
 		npcs: [{
-				characterName: "Jason",
+				characterName: "领导",
 				health: 10,
 				avatar: getImg("/static/web/battlefield/boss.webp"),
 				voice: "zh-CN-XiaoruiNeural",
@@ -27,7 +27,7 @@ export default createStore({
 				
 			},
 			{
-				characterName: "Sam",
+				characterName: "同事A",
 				health: 10,
 				avatar:  getImg("/static/web/battlefield/xiaoA.webp"),
 				voice: "zh-CN-YunxiNeural",
@@ -35,7 +35,7 @@ export default createStore({
 				rate: "10%",
 			},
 			{
-				characterName: "Anna",
+				characterName: "同事B",
 				health: 10,
 				avatar:  getImg("/static/web/battlefield/xiaoB.webp"),
 				voice: "zh-CN-XiaoxiaoNeural",
