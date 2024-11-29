@@ -153,6 +153,7 @@
 				</view>
 			</view>
 
+			<!-- 任务完成卡 -->
 			<view class="judge-container" v-if="state === 'judge' || state === 'judgeTry'">
 				<judge :title="judgeTitle" :wording="judgeContent" @judge="gotoNextRound" :good-judge="isGoodReply"
 					:isCompleteTask="isCompleteTask" :currentTask="currentTask" @setIsLoadingShow="setIsLoadingShow">
@@ -253,6 +254,7 @@
 				npcDialog: "这里是NPC的对话", // 替换为实际对话
 				someoneTalk: true,
 				chattingHistory: [],
+				taskcheck:0,
 				allHistory: [],
 				showInput: false,
 				focusInput: false,
@@ -473,6 +475,7 @@
 
 						console.log("current chatting history:", this.chattingHistory);
 						this.chattingHistory = nextRound.dialog;
+						this.taskcheck = nextRound.taskcheck;
 						this.allHistory = [...this.allHistory, ...nextRound.dialog];
 						console.log("after concat, chatting history:", this.chattingHistory);
 
@@ -577,7 +580,7 @@
 			async dismissNpcTalk() {
 				let foundNpcMessage = false;
 				const history = this.chattingHistory;
-				console.log(this.displayedNpcChatIndex, history);
+				console.log("this.displayedNpcChatIndex, history",this.displayedNpcChatIndex, history);
 				for (let i = this.displayedNpcChatIndex + 1; i < history.length; i++) {
 					if (history[i].role !== "user") {
 						// Found the next NPC message
@@ -593,10 +596,12 @@
 					// No more NPC messages; change state to 'userTalk'
 					console.log("no more npc, now user turn.");
 					this.state = "userTalk";
-					const validChats = filterChatHistory(this.allHistory);
-					const judgeResult = await reply(validChats, "1");
-					const taskCheck = judgeResult.task_check;
-					await this.checkBossComplimentTask2(history, taskCheck);
+					// const validChats = filterChatHistory(this.allHistory);
+					// const judgeResult = await reply(validChats, "1");
+					// const taskCheck = judgeResult.task_check;
+					// const taskCheck = judgeResult.task_check;
+					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
+					await this.checkBossComplimentTask2(history, this.taskcheck);
 				}
 			},
 
@@ -950,21 +955,23 @@
 			async checkBossComplimentTask1(judgeResult, taskCheck) {
 				if (judgeResult) {
 					
-					const hasNegativeMood = judgeResult.moods.some(
-						(item) => parseInt(item.mood, 10) < 0
-					);
+					// const hasNegativeMood = judgeResult.moods.some(
+					// 	(item) => parseInt(item.mood, 10) < 0
+					// );
 					// if (totalScore >= 0) {
 					// if (!hasNegativeMood) {
-					if (taskCheck === 2 || taskCheck === 3) {
+					if (taskCheck === 1 || taskCheck === 3) {
+						console.log("taskCheck11111111111111",taskCheck);
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
 						this.answerNotGoodNum = 0;
-						const allPositive = judgeResult.moods.every(
-							(item) => parseInt(item.mood, 10) > 0
-						);
-						console.log(allPositive);
+						// const allPositive = judgeResult.moods.every(
+						// 	(item) => parseInt(item.mood, 10) > 0
+						// );
+						// console.log(allPositive);
+						
 						// if (allPositive) {
-						if (taskCheck === 2 || taskCheck === 3) {
+						if (taskCheck === 1 || taskCheck === 3) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
 								this.state = "judge";
 								// console.log("allPositive:", allPositive);
@@ -1035,7 +1042,7 @@
 					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 1|| taskCheck === 3) {
+						if (taskCheck === 2|| taskCheck === 3) {
 						// if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;
