@@ -83,7 +83,7 @@
 						//	concerns: this.selectedOptions || ["Fitting in"],
 						//});
 						const response = await apiService.updateName({
-							person_id: this.userId.toString(),
+							person_id: this.userId,
 							new_name: this.username
 						});
 						// console.log("Backend response:", response);
