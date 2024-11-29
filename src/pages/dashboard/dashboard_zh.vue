@@ -130,7 +130,7 @@
 						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
-						<SProgressBar
+						<SProgressBar v-if="courseData"  class="container-sprogress" 
 						:finish-components="courseData.course_result.length+1"
 						:total-components="courseData.course_list.length"
 						:star-ratings="courseData.course_result.map(item => item.result)"
