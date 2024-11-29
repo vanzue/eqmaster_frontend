@@ -45,6 +45,24 @@ export function getAvatar(name, sceneNumber) {
 	if (name == "HR") {
 		imageName = "HR";
 	}
+	if (name == "Emma") {
+		return getImg('/static/web/Emma.webp')
+	}
+	if (name == "Bob") {
+		return getImg('/static/web/Bob.webp')
+	}
+	if (name == "Ryan") {
+		return getImg('/static/web/Ryan.webp')
+	}
+	if (name == "Colleague") {
+		return getImg('/static/web/Colleague.webp')
+	}
+	if (name == "Monica") {
+		return getImg('/static/web/Monica.webp')
+	}
+	if (name == "Alex") {
+		return getImg('/static/web/Alex.webp')
+	}
     
     const avatarPath = getImg(`/static/web/npc/${sceneNumber}${imageName}.webp`);
 	// const avatarPath = `/static/npc/444.png`;

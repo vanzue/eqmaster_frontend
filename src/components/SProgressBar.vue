@@ -97,15 +97,15 @@
 					'/static/web/level1completed1.webp',
 					'/static/web/level2completed.webp',
 					'/static/web/level3completed.webp',
-					'/static/web/level4completed.webp',
-					'/static/web/level5completed.webp'
+					//'/static/web/level4completed.webp',
+					//'/static/web/level5completed.webp'
 				];
 				const incompleteImages = [
 					'/static/web/level1incomplete.webp',
 					'/static/web/level2incomplete1.webp',
 					'/static/web/level3incomplete1.webp',
-					'/static/web/level4incomplete.webp',
-					'/static/web/level5incomplete.webp'
+					//'/static/web/level4incomplete.webp',
+					//'/static/web/level5incomplete.webp'
 				];
 				for(let i=0; i<completedImages.length; i++){
 				  this.loadAndDrawImageWx(completedImages[i])
@@ -343,15 +343,15 @@
 					'/static/web/level1completed1.webp',
 					'/static/web/level2completed.webp',
 					'/static/web/level3completed.webp',
-					'/static/web/level4completed.webp',
-					'/static/web/level5completed.webp'
+					//'/static/web/level4completed.webp',
+					//'/static/web/level5completed.webp'
 				];
 				const incompleteImages = [
 					'/static/web/level1incomplete.webp',
 					'/static/web/level2incomplete1.webp',
 					'/static/web/level3incomplete1.webp',
-					'/static/web/level4incomplete.webp',
-					'/static/web/level5incomplete.webp'
+					//'/static/web/level4incomplete.webp',
+					//'/static/web/level5incomplete.webp'
 				];
 
 				// 绘制所有端点、线段和图片

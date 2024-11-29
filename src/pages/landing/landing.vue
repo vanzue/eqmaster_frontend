@@ -12,13 +12,31 @@
 			</view>
 			<image class="splashImage" src="/static/onboarding/IP.png" mode="widthFix"></image>
 		</view> -->
-		<view v-else>
-			<!-- 添加背景图片 
-			<image class="background-image" :src="getImg('/static/web/onboarding/landingB2.webp')" mode="widthFix"></image>-->
-			<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
-	
-			<!-- 开始体验按钮 -->
-			<view class="start-button">
+
+		<!-- 添加背景图片 
+		<image class="background-image" :src="getImg('/static/web/onboarding/landingB2.webp')" mode="widthFix"></image>-->
+		<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
+
+		<!-- 开始体验按钮 -->
+		<view class="start-button">
+			<!-- #ifndef MP-WEIXIN -->
+			<view class="quizButton" @click="startQuiz">
+				<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
+			</view>
+			<!-- #endif -->
+			<!-- #ifdef MP-WEIXIN -->
+			<view class="quizButton" @click="startLoginWx">
+				<text class="quizText">{{$t('pages.landing.get_wechatlogin') }}</text>
+			</view>
+			<!--<button class="quizButton" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
+				<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
+			</button>-->
+			<!-- #endif -->
+		</view>
+		<view class="third-party">
+			<!-- #ifndef MP-WEIXIN -->
+			<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
+			<view class="third-party-login">
 				<!-- #ifndef MP-WEIXIN -->
 				<view class="quizButton" @click="startQuiz">
 					<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
@@ -137,7 +155,7 @@
 						else
 						{
 							uni.navigateTo({
-								url: `/pages/dashboard/dashboard?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
+								url: `/pages/dashboard/dashboard_zh?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
 							});
 						}
 							
@@ -148,6 +166,35 @@
 				    }
 				});
 			},
+			
+			getPhoneNumber(e) {
+			      if (e.detail.errMsg === 'getPhoneNumber:ok') {
+			        const { iv, encryptedData } = e.detail;
+					console.log(iv, encryptedData);
+					// uni.login({
+					// 	"provider": "weixin",   
+					// 	"onlyAuthorize": true, // 微信登录仅请求授权认证
+					// 	success: (event) => {
+					// 		console.log(event);
+					// 		const {code} = event;
+					// 	uni.getUserInfo({
+					// 		provider: 'weixin',
+					// 		success:  (infoRes) =>{
+					// 			this.sendCodeToServer(code, iv,encryptedData);
+					// 		}
+					// 	});
+					// 		//this.sendCodeToServer(code); // 发送 code 到服务器
+					// 	},
+					// 	fail: function (err) {
+					// 		console.log('登录失败：', res.errMsg);
+					//     }
+					// });
+			        
+			      } else {
+			        console.error('用户拒绝授权获取手机号');
+			      }
+			    },
+			
 			startLoginWx() {
 				uni.login({
 					"provider": "weixin",   

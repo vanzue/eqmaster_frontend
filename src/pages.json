@@ -1,17 +1,17 @@
 {
 	"pages": [
-		{
-			"path": "pages/dashboard/dashboard_zh",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/landing/landing",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		 {
+		 	"path": "pages/landing/landing",
+		 	"style": {
+		 		"navigationStyle": "custom"
+		 	}
+		 },
+		 {
+		 	"path": "pages/dashboard/dashboard_zh",
+		 	"style": {
+		 		"navigationStyle": "custom"
+		 	}
+		 },
 		{
 			"path": "pages/battlefield/battlefield-loading",
 			"style": {
@@ -36,8 +36,9 @@
 				"navigationStyle": "custom"
 			}
 		},
+		
 		{
-			"path": "pages/dashboard/dashboard_en",
+			"path": "pages/battlefield/battlefield-intro-zh",
 			"style": {
 				"navigationStyle": "custom"
 			}
