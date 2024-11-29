@@ -42,7 +42,7 @@
 		},
 		created() {
 			this.loadCourse();
-			// console.log('courseInfo:', this.courseInfo)
+			// console.log('courseInfo:', this.courseInfo)1
 		},
 		computed: {
 			npcs() {
