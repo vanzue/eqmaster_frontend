@@ -538,7 +538,7 @@
 					// url: `/pages/battlefield/battlefield-intro`
 					url: this.isCompleteTask ?
 						`/pages/battlefield/battlefield-summary?isFromMap=${this.isFromMap}` :
-						`/pages/battlefield/battlefield-intro`
+						`/pages/battlefield/battlefield-intro-zh`
 				});
 			},
 			// 新增方法：绘制六边形
