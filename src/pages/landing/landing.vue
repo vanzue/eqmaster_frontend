@@ -1,7 +1,6 @@
 <template>
 	<view class="container">
 		<view v-if="showSplash" :class="{'splash-screen': true, 'splash-screen-hidden': splashHidden}">
-			<!-- <view class="splash-screen-title">Your Personalized EQ Coach</view> -->
 			<image class="splash-image"  :src="getImg($t('images.onboarding.splash'))" mode="aspectFill"></image>
 		</view>
 		<!-- <view class="splashBackground"></view>
@@ -38,49 +37,33 @@
 			<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
 			<view class="third-party-login">
 				<!-- #ifndef MP-WEIXIN -->
-				<view class="quizButton" @click="startQuiz">
-					<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
+				<view class="loginButton" @click="googleLogin">
+					<image class="google-image" src="/static/onboarding/google_button.png"></image>
+					<!-- <text class="login-text-apple">Google Login</text> -->
+				</view>
+				<view class="loginButton" @click="wetchLogin">
+					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
+					<!-- <text class="login-text-apple">Wetch Login</text> -->
 				</view>
 				<!-- #endif -->
-				<!-- #ifdef MP-WEIXIN -->
-				<view class="quizButton" @click="startLoginWx">
-					<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
+				<!-- 
+				<view class="loginButton" @click="startLoginWx">
+					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
 				</view>
-				<!-- #endif -->
+				-->
+				<!-- <view class="loginButton" @click="appleleLogin">
+					<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
+					<text class="login-text-apple">Sign in with Apple</text>
+				</view> -->
 			</view>
-			<view class="third-party">
-				<!-- #ifndef MP-WEIXIN -->
-				<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
-				<view class="third-party-login">
-					<!-- #ifndef MP-WEIXIN -->
-					<view class="loginButton" @click="googleLogin">
-						<image class="google-image" src="/static/onboarding/google_button.png"></image>
-						<!-- <text class="login-text-apple">Google Login</text> -->
-					</view>
-					<view class="loginButton" @click="wetchLogin">
-						<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
-						<!-- <text class="login-text-apple">Wetch Login</text> -->
-					</view>
-					<!-- #endif -->
-					<!-- 
-					<view class="loginButton" @click="startLoginWx">
-						<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
-					</view>
-					-->
-					<!-- <view class="loginButton" @click="appleleLogin">
-						<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
-						<text class="login-text-apple">Sign in with Apple</text>
-					</view> -->
-				</view>
-				<!-- #endif -->
-			</view>
-	
-			<!-- <view class="button button2" @click="startDialogue">
-				<text class="button-text">开始对话</text>
-			</view> -->
-	
-			<!-- <text class="login-text">登录已有账号</text> -->
+			<!-- #endif -->
 		</view>
+
+		<!-- <view class="button button2" @click="startDialogue">
+			<text class="button-text">开始对话</text>
+		</view> -->
+
+		<!-- <text class="login-text">登录已有账号</text> -->
 	</view>
 </template>
 
@@ -343,9 +326,6 @@
 				setTimeout(() => {
 					console.log('隐藏闪屏');
 					this.showSplash = false; // 完全隐藏
-					uni.setNavigationBarTitle({
-						title: '登录'
-					});
 				}, 500); // 等同于 CSS 动画的持续时间
 			}, 2000); // 闪屏持续时间
 		}
@@ -373,19 +353,8 @@
 		opacity: 1;
 		/* 初始完全显示 */
 		transition: opacity 2s ease-out;
-		background-color: #252529;
 		/* 渐隐动画，2 秒 */
-	}
-	.splash-screen-title {
-		font-family: Poppins;
-		display: flex;
-		margin-top: 140rpx;
-		justify-content: center;
-		font-weight: 400;
-		color: #9EE44D;
-		font-size: 32rpx;
-		width: auto;
-		height: 80rpx;
+
 	}
 
 	.splash-screen-hidden {
@@ -401,7 +370,7 @@
 	}
 
 	.background-image {
-		/* margin-top: 5vh; */
+		margin-top: 5vh;
 		width: 100%;
 		z-index: 5;
 	}
