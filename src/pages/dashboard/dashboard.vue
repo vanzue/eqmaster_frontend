@@ -197,7 +197,7 @@
 				<view class="dashboard2-card-o">
 					<!-- 调用进度条组件 -->
 
-					<SProgressBar v-if="courseData && courseData.courses" :finishComponents="courseData.courses.length"
+					<SProgressBar v-if="courseData && courseData.courses"  class="container-sprogress" :finishComponents="courseData.courses.length"
 						:starRatings="courseData.courses.map(course => course.result)" :totalComponents="6" />
 				</view>
 
