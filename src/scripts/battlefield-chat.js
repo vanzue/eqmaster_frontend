@@ -185,6 +185,7 @@ export async function hint(chatHistory, courseId) {
 
 // 导出continueChat函数
 export async function continueChat(chatHistory, courseId) {
+	console.log("after pop:", chatHistory);
 	// 在 chat_content 中插入“继续”
 	chatHistory.push({
 		role: "user",
