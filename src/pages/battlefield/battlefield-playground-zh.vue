@@ -15,7 +15,7 @@
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-				查看所有任务
+				{{ $t('"pages.battlefield.playground.review"') }}
 			</view>
 
 			<!-- <view class="text-area">语音识别内容：1111{{transcript}}</view> -->
@@ -74,7 +74,7 @@
 					<view class="wave"></view>
 				</view>
 
-				<text class="cancel-text">松开以发送，向上滑动以取消</text>
+				<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
 			</view>
 
 			<view
@@ -90,7 +90,7 @@
           isTooltipVisible &&
           showRecordTooltip
         " class="recordTooltip">
-				长按录音
+				{{ $y('pages.battlefield.playground.record') }}
 			</view>
 			<!-- #endif -->
 
@@ -101,7 +101,7 @@
           isTooltipVisible &&
           showRecordTooltip
         " class="keyboardToolTip">
-				请输入您的回复
+				{{ $y('pages.battlefield.playground.enter') }}
 			</view>
 			<!-- #endif -->
 			<!-- tooltip for hint -->
@@ -111,7 +111,7 @@
           isTooltipVisible &&
           showHintTooltip
         " class="hintTooltip">
-				需要帮助吗？这是您的建议包
+				{{ $y('pages.battlefield.playground.help') }}
 			</view>
 
 
@@ -143,7 +143,7 @@
 				<view class="input-container-wrapper">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-						<textarea placeholder="请输入您的回复" v-model="inputContent" auto-height
+						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height
 							@blur="inputRecordingBlur" />
 					</view>
 					<view class="send-sms-container">
@@ -656,7 +656,7 @@
 				await this.$store.dispatch('fetchHomepageData');
 				setTimeout(() => {
 					uni.navigateTo({
-						url: "/pages/battlefield/battlefield-summary-zh",
+						url: "/pages/battlefield/battlefield-summary",
 					});
 				}, 1000);
 			},
@@ -761,7 +761,7 @@
 						void this.$el.offsetWidth;
 
 						newMessage.shouldAnimate = true;
-						this.anasLoadingObj.text = "正在分析中";
+						this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');
 
 						// 使用 requestAnimationFrame 确保动画在下一帧开始
 						requestAnimationFrame(() => {
@@ -804,7 +804,7 @@
 					if (selectedCard == 1) {
 						this.anasLoadingObj = {
 							loading: true,
-							text: "生成中",
+							text: this.$t('pages.battlefield.playground.generating'),
 						};
 						replyContent = await helpReply(validChats, "1");
 						console.log(replyContent);
@@ -823,7 +823,7 @@
 								void this.$el.offsetWidth;
 
 								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = "正在分析中"; // 中文翻译
+								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing'); // 中文翻译
 
 								// 使用 requestAnimationFrame 确保动画在下一帧开始
 								requestAnimationFrame(() => {
@@ -851,7 +851,7 @@
 						console.log("get hint card!!!!!!!!!!1");
 						this.anasLoadingObj = {
 							loading: true,
-							text: "Generating",
+							text: this.$t('pages.battlefield.playground.generating'),
 						};
 						const judgeResult = await hint(validChats, "1");
 						console.log("get tips from backend:", judgeResult);
@@ -869,7 +869,7 @@
 								void this.$el.offsetWidth;
 
 								newMessage2.shouldAnimate = true;
-								this.anasLoadingObj.text = "正在分析中";
+								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');
 
 								// 使用 requestAnimationFrame 确保动画在下一帧开始
 								requestAnimationFrame(() => {
@@ -936,7 +936,7 @@
 					}
 				} catch (error) {
 					uni.showToast({
-						title: "发生了一些错误",
+						title: this.$t('pages.battlefield.playground.error'),
 						icon: "none",
 						duration: 2000,
 					});
@@ -981,14 +981,14 @@
 									this.taskList.getTask(0).one = true;
 									this.taskList.doneTaskLength++;
 									this.judgeTitle =
-										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-										" 任务达成！";
+										`(${this.taskList.doneTaskLength}/${totalTaskLength}) ` +
+										this.$('pages.battlefield.playground.achieved');
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
 										this.isPass = true;
 									}
 								} else {
-									this.judgeTitle = "任务达成";
+									this.judgeTitle = this.$('pages.battlefield.playground.achieved');
 									this.isCompleteTask = true;
 								}
 							} else {
@@ -1019,7 +1019,7 @@
 								this.showHintTooltip = false;
 							}
 							console.log("tooltip for hint", this.isTooltipVisible);
-							this.judgeTitle = "还有提升空间!";
+							this.judgeTitle = this.$t('pages.battlefield.playground.need_improve');
 							this.isCompleteTask = false;
 							this.judgeContent = judgeResult.comments;
 							this.state = "judgeTry";
@@ -1032,7 +1032,7 @@
 			async checkBossComplimentTask2(dialog, taskCheck) {
 				let taskCompleted = false;
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
-					const goalKeyword = "你点的菜真不错";
+					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
 						if (taskCheck === 1|| taskCheck === 3) {
@@ -1051,13 +1051,13 @@
 									const totalTaskLength =
 										this.taskList.getTotalTaskLength();
 									this.judgeTitle =
-										`(${this.taskList.doneTaskLength}/${totalTaskLength})` +
-										" 任务达成";
+										`(${this.taskList.doneTaskLength}/${totalTaskLength}) ` +
+										this.$t('pages.battlefield.playground.achieved');
 									taskCompleted = false;
 									this.task2CompletedStatusOne = true; //如果任务2完成
 									console.log("task2 success");
 								} else {
-									this.judgeTitle = "任务达成";
+									this.judgeTitle = this.$t('pages.battlefield.playground.achieved');
 									this.isCompleteTask = true;
 									taskCompleted = true;
 								}

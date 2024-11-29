@@ -13,19 +13,19 @@
 		// 	}
 		// },
 		{
-			"path": "pages/battlefield/battlefield-loading-zh",
+			"path": "pages/battlefield/battlefield-loading",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-summary-zh",
+			"path": "pages/battlefield/battlefield-summary",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-task-zh",
+			"path": "pages/battlefield/battlefield-task",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -73,7 +73,7 @@
 			}
 		},
 		{
-			"path": "pages/battlefield/battlefield-intro-zh",
+			"path": "pages/battlefield/battlefield-intro",
 			"style": {
 				"navigationStyle": "custom"
 			}
