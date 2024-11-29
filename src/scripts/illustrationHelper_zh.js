@@ -2,7 +2,7 @@ import { getImg } from "./constants";
 export function illustrationSrc(homepageData, store, t) {
 	let returnObj = {
 		animal: "",
-		animal_name: '卡皮巴拉',
+		animal_name: t('illustration.animal.capybara.name'),
 		animal_icon: getImg('/static/web/resulten/monkey.webp'),
 		animal_name_bg: getImg('/static/web/resulten/animal-name-1.webp'),
 		weakness: 'Weakness',

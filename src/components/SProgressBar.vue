@@ -94,7 +94,7 @@
 		methods: {
 			loadimg(){
 				const completedImages = [
-					'/static/web/level1completed.webp',
+					'/static/web/level1completed1.webp',
 					'/static/web/level2completed.webp',
 					'/static/web/level3completed.webp',
 					'/static/web/level4completed.webp',
@@ -340,7 +340,7 @@
 
 				// 定义完成和未完成的图片路径数组
 				const completedImages = [
-					'/static/web/level1completed.webp',
+					'/static/web/level1completed1.webp',
 					'/static/web/level2completed.webp',
 					'/static/web/level3completed.webp',
 					'/static/web/level4completed.webp',
@@ -537,7 +537,7 @@
 				uni.reLaunch({
 					// url: `/pages/battlefield/battlefield-intro`
 					url: this.isCompleteTask ?
-						`/pages/battlefield/battlefield-summary-zh?isFromMap=${this.isFromMap}` :
+						`/pages/battlefield/battlefield-summary?isFromMap=${this.isFromMap}` :
 						`/pages/battlefield/battlefield-intro-zh`
 				});
 			},

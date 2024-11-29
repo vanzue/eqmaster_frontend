@@ -12,7 +12,7 @@
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
-					{{ this.isPass ? "Congrats!" : "Misson failed..." }}
+					{{ this.isPass ? $t('pages.battlefield.summary.pass') : $t('pages.battlefield.summary.failed') }}
 				</view>
 				<reward-bar :style="{ backgroundColor: 'transparent', width: '300rpx' }" :gemCount="this.gemCount"
 					gem-icon-width="40px" gem-icon-height="40px"></reward-bar>
@@ -39,7 +39,7 @@
 				<view class="comments">
 					<view class="comment-header">
 						<!-- <view class="down-line"></view> -->
-						<text class="comment-title">Let's recap</text>
+						<text class="comment-title">{{ $t('pages.battlefield.summary.title') }}</text>
 					</view>
 
 					<view class="sub-card">
@@ -56,7 +56,7 @@
 
 			<view class="card third-card">
 				<view class="third-card-title">
-					<text class="tips-title">Tips for you</text>
+					<text class="tips-title">{{ $t('pages.battlefield.summary.tips') }}</text>
 					<image class="tips-icon" :src="getImg('/static/web/battlefield/eqtips.webp')" mode="widthFix"></image>
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
@@ -68,7 +68,7 @@
 
 			</view>
 			<view class="status-text1">
-				<text class="tips-title1">-THE END-</text>
+				<text class="tips-title1">{{ $t('pages.battlefield.summary.end') }}</text>
 			</view>
 
 			<view class="guide-button-container">
@@ -77,7 +77,7 @@
 				<button class="guide-button" @click="this.isFromMap ? navigateToIntro() : navigateToMap()">
 					<!-- {{ this.isFromMap ? "Back to Map" : (this.isPass ? "Continue" : "Try again") }} -->
 					<!-- {{ this.isPass ? "Continue" : "Try again" }} -->
-					{{ this.isFromMap ? "Try again":"Continue" }}
+					{{ this.isFromMap ? $t('pages.battlefield.summary.again'): $t('pages.battlefield.summary.finish') }}
 				</button>
 			</view>
 
@@ -86,8 +86,8 @@
 </template>
 
 <script>
-	import RewardBar from "/components/RewardBar.vue";
-	import NpcComment from "/components/NpcComment.vue"; // ���入组件
+	import RewardBar from "@/components/RewardBar.vue";
+	import NpcComment from "@/components/NpcComment.vue"; // ���入组件
 	import { getImg } from "../../scripts/constants";
 	export default {
 		components: {
@@ -101,7 +101,7 @@
 					"好好哈哈哈你看看哈哈哈你看看哈哈哈你看看哈哈哈你看看好我看看",
 					"嘿嘿哈哈哈你看看哈哈哈你看看哈哈哈你看看哈哈哈你看看哈哈哈你看看嘿",
 				],
-				suggestion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse finibus dolor et sagittis vehicula.。",
+				suggestion: this.$t('pages.battlefield.summary.suggestion'),
 				diamondAdd: 3,
 				gemCount: 0,
 				npcHealthValues: [],
@@ -122,7 +122,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.reLaunch({
-					url: `/pages/dashboard/dashboard_en`,
+					url: `/pages/dashboard/dashboard_zh`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -134,7 +134,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.reLaunch({
-					url: `/pages/battlefield/battlefield-intro-zh`,
+					url: `/pages/battlefield/battlefield-intro`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -142,7 +142,7 @@
 
 			navigateToNextPage() {
 				uni.reLaunch({
-					url: "/pages/battlefield/battlefield-task-zh", // Replace this with the actual path to your next page
+					url: "/pages/battlefield/battlefield-task", // Replace this with the actual path to your next page
 				});
 			},
 		},
