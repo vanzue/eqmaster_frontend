@@ -117,7 +117,7 @@
 					</view>
 				</view>
 
-				<!-- 其他可滚动内容放在这里 -->
+				<!-- 其他可滚动内容放在这里1 -->
 				<scroll-view scroll-y class="dashboard2-scrollable-content">
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
@@ -130,7 +130,7 @@
 						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
-						<SProgressBar
+						<SProgressBar v-if="courseData"  class="container-sprogress" 
 						:finish-components="courseData.course_result.length+1"
 						:total-components="courseData.course_list.length"
 						:star-ratings="courseData.course_result.map(item => item.result)"
