@@ -91,7 +91,7 @@
           isTooltipVisible &&
           showRecordTooltip
         " class="recordTooltip">
-				{{ $y('pages.battlefield.playground.record') }}
+				{{ $t('pages.battlefield.playground.record') }}
 			</view>
 			<!-- #endif -->
 
@@ -102,7 +102,7 @@
           isTooltipVisible &&
           showRecordTooltip
         " class="keyboardToolTip">
-				{{ $y('pages.battlefield.playground.enter') }}
+				{{ $t('pages.battlefield.playground.enter') }}
 			</view>
 			<!-- #endif -->
 			<!-- tooltip for hint -->
@@ -112,7 +112,7 @@
           isTooltipVisible &&
           showHintTooltip
         " class="hintTooltip">
-				{{ $y('pages.battlefield.playground.help') }}
+				{{ $t('pages.battlefield.playground.help') }}
 			</view>
 
 

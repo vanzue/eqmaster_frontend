@@ -20,7 +20,7 @@ export default createStore({
 		npcs: [{
 				characterName: "Jason",
 				health: 10,
-				avatar: getImg("/static/web/battlefield/boss.webp"),
+				avatar: getImg("/static/web/battlefield/boss11.webp"),
 				voice: "zh-CN-XiaoruiNeural",
 				style: "serious",
 				rate: "0%",
@@ -29,7 +29,7 @@ export default createStore({
 			{
 				characterName: "Sam",
 				health: 10,
-				avatar:  getImg("/static/web/battlefield/xiaoA.webp"),
+				avatar:  getImg("/static/web/battlefield/xiaoA1.webp"),
 				voice: "zh-CN-YunxiNeural",
 				style: "friendly",
 				rate: "10%",
@@ -37,7 +37,7 @@ export default createStore({
 			{
 				characterName: "Anna",
 				health: 10,
-				avatar:  getImg("/static/web/battlefield/xiaoB.webp"),
+				avatar:  getImg("/static/web/battlefield/xiaoB1.webp"),
 				voice: "zh-CN-XiaoxiaoNeural",
 				style: "angry",
 				rate: "10%",

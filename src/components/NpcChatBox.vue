@@ -7,7 +7,7 @@
 				</view>
 				<view class="name">
 					<image class="character-background"
-						:src="playAudioIndex === index ? '/static/battlefield/character_background1_zh.png' : '/static/battlefield/character_background2_zh.png'"
+						:src="playAudioIndex === index ? '/static/battlefield/character_background1.png' : '/static/battlefield/character_background2.png'"
 						mode="scaleToFill" @click="playAudio()"></image>
 					<view class="character">{{ name }}</view>
 				</view>
@@ -106,8 +106,8 @@
 		border-radius: 50%;
 		overflow: hidden;
 		border: solid;
-		/* border-color: #90e0e7; */
-		border: 3px solid #F2BC74;
+		border-color: #90e0e7;
+		/* border: 3px solid #F2BC74; */
 		background-color: #fff;
 		display: flex;
 		justify-content: center;
