@@ -7,7 +7,7 @@
     />
     <!-- Content -->
     <view class="loading-text-container">
-      <text class="loading-text">Meeting Room</text>
+      <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text>
     </view>
   </view>
 </template>
@@ -15,7 +15,7 @@
 <script>
 import { startField } from "../../scripts/battlefield-chat";
 import apiService from '../../services/api-service';
-import getImg from '../../scripts/constants.js';
+import {getImg} from '../../scripts/constants.js';
 export default {
 	data() {
 		return {

@@ -11,7 +11,7 @@
 		<view class="content">
 			<view class="task-header">
 				<!-- <text class="main-title">A Cross-Department Meeting</text> -->
-				<text class="sub-title">Tasks</text>
+				<text class="sub-title">{{ $t('pages.battlefield.task.subtitle') }}</text>
 			</view>
 
 			<!-- 任务列表 -->
@@ -22,7 +22,7 @@
 							1
 						</text>
 					</view>
-					<text class="task-word">Cheer up Sam while avoiding further infuriating Jason.</text>
+					<text class="task-word">{{ $t('pages.battlefield.task.task1') }}</text>
 					<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 				</view>
 				<view class="task-item">
@@ -31,18 +31,18 @@
 							2
 						</text>
 					</view>
-					<text class="task-word">Encourage teammates to engage and get at least one to say, "I agree with you."</text>
+					<text class="task-word">{{ $t('pages.battlefield.task.task2') }}</text>
 				</view>
 			</view>
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage">Got it</button>
+			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.task.continue') }}</button>
 		</view>
 	</view>
 </template>
 
 <script>
-	import ProgressBar from '/components/ProgressBar.vue'; // 引入组件
+	import ProgressBar from '@/components/ProgressBar.vue'; // 引入组件
 	export default {
 		components: {
 			ProgressBar, // 注册组件
@@ -50,12 +50,12 @@
 		methods: {
 			navigateToNextPage() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-loading-zh'
+					url: '/pages/battlefield/battlefield-loading'
 				});
 			},
 			goback() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-intro-zh'
+					url: '/pages/battlefield/battlefield-intro'
 				});
 			}
 		}

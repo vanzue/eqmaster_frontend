@@ -201,7 +201,7 @@
 			},
 			startDialogue() {
 				uni.navigateTo({
-					url: '/pages/battlefield/battlefield-loading-zh'
+					url: '/pages/battlefield/battlefield-loading'
 				});
 			},
 			googleLogin() {

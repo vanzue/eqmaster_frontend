@@ -11,32 +11,21 @@
 
 		<!-- Content -->
 		<view class="content">
-			<text class="title content-item">UNIT 1</text>
-			<text class="subtitle content-item">Managing Tensions in a Meeting</text>
-			<text class="time-info content-item">3-4min</text>
+			<text class="title content-item">{{ $t('pages.battlefield.intro.unit1.title') }}</text>
+			<text class="subtitle content-item">{{ $t('pages.battlefield.intro.unit1.subtitle') }}</text>
+			<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
 			<view class="description content-item" id="desc">
-				<text class="npc-name">
-					<image :src="npcs[0].avatar" class="npc-avatar"></image> Jason
-				</text>
-				&nbsp;joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as
-				<text class="npc-name">
-					<image :src="npcs[1].avatar" class="npc-avatar"></image> Sam
-				</text>
-				&nbsp;feels uneasy, and
-				<text class="npc-name">
-					<image :src="npcs[2].avatar" class="npc-avatar"></image> Anna
-				</text>
-				&nbsp;stays calm. How will you respond to ease the situation?
+				{{ $t('pages.battlefield.intro.unit1.desc') }}
 			</view>
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage">Continue</button>
+			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.intro.continue') }}</button>
 		</view>
 	</view>
 </template>
 
 <script>
-	import ProgressBar from '/components/ProgressBar.vue'; // 引入组件
+	import ProgressBar from '@/components/ProgressBar.vue'; // 引入组件
 	export default {
 		components: {
 			ProgressBar, // 注册组件
@@ -52,7 +41,7 @@
 		methods: {
 			navigateToNextPage() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-task-zh' // Replace this with the actual path to your next page
+					url: '/pages/battlefield/battlefield-task' // Replace this with the actual path to your next page
 				});
 			},
 			goToDashboard() {
