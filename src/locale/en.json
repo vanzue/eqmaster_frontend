@@ -67,16 +67,44 @@
 
     "pages.battlefield.intro.continue": "Continue",
     "pages.battlefield.intro.unit1.title": "Unit 1",
-    "pages.battlefield.intro.unit1.subtitle": "The boss's stomach worms",
-    "pages.battlefield.intro.unit1.time": "3-4 minutes",
-    "pages.battlefield.intro.unit1.desc": "In a private room in an exquisite club, you have dinner with a senior leader and two colleagues. It seems like a relaxing gathering, but in fact the leader is secretly observing you and preparing to decide who will participate in an important project. You must please the leader and balance the relationship with your colleagues at the same time, because a small mistake may change your future.",
+    "pages.battlefield.intro.unit1.subtitle": "Managing Tensions in a Meeting",
+    "pages.battlefield.intro.unit1.time": "3-4min",
+    "pages.battlefield.intro.unit1.desc": "Jason joins your team meeting, frustrated by the lack of feedback on his project. Tension rises as Sam feels uneasy, and Anna stays calm. How will you respond to ease the situation?",
 
     "pages.battlefield.task.subtitle": "Tasks",
-    "pages.battlefield.task.task1": "One sentence to make every colleague happy",
-	  "pages.battlefield.task.task2": "Order dishes that satisfy every colleague",
-    "pages.battlefield.task.continue": "Continue",
+    "pages.battlefield.task.task1": "Cheer up Sam while avoiding further infuriating Jason.",
+	  "pages.battlefield.task.task2": "Encourage teammates to engage and get at least one to say, \"I agree with you.\"",
+    "pages.battlefield.task.continue": "Got it",
 
-    "pages.battlefield.loading.title": "At dinner",
+    "pages.battlefield.loading.title": "Meeting Room",
+
+    "pages.battlefield.summary.pass": "Congrats!",
+    "pages.battlefield.summary.failed": "Misson failed...",
+    "pages.battlefield.summary.title": "Let's recap",
+    "pages.battlefield.summary.tips": "Tips for you",
+    "pages.battlefield.summary.end": "-THE END-",
+    "pages.battlefield.summary.again": "Try again",
+    "pages.battlefield.summary.finish": "Continue",
+    "pages.battlefield.summary.comments1": "Continue",
+    "pages.battlefield.summary.comments2": "Continue",
+    "pages.battlefield.summary.comments3": "Continue",
+    "pages.battlefield.summary.suggestion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse finibus dolor et sagittis vehicula.。",
+
+    "pages.battlefield.playground.review": "Review all tasks",
+    "pages.battlefield.playground.submit_or_cancel": "Release to send, slide up to cancel",
+    "pages.battlefield.playground.record": "Hold to record",
+    "pages.battlefield.playground.enter": "Enter your reply",
+    "pages.battlefield.playground.help": "Need help? Here's your advice packet",
+    "pages.battlefield.playground.type_in": "Type your response",
+    "pages.battlefield.playground.not_clear": "Did not hear clearly",
+    "pages.battlefield.playground.analyzing": "Analyzing",
+
+    "pages.battlefield.playground.generating": "Generating",
+    "pages.battlefield.playground.error": "Something error happened",
+    "pages.battlefield.playground.need_improve": "You can make it better!",
+    "pages.battlefield.playground.goal_keyword": "I agree with you",
+    "pages.battlefield.playground.achieved": "Goals achieved",
+
 
     "illustration.animal.ostrich.name": "Ostrich",
     "illustration.animal.ostrich.weakness": "perception",
@@ -95,9 +123,9 @@
     "illustration.animal.capybara.characteristics": "You are like a flame, burning with endless energy, always focused on your goal, and constantly igniting the passion and motivation of those around you.",
   
     "components.SProgressBar.unit": "Unit",
-    "components.SProgressBar.unit1.name": "The boss's stomach worms",
-    "components.SProgressBar.unit2.name": "Being bullied by the boss",
-    "components.SProgressBar.unit3.name": "Encountering unreasonable colleagues",
+    "components.SProgressBar.unit1.name": "Handling tension in a meeting",
+    "components.SProgressBar.unit2.name": "Staying calm in team setbacks",
+    "components.SProgressBar.unit3.name": "Reading the room to resolve conflicts",
 
     "": ""
   }

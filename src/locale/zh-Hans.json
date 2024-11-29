@@ -70,16 +70,44 @@
 
 	"pages.battlefield.intro.continue": "继续",
 	"pages.battlefield.intro.unit1.title": "第一关",
-	"pages.battlefield.intro.unit1.subtitle": "老板肚子里的蛔虫",
+	"pages.battlefield.intro.unit1.subtitle": "缓解会议中的紧张气氛",
 	"pages.battlefield.intro.unit1.time": "3-4分钟",
-	"pages.battlefield.intro.unit1.desc": "在一个精致的会所包厢里，你与一位高层领导和两名同事共进晚餐。看似轻松的聚会，实际上领导在暗中观察你们，准备决定谁将参与重要项目。你必须讨好领导，同时平衡同事关系，因为一个小小的失误可能改变你的未来。",
+	"pages.battlefield.intro.unit1.desc": "Jason 参加了你的团队会议，他对项目缺乏反馈感到沮丧。Sam 感到不安，气氛变得紧张，而 Anna 保持冷静。你会如何应对以缓解这种情况？",
 
 	"pages.battlefield.task.subtitle": "通关任务",
-	"pages.battlefield.task.task1": "一句话让每位同事心情愉悦",
-	"pages.battlefield.task.task2": "点出让每位同事满意的菜品",
+	"pages.battlefield.task.task1": "让 Sam 高兴起来，同时避免进一步激怒 Jason。",
+	"pages.battlefield.task.task2": "鼓励队友参与并至少让一个人说“我同意你的看法”。",
 	"pages.battlefield.task.continue": "我知道了",
 
-	"pages.battlefield.loading.title": "聚餐中",
+	"pages.battlefield.loading.title": "会议室",
+
+	"pages.battlefield.summary.pass": "你真棒!",
+    "pages.battlefield.summary.failed": "真遗憾...",
+	"pages.battlefield.summary.title": "互动评价",
+    "pages.battlefield.summary.tips": "本关情商技巧",
+	"pages.battlefield.summary.end": "--到底啦--",
+	"pages.battlefield.summary.again": "再玩一次",
+    "pages.battlefield.summary.finish": "完成",
+	"pages.battlefield.summary.comments1": "Continue",
+    "pages.battlefield.summary.comments2": "Continue",
+    "pages.battlefield.summary.comments3": "Continue",
+    "pages.battlefield.summary.suggestion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse finibus dolor et sagittis vehicula.。",
+
+	"pages.battlefield.playground.review": "查看所有任务",
+	"pages.battlefield.playground.submit_or_cancel": "松开以发送，向上滑动以取消",
+	"pages.battlefield.playground.record": "长按录音",
+	"pages.battlefield.playground.enter": "请输入您的回复",
+	"pages.battlefield.playground.help": "需要帮助吗？这是您的建议包",
+	"pages.battlefield.playground.type_in": "请输入您的回复",
+	"pages.battlefield.playground.not_clear": "没有听清楚",
+    "pages.battlefield.playground.analyzing": "正在分析中",
+
+	"pages.battlefield.playground.generating": "生成中",
+	"pages.battlefield.playground.error": "发生了一些错误",
+	"pages.battlefield.playground.need_improve": "还有提升空间!",
+	"pages.battlefield.playground.goal_keyword": "我同意你的看法",
+	"pages.battlefield.playground.achieved": "任务达成",
+
 
 	"illustration.animal.ostrich.name": "鸵鸟",
 	"illustration.animal.ostrich.weakness": "感知力",
@@ -98,9 +126,9 @@
 	"illustration.animal.capybara.characteristics": "你像一团火焰，燃烧着无穷的能量，始终专注于目标，不断点燃周围人的激情与动力。",
 
 	"components.SProgressBar.unit": "关卡",
-	"components.SProgressBar.unit1.name": "老板肚子里的蛔虫",
-	"components.SProgressBar.unit2.name": "被老板刁难",
-	"components.SProgressBar.unit3.name": "遇到无理同事",
+	"components.SProgressBar.unit1.name": "处理会议中的紧张气氛",
+	"components.SProgressBar.unit2.name": "在团队遭遇挫折时保持冷静",
+	"components.SProgressBar.unit3.name": "通过阅读房间来解决冲突",
 
 	"": ""
 }

@@ -12,7 +12,7 @@
         " mode="aspectFit"></image>
 			<view class="card first-card">
 				<view class="status-text">
-					{{ this.isPass ? "你真棒!" : "真遗憾..." }}
+					{{ this.isPass ? $t('pages.battlefield.summary.pass') : $t('pages.battlefield.summary.failed') }}
 				</view>
 				<reward-bar :style="{ backgroundColor: 'transparent', width: '300rpx' }" :gemCount="this.gemCount"
 					gem-icon-width="40px" gem-icon-height="40px"></reward-bar>
@@ -39,7 +39,7 @@
 				<view class="comments">
 					<view class="comment-header">
 						<!-- <view class="down-line"></view> -->
-						<text class="comment-title">互动评价</text>
+						<text class="comment-title">{{ $t('pages.battlefield.summary.title') }}</text>
 					</view>
 
 					<view class="sub-card">
@@ -56,7 +56,7 @@
 
 			<view class="card third-card">
 				<view class="third-card-title">
-					<text class="tips-title">本关情商技巧</text>
+					<text class="tips-title">{{ $t('pages.battlefield.summary.tips') }}</text>
 					<image class="tips-icon" :src="getImg('/static/web/battlefield/eqtips.webp')" mode="widthFix"></image>
 					<!-- <view class="down-line second-line"></view> -->
 				</view>
@@ -68,7 +68,7 @@
 
 			</view>
 			<view class="status-text1">
-				<text class="tips-title1">--到底啦--</text>
+				<text class="tips-title1">{{ $t('pages.battlefield.summary.end') }}</text>
 			</view>
 
 			<view class="guide-button-container">
@@ -77,7 +77,7 @@
 				<button class="guide-button" @click="this.isFromMap ? navigateToIntro() : navigateToMap()">
 					<!-- {{ this.isFromMap ? "Back to Map" : (this.isPass ? "Continue" : "Try again") }} -->
 					<!-- {{ this.isPass ? "Continue" : "Try again" }} -->
-					{{ this.isFromMap ? "再玩一次":"完成" }}
+					{{ this.isFromMap ? $t('pages.battlefield.summary.again'):$t('pages.battlefield.summary.finish') }}
 				</button>
 			</view>
 
@@ -103,7 +103,7 @@
 					"厉害啊，“蛔虫”。不过我们这种小人物的口味可没人在乎咯。",
 					"看来今天的饭局是主攻辣味了啊，像我这种不吃辣的也只能凑合着了。没事儿，你们尽兴就好，我不重要，反正我的口味也没人太在意。",
 				],
-				suggestion: "注意倾听每个人的需求，及时回应对方的感受。适当分配话题焦点，别让任何人感到被忽视。观察细微表情，察言观色，提前调整自己的言行。",
+				suggestion: this.$t('pages.battlefield.summary.suggestion'),
 				gemCount: 0,
 				npcHealthValues: [],
 				isFromMap: false, // 新增属性以接收参数
@@ -135,7 +135,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.navigateTo({
-					url: `/pages/battlefield/battlefield-intro-zh`,
+					url: `/pages/battlefield/battlefield-intro`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -143,7 +143,7 @@
 
 			navigateToNextPage() {
 				uni.navigateTo({
-					url: "/pages/battlefield/battlefield-task-zh", // Replace this with the actual path to your next page
+					url: "/pages/battlefield/battlefield-task", // Replace this with the actual path to your next page
 				});
 			},
 		},
