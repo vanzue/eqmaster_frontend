@@ -513,16 +513,16 @@
 					}
 				}
 			},
-			resetScoresByName(name) {
-				const scoreMapping = {
-					人际平衡术: '共情力',
-					情绪侦查力: '感知力',
-					情绪掌控力: '掌控力',
-					沟通表达力: '驱动力',
-					社交得体度: '社交力'
-				};
-				return scoreMapping[name] || null;
-			},
+			// resetScoresByName(name) {
+			// 	const scoreMapping = {
+			// 		人际平衡术: '共情力',
+			// 		情绪侦查力: '感知力',
+			// 		情绪掌控力: '掌控力',
+			// 		沟通表达力: '驱动力',
+			// 		社交得体度: '社交力'
+			// 	};
+			// 	return scoreMapping[name] || null;
+			// },
 		},
 	};
 </script>
