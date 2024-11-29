@@ -25,8 +25,11 @@
 			<!-- #endif -->
 			<!-- #ifdef MP-WEIXIN -->
 			<view class="quizButton" @click="startLoginWx">
-				<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
+				<text class="quizText">{{$t('pages.landing.get_wechatlogin') }}</text>
 			</view>
+			<!--<button class="quizButton" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
+				<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
+			</button>-->
 			<!-- #endif -->
 		</view>
 		<view class="third-party">
@@ -135,7 +138,7 @@
 						else
 						{
 							uni.navigateTo({
-								url: `/pages/dashboard/dashboard?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
+								url: `/pages/dashboard/dashboard_zh?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
 							});
 						}
 							
@@ -146,6 +149,35 @@
 				    }
 				});
 			},
+			
+			getPhoneNumber(e) {
+			      if (e.detail.errMsg === 'getPhoneNumber:ok') {
+			        const { iv, encryptedData } = e.detail;
+					console.log(iv, encryptedData);
+					// uni.login({
+					// 	"provider": "weixin",   
+					// 	"onlyAuthorize": true, // 微信登录仅请求授权认证
+					// 	success: (event) => {
+					// 		console.log(event);
+					// 		const {code} = event;
+					// 	uni.getUserInfo({
+					// 		provider: 'weixin',
+					// 		success:  (infoRes) =>{
+					// 			this.sendCodeToServer(code, iv,encryptedData);
+					// 		}
+					// 	});
+					// 		//this.sendCodeToServer(code); // 发送 code 到服务器
+					// 	},
+					// 	fail: function (err) {
+					// 		console.log('登录失败：', res.errMsg);
+					//     }
+					// });
+			        
+			      } else {
+			        console.error('用户拒绝授权获取手机号');
+			      }
+			    },
+			
 			startLoginWx() {
 				uni.login({
 					"provider": "weixin",   
