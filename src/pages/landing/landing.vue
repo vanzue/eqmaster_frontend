@@ -138,7 +138,7 @@
 						else
 						{
 							uni.navigateTo({
-								url: `/pages/dashboard/dashboard?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
+								url: `/pages/dashboard/dashboard_zh?userId=${res.data.userid}&username=${res.data.name}&jobId=${res.data.jobid}`
 							});
 						}
 							
