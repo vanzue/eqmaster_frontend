@@ -58,7 +58,7 @@
 		methods: {
 			navigateToNextPage() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-task' // Replace this with the actual path to your next page
+					url: '/pages/battlefield/battlefield-task-zh' // Replace this with the actual path to your next page
 				});
 			},
 			goToDashboard() {

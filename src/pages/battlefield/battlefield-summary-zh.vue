@@ -135,7 +135,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.navigateTo({
-					url: `/pages/battlefield/battlefield-intro`,
+					url: `/pages/battlefield/battlefield-intro-zh`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -143,7 +143,7 @@
 
 			navigateToNextPage() {
 				uni.navigateTo({
-					url: "/pages/battlefield/battlefield-task", // Replace this with the actual path to your next page
+					url: "/pages/battlefield/battlefield-task-zh", // Replace this with the actual path to your next page
 				});
 			},
 		},

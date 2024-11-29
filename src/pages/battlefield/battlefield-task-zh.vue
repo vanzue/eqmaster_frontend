@@ -66,12 +66,12 @@
 		methods: {
 			navigateToNextPage() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-loading'
+					url: '/pages/battlefield/battlefield-loading-zh'
 				});
 			},
 			goback() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-intro'
+					url: '/pages/battlefield/battlefield-intro-zh'
 				});
 			}
 		}

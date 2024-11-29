@@ -13,6 +13,12 @@
 		 	}
 		 },
 		{
+			"path": "pages/battlefield/battlefield-loading-zh",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/battlefield/battlefield-loading",
 			"style": {
 				"navigationStyle": "custom"
@@ -20,6 +26,12 @@
 		},
 		{
 			"path": "pages/battlefield/battlefield-summary",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/battlefield/battlefield-task-zh",
 			"style": {
 				"navigationStyle": "custom"
 			}

@@ -174,8 +174,8 @@ export default {
 		try {
 			console.info('mapdata@@@@@@@@:');
 			const response = await uni.request({
-				url: url.getUrl(`/get_battlefield_map/${1}?dim_name=掌控力`),
-				// url: url.getUrl(`/get_battlefield_map/${userId}?dim_name=掌控力`),
+				// url: url.getUrl(`/get_battlefield_map/${1}?dim_name=self_regulation`),
+				url: url.getUrl(`/get_battlefield_map/${userId}?dim_name=self_regulation`),
 				method: 'GET'
 			});
 
