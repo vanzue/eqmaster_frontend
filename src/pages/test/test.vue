@@ -105,6 +105,8 @@
 	import {
 		getImg
 	} from '../../scripts/constants.js';
+	import locale from '@/locale';
+
 	// import StateStack from "./StateStack";
 	// const stateStack = new StateStack();
 	export default {
@@ -151,11 +153,11 @@
 				// 	Motivation: 0
 				// },
 				scores: {
-					感知力: 0,
-					共情力: 0,
-					掌控力: 0,
-					社交力: 0,
-					驱动力: 0
+					[this.$t('scores.dimensions.perception')]: 0,
+					[this.$t('scores.dimensions.empathy')]: 0,
+					[this.$t('scores.dimensions.self_regulation')]: 0,
+					[this.$t('scores.dimensions.social_skill')]: 0,
+					[this.$t('scores.dimensions.motivation')]: 0
 				},
 				getImg,
 			};
@@ -397,9 +399,9 @@
 				this.num = this.num + (this.selectedOptionIndex + 1).toString();
 				if (this.selectedOption.scores) {
 					Object.entries(this.selectedOption.scores).forEach(([dimension, score]) => {
-						const newDimension = this.resetScoresByName(dimension);
-						if (this.scores.hasOwnProperty(newDimension)) {
-							this.scores[newDimension] += score;
+						// const newDimension = this.resetScoresByName(dimension);
+						if (this.scores.hasOwnProperty(dimension)) {
+							this.scores[dimension] += score;
 						}
 					});
 				}
@@ -416,6 +418,7 @@
 					return;
 				}
 
+				console.log(this.scores);
 				if (this.num.length === 5) {
 					apiService.finalizeScenario(this.scores, jobId, this.dialogueHistory)
 						.then((result) => {

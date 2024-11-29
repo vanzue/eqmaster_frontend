@@ -127,5 +127,10 @@
     "components.SProgressBar.unit2.name": "Staying calm in team setbacks",
     "components.SProgressBar.unit3.name": "Reading the room to resolve conflicts",
 
+    "scores.dimensions.perception": "Perception",
+    "scores.dimensions.empathy": "Empathy",
+    "scores.dimensions.self_regulation": "Self Regulation",
+    "scores.dimensions.social_skill": "Social Skill",
+    "scores.dimensions.motivation": "Motivation",
     "": ""
   }
