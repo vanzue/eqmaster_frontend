@@ -802,7 +802,7 @@
 				this.cardButtonLoading = true;
 				console.log("Exchangeclick:", this.allHistory);
 				const validChats = filterChatHistory(this.allHistory);
-				console.log(validChats);
+				console.log("validChats:",validChats);
 				let replyContent = null;
 				this.userJudgeContent = "";
 				try {
@@ -811,14 +811,16 @@
 							loading: true,
 							text: this.$t('pages.battlefield.playground.generating'),
 						};
+						console.log("validChats:",validChats);
 						replyContent = await helpReply(validChats, "1");
-						console.log(replyContent);
-						if (replyContent.responsive) {
+						// console.log(replyContent);
+						console.log("r66666666666666eplyContent:", replyContent);
+						if (replyContent.response.responsive) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage = {
 								role: "user",
-								content: replyContent.responsive,
+								content: replyContent.response.responsive,
 								shouldAnimate: false,
 							};
 							this.chattingHistory.push(newMessage);
