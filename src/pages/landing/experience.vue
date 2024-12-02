@@ -61,7 +61,7 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		background-color: #1c1c1e;
+		background-color: #252529;
 		position: relative;
 		overflow: hidden;
 		touch-action: none;
