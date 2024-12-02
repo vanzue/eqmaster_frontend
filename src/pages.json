@@ -13,6 +13,7 @@
 		 	"path": "pages/dashboard/dashboard_zh",
 		 	"style": {
 		 		// "navigationStyle": "custom"
+				"navigationBarBackgroundColor": "#2F2F38"
 		 	}
 		 },
 		{
@@ -135,7 +136,7 @@
 		{
 			"path": "pages/test/test",
 			"style": {
-				// "navigationStyle": "custom"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -201,10 +202,10 @@
 		}
 	],
 	"globalStyle": {
-		"backgroundColor": "#252529",
+		"backgroundColor": "#29282d",
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "%index.title%",
-		"navigationBarBackgroundColor": "#252529",
+		"navigationBarBackgroundColor": "#29282d",
 		"enableSwipeBack": false
 	},
 	"condition": {

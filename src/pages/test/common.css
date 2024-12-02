@@ -1,3 +1,38 @@
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20rpx;
+	position: relative;
+	z-index: 3;
+	margin-top: 90rpx;
+	/* margin-left: 20rpx; */
+	/* 确保导航栏在叠加层之上 */
+}
+
+.back-button {
+	width: 12px;
+	height: 24px;
+}
+
+.title-head {
+	font-size: 40rpx;
+	font-weight: bold;
+	color: #FFFFFF;
+	z-index: 6;
+	text-align: center;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.progress-bar-item {
+	width: 193rpx;
+}
+
+.wetchat-menu {
+	width: 200rpx;
+}
 .expand-icon {
 	position: absolute;
 	bottom: 20px;
@@ -47,7 +82,7 @@
 }
 
 .container {
-	display: flex;
+	display: block;
 	flex-direction: column;
 	background-color: #1c1c1e;
 	/* padding: 40px 20px; */
