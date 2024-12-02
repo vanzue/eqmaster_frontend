@@ -52,7 +52,7 @@
 	height: 24px;
 }
 
-.navbar {
+/* .navbar {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -61,14 +61,7 @@
 	position: relative;
 	z-index: 3;
 	margin-top: 80rpx;
-	margin-left: 20rpx;
-	/* 确保导航栏在叠加层之上 */
-}
-
-.back-button {
-	width: 24px;
-	height: 24px;
-}
+} */
 
 .progress-bar {
 	flex: 1;

@@ -3,7 +3,7 @@
 		<scroll-view scroll-y style="height: 100%;">
 			<view class="content">
 				<view class="header">
-					<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
+					<image class="header-icon" src="/static/back-left.png" @click="navigateToHome"></image>
 					<text class="score-title-head">{{ $t('pages.result.result.title') }}</text>
 					<view class="header-icon"></view>
 					<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
@@ -330,7 +330,7 @@ import {
 	}
 
 	.header-icon {
-		width: 50rpx;
+		width: 24rpx;
 		height: 50rpx;
 		display: flex;
 		justify-content: center;
