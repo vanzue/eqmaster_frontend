@@ -24,9 +24,9 @@ export default {
 		},
 		
 	computed: {
-		// courseInfo() {
-		// 	return this.$store.getters.getCourseInfo;
-		// },
+		courseInfo() {
+			return this.$store.getters.getCourseInfo;
+		},
 	},
 
 			
