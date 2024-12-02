@@ -4,9 +4,10 @@
 		<view class="navbar">
 			<image @click="goback" class="back-button" src="/static/battlefield/back-iconpng.png"></image>
 			<view class="progress-bar">
-				<progress-bar :isActive="true"></progress-bar>
-				<progress-bar :isActive="true"></progress-bar>
+				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
+				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
 			</view>
+			<view class="wetchat-menu"></view>
 		</view>
 		<view class="content">
 			<view class="task-header">
@@ -70,9 +71,13 @@
 				});
 			},
 			goback() {
-				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-intro'
-				});
+				if (getCurrentPages().length > 1) {
+					uni.navigateBack(); // 返回上一个页面
+				} else {
+					uni.redirectTo({
+						url: '/pages/battlefield/battlefield-intro'
+					});
+				}
 			}
 		}
 	}
@@ -80,6 +85,37 @@
 
 <style scoped>
 	@import "./common.css";
+
+	.navbar {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		padding: 20rpx;
+		position: relative;
+		z-index: 3;
+		margin-top: 90rpx;
+		margin-left: 20rpx;
+		/* 确保导航栏在叠加层之上 */
+	}
+
+	.progress-bar {
+		flex: 1;
+		width: 100%;
+		height: 20px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 16rpx;
+	}
+	.progress-bar-item {
+		width: 193rpx;
+	}
+
+	.wetchat-menu {
+		width: 200rpx;
+	}
 
 	.content {
 		display: flex;

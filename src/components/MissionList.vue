@@ -1,15 +1,15 @@
 <template>
 	<view class="container-box">
-		<text class="content">
+		<view class="content-task">
 			<view class="card-header">
 				<view class="title">
-					通关任务
+					{{ $t('pages.battlefield.playground.tasks_title') }}
 					<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode=""
 						@click="closeCardBox"></image>
 				</view>
 			</view>
-			<view class="list">
-				<view class="item" v-for="(item,index) in listData">
+			<view class="task-list">
+				<view class="task-item" v-for="(item,index) in listData" :key="index">
 					<view class="left">
 						<image class="radiocheck-image" src="/static/battlefield/radiocheck.png" mode=""
 							v-if="item._status"></image>
@@ -37,7 +37,7 @@
 					</view>
 				</view>
 			</view>
-		</text>
+		</view>
 	</view>
 </template>
 
@@ -101,12 +101,13 @@
 		position: absolute;
 		height: 732rpx;
 		bottom: 0px;
+		left: 0;
 		background-color: #FDEDC8;
 		display: flex;
 		flex-direction: column;
 	}
 
-	.content {
+	.content-task {
 		/* display: flex; */
 		padding: 40rpx 36rpx 96rpx 32rpx;
 	}
@@ -134,7 +135,7 @@
 		height: 48rpx;
 	}
 
-	.list {
+	.task-list {
 		display: block;
 		text-align: center;
 		width: 686rpx;
@@ -145,7 +146,7 @@
 		color: #8C5225;
 	}
 
-	.item {
+	.task-item {
 		display: flex;
 		/* 				height: 156rpx; */
 		align-items: center;

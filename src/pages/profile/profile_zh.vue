@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="header">
-			<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
+			<image class="header-icon" src="/static/back-left.png" @click="navigateToHome"></image>
 			<text class="score-title-head">{{ $t('components.Nav.Profile') }}</text>
 			<view class="header-icon"></view>
 			<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
@@ -474,7 +474,7 @@
 	}
 
 	.header-icon {
-		width: 50rpx;
+		width: 24rpx;
 		height: 50rpx;
 		display: flex;
 		justify-content: center;
