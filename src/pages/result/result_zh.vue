@@ -5,7 +5,8 @@
 				<view class="header">
 					<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
 					<text class="score-title-head">{{ $t('pages.result.result.title') }}</text>
-					<image class="header-icon" src="/static/battlefield/share.png"></image>
+					<view class="header-icon"></view>
+					<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
 				</view>
 				<view class="background-curve">
 					<view class="animal-box">
@@ -281,9 +282,13 @@ import {
 				this.isExpanded = true; // 只展开，不再收起
 			},
 			navigateToHome() {
-				uni.navigateTo({
-					url: `/pages/dashboard/dashboard_zh`
-				});
+				if (getCurrentPages().length > 1) {
+					uni.navigateBack(); // 返回上一个页面
+				} else {
+					uni.redirectTo({
+						url: '/pages/dashboard/dashboard_zh' // 如果没有历史记录，导航到指定页面
+					});
+				}
 			}
 		},
 	};
@@ -321,7 +326,7 @@ import {
 		z-index: 6;
 		width: 95%;
 		height: 104rpx;
-		padding-top: 88rpx;
+		padding-top: 82rpx;
 	}
 
 	.header-icon {

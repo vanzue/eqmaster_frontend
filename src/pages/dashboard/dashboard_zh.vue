@@ -1070,7 +1070,7 @@
 		/* display: flex; */
 		flex-direction: column;
 		align-items: left;
-		padding-top: 100rpx;
+		padding-top: 40rpx;
 		width: 100%;
 		height: calc(100vh - 150rpx);
 		overflow-y: auto;
@@ -2072,7 +2072,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: left;
-		padding: 40rpx 20rpx 0rpx 20rpx;
+		padding: 0 20rpx 0rpx 20rpx;
 	}
 
 	.dashboard2-card1-container {
@@ -2222,7 +2222,7 @@
 		width: 150rpx;
 		height: auto;
 		position: absolute;
-		top: 40rpx;
+		/* top: 40rpx; */
 		right: 0rpx;
 	}
 

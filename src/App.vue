@@ -6,14 +6,14 @@
 			console.log('App Launch')
 			const userId = uni.getStorageSync('userId');
 			console.log('userId', userId)
+			const currentPages = getCurrentPages();
+			const currentRoute = currentPages.length > 0 ? currentPages[currentPages.length - 1].route : '';
 			if (userId) {
 				this.$store.commit('setUserId', userId);
 				// this.$store.dispatch('fetchHomepageData');
 				this.$store.dispatch('fetchHomepageData').then(() => {
 					const homepageData = this.$store.getters.getHomepageData;
 					if (homepageData.response && homepageData.response.eq_scores) {
-						const currentPages = getCurrentPages();
-						const currentRoute = currentPages.length > 0 ? currentPages[currentPages.length - 1].route : '';
 						// console.log(currentRoute);
 						if (currentRoute === 'pages/landing/landing' || currentRoute === '') {
 							// uni.navigateTo({
@@ -33,9 +33,11 @@
 				});
 				
 			} else {
-				uni.navigateTo({
-					url: `/pages/landing/landing`
-				});
+				if (currentRoute !== 'pages/landing/landing') {
+					uni.navigateTo({
+						url: `/pages/landing/landing`
+					});
+				}
 			}
 			const username = uni.getStorageSync('username');
 			if (username) {

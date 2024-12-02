@@ -2,8 +2,8 @@
 	<view class="container" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
-
-		<view class="progress-container">
+		
+		<view :class="[isWeChatMiniProgram ? 'progress-container-wechat' : 'progress-container']">
 			<view class="progress-bar">
 				<view class="progress" :style="{ width: `${progress}%` }"></view>
 			</view>
@@ -12,7 +12,7 @@
 
 		<!-- Test page content -->
 		<template v-if="currentPage === 'test'">
-			<view class="banner-container">
+			<view :class="[isWeChatMiniProgram ? 'banner-container-wechat' : 'banner-container']">
 				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
@@ -53,7 +53,7 @@
 
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
-			<view class="banner-container">
+			<view :class="[isWeChatMiniProgram ? 'banner-container-wechat' : 'banner-container']">
 				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
@@ -168,6 +168,10 @@
 			},
 			getscenarioDatafromstorage() {
 				return this.$store.getters.getScenarioResponse;
+			},
+			isWeChatMiniProgram() {
+				const systemInfo = uni.getSystemInfoSync();
+				return systemInfo.uniPlatform === 'mp-weixin';
 			},
 		},
 		watch: {

@@ -125,6 +125,18 @@
 	justify-content: center;
 	align-items: center;
 }
+.banner-container-wechat {
+	overflow: visible;
+	width: 100%;
+	height: 100rpx;
+	position: relative;
+	margin-top: 70rpx;
+	left: 50%;
+	transform: translate(-50%, 0);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 .test {
 	display: flex;
@@ -137,7 +149,7 @@
 	font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	z-index: 4;
 	justify-content: center;
-	margin-top: 10rpx;
+	/* margin-top: 10rpx; */
 }
 
 /* Add any additional styles you need */
@@ -145,6 +157,15 @@
 .progress-container {
 	position: absolute;
 	top: 80rpx;
+	left: 40rpx;
+	right: 40rpx;
+	display: flex;
+	align-items: center;
+	z-index: 3;
+}
+.progress-container-wechat {
+	position: absolute;
+	/* top: 80rpx; */
 	left: 40rpx;
 	right: 40rpx;
 	display: flex;

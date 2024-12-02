@@ -1,8 +1,13 @@
 <template>
 	<view class="container">
-		<scroll-view scroll-y>
+		<view class="header">
+			<image class="header-icon" src="/static/back.png" @click="navigateToHome"></image>
+			<text class="score-title-head">{{ $t('components.Nav.Profile') }}</text>
+			<view class="header-icon"></view>
+			<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
+		</view>
+		<!-- <scroll-view scroll-y> -->
 			<view class="content">
-
 				<view class="user-name">
 					<image src="/static/user_icon.png" class="user-icon"></image>
 					<text class="user-name-text">{{ username }}</text>
@@ -66,7 +71,7 @@
 
 			</view>
 
-		</scroll-view>
+		<!-- </scroll-view> -->
 		<view class="log-out" @click="logoutShow = true">
 			{{ $t('pages.profile.logout') }}
 		</view>
@@ -389,6 +394,15 @@
 					console.error('Error clearing local userId cache:', e);
 				}
 			},
+			navigateToHome() {
+				if (getCurrentPages().length > 1) {
+					uni.navigateBack(); // 返回上一个页面
+				} else {
+					uni.redirectTo({
+						url: '/pages/dashboard/dashboard_zh' // 如果没有历史记录，导航到指定页面
+					});
+				}
+			}
 		},
 		mounted() {
 			// this.startProgress(); // 开始进度条
@@ -436,8 +450,36 @@
 		/* height: 100%; */
 		margin: 0 auto;
 		/* margin-left: 20px; */
-		padding-top: 88rpx;
-		overflow: hidden;
+		margin-top: 140rpx;
+		/* overflow: hidden; */
+	}
+
+	.header {
+		position: fixed; /* Changed from absolute to fixed */
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 6;
+		width: 100%;
+		height: 104rpx;
+		top: 90rpx; /* Adjusted top position for fixed positioning */
+	}
+
+	.score-title-head {
+		font-size: 40rpx;
+		font-weight: bold;
+		color: #FFFFFF;
+		z-index: 6;
+	}
+
+	.header-icon {
+		width: 50rpx;
+		height: 50rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 16rpx;
 	}
 
 	.user-name {
@@ -701,7 +743,7 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
-		margin-top: 80rpx;
+		margin-top: 40rpx;
 		bottom: 100rpx;
 		color: #9EE44D;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;

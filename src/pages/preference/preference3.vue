@@ -158,7 +158,7 @@
 	.container {
 		display: flex;
 		flex-direction: column;
-		background-color: #1c1c1e;
+		background-color: #252529;
 		padding: 40px 20px;
 	}
 
@@ -184,7 +184,7 @@
 	}
 
 	.card {
-		background-color: #1c1c1e;
+		background-color: #252529;
 		border-radius: 20px;
 		overflow: hidden;
 		margin-top: 10vh;
