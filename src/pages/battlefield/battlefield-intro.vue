@@ -11,12 +11,19 @@
 
 		<!-- Content -->
 		<view class="content">
-			<text class="title content-item">{{ $t('pages.battlefield.intro.unit1.title') }}</text>
+			<text class="title content-item">Unit {{ this.courseInfo.course_data.course_level }} </text>
+			<text class="subtitle content-item">{{ this.courseInfo.course_data.title }}</text>
+			<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
+			<view class="description content-item" id="desc">
+				{{ this.courseInfo.course_data.background }}
+			</view>
+
+			<!-- <text class="title content-item">{{ $t('pages.battlefield.intro.unit1.title') }}</text>
 			<text class="subtitle content-item">{{ $t('pages.battlefield.intro.unit1.subtitle') }}</text>
 			<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
 			<view class="description content-item" id="desc">
 				{{ $t('pages.battlefield.intro.unit1.desc') }}
-			</view>
+			</view> -->
 		</view>
 		<view class="continue-button-container">
 			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.intro.continue') }}</button>
@@ -33,9 +40,19 @@
 		data() {
 			return {};
 		},
+		created() {
+			this.loadCourse();
+			// console.log('courseInfo:', this.courseInfo)
+		},
 		computed: {
 			npcs() {
 				return this.$store.getters.getNpcs;
+			},
+			courseData() {
+				return this.$store.getters.getcourseData;
+			},
+			courseInfo() {
+				return this.$store.getters.getCourseInfo;
 			},
 		},
 		methods: {
@@ -46,8 +63,17 @@
 			},
 			goToDashboard() {
 				uni.reLaunch({
-					url: "/pages/dashboard/dashboard_en",
+					url: "/pages/dashboard/dashboard_zh",
 				});
+			},
+			async loadCourse() {
+				try {
+					await this.$store.dispatch('fetchCourseInfo', this.courseData.next_course_id)
+					console.log('courseInfo:', this.courseInfo)
+					// 成功获取课程信息后的操作
+				} catch (error) {
+					// 处理错误
+				}
 			},
 		}
 	}

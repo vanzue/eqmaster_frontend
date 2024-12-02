@@ -18,26 +18,26 @@ export default createStore({
 		intervalId: null, // 定时器ID
 		homeNavName: 'dashboard',
 		npcs: [{
-				characterName: "Jason",
+				characterName: "领导",
 				health: 10,
-				avatar: getImg("/static/web/battlefield/boss11.webp"),
+				avatar: getImg("/static/web/battlefield/boss.webp"),
 				voice: "zh-CN-XiaoruiNeural",
 				style: "serious",
 				rate: "0%",
 				
 			},
 			{
-				characterName: "Sam",
+				characterName: "同事A",
 				health: 10,
-				avatar:  getImg("/static/web/battlefield/xiaoA1.webp"),
+				avatar:  getImg("/static/web/battlefield/xiaoA.webp"),
 				voice: "zh-CN-YunxiNeural",
 				style: "friendly",
 				rate: "10%",
 			},
 			{
-				characterName: "Anna",
+				characterName: "同事B",
 				health: 10,
-				avatar:  getImg("/static/web/battlefield/xiaoB1.webp"),
+				avatar:  getImg("/static/web/battlefield/xiaoB.webp"),
 				voice: "zh-CN-XiaoxiaoNeural",
 				style: "angry",
 				rate: "10%",
@@ -195,11 +195,12 @@ export default createStore({
 				const homepageData = await apiService.getHomepageData(this.state.userId);
 				console.log("#####store homepage data:", homepageData);
 
-				if (homepageData.response && homepageData.response.eq_scores) {
-					commit('setHomepageData', homepageData);
-					commit('setGemCount', homepageData.response.personal_info.num_star)
+				if(!homepageData.response.eq_scores){
+					throw new Error('EQ scores not found in homepage data');
 				}
 
+				commit('setHomepageData', homepageData);
+				commit('setGemCount', homepageData.response.personal_info.num_star)
 				// commit('setDiamondCount', homepageData.response.personal_info.num_diamond);
 				console.log("##########commit homepage data:", homepageData);
 			} catch (error) {

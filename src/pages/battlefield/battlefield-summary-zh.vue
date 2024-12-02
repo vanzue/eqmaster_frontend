@@ -43,11 +43,11 @@
 					</view>
 
 					<view class="sub-card">
-						<npc-comment :name="'老板'" :avatar="getImg('/static/web/battlefield/boss.webp')" :comment="comments[0]"
+						<npc-comment :name="'老板'" :avatar="getImg('/static/web/battlefield/boss11.webp')" :comment="comments[0]"
 							:npcHealth="Number(npcHealthValues[0])"></npc-comment>
-						<npc-comment :name="'同事A'" :avatar="getImg('/static/web/battlefield/xiaoA.webp')" :comment="comments[1]"
+						<npc-comment :name="'同事A'" :avatar="getImg('/static/web/battlefield/xiaoA1.webp')" :comment="comments[1]"
 							:npcHealth="npcHealthValues[1]"></npc-comment>
-						<npc-comment :name="'同事B'" :avatar="getImg('/static/web/battlefield/xiaoB.webp')" :comment="comments[2]"
+						<npc-comment :name="'同事B'" :avatar="getImg('/static/web/battlefield/xiaoB1.webp')" :comment="comments[2]"
 							:npcHealth="npcHealthValues[2]"></npc-comment>
 					</view>
 
@@ -135,7 +135,7 @@
 					// jobId: this.homepageData.response.personal_info.job_id
 				});
 				uni.navigateTo({
-					url: `/pages/battlefield/battlefield-intro`,
+					url: `/pages/battlefield/battlefield-intro-zh`,
 
 					// url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
@@ -143,7 +143,7 @@
 
 			navigateToNextPage() {
 				uni.navigateTo({
-					url: "/pages/battlefield/battlefield-task", // Replace this with the actual path to your next page
+					url: "/pages/battlefield/battlefield-task-zh", // Replace this with the actual path to your next page
 				});
 			},
 		},

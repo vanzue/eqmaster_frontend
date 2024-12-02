@@ -469,7 +469,7 @@
 					const levelName = this.localLevelNames[i] || `Level ${i + 1}`;
 
 					// 添加文本换行逻辑
-					const maxWidth = textContainerWidth; // 留一些边距
+					const maxWidth = textContainerWidth*1.2; // 留一些边距
 					const words = levelName.split(' ');
 					let line = '';
 					const lines = [];
@@ -538,7 +538,7 @@
 					// url: `/pages/battlefield/battlefield-intro`
 					url: this.isCompleteTask ?
 						`/pages/battlefield/battlefield-summary?isFromMap=${this.isFromMap}` :
-						`/pages/battlefield/battlefield-intro-zh`
+						`/pages/battlefield/battlefield-intro`
 				});
 			},
 			// 新增方法：绘制六边形

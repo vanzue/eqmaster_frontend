@@ -17,7 +17,9 @@
 
 <style scoped>
 	.bubble-container {
-		background-color: #F7E4BF;
+		background-color: #90E0E7;
+		/* background-color: #F7E4BF; */
+		/* background-color: #F7E4BF; */
 		border-radius: 12px;
 		padding: 12px;
 		max-width: 90%;

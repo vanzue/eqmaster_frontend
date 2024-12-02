@@ -66,12 +66,12 @@
 		methods: {
 			navigateToNextPage() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-loading'
+					url: '/pages/battlefield/battlefield-loading-zh'
 				});
 			},
 			goback() {
 				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-intro'
+					url: '/pages/battlefield/battlefield-intro-zh'
 				});
 			}
 		}
@@ -155,7 +155,8 @@
 		width: 72rpx;
 		height: 72rpx;
 		border-radius: 50%;
-		background-color: #F2BC74;
+		/* background-color: #F2BC74; */
+		background-color: #90E0E7;
 		color: #fff;
 		display: flex;
 		justify-content: center;

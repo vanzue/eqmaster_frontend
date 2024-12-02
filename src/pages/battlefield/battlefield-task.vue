@@ -22,7 +22,8 @@
 							1
 						</text>
 					</view>
-					<text class="task-word">{{ $t('pages.battlefield.task.task1') }}</text>
+					<text class="task-word">{{ taskList[0]}}</text>
+					<!-- <text class="task-word">{{ $t('pages.battlefield.task.task1') }}</text> -->
 					<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 				</view>
 				<view class="task-item">
@@ -31,7 +32,8 @@
 							2
 						</text>
 					</view>
-					<text class="task-word">{{ $t('pages.battlefield.task.task2') }}</text>
+					<text class="task-word">{{ taskList[1] }}</text>
+					<!-- <text class="task-word">{{ $t('pages.battlefield.task.task2') }}</text> -->
 				</view>
 			</view>
 		</view>
@@ -47,6 +49,20 @@
 		components: {
 			ProgressBar, // 注册组件
 		},
+
+		computed: {
+			courseInfo() {
+				return this.$store.getters.getCourseInfo;
+			},
+			taskList() {
+				if (this.courseInfo?.course_data?.task) {
+					return this.courseInfo.course_data.task.split(':');
+					// 返回数组 ['一句话让每位同事心情愉悦', '点出让每位同事满意的菜品']
+				}
+				return [];
+			},
+		},
+
 		methods: {
 			navigateToNextPage() {
 				uni.reLaunch({
@@ -139,6 +155,7 @@
 		width: 72rpx;
 		height: 72rpx;
 		border-radius: 50%;
+		/* background-color: #F2BC74; */
 		background-color: #90E0E7;
 		color: #fff;
 		display: flex;

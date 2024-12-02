@@ -11,6 +11,7 @@ export const API_ENDPOINT = 'https://nft-b2b2c-apim-azsc-eus-int.azure-api.net/e
 export default {
     getUrl(path) {
         const shortLocale = locale.getShortLocale();
+		// const shortLocale = 'zh';
         if (path.includes('?')) {
             return `${API_ENDPOINT}${path}&locale=${shortLocale}`;
         } else {

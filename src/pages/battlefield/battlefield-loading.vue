@@ -7,7 +7,8 @@
     />
     <!-- Content -->
     <view class="loading-text-container">
-      <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text>
+      <text class="loading-text">{{ this.courseInfo.course_data.location }}</text>
+      <!-- <text class="loading-text">{{ $t('pages.battlefield.loading.title') }}</text> -->
     </view>
   </view>
 </template>
@@ -15,26 +16,47 @@
 <script>
 import { startField } from "../../scripts/battlefield-chat";
 import apiService from '../../services/api-service';
-import {getImg} from '../../scripts/constants.js';
+import { getImg } from "../../scripts/constants";
 export default {
 	data() {
 		return {
 			getImg,}
-			},
+		},
+		
+	computed: {
+		// courseInfo() {
+		// 	return this.$store.getters.getCourseInfo;
+		// },
+	},
+
+			
   async mounted() {
-    const result = await startField(4, "4");
+	const course_id = this.$store.getters.getCourseInfo;
+	const user_id = this.$store.getters.getUserId;
+	console.log("44444444441CourseInfo", course_id.course_data.id);
+	console.log("4444444444user_id", user_id);
+    const result = await startField(user_id, course_id);
     console.log("result from start field:", result);
-    uni.setStorage({
-      key: "chats",
-      data: result.dialog,
-    });
+    // uni.setStorage({
+    //   key: "chats",
+    //   data: result.response.dialog,
+    //   // task_check: result.task_check, 
+    // });
+	uni.setStorage({
+	  key: "chats",
+	  data: {
+	    dialog: result.response.dialog,
+	    task_check: result.task_check
+	  }
+	});
 			try {
 				const npcs = this.$store.getters.getNpcs;
 				const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
 				
-				const promises = result.dialog.map(async (item) => {
+				// const promises = result.dialog.map(async (item) => {
+				const promises = result.response.dialog.map(async (item) => {
 					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);		
-					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
+					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.response.message });
 				})
 				await Promise.all(promises);
 			} catch (error) {
