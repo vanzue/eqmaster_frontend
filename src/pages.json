@@ -35,6 +35,12 @@
 			}
 		},
 		{
+			"path": "pages/battlefield/battlefield-summary-zh",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/battlefield/battlefield-task-zh",
 			"style": {
 				"navigationStyle": "custom"
