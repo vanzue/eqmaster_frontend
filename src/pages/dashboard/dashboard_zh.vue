@@ -597,7 +597,7 @@
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.reLaunch({
+						uni.navigateTo({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},

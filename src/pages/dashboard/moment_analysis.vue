@@ -4,11 +4,11 @@
 			<view class="analysis-header">
 				<image class="back" 
 					src="../../static/dashboard/left-arrow.png"
-					@click="goback"></image>
+					@tap="goback"></image>
 				<text class="title">Moment Analysis</text>
 				<image style="width: 64rpx;height:64rpx" 
 					src="../../static/dashboard/trash.png"
-					@click="openModal"></image>
+					@tap="openModal"></image>
 			</view>
 			<scroll-view scroll-y="true" class="details">
 				<ul class="detail-ul">
@@ -112,6 +112,9 @@
 		},
 		methods: {
 			goback() {
+				console.log('goback method called');
+				const pages = getCurrentPages();
+				console.log('Current pages:', pages);
 				uni.navigateBack({
 					delta: 1
 				})
@@ -149,6 +152,7 @@
 	.back {
 		width: 34.66rpx;
 		height: 37.76rpx;
+		z-index:100;
 	}
 	
 	.loader {
