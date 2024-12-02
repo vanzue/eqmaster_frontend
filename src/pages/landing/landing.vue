@@ -11,59 +11,60 @@
 			</view>
 			<image class="splashImage" src="/static/onboarding/IP.png" mode="widthFix"></image>
 		</view> -->
-
-		<!-- 添加背景图片 
-		<image class="background-image" :src="getImg('/static/web/onboarding/landingB2.webp')" mode="widthFix"></image>-->
-		<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
-
-		<!-- 开始体验按钮 -->
-		<view class="start-button">
-			<!-- #ifndef MP-WEIXIN -->
-			<view class="quizButton" @click="startQuiz">
-				<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
-			</view>
-			<!-- #endif -->
-			<!-- #ifdef MP-WEIXIN -->
-			<view class="quizButton" @click="startLoginWx">
-				<text class="quizText">{{$t('pages.landing.get_wechatlogin') }}</text>
-			</view>
-			<!--<button class="quizButton" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
-				<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
-			</button>-->
-			<!-- #endif -->
-		</view>
-		<view class="third-party">
-			<!-- #ifndef MP-WEIXIN -->
-			<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
-			<view class="third-party-login">
+		<view v-else>
+			<!-- 添加背景图片 
+			<image class="background-image" :src="getImg('/static/web/onboarding/landingB2.webp')" mode="widthFix"></image>-->
+			<image class="background-image" :src="getImg( $t('images.onboarding.landing'))" mode="widthFix"></image>
+	
+			<!-- 开始体验按钮 -->
+			<view class="start-button">
 				<!-- #ifndef MP-WEIXIN -->
-				<view class="loginButton" @click="googleLogin">
-					<image class="google-image" src="/static/onboarding/google_button.png"></image>
-					<!-- <text class="login-text-apple">Google Login</text> -->
-				</view>
-				<view class="loginButton" @click="wetchLogin">
-					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
-					<!-- <text class="login-text-apple">Wetch Login</text> -->
+				<view class="quizButton" @click="startQuiz">
+					<text class="quizText">{{ $t('pages.landing.get_started') }}</text>
 				</view>
 				<!-- #endif -->
-				<!-- 
-				<view class="loginButton" @click="startLoginWx">
-					<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
+				<!-- #ifdef MP-WEIXIN -->
+				<view class="quizButton" @click="startLoginWx">
+					<text class="quizText">{{$t('pages.landing.get_wechatlogin') }}</text>
 				</view>
-				-->
-				<!-- <view class="loginButton" @click="appleleLogin">
-					<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
-					<text class="login-text-apple">Sign in with Apple</text>
-				</view> -->
+				<!--<button class="quizButton" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
+					<text class="quizText">{{$t('pages.landing.get_wechatlogin')}}</text>
+				</button>-->
+				<!-- #endif -->
 			</view>
-			<!-- #endif -->
+			<view class="third-party">
+				<!-- #ifndef MP-WEIXIN -->
+				<view class="third-party-text"><span class="line"></span>或使用其他方式<span class="line"></span></view> 
+				<view class="third-party-login">
+					<!-- #ifndef MP-WEIXIN -->
+					<view class="loginButton" @click="googleLogin">
+						<image class="google-image" src="/static/onboarding/google_button.png"></image>
+						<!-- <text class="login-text-apple">Google Login</text> -->
+					</view>
+					<view class="loginButton" @click="wetchLogin">
+						<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
+						<!-- <text class="login-text-apple">Wetch Login</text> -->
+					</view>
+					<!-- #endif -->
+					<!-- 
+					<view class="loginButton" @click="startLoginWx">
+						<image class="google-image" src="/static/onboarding/wetch_button.png"></image>
+					</view>
+					-->
+					<!-- <view class="loginButton" @click="appleleLogin">
+						<image class="apple-image" src="/static/onboarding/appleid_button.png"></image>
+						<text class="login-text-apple">Sign in with Apple</text>
+					</view> -->
+				</view>
+				<!-- #endif -->
+			</view>
+	
+			<!-- <view class="button button2" @click="startDialogue">
+				<text class="button-text">开始对话</text>
+			</view> -->
+	
+			<!-- <text class="login-text">登录已有账号</text> -->
 		</view>
-
-		<!-- <view class="button button2" @click="startDialogue">
-			<text class="button-text">开始对话</text>
-		</view> -->
-
-		<!-- <text class="login-text">登录已有账号</text> -->
 	</view>
 </template>
 
@@ -209,9 +210,7 @@
 						//this.sendCodeToServer(code); // 发送 code 到服务器
 					},
 					fail: function (err) {
-						console.log('登录失败：', res.errMsg);
-						this.isLoading = false;
-
+						console.log('登录失败：', err.errMsg);
 				    }
 				});
 				
@@ -387,7 +386,7 @@
 	}
 
 	.background-image {
-		margin-top: 5vh;
+		/* margin-top: 5vh; */
 		width: 100%;
 		z-index: 5;
 	}
