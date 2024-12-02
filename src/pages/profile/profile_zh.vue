@@ -6,7 +6,7 @@
 			<view class="header-icon"></view>
 			<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
 		</view>
-		<scroll-view scroll-y>
+		<!-- <scroll-view scroll-y> -->
 			<view class="content">
 				<view class="user-name">
 					<image src="/static/user_icon.png" class="user-icon"></image>
@@ -71,7 +71,7 @@
 
 			</view>
 
-		</scroll-view>
+		<!-- </scroll-view> -->
 		<view class="log-out" @click="logoutShow = true">
 			{{ $t('pages.profile.logout') }}
 		</view>
@@ -451,11 +451,11 @@
 		margin: 0 auto;
 		/* margin-left: 20px; */
 		margin-top: 140rpx;
-		overflow: hidden;
+		/* overflow: hidden; */
 	}
 
 	.header {
-		position: absolute;
+		position: fixed; /* Changed from absolute to fixed */
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -463,7 +463,7 @@
 		z-index: 6;
 		width: 100%;
 		height: 104rpx;
-		padding-top: 82rpx;
+		top: 90rpx; /* Adjusted top position for fixed positioning */
 	}
 
 	.score-title-head {
@@ -743,7 +743,7 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
-		margin-top: 80rpx;
+		margin-top: 40rpx;
 		bottom: 100rpx;
 		color: #9EE44D;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
