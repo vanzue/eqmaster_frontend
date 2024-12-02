@@ -5,7 +5,7 @@
 		
 			console.log('App Launch')
 			const userId = uni.getStorageSync('userId');
-			console.log('111userId', userId)
+			console.log('userId', userId)
 			const currentPages = getCurrentPages();
 			const currentRoute = currentPages.length > 0 ? currentPages[currentPages.length - 1].route : '';
 			if (userId) {
