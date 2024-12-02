@@ -71,6 +71,23 @@ export default {
 			throw error;
 		}
 	},
+	async deleteUserData(userId) {
+		try {
+			const response = await uni.request({
+				url: `${API_ENDPOINT}/delete_eqscore/${userId}`,
+				method: 'DELETE',
+			});
+	
+			if (response.statusCode === 200) {
+				console.log("delete UserData suc");
+			} else {
+				throw new Error(`Failed to delete UserData: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error getting analysis list:', error);
+			throw error;
+		}
+	},
 	async updateDiamonds(userId, count) {
 		try {
 			const response = await uni.request({

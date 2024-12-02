@@ -83,6 +83,7 @@
 				username: '', // 用于存储从上一页接收的用户名
 				getImg,
 				API_ENDPOINT,
+				isLoading: false,
 			};
 		},
 		computed: {
@@ -97,6 +98,16 @@
 					console.log(val)
 				},
 				// deep: true,
+			},
+			isLoading(newVal) {
+				if (newVal) {
+					uni.showLoading({
+					title: 'Loading...',
+					mask: true
+					});
+				} else {
+					uni.hideLoading();
+				}
 			}
 		},
 		methods: {
@@ -126,6 +137,8 @@
 				    },
 				    success: (res) => {
 						console.log(res)
+						this.isLoading = false;
+
 						uni.setStorageSync('userId', res.data.userid);
 						uni.setStorageSync('jobId', res.data.jobid);
 						this.$store.commit('setUserId', res.data.userid);
@@ -147,6 +160,7 @@
 				    },
 				    fail: (err) => {
 				        console.log('请求失败：', err);
+						this.isLoading = false;
 				    }
 				});
 			},
@@ -180,6 +194,7 @@
 			    },
 			
 			startLoginWx() {
+				this.isLoading = true;
 				uni.login({
 					"provider": "weixin",   
 					"onlyAuthorize": true, // 微信登录仅请求授权认证

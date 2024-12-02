@@ -26,7 +26,7 @@
 							</view>
 							<view class="animal-score-desc"
 								:style="{ backgroundImage: `url(${getImg('/static/web/resulten/animal-name-3.webp')})` }">
-								{{homepageData?.response?.eq_scores?.score}}/100
+								{{Math.round(homepageData?.response?.eq_scores?.score/1.25) }}/100
 							</view>
 						</view>
 						<view class="animal-desc" :style="{ backgroundImage: `url(${getImg('/static/web/resulten/quote.webp')})` }">

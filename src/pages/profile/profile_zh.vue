@@ -379,6 +379,7 @@
 			async logOutClick() {
 				console.log("logOutClick");
 				this.logoutShow = false;
+				await apiService.deleteUserData(this.userId);
 				await this.clearLocalUserId();
 				uni.reLaunch({
 					url: `/pages/landing/landing`

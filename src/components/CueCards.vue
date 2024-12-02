@@ -5,7 +5,9 @@
 				@click="setShowCardPopup"></image>
 			<view class="card-header">
 				<view class="title">
-					选择锦囊卡片
+					Choose your advice card
+					<!-- {{ $t('选择锦囊卡片') }} -->
+					<!-- 选择锦囊卡片 -->
 				</view>
 				<view class="jewelry">
 					<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode=""></image>
@@ -17,9 +19,11 @@
 			<view class="card-center" @click.stop>
 				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
 					<view class="top">
-						<text>帮回卡</text>
+						<text>Best Answer</text>
 						<view class="top-content">
-							快速调整你的回答，提升质量，让对话更流畅。
+							Refine your answer for smoother conversations.
+							<!-- {{ $t('快速调整你的回答，提升质量，让对话更流畅。') }} -->
+							<!-- 快速调整你的回答，提升质量，让对话更流畅。 -->
 						</view>
 					</view>
 					<view class="jewelry">
@@ -31,9 +35,10 @@
 				</view>
 				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
 					<view class="top">
-						<text>提示卡</text>
+						<text>Get Hint</text>
 						<view class="top-content">
-							提供情绪引导或建议，帮助你更好地理解和回应。
+							Reveal helpful clues to guide your next move.
+							<!-- {{ $t('提供情绪引导或建议，帮助你更好地理解和回应。') }} -->
 						</view>
 					</view>
 					<view class="jewelry">
@@ -46,7 +51,7 @@
 			</view>
 			<view class="card-button">
 				<button :disabled="!selectedCard || cardButtonLoading || !canAfford(selectedCard) || !eqScoresNum"
-					@click="exchangeClick">确定兑换</button>
+					@click="exchangeClick">Confirm</button>
 			</view>
 		</view>
 	</view>
