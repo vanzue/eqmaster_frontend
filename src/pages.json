@@ -159,13 +159,15 @@
 		{
 			"path": "pages/profile/profile_en",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"disableScroll": true
 			}
 		},
 		{
 			"path": "pages/profile/profile_zh",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"disableScroll": true
 			}
 		},
 		{
