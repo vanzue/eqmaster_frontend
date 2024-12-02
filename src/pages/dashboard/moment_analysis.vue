@@ -152,7 +152,6 @@
 	.back {
 		width: 34.66rpx;
 		height: 37.76rpx;
-		z-index:100;
 	}
 	
 	.loader {
