@@ -43,5 +43,14 @@ export function getBattlefieldAvatar(name) {
 	if (name == "同事A") {
 		return getImg('/static/web/battlefield/xiaoA.webp');
 	}
+	if (name == "Jason") {
+		return getImg("/static/web/battlefield/boss11.webp");
+	}
+	if (name == "Sam") {
+		return getImg('/static/web/battlefield/xiaoA1.webp');
+	}
+	if (name == "Anna") {
+		return getImg('/static/web/battlefield/xiaoB1.webp');
+	}
 	return getImg("/static/web/battlefield/xiaoB.webp");
 }
