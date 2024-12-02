@@ -20,8 +20,8 @@
     "images.startTest": "/static/web/onboarding/startTest2.webp",
     "images.onboarding.landing": "/static/web/onboarding/landing_en.webp",
 
-    "pages.preference.preference3.question": "Let's see what EQ level you are suitable for now!",
-    "images.onboarding.startTest": "/static/web/onboarding/startTest.webp",
+    "pages.preference.preference3.question": "Start your personalized EQ journey now!",
+    "images.onboarding.startTest": "/static/web/onboarding/startTest2.webp",
     "pages.preference.preference3.start_test": "Start Test ↗",
 
     "pages.dashboard.morning": "Morning",
