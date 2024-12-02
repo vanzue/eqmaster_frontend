@@ -2,7 +2,7 @@
 const BASE_URL =
 	"https://eqmaster.aipowernft.com/chat/battlefield";
 const EVAL_URL =
-	"https://eqmaster.aipowernft.com/eval/battlefield_agent";
+	"https://eqmaster.aipowernft.com/eval/battlefield";
 const TOOLTIP_URL =
 	"https://eqmaster.aipowernft.com/course_exists";
 //return await sendRequest(chatHistory.person_id, chatHistory.course_id, body, EVAL_URL); battlefield_agent
@@ -239,13 +239,16 @@ export async function checkShowToolTips(personId) {
 // }
 export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 	// 在 body 中添加 isPass, gemCount, diamonds
+	const course_id1 = state.getters.getCourseInfo;
 	const body = {
 		person_id: state.getters.getUserId,
-		course_id: chatHistory.course_id || 1,
+		// course_id: chatHistory.course_id,
+		course_id: course_id1.course_data.id,
 		chat_content: JSON.stringify(chatHistory),
-		status: isPass ? "completed" : "incompleted", // 添加 isPass
+		status: isPass ? "complete" : "incomplete", // 添加 isPass
+		// status:  "complete" , // 添加 isPass
 		result: gemCount, // 添加 gemCount
-		person_star: diamonds, // 添加 diamonds
+		person_diamond: diamonds, // 添加 diamonds
 		locale: "zh"
 	};
 	console.log("evalBattlefield chatHistory: ", chatHistory);
