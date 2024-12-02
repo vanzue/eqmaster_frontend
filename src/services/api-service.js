@@ -113,6 +113,9 @@ export default {
 		try {
 			const response = await uni.uploadFile({
 				url: url.getUrl(`/analyze/history`),
+				header: {
+				    'Content-Type': 'multipart/form-data',
+				},
 				filePath: filePath,
 				name: 'file',
 				formData: {

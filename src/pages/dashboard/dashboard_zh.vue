@@ -6,7 +6,7 @@
 			<div></div>
 			<div></div>
 		</view>
-		<view v-else style="height: calc(100vh - 150rpx)">
+		<view v-else>
 			<view v-if="currentView === 'dashboard'" class="content">
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
@@ -111,7 +111,7 @@
 
 						<view class="dashboard2-progress-container">
 							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.dimension3_score)"
+								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
 								:animal="this.maxanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
@@ -388,48 +388,58 @@
 				const scores = this.homepageData?.response?.eq_scores;
 				console.log('jobid:', this.jobId);
 				console.log('results for backgrounds:', scores);
-				const maxScore = Math.max(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
-					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
-				const minScore = Math.min(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
-					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
+				const maxScore = Math.max(
+					Number(scores.perception_score) || 0, 
+					Number(scores.self_regulation_score) || 0, 
+					Number(scores.social_skill_score) || 0,
+					Number(scores.empathy_score) || 0, 
+					Number(scores.motivation_score) || 0
+				);
+				const minScore = Math.min(
+					Number(scores.perception_score) || 0, 
+					Number(scores.self_regulation_score) || 0, 
+					Number(scores.social_skill_score) || 0,
+					Number(scores.empathy_score) || 0, 
+					Number(scores.motivation_score) || 0
+				);
 				console.log('@@@@@@@@@@@@最高分:', maxScore);
 				console.log('@@@@@@@@@@@@最低分:', minScore);
 				// 根据最低分选择图片1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
-				if (maxScore === scores?.dimension1_score) {
+				if (maxScore === scores?.perception_score) {
 					console.log("usercard src:", '鸵鸟')
 					this.maxanimal = "ostrich";
 					// return '/static/dashboard/en/capybara.png';-okokok猴子刺猬鸵鸟
-				} else if (maxScore === scores?.dimension2_score) {
+				} else if (maxScore === scores?.self_regulation_score) {
 					console.log("usercard src:", '猴子')
 					this.maxanimal = "monkey";
 					// return '/static/dashboard/en/hedgehog.png';
-				} else if (maxScore === scores?.dimension3_score) {
+				} else if (maxScore === scores?.social_skill_score) {
 					// return '/static/dashboard/en/coyote.png';
 					console.log("usercard src:", '刺猬')
 					this.maxanimal = "hedgehog";
-				} else if (maxScore === scores?.dimension4_score) {
+				} else if (maxScore === scores?.empathy_score) {
 					console.log("usercard src:", '狼')
 					this.maxanimal = "coyote";
 					// return '/static/dashboard/en/ostrich.png';
-				} else if (maxScore === scores?.dimension5_score) {
+				} else if (maxScore === scores?.motivation_score) {
 					console.log("usercard src:", '水豚')
 					this.maxanimal = "capybara";
 					// return '/static/dashboard/en/monkey.png';
 				}
 
-				if (minScore === scores?.dimension5_score) {
+				if (minScore === scores?.motivation_score) {
 					console.log("usercard src:", '水豚')
 					this.minanimal = "capybara";
-				} else if (minScore === scores?.dimension4_score) {
+				} else if (minScore === scores?.empathy_score) {
 					console.log("usercard src:", '狼')
 					this.minanimal = "coyote";
-				} else if (minScore === scores?.dimension3_score) {
+				} else if (minScore === scores?.social_skill_score) {
 					console.log("usercard src:", '刺猬')
 					this.minanimal = "hedgehog";
-				} else if (minScore === scores?.dimension2_score) {
+				} else if (minScore === scores?.self_regulation_score) {
 					console.log("usercard src:", '猴子')
 					this.minanimal = "monkey";
-				} else if (minScore === scores?.dimension1_score) {
+				} else if (minScore === scores?.perception_score) {
 					console.log("usercard src:", '鸵鸟')
 					this.minanimal = "ostrich";
 				}
@@ -454,23 +464,23 @@
 				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
 					const scores = [{
 							name: 'perception',
-							score: this.homepageData.response.eq_scores.dimension1_score,
+							score: this.homepageData.response.eq_scores.perception_score,
 						},
 						{
 							name: 'self regulation',
-							score: this.homepageData.response.eq_scores.dimension2_score,
+							score: this.homepageData.response.eq_scores.self_regulation_score,
 						},
 						{
 							name: 'social skill',
-							score: this.homepageData.response.eq_scores.dimension3_score,
+							score: this.homepageData.response.eq_scores.social_skill_score,
 						},
 						{
 							name: 'empathy',
-							score: this.homepageData.response.eq_scores.dimension4_score,
+							score: this.homepageData.response.eq_scores.empathy_score,
 						},
 						{
 							name: 'motivation',
-							score: this.homepageData.response.eq_scores.dimension5_score,
+							score: this.homepageData.response.eq_scores.motivation_score,
 						}
 					];
 
@@ -480,7 +490,7 @@
 					return scores;
 				}
 				return [];
-			}
+			},
 		},
 		watch: {
 			homepageData: {
@@ -597,7 +607,7 @@
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.reLaunch({
+						uni.navigateTo({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
@@ -2085,6 +2095,7 @@
 
 	.dashboard2-card1 {
 		width: calc(100% - 80rpx);
+		height: 180rpx;
 		aspect-ratio: 9 / 2;
 		/* 调整这个比例以匹配您的背景图片 */
 		background-size: 100% 100%;
@@ -2105,7 +2116,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		margin-top: 15rpx;
+		/* margin-top: 50rpx; */
 	}
 
 	.dashboard2-card3 {

@@ -1,17 +1,18 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
+
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')" mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
 				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
+				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList"></image>
 				<reward-bar :gemCount="gemCount"></reward-bar>
 				<view class="setting-group">
-					<!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
-					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
+					<!-- <image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
 					</image>
-					<image class="setting-item" src="/static/battlefield/setting.png"></image>
+					<image class="setting-item" src="/static/battlefield/setting.png"></image> -->
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
@@ -436,13 +437,18 @@
 					return;
 				}
 				// this.answerNotGoodNum = 0;
+				console.log("结果1this.pass",this.pass)
+				console.log("结果2this.taskFinished",this.taskFinished)
+				// await this.Pass();
 
 				if (this.taskFinished) {
 					this.isFinish = true;
+					
 					await this.Pass();
 					return;
 				}
-				console.log(this.task2CompletedStatusOne);
+				
+				console.log("结果2",this.task2CompletedStatusOne);
 				if (this.task2CompletedStatusOne) {
 					this.task2CompletedStatusOne = false;
 					this.state = "NpcTalk";
@@ -600,6 +606,7 @@
 					// const taskCheck = judgeResult.task_check;
 					// const taskCheck = judgeResult.task_check;
 					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
+					// await this.checkBossComplimentTask1(judgeResult, taskCheck);
 					await this.checkBossComplimentTask2(history, this.taskcheck);
 				}
 			},
@@ -609,6 +616,7 @@
 				return this.npcs.findIndex((npc) => npc.characterName === name);
 			},
 			async Pass() {
+				console.log("Pass！！！！！！！！");
 				const isPass = this.isPass; // 假设你从当前状态得知是否通过
 				const gemCount = this.calculateStars(); // 假设 this.gemCount 是当前的宝石数量
 				const diamonds = this.diamonds; // 假设 this.diamonds 是当前的钻石数量
@@ -620,7 +628,7 @@
 					diamonds
 				);
 				const userId = this.$store.getters.getUserId;
-				console.log("evaluation result:", evaluationResult);
+				console.log("evaluation result！！！！！！！！:", evaluationResult);
 				uni.setStorage({
 					key: "evalResult",
 					data: evaluationResult,
@@ -861,12 +869,12 @@
 						};
 						const judgeResult = await hint(validChats, "1");
 						console.log("get tips from backend:", judgeResult);
-						if (judgeResult.tips) {
+						if (judgeResult.response.tips) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage2 = {
 								role: "tipping",
-								content: judgeResult.tips,
+								content: judgeResult.response.tips,
 								shouldAnimate: false,
 							};
 							this.chattingHistory.push(newMessage2);
@@ -961,7 +969,7 @@
 					// );
 					// if (totalScore >= 0) {
 					// if (!hasNegativeMood) {
-					if (taskCheck === 1 || taskCheck === 3) {
+					if (taskCheck === 1 ) {
 						console.log("taskCheck11111111111111",taskCheck);
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
@@ -972,8 +980,12 @@
 						// console.log(allPositive);
 						
 						// if (allPositive) {
-						if (taskCheck === 1 || taskCheck === 3) {
+						if (taskCheck === 1 ) {
+							// console.log("7777777777777totalTaskLength", totalTaskLength);
+							// console.log("7777777777777this.taskList.doneTaskLength", this.taskList.doneTaskLength);
+							console.log("777777777777");
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
+								
 								this.state = "judge";
 								// console.log("allPositive:", allPositive);
 								this.currentTask = this.taskList.getTask(0);
@@ -981,23 +993,33 @@
 								console.log("Total task length:", totalTaskLength);
 								this.taskList.getTask(0)._status = true;
 								this.taskList.getTask(0)._completedRoundNum++;
+								// console.log("433433343this.taskList.getTask(0).totalRoundNum", this.taskList.getTask(0).totalRoundNum);
+								// console.log("433433343this.taskList.getTask(0)._completedRoundNum", this.taskList.getTask(0)._completedRoundNum);
+								
 								if (
 									this.taskList.getTask(0).totalRoundNum ==
 									this.taskList.getTask(0)._completedRoundNum
 								) {
+									console.log("99999999999");
 									this.isCompleteTask = true;
 									this.taskList.getTask(0).one = true;
 									this.taskList.doneTaskLength++;
+									console.log("10");
 									this.judgeTitle =
-										`(${this.taskList.doneTaskLength}/${totalTaskLength}) ` +
-										this.$('pages.battlefield.playground.achieved');
+									    `(${this.taskList.doneTaskLength}/${totalTaskLength}) ` +
+									    this.$t('pages.battlefield.playground.achieved');
+									console.log("11");
+									console.log("21this.taskList.doneTaskLength", this.taskList.doneTaskLength);
+									console.log("22this.taskList.doneTaskLength", totalTaskLength);
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
 										this.isPass = true;
 									}
+									console.log("243234232this.taskFinished", this.taskFinished);
 								} else {
 									this.judgeTitle = this.$('pages.battlefield.playground.achieved');
 									this.isCompleteTask = true;
+									console.log("13131313");
 								}
 							} else {
 								await this.gotoNextRound();
@@ -1006,8 +1028,8 @@
 							await this.gotoNextRound();
 						}
 					} else {
-						// if (taskCheck === 0 || taskCheck === 1) {
-						if (this.answerNotGoodNum < 2) {
+						if (taskCheck === 0 || taskCheck === 2) {
+						// if (this.answerNotGoodNum < 2) {
 							this.answerNotGoodNum++;
 							this.isGoodReply = true;
 							this.state = "userTalk";
@@ -1039,13 +1061,17 @@
 			},
 			async checkBossComplimentTask2(dialog, taskCheck) {
 				let taskCompleted = false;
+				console.log("17");
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
+					console.log("18");
 					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 2|| taskCheck === 3) {
+						if (taskCheck === 2) {
+							console.log("19");
 						// if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
+								console.log("20");
 								this.isGoodReply = true;
 								this.state = "judge";
 								const task2 = this.taskList.getTask(1);
@@ -1076,11 +1102,14 @@
 						}
 					}
 					const totalTaskLength = this.taskList.getTotalTaskLength();
+					console.log("22222222totalTaskLength", totalTaskLength);
+					console.log("22222222this.taskList.doneTaskLength", this.taskList.doneTaskLength);
 					if (this.taskList.doneTaskLength >= totalTaskLength) {
 						this.taskFinished = true;
 						this.isPass = true;
 						taskCompleted = false;
 					}
+					console.log("243234232this.taskFinished", this.taskFinished);
 				} else {
 					taskCompleted = true;
 				}
@@ -1242,8 +1271,8 @@
 		padding: 20rpx;
 		position: relative;
 		z-index: 12;
-		margin-top: 80rpx;
-		margin-left: 20rpx;
+		margin-top: 60rpx;
+		/* margin-left: 20rpx; */
 	}
 
 	.back-button {
@@ -1261,6 +1290,35 @@
 		justify-content: center;
 		align-items: center;
 		margin-top: 200rpx;
+	}
+
+	.header {
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 6;
+		width: 95%;
+		height: 104rpx;
+		padding-top: 82rpx;
+	}
+
+	.header-icon {
+		width: 50rpx;
+		height: 50rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.header-icon {
+		width: 50rpx;
+		height: 50rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 16rpx;
 	}
 
 	.time-info {
@@ -1281,13 +1339,14 @@
 
 	.setting-group {
 		display: flex;
+		width: 170rpx;
 		flex-direction: row;
 		position: relative;
 	}
 
 	.setting-item {
 		width: 24px;
-		margin-right: 20rpx;
+		/* margin-right: 20rpx; */
 		height: 24px;
 		z-index: 12;
 	}

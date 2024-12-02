@@ -43,11 +43,11 @@
 					</view>
 
 					<view class="sub-card">
-						<npc-comment :name="'老板'" :avatar="getImg('/static/web/battlefield/boss11.webp')" :comment="comments[0]"
+						<npc-comment :name="'Jason'" :avatar="getImg('/static/web/battlefield/boss11.webp')" :comment="comments[0]"
 							:npcHealth="Number(npcHealthValues[0])"></npc-comment>
-						<npc-comment :name="'同事A'" :avatar="getImg('/static/web/battlefield/xiaoA1.webp')" :comment="comments[1]"
+						<npc-comment :name="'Sam'" :avatar="getImg('/static/web/battlefield/xiaoA1.webp')" :comment="comments[1]"
 							:npcHealth="npcHealthValues[1]"></npc-comment>
-						<npc-comment :name="'同事B'" :avatar="getImg('/static/web/battlefield/xiaoB1.webp')" :comment="comments[2]"
+						<npc-comment :name="'Anna'" :avatar="getImg('/static/web/battlefield/xiaoB1.webp')" :comment="comments[2]"
 							:npcHealth="npcHealthValues[2]"></npc-comment>
 					</view>
 
