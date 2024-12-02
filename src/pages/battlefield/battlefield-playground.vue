@@ -862,12 +862,12 @@
 						};
 						const judgeResult = await hint(validChats, "1");
 						console.log("get tips from backend:", judgeResult);
-						if (judgeResult.tips) {
+						if (judgeResult.response.tips) {
 							await this.$store.dispatch('fetchHomepageData');
 							this.showCardPopup = false;
 							const newMessage2 = {
 								role: "tipping",
-								content: judgeResult.tips,
+								content: judgeResult.response.tips,
 								shouldAnimate: false,
 							};
 							this.chattingHistory.push(newMessage2);
