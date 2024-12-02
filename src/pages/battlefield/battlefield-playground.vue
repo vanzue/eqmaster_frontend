@@ -437,13 +437,16 @@
 					return;
 				}
 				// this.answerNotGoodNum = 0;
+				console.log("结果1",this.pass)
+				console.log("结果2this.taskFinished",this.taskFinished)
 
 				if (this.taskFinished) {
 					this.isFinish = true;
+					
 					await this.Pass();
 					return;
 				}
-				console.log(this.task2CompletedStatusOne);
+				console.log("结果2",this.task2CompletedStatusOne);
 				if (this.task2CompletedStatusOne) {
 					this.task2CompletedStatusOne = false;
 					this.state = "NpcTalk";
@@ -601,6 +604,7 @@
 					// const taskCheck = judgeResult.task_check;
 					// const taskCheck = judgeResult.task_check;
 					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
+					// await this.checkBossComplimentTask1(judgeResult, taskCheck);
 					await this.checkBossComplimentTask2(history, this.taskcheck);
 				}
 			},
@@ -962,7 +966,7 @@
 					// );
 					// if (totalScore >= 0) {
 					// if (!hasNegativeMood) {
-					if (taskCheck === 1 || taskCheck === 3) {
+					if (taskCheck === 0 || taskCheck === 3) {
 						console.log("taskCheck11111111111111",taskCheck);
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
@@ -973,8 +977,12 @@
 						// console.log(allPositive);
 						
 						// if (allPositive) {
-						if (taskCheck === 1 || taskCheck === 3) {
+						if (taskCheck === 0 || taskCheck === 3) {
+							// console.log("7777777777777totalTaskLength", totalTaskLength);
+							// console.log("7777777777777this.taskList.doneTaskLength", this.taskList.doneTaskLength);
+							console.log("777777777777");
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
+								console.log("99999999999");
 								this.state = "judge";
 								// console.log("allPositive:", allPositive);
 								this.currentTask = this.taskList.getTask(0);
@@ -982,6 +990,9 @@
 								console.log("Total task length:", totalTaskLength);
 								this.taskList.getTask(0)._status = true;
 								this.taskList.getTask(0)._completedRoundNum++;
+								console.log("433433343this.taskList.getTask(0).totalRoundNum", this.taskList.getTask(0).totalRoundNum);
+								console.log("433433343this.taskList.getTask(0)._completedRoundNum", this.taskList.getTask(0)._completedRoundNum);
+								
 								if (
 									this.taskList.getTask(0).totalRoundNum ==
 									this.taskList.getTask(0)._completedRoundNum
@@ -992,6 +1003,7 @@
 									this.judgeTitle =
 										`(${this.taskList.doneTaskLength}/${totalTaskLength}) ` +
 										this.$('pages.battlefield.playground.achieved');
+									console.log("this.taskList.doneTaskLength", this.taskList.doneTaskLength);
 									if (this.taskList.doneTaskLength >= totalTaskLength) {
 										this.taskFinished = true;
 										this.isPass = true;
@@ -999,6 +1011,7 @@
 								} else {
 									this.judgeTitle = this.$('pages.battlefield.playground.achieved');
 									this.isCompleteTask = true;
+									console.log("13131313");
 								}
 							} else {
 								await this.gotoNextRound();
@@ -1044,7 +1057,7 @@
 					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 2|| taskCheck === 3) {
+						if (taskCheck === 0|| taskCheck === 3) {
 						// if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;
@@ -1077,6 +1090,8 @@
 						}
 					}
 					const totalTaskLength = this.taskList.getTotalTaskLength();
+					console.log("22222222totalTaskLength", totalTaskLength);
+					console.log("22222222this.taskList.doneTaskLength", this.taskList.doneTaskLength);
 					if (this.taskList.doneTaskLength >= totalTaskLength) {
 						this.taskFinished = true;
 						this.isPass = true;
