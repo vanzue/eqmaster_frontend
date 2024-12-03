@@ -5,18 +5,18 @@
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')" mode="aspectFill" />
 			<view class="overlay"></view>
 
-			<view class="navbar" :class="{ shadowed: shouldShadow }">
-				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
-				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList"></image>
-				<reward-bar :gemCount="gemCount"></reward-bar>
-				<view class="setting-group">
+			<view class="navbar" :style="{ height: navBarHeight + 'px' }" :class="{ shadowed: shouldShadow }">
+				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList" :style="{marginTop: navBarTop + 'px'}"></image>
+				<reward-bar :gemCount="gemCount" :style="{marginTop: navBarTop + 'px'}"></reward-bar>
+				<view class="setting-group" :style="{marginTop: navBarTop + 'px'}">
 					<!-- <image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
 					</image>
 					<image class="setting-item" src="/static/battlefield/setting.png"></image> -->
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-				{{ $t('"pages.battlefield.playground.review"') }}
+				{{ $t('pages.battlefield.playground.review') }}
 			</view>
 
 			<!-- <view class="text-area">语音识别内容：1111{{transcript}}</view> -->
@@ -303,7 +303,6 @@
 				taskFinished: false,
 				isFinish: false,
 				playAudioIndex: -1,
-				audioContext: null,
 				sendMessageNavShow: true,
 			};
 		},
@@ -498,13 +497,13 @@
 			playAudio(params) {
 				console.log(params);
 				this.playAudioIndex = params.index;
-				this.audioContext = uni.createInnerAudioContext();
+				const audioContext = uni.createInnerAudioContext();
 				const audio = this.$store.getters.getAudios(`voice-${params.dialog}`);
 				console.log(audio);
 				if (audio) {
-					this.audioContext.src = audio;
-					this.audioContext.play();
-					this.audioContext.onEnded(() => {
+					audioContext.src = audio;
+					audioContext.play();
+					audioContext.onEnded(() => {
 						this.playAudioIndex = -1;
 					});
 				}
@@ -1240,6 +1239,12 @@
 				// 合并 'user' 的消息和 'npc' 的消息
 				return [...latestNpcChats, ...latestUserChat];
 			},
+			navBarTop() {
+				return this.$store.getters.getNavBarTop;
+			},
+			navBarHeight() {
+				return this.$store.getters.getNavBarHeight;
+			},
 		},
 	};
 </script>
@@ -1269,10 +1274,10 @@
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		padding: 20rpx;
+		padding: 0 20rpx;
 		position: relative;
 		z-index: 12;
-		margin-top: 60rpx;
+		/* margin-top: 60rpx; */
 		/* margin-left: 20rpx; */
 	}
 
@@ -1424,7 +1429,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 50%;
-		width: 238rpx;
+		width: auto;
 		padding: 10px 20px;
 		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);

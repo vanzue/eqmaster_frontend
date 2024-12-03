@@ -490,7 +490,7 @@
 					return scores;
 				}
 				return [];
-			},
+			}
 		},
 		watch: {
 			homepageData: {
@@ -581,7 +581,9 @@
 		},
 		onShow() {
 			this.getAnalysisList(this.userId);
-
+			if (typeof wx !== 'undefined') {
+				wx.hideHomeButton();
+			}
 		},
 		methods: {
 			progressWidth(value) {
@@ -607,7 +609,7 @@
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.navigateTo({
+						uni.reLaunch({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
@@ -2056,11 +2058,12 @@
 		z-index: 10000;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
-		padding: 20rpx;
+		padding: 0 20rpx;
 	}
 
 	.dashboard2-scrollable-content {
-		padding-top: 300rpx;
+		z-index: 999;
+		padding-top: 352rpx;
 		/* 其他样式 */
 	}
 
@@ -2095,8 +2098,7 @@
 
 	.dashboard2-card1 {
 		width: calc(100% - 80rpx);
-		height: 180rpx;
-		aspect-ratio: 9 / 2;
+		aspect-ratio: 9 / 3;
 		/* 调整这个比例以匹配您的背景图片 */
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
@@ -2116,7 +2118,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		/* margin-top: 50rpx; */
+		margin-top: 15rpx;
 	}
 
 	.dashboard2-card3 {

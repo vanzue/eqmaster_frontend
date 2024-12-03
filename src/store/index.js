@@ -21,8 +21,8 @@ export default createStore({
 				characterName: "Jason",
 				health: 10,
 				avatar: getImg("/static/web/battlefield/boss11.webp"),
-				voice: "zh-CN-XiaoruiNeural",
-				style: "serious",
+				voice: "en-US-DavisNeural",
+				style: "chat",
 				rate: "0%",
 				
 			},
@@ -30,7 +30,7 @@ export default createStore({
 				characterName: "Sam",
 				health: 10,
 				avatar:  getImg("/static/web/battlefield/xiaoA1.webp"),
-				voice: "zh-CN-YunxiNeural",
+				voice: "en-US-JasonNeural",
 				style: "friendly",
 				rate: "10%",
 			},
@@ -38,8 +38,8 @@ export default createStore({
 				characterName: "Anna",
 				health: 10,
 				avatar:  getImg("/static/web/battlefield/xiaoB1.webp"),
-				voice: "zh-CN-XiaoxiaoNeural",
-				style: "angry",
+				voice: "en-US-JennyNeural",
+				style: "chat",
 				rate: "10%",
 			},
 		],
@@ -48,9 +48,11 @@ export default createStore({
 		diamondCount: 0,
 		gemCount: 0,
 		audios: new Map(),
-    scenario_id: 1,
-    scenarioResponse: {},
+		scenario_id: 1,
+		scenarioResponse: {},
 		courseInfo: {}, // 添加新的state属性
+		navBarTop: 0,
+		navBarHeight: (typeof wx !== 'undefined' ? wx.getSystemInfoSync().statusBarHeight + 60 : 60)
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -127,6 +129,12 @@ export default createStore({
 		setCourseInfo(state, courseInfo) {
 			state.courseInfo = courseInfo;
 		},
+		setNavBarTop(state, navBarTop) {
+			state.navBarTop = navBarTop;
+		},
+		setNavBarHeight(state, navBarHeight) {
+			state.navBarHeight = navBarHeight;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -184,6 +192,12 @@ export default createStore({
 		},
 		getCourseInfo(state) {
 			return state.courseInfo;
+		},
+		getNavBarHeight(state) {
+			return state.navBarHeight;
+		},
+		getNavBarTop(state) {
+			return state.navBarTop;
 		},
 	},
 	actions: {
@@ -259,6 +273,37 @@ export default createStore({
 			localStorage.clear();
 			uni.setStorageSync('username', username);
 		},
+		async getNavBarHeight({ commit }) {
+			try {
+				const systemInfo = wx.getSystemInfoSync();
+				const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
 
+				const statusBarHeight = systemInfo.statusBarHeight;
+
+				// 获取胶囊按钮的位置信息
+				const menuButtonHeight = menuButtonInfo.height;
+				const menuButtonTop = menuButtonInfo.top;
+
+				// 计算导航栏高度
+				const navBarHeight = statusBarHeight + menuButtonHeight + 2 * (menuButtonTop - statusBarHeight);
+
+				// 计算胶囊中心的Y坐标
+				const capsuleCenterY = menuButtonTop + menuButtonHeight / 2;
+
+				// 计算导航栏中心的Y坐标
+				const navBarCenterY = navBarHeight / 2;
+
+				// 计算胶囊中心距离导航栏中心的距离
+				const distance = Math.abs(capsuleCenterY - navBarCenterY);
+				const navBarTop = distance * 2;
+
+				commit('setNavBarHeight', navBarHeight);
+				commit('setNavBarTop', navBarTop);
+				return navBarHeight;
+			} catch (error) {
+				console.error('Error getting nav bar height:', error);
+				return 60; // Default fallback height
+			}
+		},
 	}
 })

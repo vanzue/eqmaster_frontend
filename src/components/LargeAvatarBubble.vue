@@ -31,15 +31,16 @@ import apiService from '../services/api-service'
 		},
 		data() {
 			return {
-				audioContext: null,
+				audioContextOut: null,
 			}
 		},
 		async mounted() {
-			this.audioContext = uni.createInnerAudioContext();
+			const app = getApp();
+			app.globalData.audioContextGloabal = uni.createInnerAudioContext();
 			const audio = this.$store.getters.getAudios(`voice-${this.wording}`);
 			if (audio) {
-				this.audioContext.src = audio;
-				this.audioContext.play();
+				app.globalData.audioContextGloabal.src = audio;
+				app.globalData.audioContextGloabal.play();
 			}
 		},
 		created() {
@@ -48,17 +49,19 @@ import apiService from '../services/api-service'
 		watch: {
 			wording(newValue) {
 				const audio = this.$store.getters.getAudios(`voice-${this.wording}`);
+				const app = getApp();
 				if (audio) {
-					this.audioContext.src = audio;
-					this.audioContext.play();
+					app.globalData.audioContextGloabal.src = audio;
+					app.globalData.audioContextGloabal.play();
 				}
 			},
 		},
 		unmounted() {
+			const app = getApp();
 			console.log("unmounted");
-			if (this.audioContext) {
-				this.audioContext.pause();
-				this.audioContext.destroy();
+			if (app.globalData.audioContextGloabal) {
+				app.globalData.audioContextGloabal.pause();
+				app.globalData.audioContextGloabal.destroy();
 			}
 		},
 	}
