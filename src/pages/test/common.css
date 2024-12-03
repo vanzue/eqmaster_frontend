@@ -3,10 +3,10 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20rpx;
+	padding: 0 20rpx;
 	position: relative;
 	z-index: 3;
-	margin-top: 90rpx;
+	/* margin-top: 90rpx; */
 	/* margin-left: 20rpx; */
 	/* 确保导航栏在叠加层之上 */
 }

@@ -2,8 +2,8 @@
 	let firstBackTime = 0
 	export default {
 		onLaunch: function () {
-		
 			console.log('App Launch')
+			this.$store.dispatch('getNavBarHeight');
 			this.globalData={
 				audioContextGloabal:null
 			}
