@@ -249,7 +249,7 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 		// status:  "complete" , // 添加 isPass
 		result: gemCount, // 添加 gemCount
 		person_diamond: diamonds, // 添加 diamonds
-		locale: "zh"
+		locale: "en"
 	};
 	console.log("evalBattlefield chatHistory: ", chatHistory);
 	console.log("evalBattlefield body: ", body);
