@@ -244,8 +244,22 @@
 									uni.setStorageSync('jobId', loginResponse.jobid);
 									this.$store.commit('setUserId', loginResponse.userid);
 									this.$store.commit('setJobId', loginResponse.jobid);
-									uni.navigateTo({
-										url: `/pages/preference/preference3`
+									this.$store.dispatch('fetchHomepageData').then(() => {
+										const homepageData = this.$store.getters.getHomepageData;
+										if (homepageData.response && homepageData.response.eq_scores) {
+											// console.log(currentRoute);
+											if (currentRoute === 'pages/landing/landing' || currentRoute === '') {
+												uni.navigateTo({
+													url: `/pages/dashboard/dashboard_zh?currentView=dashboard`
+												});
+											}
+										} else {
+											uni.navigateTo({
+												url: `/pages/preference/preference3`
+											});
+										}
+									}).catch((error) => {
+										console.error('Error fetching homepage data:', error);
 									});
 								}
 				            }
