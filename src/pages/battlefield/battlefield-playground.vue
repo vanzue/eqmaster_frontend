@@ -16,7 +16,7 @@
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-				{{ $t('"pages.battlefield.playground.review"') }}
+				{{ $t('pages.battlefield.playground.review') }}
 			</view>
 
 			<!-- <view class="text-area">语音识别内容：1111{{transcript}}</view> -->
@@ -1424,7 +1424,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 50%;
-		width: 238rpx;
+		width: auto;
 		padding: 10px 20px;
 		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);
