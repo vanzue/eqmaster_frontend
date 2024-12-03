@@ -2045,7 +2045,7 @@
 	.dashboard2-content {
 		position: relative;
 		/* height: 100vh; */
-		overflow-y: auto;
+		/* overflow-y: auto; */
 	}
 
 	.dashboard2-fixed-content {
@@ -2060,7 +2060,9 @@
 	}
 
 	.dashboard2-scrollable-content {
-		padding-top: 300rpx;
+		position: absolute;
+		top: 340rpx;
+		overflow-y: auto;
 		/* 其他样式 */
 	}
 

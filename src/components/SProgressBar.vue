@@ -623,8 +623,8 @@
 	.progress-canvas {
 		width: 100%;
 		/* 将宽度设置为100% */
-		height: 1100rpx;
-		margin-top: 45rpx;
+		height: 900rpx;
+		/* margin-top: 45rpx; */
 		/* 移除transform属性 */
 	}
 </style>

@@ -49,6 +49,7 @@ export function getAvatar(name, sceneNumber) {
 		return getImg('/static/web/Emma.webp')
 	}
 	if (name == "Bob") {
+		if(sceneNumber == '4') return getImg('/static/web/Colleague.webp')
 		return getImg('/static/web/Bob.webp')
 	}
 	if (name == "Ryan") {
