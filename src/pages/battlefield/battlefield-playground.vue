@@ -303,7 +303,6 @@
 				taskFinished: false,
 				isFinish: false,
 				playAudioIndex: -1,
-				audioContext: null,
 				sendMessageNavShow: true,
 			};
 		},
@@ -498,13 +497,13 @@
 			playAudio(params) {
 				console.log(params);
 				this.playAudioIndex = params.index;
-				this.audioContext = uni.createInnerAudioContext();
+				const audioContext = uni.createInnerAudioContext();
 				const audio = this.$store.getters.getAudios(`voice-${params.dialog}`);
 				console.log(audio);
 				if (audio) {
-					this.audioContext.src = audio;
-					this.audioContext.play();
-					this.audioContext.onEnded(() => {
+					audioContext.src = audio;
+					audioContext.play();
+					audioContext.onEnded(() => {
 						this.playAudioIndex = -1;
 					});
 				}
