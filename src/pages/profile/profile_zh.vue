@@ -123,22 +123,22 @@
 					</view>
 					<view class="eqoach-center" @click.stop>
 						<view class="eqoach-center-text">
-							在 Line 上添加 EQoach bot
+							Add EQoach bot for line
 						</view>
 						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-code.webp')" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>
-								保存二维码
+								Save QR code
 							</view>
 							<view class="save-code-two">
 								<view class="save-code-num">2</view>
-								打开Line扫码添加
+								Open Line and scan to add
 							</view>
 						</view>
 					</view>
 					<view class="card-button">
-						<button :disabled="saveqrcodeLoding" @click="saveQRCode()">保存二维码</button>
+						<button :disabled="saveqrcodeLoding" @click="saveQRCode()">Save QR code</button>
 					</view>
 				</view>
 			</view>
