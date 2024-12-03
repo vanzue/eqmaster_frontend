@@ -41,7 +41,8 @@
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
-		border: 2px solid #fcc764;
+		border: 2px solid #90E0E7;
+		/* border: 2px solid #fcc764; */
 		margin-right: 10px;
 	}
 
