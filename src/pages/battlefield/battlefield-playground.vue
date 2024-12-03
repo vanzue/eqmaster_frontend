@@ -456,6 +456,9 @@
 						const nextRound = await continueChat(this.allHistory, "1");
 						// nextRound = nextRound.response;
 						console.log("next round data", nextRound);
+						this.taskcheck = nextRound.task_check
+						console.log("……taskcheck", this.taskcheck);
+						await this.checkBossComplimentTask2("1",this.taskcheck);
 
 						nextRound.dialog = nextRound.response.dialog.map(item => ({
 							role: item.role,
@@ -479,6 +482,8 @@
 						this.taskcheck = nextRound.taskcheck;
 						this.allHistory = [...this.allHistory, ...nextRound.dialog];
 						console.log("after concat, chatting history:", this.chattingHistory);
+
+						// await this.checkBossComplimentTask2(this.taskcheck);
 
 						this.displayedNpcChatIndex = 0;
 						this.talkingNpc = this.getNpcIndexByName(this.chattingHistory[0].role);
@@ -596,7 +601,7 @@
 					// const taskCheck = judgeResult.task_check;
 					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
 					// await this.checkBossComplimentTask1(judgeResult, taskCheck);
-					await this.checkBossComplimentTask2(history, this.taskcheck);
+					await this.checkBossComplimentTask2(this.taskcheck);
 				}
 			},
 
@@ -1048,13 +1053,59 @@
 					}
 				}
 			},
+			// async checkBossComplimentTask2(taskCheck) {
+			// 	console.log("^^^^^^^^^^^^^^^taskCheck", taskCheck);
+			// 	let taskCompleted = false;
+				
+			// 	if (!this.taskFinished && !this.taskList.getTask(1).one) {
+			// 		if (taskCheck === 2) {
+			// 			if (this.taskList && this.taskList.getTask(1)) {
+			// 				this.isGoodReply = true;
+			// 				this.state = "judge";
+			// 				const task2 = this.taskList.getTask(1);
+			// 				this.currentTask = task2;
+			// 				task2._status = true;
+			// 				task2._completedRoundNum++;
+							
+			// 				if (task2.totalRoundNum === task2._completedRoundNum) {
+			// 					this.isCompleteTask = true;
+			// 					task2.one = true;
+			// 					this.taskList.doneTaskLength++;
+			// 					const totalTaskLength = this.taskList.getTotalTaskLength();
+			// 					this.judgeTitle = `(${this.taskList.doneTaskLength}/${totalTaskLength}) ` +
+			// 						this.$t('pages.battlefield.playground.achieved');
+			// 					taskCompleted = false;
+			// 					this.task2CompletedStatusOne = true; //如果任务2完成
+			// 					console.log("task2 success");
+			// 				} else {
+			// 					this.judgeTitle = this.$t('pages.battlefield.playground.achieved');
+			// 					this.isCompleteTask = true;
+			// 					taskCompleted = true;
+			// 				}
+			// 			}
+			// 		} else {
+			// 			taskCompleted = true;
+			// 		}
+			// 	} else {
+			// 		taskCompleted = true;
+			// 	}
+
+			// 	const totalTaskLength = this.taskList.getTotalTaskLength();
+			// 	if (this.taskList.doneTaskLength >= totalTaskLength) {
+			// 		this.taskFinished = true;
+			// 		this.isPass = true;
+			// 		taskCompleted = false;
+			// 	}
+
+			// 	return taskCompleted;
+			// },
 			async checkBossComplimentTask2(dialog, taskCheck) {
 				let taskCompleted = false;
 				console.log("17");
 				if (!this.taskFinished && !this.taskList.getTask(1).one) {
 					console.log("18");
-					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
-					console.log(dialog);
+					// const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
+					// console.log(dialog);
 					for (let chat of dialog) {
 						if (taskCheck === 2) {
 							console.log("19");
