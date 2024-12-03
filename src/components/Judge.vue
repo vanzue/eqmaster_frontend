@@ -94,16 +94,17 @@
 				};
 			},
 			bgColor() {
-				return this.goodJudge ? '#E8FFC4' : '#fff2b4';
+				return this.goodJudge ? '#E8FFC4' : '#fcddb2';
 			},
 			fontColor() {
 				return this.goodJudge ? '#315B00' : '#936A15';
 			},
 			buttonBgColor() {
-				return this.goodJudge ? '#A9E55B' : '#FFD044';
+				return this.goodJudge ? '#A9E55B' : '#ea833d';
 			},
 			buttonText() {
-				return this.goodJudge ? '继续' : '再试一次';
+				// return this.goodJudge ? '继续' : '再试一次';
+				return this.goodJudge ? 'Contiune' : 'Try Again';
 			}
 		}
 	}

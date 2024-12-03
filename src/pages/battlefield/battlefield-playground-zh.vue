@@ -1329,7 +1329,8 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 20px;
-		background: #FDEDC8;
+		/* background: #FDEDC8; */
+		background-color: #d6fcf6;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -1477,7 +1478,8 @@
 		transform: translateX(-50%);
 		width: 420rpx;
 		height: 160rpx;
-		background-color: #FDEDC8;
+		/* background-color: #FDEDC8; */
+		background-color: #d6fcf6;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -1602,8 +1604,10 @@
 		/* padding: 20rpx 0; */
 		border-radius: 40rpx;
 		/* 增加一些内边距 */
-		background-color: #FDEDC8;
-		border: 2px solid #F2BC74;
+		/* background-color: #FDEDC8; */
+		background-color: #d6fcf6;
+		/* border: 2px solid #F2BC74; */
+		border: 2px solid #90e0e7;
 		/* 可选的背景色，用于强调输入框 */
 	}
 

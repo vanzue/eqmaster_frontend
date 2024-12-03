@@ -156,7 +156,8 @@
 		width: 654rpx;
 		/* Set the width to 90% */
 		/* height: 810rpx; */
-		background-color: #FDEDC8;
+		background-color: #D6FCF6;
+		/* background-color: #FDEDC8; */
 		border-radius: 32rpx;
 		display: flex;
 		/* justify-content: center; */
@@ -226,7 +227,8 @@
 		gap: 40rpx;
 		border-radius: 32rpx;
 		background: #FFFFFF;
-		box-shadow: 0px 0px 12px 0px #FED397;
+		box-shadow: 0px 0px 12px 0px #90E0E7;
+		/* box-shadow: 0px 0px 12px 0px #FED397; */
 	}
 
 	.top {
@@ -287,7 +289,8 @@
 		left: -3px;
 		right: -3px;
 		bottom: -3px;
-		border: 3px solid #F2BC74;
+		border: 3px solid #90E0E7;
+		/* border: 3px solid #F2BC74; */
 		border-radius: 35rpx;
 		pointer-events: none;
 	}
@@ -302,7 +305,8 @@
 		width: 100%;
 		height: 88rpx;
 		line-height: 88rpx;
-		background-color: #F2BC74 !important;
+		background-color: #90E0E7 !important;
+		/* background-color: #F2BC74 !important; */
 		border-radius: 400rpx;
 		font-size: 30rpx;
 		font-weight: 600;
