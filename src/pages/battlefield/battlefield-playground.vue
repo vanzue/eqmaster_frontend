@@ -1,17 +1,18 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
+
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')" mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
 				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
+				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList"></image>
 				<reward-bar :gemCount="gemCount"></reward-bar>
 				<view class="setting-group">
-					<!-- <image class="setting-item" src="/static/battlefield/copy.png" @click="missionShow = true"></image> -->
-					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
+					<!-- <image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
 					</image>
-					<image class="setting-item" src="/static/battlefield/setting.png"></image>
+					<image class="setting-item" src="/static/battlefield/setting.png"></image> -->
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
@@ -1271,8 +1272,8 @@
 		padding: 20rpx;
 		position: relative;
 		z-index: 12;
-		margin-top: 80rpx;
-		margin-left: 20rpx;
+		margin-top: 60rpx;
+		/* margin-left: 20rpx; */
 	}
 
 	.back-button {
@@ -1290,6 +1291,35 @@
 		justify-content: center;
 		align-items: center;
 		margin-top: 200rpx;
+	}
+
+	.header {
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 6;
+		width: 95%;
+		height: 104rpx;
+		padding-top: 82rpx;
+	}
+
+	.header-icon {
+		width: 50rpx;
+		height: 50rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.header-icon {
+		width: 50rpx;
+		height: 50rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 16rpx;
 	}
 
 	.time-info {
@@ -1310,13 +1340,14 @@
 
 	.setting-group {
 		display: flex;
+		width: 170rpx;
 		flex-direction: row;
 		position: relative;
 	}
 
 	.setting-item {
 		width: 24px;
-		margin-right: 20rpx;
+		/* margin-right: 20rpx; */
 		height: 24px;
 		z-index: 12;
 	}

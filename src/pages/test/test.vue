@@ -1,5 +1,10 @@
 <template>
 	<view class="container" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
+		<view class="navbar">
+			<image class="back-button" src="/static/battlefield/back-left.png" @tap="goToDashboard"></image>
+			<view class="title-head">{{ $t('index.title') }}</view>
+			<view class="wetchat-menu"></view>
+		</view>
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
 		

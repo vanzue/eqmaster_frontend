@@ -4,9 +4,10 @@
 		<view class="navbar">
 			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
 			<view class="progress-bar">
-				<progress-bar :isActive="true"></progress-bar>
-				<progress-bar :isActive="false"></progress-bar>
+				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
+				<progress-bar :isActive="false" class="progress-bar-item"></progress-bar>
 			</view>
+			<view class="wetchat-menu"></view>
 		</view>
 
 		<!-- Content -->
@@ -62,9 +63,13 @@
 				});
 			},
 			goToDashboard() {
-				uni.reLaunch({
-					url: "/pages/dashboard/dashboard_zh",
-				});
+				if (getCurrentPages().length > 1) {
+					uni.navigateBack(); // 返回上一个页面
+				} else {
+					uni.redirectTo({
+						url: '/pages/dashboard/dashboard_zh' // 如果没有历史记录，导航到指定页面
+					});
+				}
 			},
 			async loadCourse() {
 				try {
@@ -85,12 +90,12 @@
 	.navbar {
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
+		justify-content: space-around;
 		align-items: center;
 		padding: 20rpx;
 		position: relative;
 		z-index: 3;
-		margin-top: 5vh;
+		margin-top: 90rpx;
 		margin-left: 20rpx;
 		/* 确保导航栏在叠加层之上 */
 	}
@@ -108,6 +113,14 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		gap: 16rpx;
+	}
+	.progress-bar-item {
+		width: 193rpx;
+	}
+
+	.wetchat-menu {
+		width: 200rpx;
 	}
 
 	.content {

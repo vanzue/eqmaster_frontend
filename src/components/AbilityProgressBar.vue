@@ -1,5 +1,5 @@
 <template>
-	<view class="progress-container">
+	<view :class="['progress-container', isWeChatMiniProgram ? 'progress-container-wechat' : '']">
 	  <!-- 第一段进度条 -->
 	  <view class="progress-segment" :class="{ 'first-segment': true }" :style="getSegmentStyle(segment1Width, 0)"></view>
 	  <!-- 间隙 -->
@@ -68,7 +68,11 @@ export default {
 		},
 		getIndicatorIcon() {
 			return getImg(`/static/web/${this.animal}_progress.webp`);
-		}
+		},
+		isWeChatMiniProgram() {
+			const systemInfo = uni.getSystemInfoSync();
+			return systemInfo.uniPlatform === 'mp-weixin';
+		},
 	},
 	methods: {
 		getSegmentStyle(width, startPosition) {
@@ -82,7 +86,7 @@ export default {
 			}
 			
 			const activePercentage = (activeWidth / width) * 100;
-			
+			console.log(activePercentage);
 			return {
 				width: `${width}%`,
 				background: `linear-gradient(to right, ${this.activeColor} ${activePercentage}%, rgba(255, 255, 255, 0.3) ${activePercentage}%)`
@@ -94,9 +98,10 @@ export default {
 
 <style>
 .progress-container {
-	position: relative;
+	position: absolute;
 	display: flex;
 	width: 90%;
+	left: 5%;
 	height: 22px; /* 增加高度以适应边框 */
 	background-color: transparent;
 	justify-content: space-between;
@@ -105,7 +110,10 @@ export default {
 	border-radius: 12px; /* 增加边框的圆角 */
 	overflow: visible; /* 改为 visible 以允许指示器超出容器 */
 	box-sizing: border-box; /* 确保边框包含在总宽度内 */
-	margin-top: 30rpx; /* 保留之前添加的向下移动 */
+	margin-top: 70rpx; /* 保留之前添加的向下移动 */
+}
+.progress-container-wechat {
+	margin-top: 60rpx; /* 保留之前添加的向下移动 */
 }
 
 .progress-segment {
