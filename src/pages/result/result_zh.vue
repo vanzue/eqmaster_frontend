@@ -2,11 +2,10 @@
 	<view class="container">
 		<scroll-view scroll-y style="height: 100%;">
 			<view class="content">
-				<view class="header">
-					<image class="header-icon" src="/static/back-left.png" @click="navigateToHome"></image>
-					<text class="score-title-head">{{ $t('pages.result.result.title') }}</text>
+				<view class="header" :style="{ height: navBarHeight + 'px'}">
+					<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px'}"></image>
+					<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('pages.result.result.title') }}</text>
 					<view class="header-icon"></view>
-					<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
 				</view>
 				<view class="background-curve">
 					<view class="animal-box">
@@ -156,6 +155,8 @@ import {
 				progress: 0,
 				imageWidth: 2000,
 				isExpanded: false, // 默认收起状态
+				// navBarTop: 0,
+				// navBarHeight: 0,
 			};
 		},
 		computed: {
@@ -167,6 +168,12 @@ import {
 			},
 			username() {
 				return this.$store.getters.getUsername;
+			},
+			navBarTop() {
+				return this.$store.getters.getNavBarTop;
+			},
+			navBarHeight() {
+				return this.$store.getters.getNavBarHeight;
 			},
 			formattedBirthday() {
 				if (this.birthday) {
@@ -236,7 +243,7 @@ import {
 			}
 		},
 		created() {
-			this.$store.dispatch('fetchcourseData')
+			this.$store.dispatch('fetchcourseData');
 		},
 		onUnload() {},
 		onReady(option) {
@@ -326,7 +333,7 @@ import {
 		z-index: 6;
 		width: 95%;
 		height: 104rpx;
-		padding-top: 82rpx;
+		/* padding-top: 82rpx; */
 	}
 
 	.header-icon {

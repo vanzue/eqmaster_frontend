@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
 		<view class="overlay"></view>
-		<view class="navbar">
-			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
-			<view class="progress-bar">
+		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
+			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
 				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
 				<progress-bar :isActive="false" class="progress-bar-item"></progress-bar>
 			</view>
-			<view class="wetchat-menu"></view>
+			<view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view>
 		</view>
 
 		<!-- Content -->
@@ -55,6 +55,12 @@
 			courseInfo() {
 				return this.$store.getters.getCourseInfo;
 			},
+			navBarTop() {
+				return this.$store.getters.getNavBarTop;
+			},
+			navBarHeight() {
+				return this.$store.getters.getNavBarHeight;
+			},
 		},
 		methods: {
 			navigateToNextPage() {
@@ -92,11 +98,11 @@
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
-		padding: 20rpx;
+		padding: 0 20rpx;
 		position: relative;
 		z-index: 3;
-		margin-top: 90rpx;
-		margin-left: 20rpx;
+		/* margin-top: 90rpx; */
+		/* margin-left: 0 20rpx; */
 		/* 确保导航栏在叠加层之上 */
 	}
 

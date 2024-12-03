@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
-		<view class="header">
-			<image class="header-icon" src="/static/back-left.png" @click="navigateToHome"></image>
-			<text class="score-title-head">{{ $t('components.Nav.Profile') }}</text>
+		<view class="header" :style="{ height: navBarHeight + 'px' }">
+			<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px', opacity: 0}"></image>
+			<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('components.Nav.Profile') }}</text>
 			<view class="header-icon"></view>
 			<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
 		</view>
@@ -217,6 +217,12 @@
 						code: 'zh-Hans'
 					},
 				]
+			},
+			navBarTop() {
+				return this.$store.getters.getNavBarTop;
+			},
+			navBarHeight() {
+				return this.$store.getters.getNavBarHeight;
 			},
 		},
 		onLoad(option) {
@@ -455,15 +461,15 @@
 	}
 
 	.header {
-		position: fixed; /* Changed from absolute to fixed */
+		position: absolute;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
 		z-index: 6;
 		width: 100%;
-		height: 104rpx;
-		top: 90rpx; /* Adjusted top position for fixed positioning */
+		/* height: 156rpx; */
+		/* padding-top: 82rpx; */
 	}
 
 	.score-title-head {
