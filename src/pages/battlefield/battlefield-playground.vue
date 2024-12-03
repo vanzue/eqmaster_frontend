@@ -16,7 +16,7 @@
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
-				{{ $t('"pages.battlefield.playground.review"') }}
+				{{ $t('pages.battlefield.playground.review') }}
 			</view>
 
 			<!-- <view class="text-area">语音识别内容：1111{{transcript}}</view> -->
@@ -303,7 +303,6 @@
 				taskFinished: false,
 				isFinish: false,
 				playAudioIndex: -1,
-				audioContext: null,
 				sendMessageNavShow: true,
 			};
 		},
@@ -498,13 +497,13 @@
 			playAudio(params) {
 				console.log(params);
 				this.playAudioIndex = params.index;
-				this.audioContext = uni.createInnerAudioContext();
+				const audioContext = uni.createInnerAudioContext();
 				const audio = this.$store.getters.getAudios(`voice-${params.dialog}`);
 				console.log(audio);
 				if (audio) {
-					this.audioContext.src = audio;
-					this.audioContext.play();
-					this.audioContext.onEnded(() => {
+					audioContext.src = audio;
+					audioContext.play();
+					audioContext.onEnded(() => {
 						this.playAudioIndex = -1;
 					});
 				}
@@ -1430,7 +1429,7 @@
 		z-index: 12;
 		top: 83%;
 		left: 50%;
-		width: 238rpx;
+		width: auto;
 		padding: 10px 20px;
 		transform: translateX(-50%);
 		background-color: rgba(16, 16, 16, 0.4);

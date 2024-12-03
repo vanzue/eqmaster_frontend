@@ -194,6 +194,7 @@
 				// },
 				isDelEqoashBot: false,
 				applicationLocale: '',
+				qrImg: null,
 			};
 		},
 		computed: {
@@ -225,6 +226,7 @@
 				return this.$store.getters.getNavBarHeight;
 			},
 		},
+		
 		onLoad(option) {
 			console.log('Received options:', option);
 
@@ -267,6 +269,7 @@
 			}
 		},
 		methods: {
+			
 			onLocaleChange(e) {
 				uni.setLocale(e.code);
 				this.$i18n.locale = e.code;
@@ -316,15 +319,15 @@
 			},
 			saveQRCode() {
 				this.saveqrcodeLoding = true;
-				const qrCodeImage = this.$refs.qrCodeImage;
-				if (!qrCodeImage) {
-					console.error('QR code image not found');
-					return;
-				}
+				// const qrCodeImage = this.$refs.qrCodeImage;
+				// if (!qrCodeImage) {
+				// 	console.error('QR code image not found');
+				// 	return;
+				// }
 				const sysInfo = uni.getSystemInfoSync();
-				if (sysInfo.platform === 'ios' || sysInfo.platform === 'android') {
+				// #ifndef MP-WEIXIN
 					uni.saveImageToPhotosAlbum({
-						filePath: '/static/eqoach-code.png',
+						filePath:getImg('/static/web/eqoach-code.webp'),
 						success: () => {
 							uni.showToast({
 								title: 'Image saved successfully',
@@ -339,48 +342,58 @@
 							});
 						}
 					});
-				} else {
-					const canvas = document.createElement('canvas');
-					const context = canvas.getContext('2d');
-					const img = new Image();
-					img.crossOrigin = 'Anonymous';
-					img.src = qrCodeImage.src;
-
-					img.onload = () => {
-						canvas.width = img.width;
-						canvas.height = img.height;
-						context.drawImage(img, 0, 0);
-
-						canvas.toBlob((blob) => {
-							const link = document.createElement('a');
-							link.href = URL.createObjectURL(blob);
-							link.download = 'qrcode.png';
-							link.click();
-
-							wx.saveImageToPhotosAlbum({
-								filePath: link.href,
+				 // #endif
+					 // #ifdef MP-WEIXIN
+					uni.authorize({
+					scope: 'scope.writePhotosAlbum',
+					success: () => {
+						uni.downloadFile({
+						url: getImg('/static/web/eqoach-code.webp'),
+						success: (downloadRes) => {
+							if (downloadRes.statusCode === 200) {
+							uni.saveImageToPhotosAlbum({
+								filePath: downloadRes.tempFilePath,
 								success: () => {
-									uni.showToast({
-										title: 'Image saved successfully',
-										icon: 'success'
-									});
+								uni.showToast({
+									title: 'Image saved successfully',
+									icon: 'success'
+								});
+								this.saveqrcodeLoding = false;
 								},
 								fail: (err) => {
-									uni.showToast({
-										title: 'Image save failed',
-										icon: 'none'
-									});
+								console.log('保存图片失败：', err);
+								uni.showToast({
+									title: 'Image save failed',
+									icon: 'none'
+								});
+								this.saveqrcodeLoding = false;
 								}
 							});
-
-						}, 'image/png');
-					};
-
-					img.onerror = (error) => {
-						console.error('Error loading QR code image:', error);
-					};
-				}
-				this.saveqrcodeLoding = false;
+							} else {
+							console.error('下载图片失败：', downloadRes.statusCode);
+							this.saveqrcodeLoding = false;
+							}
+						},
+						fail: (err) => {
+							console.error('下载图片失败：', err);
+							this.saveqrcodeLoding = false;
+						}
+						});
+					},
+					fail: (err) => {
+						console.log('授权失败：', err);
+						uni.showModal({
+						title: '授权失败',
+						content: '请前往设置开启保存到相册的权限',
+						showCancel: false,
+						success: () => {
+							this.saveqrcodeLoding = false;
+						}
+						});
+					}
+					});
+					 // #endif
+				
 			},
 			async logOutClick() {
 				console.log("logOutClick");
@@ -415,6 +428,7 @@
 			// this.animateImage(); // 开始图片动画
 			// 如果需要在弹窗打开时设置默认选项，可以在此处调用
 			// this.selectedOption = '同事'; // 已在 data 中设置，不需要额外操作
+			
 		},
 		beforeDestroy() {
 			// 页面销毁前清除定时器

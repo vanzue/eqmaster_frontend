@@ -1,6 +1,6 @@
 <template>
 	<view class="bubble-container">
-		<view class="text-box">
+		<view class="text-box" @click="dismiss">
 			<view class="user-info" :class="isOddRequest ? 'odd-style' : 'even-style'">
 				<image class="user-avatar" :src="avatar" mode="aspectFill" />
 				<view :class="isOddRequest ? 'user-name-right' : 'user-name-left'">
@@ -11,8 +11,8 @@
 				</view>
 
 			</view>
-			<view class="text-content" @click="dismiss">{{ description }}</view>
-			<view class="expand-icon">
+			<view class="text-content">{{ description }}</view>
+			<view class="expand-icon" >
 				<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
 			</view>
 		</view>

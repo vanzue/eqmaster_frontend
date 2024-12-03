@@ -4,6 +4,9 @@
 		onLaunch: function () {
 			console.log('App Launch')
 			this.$store.dispatch('getNavBarHeight');
+			this.globalData={
+				audioContextGloabal:null
+			}
 			const userId = uni.getStorageSync('userId');
 			console.log('userId', userId)
 			const currentPages = getCurrentPages();
@@ -47,6 +50,10 @@
 			if (jobId) {
 				this.$store.commit('setJobId', jobId);
 			}
+		},
+	
+		globalData: {
+			audioContextGloabal: null
 		},
 		onShow: function () {
 			console.log('App Show')
