@@ -56,7 +56,7 @@ export default {
 				// const promises = result.dialog.map(async (item) => {
 				const promises = result.response.dialog.map(async (item) => {
 					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);		
-					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.response.message });
+					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.message });
 				})
 				await Promise.all(promises);
 			} catch (error) {

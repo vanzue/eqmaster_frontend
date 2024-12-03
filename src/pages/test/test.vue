@@ -1,9 +1,9 @@
 <template>
 	<view class="container" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
-		<view class="navbar">
-			<image class="back-button" src="/static/battlefield/back-left.png" @tap="goToDashboard"></image>
-			<view class="title-head">{{ $t('index.title') }}</view>
-			<view class="wetchat-menu"></view>
+		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
+			<image class="back-button" src="/static/battlefield/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+			<view class="title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('index.title') }}</view>
+			<view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view>
 		</view>
 		<!-- 背景图 -->
 		<image class="background-image" :src="backgroundImageSrc" mode="aspectFill" />
@@ -177,6 +177,12 @@
 			isWeChatMiniProgram() {
 				const systemInfo = uni.getSystemInfoSync();
 				return systemInfo.uniPlatform === 'mp-weixin';
+			},
+			navBarTop() {
+				return this.$store.getters.getNavBarTop;
+			},
+			navBarHeight() {
+				return this.$store.getters.getNavBarHeight;
 			},
 		},
 		watch: {

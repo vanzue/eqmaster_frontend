@@ -130,6 +130,7 @@
 			"path": "pages/result/result_zh",
 			"style": {
 				"navigationStyle": "custom",
+				// "navigationBarBackgroundColor": "#2F2F38",
 				"disableSwipeBack": true
 			}
 		},
