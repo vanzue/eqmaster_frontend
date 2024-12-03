@@ -665,14 +665,14 @@ import {
 	}
 
 	.improved-content-item {
-		padding: 60rpx 32rpx 60rpx 32rpx;
+		padding: 32rpx 32rpx 60rpx 32rpx;
 	}
 
 	.improved-content-title {
 		display: flex;
 		align-items: center;
 		gap: 12rpx;
-		font-size: 30rpx;
+		font-size: 35rpx;
 		color: #FCDDB2;
 		font-weight: 600;
 	}
