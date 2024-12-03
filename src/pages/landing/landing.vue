@@ -246,13 +246,11 @@
 									this.$store.commit('setJobId', loginResponse.jobid);
 									this.$store.dispatch('fetchHomepageData').then(() => {
 										const homepageData = this.$store.getters.getHomepageData;
+										console.log(homepageData);
 										if (homepageData.response && homepageData.response.eq_scores) {
-											// console.log(currentRoute);
-											if (currentRoute === 'pages/landing/landing' || currentRoute === '') {
-												uni.navigateTo({
-													url: `/pages/dashboard/dashboard_zh?currentView=dashboard`
-												});
-											}
+											uni.navigateTo({
+												url: `/pages/dashboard/dashboard_zh?currentView=dashboard`
+											});
 										} else {
 											uni.navigateTo({
 												url: `/pages/preference/preference3`
@@ -319,9 +317,15 @@
 							uni.setStorageSync('jobId', loginResponse.jobid);
 							this.$store.commit('setUserId', loginResponse.userid);
 							this.$store.commit('setJobId', loginResponse.jobid);
-							uni.navigateTo({
-								url: `/pages/preference/preference3`
-							});
+							if (homepageData.response && homepageData.response.eq_scores) {
+								uni.navigateTo({
+									url: `/pages/dashboard/dashboard_zh?currentView=dashboard`
+								});
+							} else {
+								uni.navigateTo({
+									url: `/pages/preference/preference3`
+								});
+							}
 						}
 				    },
 				    fail: (err) => {
