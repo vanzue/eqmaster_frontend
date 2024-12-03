@@ -123,22 +123,22 @@
 					</view>
 					<view class="eqoach-center" @click.stop>
 						<view class="eqoach-center-text">
-							Add EQoach bot for line
+							{{$t('pages.profile.line.addbot')}}
 						</view>
 						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-code.webp')" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>
-								Save QR code
+								{{$t('pages.profile.line.saveqrcode')}}
 							</view>
 							<view class="save-code-two">
 								<view class="save-code-num">2</view>
-								Open Line and scan to add
+								{{$t('pages.profile.line.swapcode')}}
 							</view>
 						</view>
 					</view>
 					<view class="card-button">
-						<button :disabled="saveqrcodeLoding" @click="saveQRCode()">Save QR code</button>
+						<button :disabled="saveqrcodeLoding" @click="saveQRCode()">{{$t('pages.profile.line.saveqrcode')}}</button>
 					</view>
 				</view>
 			</view>
