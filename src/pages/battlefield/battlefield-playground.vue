@@ -7,12 +7,16 @@
 
 			<view class="navbar" :style="{ height: navBarHeight + 'px' }" :class="{ shadowed: shouldShadow }">
 				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+				<!-- #ifdef MP-WEIXIN -->
 				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList" :style="{marginTop: navBarTop + 'px'}"></image>
-				<reward-bar :gemCount="gemCount" :style="{marginTop: navBarTop + 'px'}"></reward-bar>
+				<!-- #endif -->
+				<reward-bar :gemCount="gemCount" :style="{marginTop: navBarTop + 'px', marginLeft: isWeChatMiniProgram ? '' : '80rpx'}"></reward-bar>
 				<view class="setting-group" :style="{marginTop: navBarTop + 'px'}">
-					<!-- <image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
+					<!-- #ifdef APP-PLUS || H5 -->
+					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
 					</image>
-					<image class="setting-item" src="/static/battlefield/setting.png"></image> -->
+					<image class="setting-item" src="/static/battlefield/setting.png"></image>
+					<!-- #endif -->
 				</view>
 			</view>
 			<view v-if="showToolTips && isTooltipVisible && showTaskTooltip" class="taskTooltip">
@@ -142,15 +146,13 @@
 			</view>
 
 			<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-				<view class="input-container-wrapper">
+				<view class="input-container-wrapper" :style="{position: showKeyboardInput ? 'unset' : 'fixed'}">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height
-							@blur="inputRecordingBlur" />
+						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height @focus="scrollToInput" />
 					</view>
-					<view class="send-sms-container">
-						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png" @click="inputRecordingBlur">
-						</image>
+					<view class="send-sms-container" @click="inputRecordingBlur">
+						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png"></image>
 					</view>
 				</view>
 			</view>
@@ -259,6 +261,7 @@
 				taskcheck:0,
 				allHistory: [],
 				showInput: false,
+				showKeyboardInput: false,
 				focusInput: false,
 				gemCount: 2,
 				isPass: false, // 初始化 isPass 值，可以是 true 或 false
@@ -343,8 +346,22 @@
 					return false;
 				})
 			);
+			this.scrollToInput();
 		},
 		methods: {
+			scrollToInput() {
+				// 监听键盘高度变化
+				uni.onKeyboardHeightChange(res => {
+					console.log(res);
+					if (res.height == 0) {
+						// 键盘收起
+						this.showKeyboardInput = false;
+					} else {
+						// 键盘弹起
+						this.showKeyboardInput = true;
+					}
+				});
+			},
 			setIsLoadingShow(value) {
 				this.isLoadingShow = value;
 			},
@@ -1285,6 +1302,10 @@
 			navBarHeight() {
 				return this.$store.getters.getNavBarHeight;
 			},
+			isWeChatMiniProgram() {
+				const systemInfo = uni.getSystemInfoSync();
+				return systemInfo.uniPlatform === 'mp-weixin';
+			},
 		},
 	};
 </script>
@@ -1296,6 +1317,15 @@
 	.uni-scroll-view-content {
 		height: auto;
 		padding-bottom: 60rpx;
+	}
+
+	::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+		color: transparent;
 	}
 </style>
 <style scoped>
@@ -1388,6 +1418,7 @@
 		width: 170rpx;
 		flex-direction: row;
 		position: relative;
+		justify-content: space-around;
 	}
 
 	.setting-item {
@@ -1688,7 +1719,7 @@
 	.input-container-wrapper {
 		position: fixed;
 		display: flex;
-		width: 70%;
+		width: 100%;
 		/* left: 10%; */
 		bottom: 200rpx;
 		justify-content: center;
@@ -1697,7 +1728,7 @@
 
 	.input-container {
 		/* position: fixed; */
-		width: 100%;
+		width: 550rpx;
 		/* left: 10%; */
 		/* bottom: 200rpx; */
 		/* 将其固定在屏幕底部 */
@@ -1711,10 +1742,22 @@
 		border: 2px solid #90E0E7;
 		/* 可选的背景色，用于强调输入框 */
 	}
+	.input-container textarea {
+		height: 44rpx;
+	}
 
-	.send-sms-icon {
+	.send-sms-container {
 		width: 88rpx;
 		height: 88rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #90E0E7;
+		border-radius: 50%;
+	}
+	.send-sms-icon {
+		width: 28rpx;
+		height: 32rpx;
 	}
 
 	textarea {
