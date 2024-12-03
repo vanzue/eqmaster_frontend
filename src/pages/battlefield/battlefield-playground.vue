@@ -405,7 +405,8 @@
 				}
 			},
 			handleRecordingDone() {
-				console.log("handling touch move...");
+				console.log("stop record");
+				// console.log("handling touch move...");
 				if (!this.isRecording) return;
 				recorderManager.stop();
 				clearInterval(this.countdownInterval);
@@ -425,18 +426,13 @@
 			},
 			startCountdown() {
 				this.countdownInterval = setInterval(() => {
+					console.log("Counting down:", this.remainingTime);
 					if (this.remainingTime > 0) {
 						this.remainingTime--;
 					} else {
 						this.handleRecordingDone();
 					}
 				}, 1000);
-			},
-			resetRecording() {
-				this.isRecording = false;
-				this.isCanceling = false;
-				this.remainingTime = 30;
-				clearInterval(this.countdownInterval);
 			},
 			hideTooltip() {
 				this.isTooltipVisible = false;
@@ -540,13 +536,6 @@
 					lang: 'zh_CN',
 				  });
 				this.userJudgeContent = "";
-			},
-			handleRecordingDone() {
-				// console.log('Released');
-				if (this.isRecording) {
-					recorderManager.stop();
-					this.isRecording = false;
-				}
 			},
 			getNextState() {
 				if (this.state === "NpcTalk" && this.chattingHistory.length === 0) {

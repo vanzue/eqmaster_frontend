@@ -783,11 +783,12 @@
 		align-items: center;
 		flex-direction: column;
 		z-index: 1000;
-		padding: 10rpx;
+		padding: 0rpx;
+		margin: -20rpx 0rpx;
 	}
 
 	.popup-content {
-		width: 580rpx;
+		width: 610rpx;
 		/* Set the width to 90% */
 		/* height: 810rpx; */
 		background-color: #373742;
@@ -848,7 +849,7 @@
 	}
 
 	.eqoach-center {
-		margin-top: 36rpx;
+		margin-top: 60rpx;
 		display: block;
 		width: 590rpx;
 		/* height: 508rpx; */
@@ -872,7 +873,7 @@
 		text-align: left;
 		width: 430rpx;
 		/* height: 96rpx; */
-		margin: 48rpx auto;
+		margin: 24rpx auto;
 		color: #FFFFFF;
 		line-height: 60rpx;
 	}
@@ -940,7 +941,7 @@
 	.card-button {
 		display: flex;
 		width: 100%;
-		margin-top: 48rpx;
+		margin-top: 24rpx;
 	}
 
 	.card-button button {
