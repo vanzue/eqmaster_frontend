@@ -469,7 +469,7 @@
 					const levelName = this.localLevelNames[i] || `Level ${i + 1}`;
 
 					// 添加文本换行逻辑
-					const maxWidth = textContainerWidth*1.2; // 留一些边距
+					const maxWidth = textContainerWidth*1.1; // 留一些边距
 					const words = levelName.split(' ');
 					let line = '';
 					const lines = [];

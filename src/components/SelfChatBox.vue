@@ -30,7 +30,8 @@
 
 <style scoped>
 	.bubble-container {
-		background-color: #FDEDC8;
+		/* background-color: #FDEDC8; */
+		background-color: #d6fcf6;
 		border-radius: 10px;
 		padding: 12px;
 		margin-top: 48rpx;
