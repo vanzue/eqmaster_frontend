@@ -1842,8 +1842,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: right;
-		margin-top: 10px;
+		margin-top: 50rpx;
 		margin-right: 10px;
+		gap: 16rpx;
 	}
 
 	.loading-icon {
