@@ -1506,7 +1506,7 @@
 		position: absolute;
 		z-index: 12;
 		top: 12%;
-		left: 3.2%;
+		right: 3.2%;
 		width: 192rpx;
 		padding: 10px 5px;
 		font-size: 26rpx;
