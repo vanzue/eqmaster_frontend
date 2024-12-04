@@ -436,10 +436,11 @@ import {
 	.animal-score-desc {
 		position: absolute;
 		display: flex;
-		justify-content: center;
+		/* justify-content: left; */
+		left: 20rpx;
 		align-items: center;
 		width: 173.14rpx;
-		height: 60rpx;
+		height: 48rpx;
 
 		background-image: none;
 		background-size: cover;
