@@ -111,6 +111,8 @@ export default {
 	},
 	async uploadChatHistory(filePath, userId) {
 		try {
+			const targetUrl = url.getUrl(`/analyze/history`);
+			console.log('Attempting to upload file to URL:', targetUrl); 
 			const response = await uni.uploadFile({
 				url: url.getUrl(`/analyze/history`),
 				header: {
