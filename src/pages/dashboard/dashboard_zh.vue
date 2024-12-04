@@ -76,12 +76,12 @@
 
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
-					<view class="card3">
+					<!-- <view class="card3">
 						<image class="illustration36" :src="getImg('/static/web/Frame1.webp')" mode="widthFix"></image>
 						<image class="illustration37" :src="getImg('/static/web/Frame22.webp')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
 						<image class="illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"></image>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<!-- chat battlefield homepage -->
@@ -1084,7 +1084,8 @@
 		align-items: left;
 		padding-top: 40rpx;
 		width: 100%;
-		height: calc(100vh - 150rpx);
+		/* height: calc(100vh - 150rpx); */
+		height: 100vh;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}

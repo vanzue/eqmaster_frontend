@@ -31,9 +31,8 @@
 			</view>
 
 			<view class="chat-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
-				<scroll-view class="chat-history-container" scroll-y :scroll-top="scrollTop" ref="chatHistoryContainer"
-					:scroll-into-view="scrollIntoViewId">
-					<view v-for="(chat, index) in displayedMessages" :key="index" :id="'chat-item-' + index">
+				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true">
+					<view v-for="(chat, index) in displayedMessages" class="chat-item" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
                 // ['领导', '同事A', '同事B'].includes(
 				['Jason', 'Sam', 'Anna'].includes(
@@ -45,12 +44,13 @@
 						<view v-else-if="chat.role === 'user'"
 							:class="['message-wrapper', { animate: chat.shouldAnimate }]">
 							<self-chat-box :key="'user' + index" :wording="chat.content" :commit="userJudgeContent"
-								:isLastElement="index === displayedMessages.length - 1"></self-chat-box>
+								:isLastElement="index === lastUserIndex"></self-chat-box>
 						</view>
 						<view v-else-if="chat.role === 'tipping'"
 							:class="['message-wrapper', { animate: chat.shouldAnimate }]">
 							<tipping-chat-box :key="'tipping' + index" :tip="chat.content"></tipping-chat-box>
 						</view>
+						<view v-else-if="chat.role === 'empty'" :class="['message-wrapper']"></view>
 					</view>
 					<view class="loading-container" v-if="anasLoadingObj.loading">
 						<image class="loading-icon" src="/static/battlefield/loading.png"></image>
@@ -307,6 +307,9 @@
 				isFinish: false,
 				playAudioIndex: -1,
 				sendMessageNavShow: true,
+				scrollIntoViewIdOffset: 0,
+				scrollTop: 0,
+				dynamicIndex: 2,
 			};
 		},
 		created() {
@@ -460,7 +463,7 @@
 					await this.Pass();
 					return;
 				}
-				
+				// return false;
 				console.log("结果2",this.task2CompletedStatusOne);
 				if (this.task2CompletedStatusOne) {
 					this.task2CompletedStatusOne = false;
@@ -916,7 +919,7 @@
 						judgeResult = judgeResult.response;
 						await this.checkBossComplimentTask1(judgeResult, taskCheck);
 
-						this.updateScrollIntoView();
+						// this.updateScrollIntoView();
 
 						// 遍历 judgeResult.moods 并根据角色调整 this.mood 的值
 						judgeResult.moods.forEach((item) => {
@@ -1041,6 +1044,14 @@
 							this.state = "userTalk";
 							this.userJudgeContent = judgeResult.comments;
 							console.log("userJudgeContent", this.userJudgeContent);
+							
+							const newMessage = {
+								role: "empty",
+								content: 'empty',
+							};
+							this.chattingHistory.push(newMessage);
+							// this.updateScrollIntoView();
+							
 							// Add a 3-second delay before going to the next round
 							setTimeout(async () => {
 								await this.gotoNextRound();
@@ -1129,9 +1140,10 @@
 			},
 			updateScrollIntoView() {
 				this.$nextTick(() => {
-					const lastMessageId =
-						"chat-item-" + (this.displayedMessages.length - 1);
-					this.scrollIntoViewId = lastMessageId;
+					setTimeout(() => {
+						const lastMessageId = "chat-item-" + (this.displayedMessages.length - 1);
+						this.scrollIntoViewId = lastMessageId;
+					}, 100); // 添加100毫秒的延迟
 				});
 			},
 		},
@@ -1209,26 +1221,20 @@
 					chat.role === "Jason" ||
 					chat.role === "Sam" ||
 					chat.role === "Anna" ||
-					chat.role === "tipping"
+					chat.role === "tipping" ||
+					chat.role === "empty"
 				);
-				console.log("displayedMessages");
+				// console.log("displayedMessages", userAndNpcChats);
 				this.gemCount = this.calculateStars();
 				// 按顺序展示user和npc的记录
 				return userAndNpcChats;
-				// const userChats = this.chattingHistory.filter((chat) => chat.role === 'user');
-				// const npcChats = this.chattingHistory.filter((chat) => ['领导', '同事A', '同事B'].includes(chat.role));
-
-				// // 只保留来自 'user' 的最新一条
-				// const latestUserChat = userChats.slice(-1); // 取最后一条
-
-				// // 保留来自 '领导'、'同事A' 和 '同事B' 的最新三条消息
-				// const latestNpcChats = npcChats.slice(-3); // 取最后三条
-
-				// 合并 'user' 的消息和 'npc' 的消息
-				// return [...latestNpcChats, ...latestUserChat];
-				// return [...npcChats, ...userChats];
 			},
-
+			lastUserIndex() {
+				const userAndNpcChats = this.displayedMessages;
+				// Find last index of user chat
+				const lastUserIndex = userAndNpcChats.map(chat => chat.role).lastIndexOf("user");
+				return lastUserIndex;
+			},
 			displayedHistory() {
 				const userChats = this.chattingHistory.filter(
 					(chat) => chat.role === "user"
@@ -1751,6 +1757,9 @@
 		overflow-x: hidden;
 		margin-top: 20rpx;
 	}
+	/* .chat-item:last-child {
+		padding-bottom: 100px;
+	} */
 
 	/* 消息动效 */
 	.message-wrapper {
