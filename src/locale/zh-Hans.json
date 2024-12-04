@@ -69,9 +69,9 @@
 	"pages.profile.popup.ok": "确认",
 	"pages.profile.popup.cancel": "取消",
 	"pages.profile.language": "语言",
-	"pages.profile.line.addbot": "在 Line 上添加 EQoach bot",
+	"pages.profile.line.addbot": "在 Telegram 上添加 EQoach bot",
 	"pages.profile.line.saveqrcode": "保存二维码",
-	"pages.profile.line.swapcode": "打开Line扫码添加",
+	"pages.profile.line.swapcode": "打开Telegram扫码添加",
 
 	"pages.battlefield.intro.continue": "继续",
 	"pages.battlefield.intro.unit1.title": "关卡 ",
