@@ -4,10 +4,12 @@
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
 			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
-				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
-				<progress-bar :isActive="false" class="progress-bar-item"></progress-bar>
+				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
+				<progress-bar :isActive="false" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
 			</view>
+			<!-- #ifdef MP-WEIXIN -->
 			<view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view>
+			<!-- #endif -->
 		</view>
 
 		<!-- Content -->
@@ -61,6 +63,10 @@
 			navBarHeight() {
 				return this.$store.getters.getNavBarHeight;
 			},
+			isWeChatMiniProgram() {
+				const systemInfo = uni.getSystemInfoSync();
+				return systemInfo.uniPlatform === 'mp-weixin';
+			},
 		},
 		methods: {
 			navigateToNextPage() {
@@ -98,7 +104,7 @@
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
-		padding: 0 20rpx;
+		padding: 0 48rpx;
 		position: relative;
 		z-index: 3;
 		/* margin-top: 90rpx; */
@@ -123,6 +129,9 @@
 	}
 	.progress-bar-item {
 		width: 193rpx;
+	}
+	.progress-bar-item-wetchat {
+		width: 274rpx;
 	}
 
 	.wetchat-menu {
