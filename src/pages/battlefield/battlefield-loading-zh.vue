@@ -31,6 +31,9 @@ export default {
   async mounted() {
     const result = await startField(1, "1");
     console.log("result from start field:", result);
+	result.response.dialog.map( (item) => {
+		this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: item.voice_url });
+	})
     // uni.setStorage({
     //   key: "chats",
     //   data: result.response.dialog,
@@ -43,23 +46,9 @@ export default {
 	    task_check: result.task_check
 	  }
 	});
-			try {
-				const npcs = this.$store.getters.getNpcs;
-				const npcsMap = new Map(npcs.map(item => [item.characterName, item]));
-				
-				// const promises = result.dialog.map(async (item) => {
-				const promises = result.response.dialog.map(async (item) => {
-					const result = await apiService.getVoice(item.words || item.content, npcsMap.get(item.role).voice, npcsMap.get(item.role).style, npcsMap.get(item.role).rate);		
-					this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: result.response.message });
-				})
-				await Promise.all(promises);
-			} catch (error) {
-				console.log("get voice fail", error);
-			} finally {
-				uni.reLaunch({
-					url: '/pages/battlefield/battlefield-playground-zh'
-				})
-			}
+			uni.reLaunch({
+				url: '/pages/battlefield/battlefield-playground'
+			})
 		}
 	}
 </script>
