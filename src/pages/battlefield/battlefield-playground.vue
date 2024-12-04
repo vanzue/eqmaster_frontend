@@ -30,7 +30,7 @@
 					:characterName="npc.characterName"></npc-status>
 			</view>
 
-			<view class="chat-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
+			<view class="chat-container" v-if="state !== 'NpcTalk'">
 				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true">
 					<view v-for="(chat, index) in displayedMessages" class="chat-item" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
@@ -69,23 +69,25 @@
 
 			<!-- 录音弹框 -->
 			<!-- avoid opacity inheriting -->
-			<view v-if="isRecording" class="recording-box">
-				<text class="timer">{{ remainingTime }}''</text>
-				<view class="waveform">
-					<!-- 声波动画 -->
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
+			<view class="popup-overlay" v-if="isRecording" @click="handleRecordingDone">
+				<view class="recording-box">
+					<text class="timer">{{ remainingTime }}''</text>
+					<view class="waveform">
+						<!-- 声波动画 -->
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+					</view>
+	
+					<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
 				</view>
-
-				<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
 			</view>
 
 			<view
 				v-if="state === 'userTalk' && showToolTips && isTooltipVisible && (showHintTooltip || showRecordTooltip || showTaskTooltip)"
-				class="tooltipOverlay" @click="hideTooltip">
+				class="tooltipOverlay" @click.stop="hideTooltip">
 			</view>
 			<!-- tooltip -->
 			<!-- tooltip for record -->
@@ -121,23 +123,22 @@
 			</view>
 
 
-			<view class="player-action-container" :class="{ shadowed: shouldShadow }"
-				v-if="state !== 'NpcTalk' && sendMessageNavShow">
-				<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
+			<view class="player-action-container"
+				v-if="state !== 'NpcTalk' && sendMessageNavShow" :style="{ zIndex: isRecording ? 1000 : 10 }">
+				<view class="action-item" v-if="!isRecording" @click.stop="handleClickInput()">
 					<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 				</view>
 
 				<!-- #ifndef H5 -->
 				<view class="middle-container">
 					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
-						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
+						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click.stop="hideTooltip">
 						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
 					</view>
 				</view>
 				<!-- #endif -->
-				<view class="action-item" v-if="!isRecording">
-					<image class="action-icon" src="/static/battlefield/light.svg" @click="clickHintButton">
-					</image>
+				<view class="action-item" v-if="!isRecording" @click.stop="clickHintButton">
+					<image class="action-icon" src="/static/battlefield/light.svg"></image>
 				</view>
 			</view>
 
@@ -267,7 +268,6 @@
 				isPass: false, // 初始化 isPass 值，可以是 true 或 false
 				diamonds: 0,
 				tempFilePath: "", // 临时录音文件路径
-				isRecording: false, // Controls the display state of left and right icons
 				getBattlefieldAvatar,
 				showCardPopup: false,
 				cardButtonLoading: false,
@@ -556,7 +556,6 @@
 			},
 			// showInput = true; focusInput = true;
 			handleClickInput() {
-				console.log(555);
 				this.showInput = true;
 				this.focusInput = true;
 				this.inputContent = "";
@@ -567,7 +566,8 @@
 			hint() {
 				console.log("Choose hint card");
 			},
-			clickHintButton() {
+			clickHintButton(event) {
+				event.stopPropagation();
 				this.state = "hint";
 				this.showCardPopup = true;
 				this.showHintTooltip = false;
@@ -1571,7 +1571,7 @@
 		border-style: solid;
 		border-color: rgba(16, 16, 16, 0.4) transparent transparent transparent;
 	}
-
+	
 	.taskTooltip {
 		position: absolute;
 		z-index: 12;
@@ -1611,7 +1611,8 @@
 	.recording-box {
 		position: absolute;
 		z-index: 12;
-		top: 76%;
+		/* top: 76%; */
+		bottom: 298rpx;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 420rpx;
@@ -1631,7 +1632,7 @@
 		top: 20%;
 		width: 80%;
 		height: 120rpx;
-		margin-bottom: 20rpx;
+		/* margin-bottom: 20rpx; */
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: center;
@@ -1649,7 +1650,7 @@
 
 	.cancel-text {
 		position: relative;
-		top: 50%;
+		top: 60%;
 		font-size: 26rpx;
 		line-height: 34rpx;
 		color: white;
