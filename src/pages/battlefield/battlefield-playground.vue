@@ -30,7 +30,7 @@
 					:characterName="npc.characterName"></npc-status>
 			</view>
 
-			<view class="chat-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
+			<view class="chat-container" v-if="state !== 'NpcTalk'">
 				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true">
 					<view v-for="(chat, index) in displayedMessages" class="chat-item" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
@@ -69,7 +69,7 @@
 
 			<!-- 录音弹框 -->
 			<!-- avoid opacity inheriting -->
-			<view class="popup-overlay-recording" v-if="isRecording" @click="handleRecordingDone">
+			<view class="popup-overlay" v-if="isRecording" @click="handleRecordingDone">
 				<view class="recording-box">
 					<text class="timer">{{ remainingTime }}''</text>
 					<view class="waveform">
@@ -80,14 +80,14 @@
 						<view class="wave"></view>
 						<view class="wave"></view>
 					</view>
-
+	
 					<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
 				</view>
 			</view>
 
 			<view
 				v-if="state === 'userTalk' && showToolTips && isTooltipVisible && (showHintTooltip || showRecordTooltip || showTaskTooltip)"
-				class="tooltipOverlay" @click="hideTooltip">
+				class="tooltipOverlay" @click.stop="hideTooltip">
 			</view>
 			<!-- tooltip -->
 			<!-- tooltip for record -->
@@ -123,23 +123,22 @@
 			</view>
 
 
-			<view class="player-action-container" :class="{ shadowed: shouldShadow }"
-				v-if="state !== 'NpcTalk' && sendMessageNavShow">
-				<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
+			<view class="player-action-container"
+				v-if="state !== 'NpcTalk' && sendMessageNavShow" :style="{ zIndex: isRecording ? 1000 : 10 }">
+				<view class="action-item" v-if="!isRecording" @click.stop="handleClickInput()">
 					<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 				</view>
 
 				<!-- #ifndef H5 -->
 				<view class="middle-container">
 					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
-						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
+						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click.stop="hideTooltip">
 						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
 					</view>
 				</view>
 				<!-- #endif -->
-				<view class="action-item" v-if="!isRecording" @click="clickHintButton()">
-					<image class="action-icon" src="/static/battlefield/light.svg">
-					</image>
+				<view class="action-item" v-if="!isRecording" @click.stop="clickHintButton">
+					<image class="action-icon" src="/static/battlefield/light.svg"></image>
 				</view>
 			</view>
 
@@ -395,8 +394,7 @@
 				this.showRecordTooltip = false;
 				// console.log(("change tooltip visible into:", this.isTooltipVisible));
 			},
-			handleTouchMove(event) {
-				event.preventDefault(); // 阻止默认事件
+			handleTouchMove(e) {
 				console.log("move start , isRecording: ", this.isRecording);
 				if (!this.isRecording) return;
 				const currentY = e.touches[0].clientY;
@@ -409,8 +407,7 @@
 					console.log("not canceled");
 				}
 			},
-			handleRecordingDone(event) {
-				event.preventDefault(); // 阻止默认事件
+			handleRecordingDone() {
 				console.log("stop record");
 				// console.log("handling touch move...");
 				if (!this.isRecording) return;
@@ -440,8 +437,7 @@
 					}
 				}, 1000);
 			},
-			hideTooltip(event) {
-				event.preventDefault(); // 阻止默认事件
+			hideTooltip() {
 				this.isTooltipVisible = false;
 				this.showRecordTooltip = false;
 				this.showHintTooltip = false;
@@ -490,16 +486,13 @@
 						}));
 
 						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
-
-						await Promise.all(nextRound.dialog.map(async item => {
-							const result = await apiService.getVoice(item.content, npcsMap.get(item
-								.role).voice, npcsMap.get(item.role).style, npcsMap.get(item
-								.role).rate);
+						nextRound.dialog.map( item => {
+							
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
-								value: result.message
+								value: item.voice_url
 							});
-						}));
+						});
 
 						console.log("current chatting history:", this.chattingHistory);
 						this.chattingHistory = nextRound.dialog;
@@ -573,7 +566,8 @@
 			hint() {
 				console.log("Choose hint card");
 			},
-			clickHintButton() {
+			clickHintButton(event) {
+				event.stopPropagation();
 				this.state = "hint";
 				this.showCardPopup = true;
 				this.showHintTooltip = false;
@@ -1889,21 +1883,6 @@
 	.chat-history-container.shadowed,
 	.player-action-container.shadowed {
 		opacity: 0.5;
-	}
-
-	.popup-overlay-recording {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		z-index: 1000;
-		/* padding: 10rpx; */
 	}
 
 	.popup-overlay {

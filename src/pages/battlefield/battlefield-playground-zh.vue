@@ -459,19 +459,18 @@
 						nextRound.dialog = nextRound.response.dialog.map(item => ({
 							role: item.role,
 							content: item.content ?? item.words,
+							voice:item.voice_url
 						}));
 
 						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
 
-						await Promise.all(nextRound.dialog.map(async item => {
-							const result = await apiService.getVoice(item.content, npcsMap.get(item
-								.role).voice, npcsMap.get(item.role).style, npcsMap.get(item
-								.role).rate);
+						nextRound.dialog.map( item => {
+							
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
-								value: result.message
+								value: item.voice_url
 							});
-						}));
+						});
 
 						console.log("current chatting history:", this.chattingHistory);
 						this.chattingHistory = nextRound.dialog;
