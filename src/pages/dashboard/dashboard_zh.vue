@@ -6,7 +6,7 @@
 			<div></div>
 			<div></div>
 		</view>
-		<view v-else>
+		<view v-else class="content-box">
 			<view v-if="currentView === 'dashboard'" class="content">
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
@@ -1091,6 +1091,11 @@
 		width: 100%;
 		/* height: calc(100vh - 150rpx); */
 		height: 100vh;
+		/* overflow-y: auto; */
+		/* -webkit-overflow-scrolling: touch; */
+	}
+	.content-box {
+		position: relative;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -1100,8 +1105,10 @@
 		/* 避免 flex 布局干扰 */
 		flex-direction: column;
 		align-items: left;
+		height: auto;
 		/* width: 100%; */
 		margin-left: 20px;
+		padding-bottom: 90px;
 	}
 
 
