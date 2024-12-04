@@ -2,12 +2,14 @@
 	<view class="container">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
-			<image @click="goback" class="back-button" src="/static/battlefield/back-iconpng.png" :style="{marginTop: navBarTop + 'px'}"></image>
+			<image @click="goback" class="back-button" src="/static/back-left.png" :style="{marginTop: navBarTop + 'px'}"></image>
 			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
-				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
-				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
+				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
+				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
 			</view>
+			<!-- #ifdef MP-WEIXIN -->
 			<view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view>
+			<!-- #endif -->
 		</view>
 		<view class="content">
 			<view class="task-header">
@@ -68,6 +70,10 @@
 			navBarHeight() {
 				return this.$store.getters.getNavBarHeight;
 			},
+			isWeChatMiniProgram() {
+				const systemInfo = uni.getSystemInfoSync();
+				return systemInfo.uniPlatform === 'mp-weixin';
+			},
 		},
 
 		methods: {
@@ -105,6 +111,11 @@
 		/* 确保导航栏在叠加层之上 */
 	}
 
+	.back-button {
+		width: 24rpx;
+		height: 50rpx;
+	}
+
 	.progress-bar {
 		flex: 1;
 		width: 100%;
@@ -117,6 +128,9 @@
 	}
 	.progress-bar-item {
 		width: 193rpx;
+	}
+	.progress-bar-item-wetchat {
+		width: 274rpx;
 	}
 
 	.wetchat-menu {

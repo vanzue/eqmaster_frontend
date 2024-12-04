@@ -59,7 +59,7 @@
 								<view class="">
 									<view class="blood-container">
 										<view class="health-bar-container">
-											<view class="health-bar-line"></view>
+											<!-- <view class="health-bar-line"></view> -->
 											<view class="health-bar-background">
 												<view class="health-bar-foreground"
 													:style="progressWidth(caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].score : 0, 1)">
@@ -78,7 +78,7 @@
 									<view class="">
 										<view class="blood-container">
 											<view class="health-bar-container">
-												<view class="health-bar-line"></view>
+												<!-- <view class="health-bar-line"></view> -->
 												<view class="health-bar-background">
 													<view class="health-bar-foreground"
 														:style="progressWidth(score.score)">
@@ -666,14 +666,14 @@ import {
 	}
 
 	.improved-content-item {
-		padding: 60rpx 32rpx 60rpx 32rpx;
+		padding: 32rpx 32rpx 60rpx 32rpx;
 	}
 
 	.improved-content-title {
 		display: flex;
 		align-items: center;
 		gap: 12rpx;
-		font-size: 30rpx;
+		font-size: 35rpx;
 		color: #FCDDB2;
 		font-weight: 600;
 	}
