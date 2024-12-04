@@ -63,14 +63,14 @@
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" :key="index"
 									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
-									@click="navigateToAnalysis(item)">
+									@tap="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList" :key="index"
 								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
-								@click="navigateToAnalysis(item)">
+								@tap="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
 					</view>
@@ -610,11 +610,12 @@
 				});
 			},
 			navigateToAnalysis(analysis) {
+				console.log("navigate To analysis....");
 				uni.setStorage({
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.reLaunch({
+						uni.navigateTo({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
