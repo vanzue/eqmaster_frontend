@@ -388,7 +388,7 @@ import {
 	.image-container {
 	position: relative;
 	width: 100%;
-	height: 200px; /* 根据需要调整高度 */
+	height: 210px; /* 根据需要调整高度 */
 	overflow: hidden;
 	}
 	.splash-image {
@@ -400,19 +400,32 @@ import {
 		/* 在图像上方添加一些空间 */
 		position: absolute;
 		/* 绝对定位以便移动 */
-		animation: slide 10s linear infinite;
+		animation: slide 5s linear infinite;
 	}
 	.splash-image:nth-child(2) {
 		left: 2000rpx; /* 根据需要调整宽度 */
 	}
+	
 
 	@keyframes slide {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(-2000rpx); /* 根据需要调整宽度 */
-	}
+		0% {
+			transform: translateX(-200rpx);
+		}
+		10%, 20% {
+			transform: translateX(-630rpx); /* 第二张图片 */
+		}
+		30%, 40% {
+			transform: translateX(-1035rpx); /* 第三张图片 */
+		}
+		50%, 60% {
+			transform: translateX(-1435rpx); /* 第四张图片 */
+		}
+		70%, 80% {
+			transform: translateX(-1830rpx); /* 第五张图片 */
+		}
+		90%, 100% {
+			transform: translateX(-2250rpx); /* 图片完全移出视图 */
+		}
 	}
 
 	.status-text {
