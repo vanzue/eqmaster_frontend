@@ -59,7 +59,7 @@
 								<view class="">
 									<view class="blood-container">
 										<view class="health-bar-container">
-											<view class="health-bar-line"></view>
+											<!-- <view class="health-bar-line"></view> -->
 											<view class="health-bar-background">
 												<view class="health-bar-foreground"
 													:style="progressWidth(caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].score : 0, 1)">
@@ -78,7 +78,7 @@
 									<view class="">
 										<view class="blood-container">
 											<view class="health-bar-container">
-												<view class="health-bar-line"></view>
+												<!-- <view class="health-bar-line"></view> -->
 												<view class="health-bar-background">
 													<view class="health-bar-foreground"
 														:style="progressWidth(score.score)">
@@ -436,10 +436,11 @@ import {
 	.animal-score-desc {
 		position: absolute;
 		display: flex;
-		justify-content: center;
+		/* justify-content: left; */
+		left: 20rpx;
 		align-items: center;
 		width: 173.14rpx;
-		height: 60rpx;
+		height: 48rpx;
 
 		background-image: none;
 		background-size: cover;

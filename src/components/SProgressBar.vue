@@ -363,6 +363,7 @@
 					ctx.beginPath();
 					ctx.arc(endPoint.x, endPoint.y + yOffset, 12, 0, 2 * Math.PI);
 					ctx.fillStyle = isCompleted ? 'rgba(158, 228, 77, 1)' : 'rgba(158, 228, 77, 0.2)';
+					// ctx.fillStyle = isCompleted ? 'rgba(16, 16, 16, 0.4)' : 'rgba(16, 16, 16, 0.4)';
 					ctx.fill();
 					ctx.lineWidth = 4;
 					ctx.strokeStyle = isCompleted ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.2)';
@@ -447,12 +448,14 @@
 					ctx.quadraticCurveTo(bgX, bgY, bgX + cornerRadius, bgY);
 					ctx.closePath();
 
-					ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; // 半透明黑色
+					// ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; // 半透明黑色
 					ctx.fill();
 
 					// 添加关卡文本
+					ctx.fillStyle = isCompleted ? '#232329' : '#2B2B34'; // 添加深色背景
+					ctx.fill();
 					ctx.font = '12px Arial';
-					ctx.fillStyle = 'white';
+					ctx.fillStyle = isCompleted ? 'white' : 'rgba(255, 255, 255, 0.3)'; // 未完成时设置30%透明度的白色
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle'; // 确保文本垂直居中
 					// const levelText = `Unit${this.numberToChineseCharacter(i + 1)}`;
@@ -463,7 +466,7 @@
 
 					// 添加关卡名称
 					ctx.font = 'bold 14px Arial';
-					ctx.fillStyle = 'white'; // 或者您想要的其他颜色
+					ctx.fillStyle = isCompleted ? 'white' : 'rgba(255, 255, 255, 0.3)'; // 或者您想要的其他颜色
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
 					const levelName = this.localLevelNames[i] || `Level ${i + 1}`;
