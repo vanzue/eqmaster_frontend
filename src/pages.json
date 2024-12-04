@@ -13,8 +13,7 @@
 		 	"path": "pages/dashboard/dashboard_zh",
 		 	"style": {
 		 		// "navigationStyle": "custom"
-				"navigationBarBackgroundColor": "#2F2F38",
-				"disableScroll": true
+				"navigationBarBackgroundColor": "#2F2F38"
 		 	}
 		 },
 		{
