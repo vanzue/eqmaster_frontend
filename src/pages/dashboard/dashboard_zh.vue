@@ -1090,7 +1090,7 @@
 		padding-top: 40rpx;
 		width: 100%;
 		/* height: calc(100vh - 150rpx); */
-		height: 100vh;
+		height: auto;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -1102,6 +1102,7 @@
 		align-items: left;
 		/* width: 100%; */
 		margin-left: 20px;
+		padding-bottom: 90px;
 	}
 
 
