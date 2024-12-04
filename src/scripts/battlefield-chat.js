@@ -25,11 +25,13 @@ function sendRequest(
 		console.log("44444444441CourseInfo", course_id.course_data.id);
 		
 		console.log("formattedChatContent:", formattedChatContent);
+		
 		const body = outerBody || {
 			person_id: state.getters.getUserId,
 			course_id: course_id.course_data.id,
 			chat_content: JSON.stringify(formattedChatContent),
-			locale:  "en"
+			locale:  "en",
+			npcs:  course_id.course_data.npc,
 		};
 
 		// body['lang_type'] = locale.getShortLocale();
@@ -138,7 +140,8 @@ export async function startField(person_id, courseId) {
 		content: [{
 			type: "text",
 			text: "StartDialog",
-		}, ],
+		},
+		 ],
 	}, ]);
 }
 

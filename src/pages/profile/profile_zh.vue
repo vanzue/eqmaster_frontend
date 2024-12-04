@@ -125,7 +125,7 @@
 						<view class="eqoach-center-text">
 							{{$t('pages.profile.line.addbot')}}
 						</view>
-						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-code.webp')" ref="qrCodeImage"></image>
+						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-telegram.webp')" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>
@@ -327,7 +327,7 @@
 				const sysInfo = uni.getSystemInfoSync();
 				// #ifndef MP-WEIXIN
 					uni.saveImageToPhotosAlbum({
-						filePath:getImg('/static/web/eqoach-code.webp'),
+						filePath:getImg('/static/web/eqoach-telegram.webp'),
 						success: () => {
 							uni.showToast({
 								title: 'Image saved successfully',
@@ -348,7 +348,7 @@
 					scope: 'scope.writePhotosAlbum',
 					success: () => {
 						uni.downloadFile({
-						url: getImg('/static/web/eqoach-code.webp'),
+						url: getImg('/static/web/eqoach-telegram.webp'),
 						success: (downloadRes) => {
 							if (downloadRes.statusCode === 200) {
 							uni.saveImageToPhotosAlbum({
@@ -857,8 +857,9 @@
 	}
 
 	.eqoach-center-text {
-		font-size: 44rpx;
+		font-size: 42rpx;
 		font-weight: 6000;
+		font-weight: bold;
 		color: #FFFFFF;
 	}
 
@@ -871,7 +872,7 @@
 	.eqoach-center-line {
 		display: block;
 		text-align: left;
-		width: 430rpx;
+		width: 500rpx;
 		/* height: 96rpx; */
 		margin: 24rpx auto;
 		color: #FFFFFF;

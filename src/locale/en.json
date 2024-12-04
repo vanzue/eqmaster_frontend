@@ -65,9 +65,9 @@
   	"pages.profile.popup.ok": "log out",
 	  "pages.profile.popup.cancel": "Cancel",
     "pages.profile.language": "Language",
-	"pages.profile.line.addbot": "Add EQoach bot for line",
+	"pages.profile.line.addbot": "Add EQoach bot for Telegram",
 	"pages.profile.line.saveqrcode": "Save QR code",
-	"pages.profile.line.swapcode": "Open Line and scan to add",
+	"pages.profile.line.swapcode": "Open Telegram and scan to add",
 
     "pages.battlefield.intro.continue": "Continue",
     "pages.battlefield.intro.unit1.title": "Unit ",
