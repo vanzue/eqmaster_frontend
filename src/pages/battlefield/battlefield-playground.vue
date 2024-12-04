@@ -69,18 +69,20 @@
 
 			<!-- 录音弹框 -->
 			<!-- avoid opacity inheriting -->
-			<view v-if="isRecording" class="recording-box">
-				<text class="timer">{{ remainingTime }}''</text>
-				<view class="waveform">
-					<!-- 声波动画 -->
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-				</view>
+			<view class="popup-overlay-recording" v-if="isRecording" @click="handleRecordingDone">
+				<view class="recording-box">
+					<text class="timer">{{ remainingTime }}''</text>
+					<view class="waveform">
+						<!-- 声波动画 -->
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+					</view>
 
-				<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
+					<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
+				</view>
 			</view>
 
 			<view
@@ -135,8 +137,8 @@
 					</view>
 				</view>
 				<!-- #endif -->
-				<view class="action-item" v-if="!isRecording">
-					<image class="action-icon" src="/static/battlefield/light.svg" @click="clickHintButton">
+				<view class="action-item" v-if="!isRecording" @click="clickHintButton()">
+					<image class="action-icon" src="/static/battlefield/light.svg">
 					</image>
 				</view>
 			</view>
@@ -267,7 +269,6 @@
 				isPass: false, // 初始化 isPass 值，可以是 true 或 false
 				diamonds: 0,
 				tempFilePath: "", // 临时录音文件路径
-				isRecording: false, // Controls the display state of left and right icons
 				getBattlefieldAvatar,
 				showCardPopup: false,
 				cardButtonLoading: false,
@@ -394,7 +395,8 @@
 				this.showRecordTooltip = false;
 				// console.log(("change tooltip visible into:", this.isTooltipVisible));
 			},
-			handleTouchMove(e) {
+			handleTouchMove(event) {
+				event.preventDefault(); // 阻止默认事件
 				console.log("move start , isRecording: ", this.isRecording);
 				if (!this.isRecording) return;
 				const currentY = e.touches[0].clientY;
@@ -407,7 +409,8 @@
 					console.log("not canceled");
 				}
 			},
-			handleRecordingDone() {
+			handleRecordingDone(event) {
+				event.preventDefault(); // 阻止默认事件
 				console.log("stop record");
 				// console.log("handling touch move...");
 				if (!this.isRecording) return;
@@ -437,7 +440,8 @@
 					}
 				}, 1000);
 			},
-			hideTooltip() {
+			hideTooltip(event) {
+				event.preventDefault(); // 阻止默认事件
 				this.isTooltipVisible = false;
 				this.showRecordTooltip = false;
 				this.showHintTooltip = false;
@@ -559,7 +563,6 @@
 			},
 			// showInput = true; focusInput = true;
 			handleClickInput() {
-				console.log(555);
 				this.showInput = true;
 				this.focusInput = true;
 				this.inputContent = "";
@@ -1574,7 +1577,7 @@
 		border-style: solid;
 		border-color: rgba(16, 16, 16, 0.4) transparent transparent transparent;
 	}
-
+	
 	.taskTooltip {
 		position: absolute;
 		z-index: 12;
@@ -1614,7 +1617,8 @@
 	.recording-box {
 		position: absolute;
 		z-index: 12;
-		top: 76%;
+		/* top: 76%; */
+		bottom: 298rpx;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 420rpx;
@@ -1634,7 +1638,7 @@
 		top: 20%;
 		width: 80%;
 		height: 120rpx;
-		margin-bottom: 20rpx;
+		/* margin-bottom: 20rpx; */
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: center;
@@ -1652,7 +1656,7 @@
 
 	.cancel-text {
 		position: relative;
-		top: 50%;
+		top: 60%;
 		font-size: 26rpx;
 		line-height: 34rpx;
 		color: white;
@@ -1885,6 +1889,21 @@
 	.chat-history-container.shadowed,
 	.player-action-container.shadowed {
 		opacity: 0.5;
+	}
+
+	.popup-overlay-recording {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		z-index: 1000;
+		/* padding: 10rpx; */
 	}
 
 	.popup-overlay {
