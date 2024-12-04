@@ -1,7 +1,8 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
-			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')" mode="aspectFill" />
+			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')"
+				mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
@@ -143,11 +144,12 @@
 				<view class="input-container-wrapper">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height
-							@blur="inputRecordingBlur" />
+						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent"
+							auto-height @blur="inputRecordingBlur" />
 					</view>
 					<view class="send-sms-container">
-						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png" @click="inputRecordingBlur">
+						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png"
+							@click="inputRecordingBlur">
 						</image>
 					</view>
 				</view>
@@ -217,7 +219,9 @@
 	import TaskList from "../../models/TaskList";
 	import state from "../../state";
 	import apiService from '../../services/api-service';
-	import { getImg } from "../../scripts/constants";
+	import {
+		getImg
+	} from "../../scripts/constants";
 	export default {
 		components: {
 			RewardBar,
@@ -254,7 +258,7 @@
 				npcDialog: "这里是NPC的对话", // 替换为实际对话
 				someoneTalk: true,
 				chattingHistory: [],
-				taskcheck:0,
+				taskcheck: 0,
 				allHistory: [],
 				showInput: false,
 				focusInput: false,
@@ -459,13 +463,13 @@
 						nextRound.dialog = nextRound.response.dialog.map(item => ({
 							role: item.role,
 							content: item.content ?? item.words,
-							voice:item.voice_url
+							voice: item.voice_url
 						}));
 
 						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
 
-						nextRound.dialog.map( item => {
-							
+						nextRound.dialog.map(item => {
+
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
 								value: item.voice_url
@@ -515,7 +519,7 @@
 				};
 				recorderManager.start({
 					lang: 'zh_CN',
-				  });
+				});
 				this.userJudgeContent = "";
 			},
 			handleRecordingDone() {
@@ -579,7 +583,7 @@
 			async dismissNpcTalk() {
 				let foundNpcMessage = false;
 				const history = this.chattingHistory;
-				console.log("this.displayedNpcChatIndex, history",this.displayedNpcChatIndex, history);
+				console.log("this.displayedNpcChatIndex, history", this.displayedNpcChatIndex, history);
 				for (let i = this.displayedNpcChatIndex + 1; i < history.length; i++) {
 					if (history[i].role !== "user") {
 						// Found the next NPC message
@@ -599,7 +603,7 @@
 					// const judgeResult = await reply(validChats, "1");
 					// const taskCheck = judgeResult.task_check;
 					// const taskCheck = judgeResult.task_check;
-					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
+					console.log("2222222111111111111this.taskcheck.", this.taskcheck);
 					await this.checkBossComplimentTask2(history, this.taskcheck);
 				}
 			},
@@ -691,10 +695,10 @@
 				recorderManager.onRecognize = (res) => {
 					this.transcript = res.result;
 				}
-				
+
 				recorderManager.onStop = async (res) => {
 					let text = res.result;
-					
+
 					// 检查是否有录音内容
 					if (!text || text.trim() === '') {
 						console.log('没有检测到语音内容');
@@ -711,11 +715,11 @@
 					// 更新transcript并添加到聊天历史
 					this.transcript = text;
 					const newMessage = {
-						role: "user", 
+						role: "user",
 						content: text,
 						shouldAnimate: false
 					};
-					
+
 					this.chattingHistory.push(newMessage);
 					this.allHistory.push(newMessage);
 
@@ -827,7 +831,8 @@
 								void this.$el.offsetWidth;
 
 								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing'); // 中文翻译
+								this.anasLoadingObj.text = this.$t(
+								'pages.battlefield.playground.analyzing'); // 中文翻译
 
 								// 使用 requestAnimationFrame 确保动画在下一帧开始
 								requestAnimationFrame(() => {
@@ -953,14 +958,14 @@
 			},
 			async checkBossComplimentTask1(judgeResult, taskCheck) {
 				if (judgeResult) {
-					
+
 					// const hasNegativeMood = judgeResult.moods.some(
 					// 	(item) => parseInt(item.mood, 10) < 0
 					// );
 					// if (totalScore >= 0) {
 					// if (!hasNegativeMood) {
 					if (taskCheck === 1 || taskCheck === 3) {
-						console.log("taskCheck11111111111111",taskCheck);
+						console.log("taskCheck11111111111111", taskCheck);
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
 						this.answerNotGoodNum = 0;
@@ -968,7 +973,7 @@
 						// 	(item) => parseInt(item.mood, 10) > 0
 						// );
 						// console.log(allPositive);
-						
+
 						// if (allPositive) {
 						if (taskCheck === 1 || taskCheck === 3) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
@@ -1041,8 +1046,8 @@
 					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 2|| taskCheck === 3) {
-						// if (chat.content.includes(goalKeyword)) {
+						if (taskCheck === 2 || taskCheck === 3) {
+							// if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;
 								this.state = "judge";
@@ -1619,6 +1624,7 @@
 		background-color: #F2BC74;
 		border-radius: 50%;
 	}
+
 	.send-sms-icon {
 		width: 28rpx;
 		height: 32rpx;
@@ -1733,7 +1739,7 @@
 		border-radius: 5px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	}
-	
+
 
 
 	.navbar.shadowed,
@@ -1786,14 +1792,14 @@
 		flex-direction: column;
 		z-index: 1000;
 	}
-	
+
 	.text-area {
-	  margin-top: 30rpx;
-	  padding: 20rpx;
-	  min-height: 100rpx;
-	  border: 1px solid #eee;
-	  border-radius: 10rpx;
-	  z-index: 1001;
+		margin-top: 30rpx;
+		padding: 20rpx;
+		min-height: 100rpx;
+		border: 1px solid #eee;
+		border-radius: 10rpx;
+		z-index: 1001;
 	}
 
 	.loading-spinner {
