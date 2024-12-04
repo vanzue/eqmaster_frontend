@@ -459,19 +459,18 @@
 						nextRound.dialog = nextRound.response.dialog.map(item => ({
 							role: item.role,
 							content: item.content ?? item.words,
+							voice:item.voice_url
 						}));
 
 						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
 
-						await Promise.all(nextRound.dialog.map(async item => {
-							const result = await apiService.getVoice(item.content, npcsMap.get(item
-								.role).voice, npcsMap.get(item.role).style, npcsMap.get(item
-								.role).rate);
+						nextRound.dialog.map( item => {
+							
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
-								value: result.message
+								value: item.voice_url
 							});
-						}));
+						});
 
 						console.log("current chatting history:", this.chattingHistory);
 						this.chattingHistory = nextRound.dialog;
@@ -1329,7 +1328,8 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 20px;
-		background: #FDEDC8;
+		/* background: #FDEDC8; */
+		background-color: #d6fcf6;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -1477,7 +1477,8 @@
 		transform: translateX(-50%);
 		width: 420rpx;
 		height: 160rpx;
-		background-color: #FDEDC8;
+		/* background-color: #FDEDC8; */
+		background-color: #d6fcf6;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -1602,8 +1603,10 @@
 		/* padding: 20rpx 0; */
 		border-radius: 40rpx;
 		/* 增加一些内边距 */
-		background-color: #FDEDC8;
-		border: 2px solid #F2BC74;
+		/* background-color: #FDEDC8; */
+		background-color: #d6fcf6;
+		/* border: 2px solid #F2BC74; */
+		border: 2px solid #90e0e7;
 		/* 可选的背景色，用于强调输入框 */
 	}
 
