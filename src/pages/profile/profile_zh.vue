@@ -76,9 +76,9 @@
 			{{ $t('pages.profile.logout') }}
 		</view>
 
-		<view class="language" @click="showLanguagePopup = true">
+		<!-- <view class="language" @click="showLanguagePopup = true">
 			{{ $t('pages.profile.language') }}
-		</view>
+		</view> -->
 
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 
@@ -450,7 +450,8 @@
 		align-items: left;
 		/* padding-top: 100rpx; */
 		width: 100%;
-		height: calc(100vh - 100rpx);
+		/* height: calc(100vh - 100rpx); */
+		height: 100vh;
 		overflow-x: hidden;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;

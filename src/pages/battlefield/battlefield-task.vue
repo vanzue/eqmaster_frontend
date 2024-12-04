@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
-			<image @click="goback" class="back-button" src="/static/battlefield/back-iconpng.png" :style="{marginTop: navBarTop + 'px'}"></image>
+			<image @click="goback" class="back-button" src="/static/back-left.png" :style="{marginTop: navBarTop + 'px'}"></image>
 			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
 				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
 				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
@@ -109,6 +109,11 @@
 		/* margin-top: 90rpx; */
 		/* margin-left: 0 20rpx; */
 		/* 确保导航栏在叠加层之上 */
+	}
+
+	.back-button {
+		width: 24rpx;
+		height: 50rpx;
 	}
 
 	.progress-bar {
