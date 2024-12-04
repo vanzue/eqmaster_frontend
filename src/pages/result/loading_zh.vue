@@ -388,7 +388,7 @@ import {
 	.image-container {
 	position: relative;
 	width: 100%;
-	height: 200px; /* 根据需要调整高度 */
+	height: 210px; /* 根据需要调整高度 */
 	overflow: hidden;
 	}
 	.splash-image {

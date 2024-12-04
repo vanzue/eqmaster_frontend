@@ -2055,7 +2055,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		z-index: 10000;
+		z-index: 1000;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
 		padding: 0 20rpx;
@@ -2090,6 +2090,7 @@
 
 	.dashboard2-card1-container {
 		padding: 20 20rpx;
+		z-index: 1000;
 		/* Add left and right padding */
 		width: 100%;
 		box-sizing: border-box;
