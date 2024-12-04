@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
-			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+			<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
 			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
 				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
 				<progress-bar :isActive="false" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
@@ -104,7 +104,7 @@
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
-		padding: 0 48rpx;
+		padding: 0 20rpx;
 		position: relative;
 		z-index: 3;
 		/* margin-top: 90rpx; */
@@ -113,8 +113,8 @@
 	}
 
 	.back-button {
-		width: 24px;
-		height: 24px;
+		width: 24rpx;
+		height: 50rpx;
 	}
 
 	.progress-bar {
