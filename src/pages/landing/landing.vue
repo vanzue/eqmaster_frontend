@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view v-if="showSplash" :class="{'splash-screen': true, 'splash-screen-hidden': splashHidden}">
-			<image class="splash-image"  :src="getImg($t('images.onboarding.splash'))" mode="aspectFill"></image>
+			<image class="splash-image"  :src="getImg($t('images.onboarding.splash'))" mode="bottom"></image>
 		</view>
 		<!-- <view class="splashBackground"></view>
 		<view v-if="showSplash" class="splash-screen">
