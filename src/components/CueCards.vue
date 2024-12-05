@@ -18,14 +18,19 @@
 			</view>
 			<view class="card-center" @click.stop>
 				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
+					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-right.webp')"></image>
 					<view class="top">
 						<text>Best Answer</text>
+						
 						<view class="top-content">
+							
 							Refine your answer for smoother conversations.
 							<!-- {{ $t('快速调整你的回答，提升质量，让对话更流畅。') }} -->
-							<!-- 快速调整你的回答，提升质量，让对话更流畅。 -->
+							<!-- 快速调整你的回答，提升质量，让对话更流畅。 <image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon-zh.webp') "></image> -->
 						</view>
 					</view>
+					
+					<!-- <image class="jewelry-image" src="/static/battlefield/jewelry.png" mode="widthFix"></image> -->
 					<view class="jewelry">
 						<image class="jewelry-image" src="/static/battlefield/jewelry.png" mode="widthFix"></image>
 						<view class="jewelry-num-dark">
@@ -34,6 +39,7 @@
 					</view>
 				</view>
 				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
+					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-right.webp')"></image>
 					<view class="top">
 						<text>Get Hint</text>
 						<view class="top-content">
@@ -58,6 +64,7 @@
 </template>
 
 <script>
+	import { getImg } from '../scripts/constants';
 	import apiService from '../services/api-service';
 	export default {
 		props: {
@@ -69,6 +76,10 @@
 				type: Boolean,
 				default: false
 			},
+			tip: {
+				type: String,
+				required: true
+			}
 		},
 		data() {
 			return {
@@ -77,6 +88,7 @@
 				isLoading: true,
 				error: null,
 				isExchanging: false,
+				getImg,
 			};
 		},
 		onLoad(option) {
@@ -277,6 +289,13 @@
 		font-size: 40rpx;
 		font-weight: 900;
 		text-align: left;
+	}
+	.tip-mark-yellow {
+		position: absolute;
+		top: 10rpx; /* Adjust as needed */
+		right: 10rpx; /* Adjust as needed */
+		width: 40rpx;
+		height: 40rpx;
 	}
 
 	/* .card-selected {

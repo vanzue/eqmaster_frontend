@@ -1,10 +1,10 @@
 <template>
 	<view class="bubble-container">
 		<text class="txt">{{ wording }}</text>
-		<text class="commit" v-if="commit !== '' && isLastElement">
+		<view class="commit-container" v-if="commit !== '' && isLastElement">
 			<image class="commit-icon" src="/static/battlefield/commit_warning-fill.png"></image>
-			{{ commit }}
-		</text>
+			<text class="commit">{{ commit }}</text>
+		</view>
 	</view>
 </template>
 
@@ -30,12 +30,10 @@
 
 <style scoped>
 	.bubble-container {
-		/* background-color: #FDEDC8; */
 		background-color: #d6fcf6;
 		border-radius: 10px;
 		padding: 12px;
 		margin-top: 48rpx;
-		/* width: 100%; */
 		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 		line-height: 1.5;
 	}
@@ -46,15 +44,22 @@
 		font-weight: normal;
 		color: #000;
 	}
-	.commit {
-		display: block;
+
+	.commit-container {
+		display: flex;
 		margin-top: 16rpx;
-		font-size: 13px;
-		color: #872E13;
 	}
+
 	.commit-icon {
 		width: 40rpx;
 		height: 40rpx;
-		margin-bottom: -10rpx;
+		margin-right: 10rpx;
+	}
+
+	.commit {
+		flex: 1;
+		font-size: 13px;
+		color: #872E13;
+		word-wrap: break-word;
 	}
 </style>
