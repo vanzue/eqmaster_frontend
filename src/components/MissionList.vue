@@ -102,7 +102,7 @@
 		height: 732rpx;
 		bottom: 0px;
 		left: 0;
-		background-color: #FDEDC8;
+		background-color: #D6FCF6;
 		display: flex;
 		flex-direction: column;
 	}
@@ -125,7 +125,7 @@
 		font-size: 40rpx;
 		font-weight: 700;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #8C5225;
+		color: #2D6985;
 	}
 
 	.card-close-image {
@@ -141,9 +141,9 @@
 		width: 686rpx;
 		height: 500rpx;
 		gap: 16rpx;
-		opacity: 0px;
+		/* opacity: 0px; */
 		margin-top: 40rpx;
-		color: #8C5225;
+		color: #2D6985;
 	}
 
 	.task-item {
@@ -162,7 +162,7 @@
 		line-height: 40rpx;
 		font-weight: 600;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #8C5225;
+		color: #2D6985;
 	}
 
 	.radiocheck-image {
