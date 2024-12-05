@@ -66,7 +66,7 @@
 			},
 			healthBarStyle(val) {
 				const percentage = val ? (val._completedRoundNum / val.totalRoundNum) * 100 : 0;
-				const color = percentage < 50 ? '#E8FFC4' : '#9EE44D';
+				const color = percentage < 50 ? '#E8FFC4' : '#90E0E7';
 				const width = `${percentage}%`;
 				return {
 					width,
@@ -215,6 +215,7 @@
 		/* 添加只在上方显示阴影的代码 */
 		overflow: visible;
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
+		border-bottom: transparent;
 	}
 
 	.health-bar-line {
