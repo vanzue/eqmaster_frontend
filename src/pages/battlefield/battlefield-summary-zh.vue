@@ -170,14 +170,14 @@
 			const evalResult = uni.getStorage({
 				key: "evalResult",
 				success: (res) => {
-					// console.log("evalResult result:", res);
-					const dbCourse = res.data.response;
+					console.log("result:", res);
+					const dbCourse = res.data.db_course;
 					const list = Object.keys(dbCourse)
 						.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
 						.sort() // 如果你想按照 comment1, comment2 的顺序排列
 						.map((key) => dbCourse[key]); // 提取这些键的值      ;
 					this.comments = list;
-					this.suggestion = res.data.response.tips
+					this.suggestion = res.data.db_course.tips
 						.map(tip => `• ${tip}`) // 在每行开头添加 bullet point
 						.join('\n'); // 用换行符连接所有行
 
