@@ -60,10 +60,10 @@
 			indicatorStyle() {
 				return {
 					position: 'absolute',
-					top: '-90%', // 垂直居中
+					top: '-220%', // 垂直居中
 					transform: 'translateY(-100%)',
 					transform: 'translateX(-50%)',
-					left: '110%', // 放置在背景条的末端
+					left: '120%', // 放置在背景条的末端
 					marginLeft: '-18rpx', // 调整圆圈与血条末端的间距
 					width: '30px',
 					height: '30px',

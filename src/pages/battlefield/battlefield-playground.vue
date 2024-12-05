@@ -3,7 +3,8 @@
 		<view class="container" @click="handleContainerClick">
 
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')" mode="aspectFill" />
-			<view class="overlay"></view>
+			<view v-if="state === 'userTalk'" class="overlay user-overlay"></view>
+			<view v-else class="overlay"></view>
 
 			<view class="navbar" :style="{ height: navBarHeight + 'px' }" :class="{ shadowed: shouldShadow }">
 				<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
@@ -1583,8 +1584,8 @@
 	.taskTooltip {
 		position: absolute;
 		z-index: 12;
-		top: 12%;
-		left: 5%;
+		top: 10.5%;
+		left: 3.5%;
 		width: 192rpx;
 		padding: 10px 5px;
 		font-size: 26rpx;
