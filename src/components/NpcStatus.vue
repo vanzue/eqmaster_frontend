@@ -120,15 +120,15 @@
 	}
 
 	.blood-container {
-		height: 20px;
+		height: 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
 
 	.health-bar-container {
-		width: 100px;
-		height: 10px;
+		width: 132rpx;
+		height: 12rpx;
 		margin-bottom: 10rpx;
 		position: relative;
 		overflow: visible;
@@ -159,7 +159,7 @@
 		position: absolute;
 		left: 33%;
 		width: 2rpx;
-		height: 10px;
+		height: 5px;
 		background-color: #ffffff;
 		z-index: 12;
 		/* 中间的白线 */
@@ -170,12 +170,12 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		height: 100px;
+		height: 80px;
 	}
 
 	.avatar {
-		width: 70px;
-		height: 70px;
+		width: 100rpx;
+		height: 100rpx;
 		border-radius: 50%;
 		background-color: #fff;
 		object-fit: cover;
@@ -186,12 +186,12 @@
 		position: absolute;
 		bottom: 8px;
 		font-size: 16px;
-		height: 22px;
+		height: 34rpx;
 		color: #fff;
 		text-align: center;
-		background-color: rgba(16, 16, 16, 0.8);
-		padding: 2px 8px;
-		border-radius: 10px;
+		background-color: rgba(16, 16, 16, 0.6);
+		padding: 6rpx 16rpx;
+		border-radius: 22rpx;
 	}
 
 	/* 指示器样式 */

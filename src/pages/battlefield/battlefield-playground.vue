@@ -1494,7 +1494,7 @@
 		align-items: center;
 		position: absolute;
 		bottom: -10rpx;
-		box-shadow: 0px 0px 4px 0px rgba(254, 211, 151, 1);
+		box-shadow: 0px 0px 4px 0px #90e0e7;
 		z-index: 12;
 	}
 

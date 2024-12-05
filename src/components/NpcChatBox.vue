@@ -63,13 +63,13 @@
 <style scoped>
 	.bubble-container {
 		background-color: #2F2F38;
-		border-radius: 10px;
+		border-radius: 32rpx;
 		padding: 50rpx 42rpx 36rpx 42rpx;
 		margin-top: 100rpx;
 		/* width: 100%; */
 		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 		/* border: 2px solid #F2BC74; */
-		line-height: 1.5;
+		/* line-height: 1.5; */
 		position: relative;
 	}
 
@@ -123,7 +123,8 @@
 	.txt {
 		text-align: left;
 		font-size: 30rpx;
-		color: #fff;
+		color: #D7D8E0;
+		line-height: 40rpx;
 	}
 
 	.name {
