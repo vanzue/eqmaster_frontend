@@ -423,6 +423,7 @@
 				this.isRecording = false;
 				// Remove the empty message from chattingHistory
 				this.chattingHistory = this.chattingHistory.filter(chat => chat.role !== 'empty-audio');
+				this.anasLoadingObj.loading = true;
 				// if (this.isCanceling) {
 				//   this.cancelRecording();
 				// } else {
@@ -763,8 +764,11 @@
 					// 发送消息进行处理
 					this.sendMessageNavShow = false;
 					try {
+						// this.anasLoadingObj.loading = true;
 						const validChats = filterChatHistory(this.allHistory);
+						// this.anasLoadingObj.loading = true;
 						const judgeResult = await reply(validChats, "1");
+						// this.anasLoadingObj.loading = true;
 						await this.handleRecorderReply(judgeResult);
 					} catch (error) {
 						console.error('处理录音回复出错:', error);
