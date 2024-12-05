@@ -32,12 +32,11 @@ export default{
 
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: left;
     }
 
     .item-container {
         margin: 32rpx 32rpx 24rpx 32rpx;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
