@@ -47,6 +47,7 @@ export default createStore({
 		characteristics: null,
 		diamondCount: 0,
 		gemCount: 0,
+		evalResult: {},
 		audios: new Map(),
 		scenario_id: 1,
 		scenarioResponse: {},
@@ -109,6 +110,9 @@ export default createStore({
 		},
 		setGemCount(state, gemCount) {
 			state.gemCount = gemCount;
+		},
+		setevalResult(state, evalResult) {
+			state.evalResult = evalResult;
 		},
 		setAudios(state, {
 			key,
@@ -178,6 +182,9 @@ export default createStore({
 		},
 		getGemCount(state) {
 			return state.gemCount;
+		},
+		getevalResult(state) {
+			return state.evalResult;
 		},
 		getAudios: (state) => (key) => {
 			return state.audios.get(key);
@@ -266,7 +273,8 @@ export default createStore({
 			commit('setCharateristics', '');
 			commit('setcourseData', {});
 			commit('setAudios', {});
-			commit('setGemCount', 0);
+			commit('evalResult', {});
+			commit('setGemCount', 0); 
 			commit('setDiamondCount', 0);
 
 			const username = uni.getStorageSync('username');
