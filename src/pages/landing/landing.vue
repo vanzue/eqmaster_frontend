@@ -425,11 +425,12 @@
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
-		top: 68vh;
+		top: 75vh;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		z-index: 6;
+		
 	}
 
 	.quizButton {
@@ -476,7 +477,7 @@
 	}
 	.third-party {
 		position: absolute;
-		bottom: 50rpx;
+		bottom: -100rpx;
 		display: block;
 		z-index: 100;
 		justify-content: center;

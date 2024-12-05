@@ -1,27 +1,36 @@
 <template>
-	<view style="background-color: #2f2f38;height: 100vh;width: 100vw;">
-		<view style="padding-top: 100rpx;padding-left: 40rpx;padding-right: 40rpx;">
-			<view class="analysis-header">
+	<view class="container">
+		<view class="header" :style="{ height: navBarHeight + 'px'}">
+			<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px'}"></image>
+			<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('pages.dashboard.moment_analysis.title') }}</text>
+			<view class="header-icon"></view>
+		</view>
+		<view class="content">
+			<!-- <view class="analysis-header">
 				<image class="back" src="../../static/dashboard/left-arrow.png" @click="goback"></image>
 				<text class="title">对话分析</text>
 				<image style="width: 64rpx;height:64rpx" src="../../static/dashboard/trash.png" @click="openModal">
 				</image>
-			</view>
+			</view> -->
 			<scroll-view scroll-y="true" class="details">
 				<ul class="detail-ul">
-					<view class="detail-title" style="padding-left: 64rpx;">{{analysisResult.analysis.title.title}}
+					<view class="detail-ui-title">
+						<image class="xinxin" src="/static/dashboard/xinxin.png"></image>
+						<view class="detail-title" style="">
+							{{analysisResult.analysis.title.title}}
+						</view>
 					</view>
-					<view class="detail-summary" style="padding-left: 64rpx;">
+					<view class="detail-summary" style="">
 						{{analysisResult.analysis.summary.summary}}
 					</view>
-					<view class="detail-summary" style="padding: 8rpx 0px 8rpx 64rpx;">你可以:</view>
+					<view class="detail-summary" style="">{{ $t('pages.dashboard.moment_analysis.youcan') }}</view>
 					<li class="detail-item" v-for="suggestion in analysisResult.analysis.suggestions">
 						{{ suggestion.point }}
 					</li>
 				</ul>
 			</scroll-view>
 			<view class="chat-history">
-				<text class="title">对话记录</text>
+				<text class="title">{{ $t('pages.dashboard.moment_analysis.chathistory') }}</text>
 				<view class="chat-list">
 					<scroll-view scroll-y="true" style="height: 594rpx">
 						<view class="history-detail">
@@ -33,25 +42,26 @@
 					</scroll-view>
 				</view>
 			</view>
+			<view class="delete" @click="openModal">{{ $t('pages.dashboard.moment_analysis.deletethismoment') }}</view>
 
 			<!-- delete model -->
 			<view v-if="isModelOpen" class="overlay">
 				<view class="delete-model">
 					<view v-if="isDeleteSuccess">
-						<view class="model-title">删除成功</view>
-						<view class="model-desc">聊天记录分析和聊天记录已删除</view>
+						<view class="model-title">{{ $t('pages.dashboard.moment_analysis.deletesuccess') }}</view>
+						<view class="model-desc">{{ $t('pages.dashboard.moment_analysis.delete_success_text') }}</view>
 						<view class="button-container">
-							<view class="button right" style="width: 446rpx" @click="goback">返回主页</view>
+							<view class="button right" style="width: 446rpx" @click="goback">{{ $t('pages.dashboard.moment_analysis.bank_home') }}</view>
 						</view>
 					</view>
 					<view v-else>
-						<view class="model-title">删除聊天记录?</view>
-						<view class="model-desc">确定要删除聊天记录分析吗?</view>
+						<view class="model-title">{{ $t('pages.dashboard.moment_analysis.delete_record') }}</view>
+						<view class="model-desc">{{ $t('pages.dashboard.moment_analysis.delete_record_analysis') }}</view>
 						<view class="button-container">
-							<view class="button left" :class="{ 'is-loading': isLoading }" @click="cancelDelete">取消
+							<view class="button left" :class="{ 'is-loading': isLoading }" @click="cancelDelete">{{ $t('index.confirm') }}
 							</view>
 							<view class="button right" @click="deleteMoment">
-								<text v-if="!isDeleting">确定</text>
+								<text v-if="!isDeleting">{{ $t('index.cancel') }}</text>
 								<view v-else class="loader"></view>
 							</view>
 						</view>
@@ -91,6 +101,14 @@
 				},
 			}
 		},
+		computed: {
+			navBarTop() {
+				return this.$store.getters.getNavBarTop;
+			},
+			navBarHeight() {
+				return this.$store.getters.getNavBarHeight;
+			},
+		},
 		onLoad(options) {
 			const {
 				analysisId
@@ -111,10 +129,14 @@
 			})
 		},
 		methods: {
-			goback() {
-				uni.navigateBack({
-					delta: 1
-				})
+			navigateToHome() {
+				if (getCurrentPages().length > 1) {
+					uni.navigateBack(); // 返回上一个页面
+				} else {
+					uni.redirectTo({
+						url: '/pages/dashboard/dashboard_zh' // 如果没有历史记录，导航到指定页面
+					});
+				}
 			},
 			openModal() {
 				this.isModelOpen = true;
@@ -139,6 +161,50 @@
 </script>
 
 <style scoped>
+	.container {
+		position: fixed;
+		background-color: #2f2f38;
+		height: 100vh;
+		width: 100%;
+		/* display: flex; */
+	}
+	.header {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 6;
+		width: 95%;
+		height: 104rpx;
+		padding: 0 32rpx;
+		/* padding-top: 82rpx; */
+	}
+
+	.header-icon {
+		width: 24rpx;
+		height: 50rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		/* text-align: center; */
+		/* margin-top: 160rpx; */
+	}
+
+	.score-title-head {
+		font-size: 40rpx;
+		font-weight: bold;
+		color: #FFFFFF;
+		z-index: 6;
+	}
+
+
 	.analysis-header {
 		display: flex;
 		flex-direction: row;
@@ -186,10 +252,12 @@
 		margin-top: 30rpx;
 		border-radius: 32rpx;
 		overflow: hidden;
+		margin: 26rpx auto;
 	}
 
 	.chat-history {
-		margin-top: 34rpx;
+		/* margin-top: 34rpx; */
+		margin: 24rpx auto;
 	}
 
 	.chat-list {
@@ -204,7 +272,19 @@
 		font-size: 40rpx;
 		font-weight: 700;
 		color: #fff;
-		line-height: 50rpx;
+		line-height: 60rpx;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		word-break: keep-all;
+		white-space: normal;
+	}
+	.xinxin {
+		width: 70rpx;
+		height:50rpx;
+		position: relative;
+		top: 5px;
 	}
 
 	.detail-summary {
@@ -212,29 +292,34 @@
 		font-weight: 400;
 		color: #fff;
 		line-height: 40rpx;
+		padding: 8rpx 0 8rpx 44rpx;
+	}	
+
+	.detail-ui-title {
+		display: flex;
 	}
 
 	.detail-ul {
-		width: 606rpx;
+		/* width: 100%; */
 		padding: 32rpx;
 		color: #fff;
 		font-size: 26rpx;
 		font-weight: 400;
 		line-height: 36rpx;
 		list-style-type: none;
-		padding-left: 0;
+		/* padding-left: 0; */
 	}
 
 	.detail-item {
 		position: relative;
-		padding-left: 64rpx;
+		padding-left: 44rpx;
 	}
 
 	.detail-item::before {
-		content: "·";
-		font-weight: bold;
+		content: "•";
+		font-weight: 900;
 		position: absolute;
-		left: 32rpx;
+		left: 16rpx;
 	}
 
 	.history-detail {
@@ -346,5 +431,17 @@
 	.right {
 		background-color: #9ee44d;
 		color: #000;
+	}
+	.delete {
+		display: block;
+		text-align: center;
+		font-family: Source Han Sans SC;
+		font-size: 30rpx;
+		font-weight: 400;
+		line-height: 44rpx;
+		text-align: center;
+		text-underline-position: from-font;
+		text-decoration-skip-ink: none;
+		color: #9EE44D;
 	}
 </style>
