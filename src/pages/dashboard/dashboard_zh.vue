@@ -1064,6 +1064,7 @@
 		display: flex;
 		flex-direction: row;
 		gap: 22rpx;
+		margin-bottom: 200rpx;
 	}
 
 	.left-history-container {
@@ -1106,10 +1107,10 @@
 		/* 避免 flex 布局干扰 */
 		flex-direction: column;
 		align-items: left;
-		height: auto;
+		height: 100vh;
 		/* width: 100%; */
 		margin-left: 20px;
-		padding-bottom: 90px;
+		/* padding-bottom: 90px; */
 	}
 
 
