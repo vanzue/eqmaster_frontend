@@ -6,6 +6,9 @@
 
 	"index.title": "情商大师",
 
+	"index.confirm": "确定",
+    "index.cancel": "取消",
+
 	"components.Nav.home": "主页",
 	"components.Nav.Battlefield": "修罗场",
 	"components.Nav.Profile": "我的",
@@ -41,7 +44,15 @@
 	"pages.dashboard.emotion.emotion": "Emotion",
 	"images.dashboard.import-button": "/static/web/dashboard/import-button-zh.webp",
 
-
+	"pages.dashboard.moment_analysis.title": "对话分析",
+	"pages.dashboard.moment_analysis.youcan": "你可以:",
+    "pages.dashboard.moment_analysis.chathistory": "对话记录",
+    "pages.dashboard.moment_analysis.deletethismoment": "删除记录",
+    "pages.dashboard.moment_analysis.deletesuccess": "删除成功",
+    "pages.dashboard.moment_analysis.delete_success_text": "聊天记录分析和聊天记录已删除",
+    "pages.dashboard.moment_analysis.bank_home": "返回主页",
+    "pages.dashboard.moment_analysis.delete_record": "删除聊天记录?",
+    "pages.dashboard.moment_analysis.delete_record_analysis": "确定要删除聊天记录分析吗?",
 
 	"pages.result.loading.splash": "接下来，\n一起来看看你的职场人格类型吧!",
     "pages.result.loading.status": "正在生成你专属的情商报告",
