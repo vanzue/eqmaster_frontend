@@ -1,7 +1,8 @@
 <template>
 	<view>
 		<view class="container" @click="handleContainerClick">
-			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')" mode="aspectFill" />
+			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')"
+				mode="aspectFill" />
 			<view class="overlay"></view>
 
 			<view class="navbar" :class="{ shadowed: shouldShadow }">
@@ -143,11 +144,12 @@
 				<view class="input-container-wrapper">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
-						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height
-							@blur="inputRecordingBlur" />
+						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent"
+							auto-height @blur="inputRecordingBlur" />
 					</view>
 					<view class="send-sms-container">
-						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png" @click="inputRecordingBlur">
+						<image class="send-sms-icon" src="/static/battlefield/send-sms-icon.png"
+							@click="inputRecordingBlur">
 						</image>
 					</view>
 				</view>
@@ -217,7 +219,9 @@
 	import TaskList from "../../models/TaskList";
 	import state from "../../state";
 	import apiService from '../../services/api-service';
-	import { getImg } from "../../scripts/constants";
+	import {
+		getImg
+	} from "../../scripts/constants";
 	export default {
 		components: {
 			RewardBar,
@@ -254,7 +258,7 @@
 				npcDialog: "这里是NPC的对话", // 替换为实际对话
 				someoneTalk: true,
 				chattingHistory: [],
-				taskcheck:0,
+				taskcheck: 0,
 				allHistory: [],
 				showInput: false,
 				focusInput: false,
@@ -459,13 +463,13 @@
 						nextRound.dialog = nextRound.response.dialog.map(item => ({
 							role: item.role,
 							content: item.content ?? item.words,
-							voice:item.voice_url
+							voice: item.voice_url
 						}));
 
 						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
 
-						nextRound.dialog.map( item => {
-							
+						nextRound.dialog.map(item => {
+
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
 								value: item.voice_url
@@ -515,7 +519,7 @@
 				};
 				recorderManager.start({
 					lang: 'zh_CN',
-				  });
+				});
 				this.userJudgeContent = "";
 			},
 			handleRecordingDone() {
@@ -579,7 +583,7 @@
 			async dismissNpcTalk() {
 				let foundNpcMessage = false;
 				const history = this.chattingHistory;
-				console.log("this.displayedNpcChatIndex, history",this.displayedNpcChatIndex, history);
+				console.log("this.displayedNpcChatIndex, history", this.displayedNpcChatIndex, history);
 				for (let i = this.displayedNpcChatIndex + 1; i < history.length; i++) {
 					if (history[i].role !== "user") {
 						// Found the next NPC message
@@ -599,374 +603,9 @@
 					// const judgeResult = await reply(validChats, "1");
 					// const taskCheck = judgeResult.task_check;
 					// const taskCheck = judgeResult.task_check;
-					console.log("2222222111111111111this.taskcheck.",this.taskcheck);
-					await this.checkBossComplimentTask2(history, this.taskcheck);
-				}
-			},
 
-			// Helper method to get NPC index by name
-			getNpcIndexByName(name) {
-				return this.npcs.findIndex((npc) => npc.characterName === name);
-			},
-			async Pass() {
-				const isPass = this.isPass; // 假设你从当前状态得知是否通过
-				const gemCount = this.calculateStars(); // 假设 this.gemCount 是当前的宝石数量
-				const diamonds = this.diamonds; // 假设 this.diamonds 是当前的钻石数量
-				this.$store.commit('setGemCount', gemCount);
-				const evaluationResult = await evalBattlefield(
-					this.allHistory,
-					isPass,
-					gemCount,
-					diamonds
-				);
-				const userId = this.$store.getters.getUserId;
-				console.log("evaluation result:", evaluationResult);
-				uni.setStorage({
-					key: "evalResult",
-					data: evaluationResult,
-					success: () => {
-						console.log("evalResult 设置成功:", evaluationResult);
-					},
-					fail: (err) => {
-						console.error("设置 evalResult 失败:", err);
-					},
-				});
-				uni.setStorage({
-					key: "gemCount",
-					data: this.gemCount,
-					success: () => {
-						console.log("gemCount 设置成功:", this.gemCount);
-					},
-					fail: (err) => {
-						console.error("设置 gemCount 失败:", err);
-					},
-				});
-				uni.setStorage({
-					key: "isPass",
-					data: this.isPass,
-					success: () => {
-						console.log("isPass 设置成功:", this.isPass);
-					},
-					fail: (err) => {
-						console.error("设置 isPass 失败:", err);
-					},
-				});
-				// 将所有 NPC 的 health 值保存到本地存储
-				const npcHealthValues = this.npcs.map((npc) => npc.health);
-				uni.setStorage({
-					key: "npcHealth",
-					data: npcHealthValues,
-					success: () => {
-						console.log("NPC health 设置成功:", npcHealthValues);
-					},
-					fail: (err) => {
-						console.error("设置 NPC health 失败:", err);
-					},
-				});
-				await this.$store.dispatch('fetchHomepageData');
-				setTimeout(() => {
-					uni.navigateTo({
-						url: "/pages/battlefield/battlefield-summary-zh",
-					});
-				}, 1000);
-			},
-			calculateStars() {
-				const totalMood = this.npcs.reduce((sum, npc) => sum + npc.health, 0);
-				const adjustedMood = totalMood; // 调整情绪值，确保为正数
-				console.log(adjustedMood);
-				if (adjustedMood >= 41 && adjustedMood <= 60) {
-					return 3; // 三颗星
-				} else if (adjustedMood >= 21 && adjustedMood <= 40) {
-					return 2; // 两颗星
-				} else if (adjustedMood >= 0 && adjustedMood <= 20) {
-					return 1; // 一颗星
-				} else {
-					return 0; // 如果调整后的情绪值小于0，返回0颗星
-				}
-			},
-			handleContainerClick() {
-				if (this.state === "NpcTalk") {
-					console.log("handleContainerClick");
-					this.dismissNpcTalk();
-				}
-				// If needed, handle clicks in other states
-			},
-
-			initRecorderManager() {
-				// 设置录音识别回调
-				recorderManager.onRecognize = (res) => {
-					this.transcript = res.result;
-				}
-				
-				recorderManager.onStop = async (res) => {
-					let text = res.result;
-					
-					// 检查是否有录音内容
-					if (!text || text.trim() === '') {
-						console.log('没有检测到语音内容');
-						this.isCanceling = true;
-						this.resetRecording();
-						uni.showToast({
-							title: "没有听清楚",
-							icon: "none"
-						});
-						this.anasLoadingObj.loading = false;
-						return;
-					}
-
-					// 更新transcript并添加到聊天历史
-					this.transcript = text;
-					const newMessage = {
-						role: "user", 
-						content: text,
-						shouldAnimate: false
-					};
-					
-					this.chattingHistory.push(newMessage);
-					this.allHistory.push(newMessage);
-
-					// 添加动画效果
-					this.$nextTick(() => {
-						setTimeout(() => {
-							newMessage.shouldAnimate = true;
-							this.anasLoadingObj.text = "正在分析中";
-						}, 50);
-					});
-
-					// 发送消息进行处理
-					this.sendMessageNavShow = false;
-					try {
-						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "1");
-						await this.handleRecorderReply(judgeResult);
-					} catch (error) {
-						console.error('处理录音回复出错:', error);
-						uni.showToast({
-							title: "处理消息失败",
-							icon: "none"
-						});
-					} finally {
-						this.anasLoadingObj.loading = false;
-					}
-				}
-			},
-			async inputRecordingBlur() {
-				this.showInput = false;
-				console.log(this.taskList);
-				if (this.inputContent !== "") {
-					this.anasLoadingObj = {
-						loading: true,
-						text: "",
-					};
-					this.userJudgeContent = "";
-					const newMessage = {
-						role: "user",
-						content: this.inputContent,
-						shouldAnimate: false,
-					};
-					this.chattingHistory.push(newMessage);
-					this.allHistory.push(newMessage);
-					this.$nextTick(() => {
-						// Force a repaint to trigger the animation
-						void this.$el.offsetWidth;
-
-						newMessage.shouldAnimate = true;
-						this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');
-
-						// 使用 requestAnimationFrame 确保动画在下一帧开始
-						requestAnimationFrame(() => {
-							setTimeout(() => {
-								// 这个空函数强制浏览器应用更改
-							}, 0);
-						});
-					});
-					try {
-						this.sendMessageNavShow = false;
-						const validChats = filterChatHistory(this.allHistory);
-						const judgeResult = await reply(validChats, "1");
-						// judgeResult = judgeResult.response;
-						// console.log("validChat:", validChat);
-						console.log("judge Result:", judgeResult);
-						this.gemCount = this.calculateStars();
-						console.log("-----------#####after judge:", this.gemCount);
-						await this.handleRecorderReply(judgeResult);
-						this.inputContent = "";
-						this.anasLoadingObj.loading = false;
-					} catch (error) {
-						this.anasLoadingObj.loading = false;
-						if (this.chattingHistory.length > 0) {
-							this.chattingHistory.pop();
-						}
-						this.anasLoadingObj.loading = false;
-						this.sendMessageNavShow = true;
-					}
-				}
-			},
-			async exchangeClick(selectedCard) {
-				// console.log(selectedCard);
-				this.cardButtonLoading = true;
-				console.log("Exchangeclick:", this.allHistory);
-				const validChats = filterChatHistory(this.allHistory);
-				console.log(validChats);
-				let replyContent = null;
-				this.userJudgeContent = "";
-				try {
-					if (selectedCard == 1) {
-						this.anasLoadingObj = {
-							loading: true,
-							text: this.$t('pages.battlefield.playground.generating'),
-						};
-						replyContent = await helpReply(validChats, "1");
-						console.log(replyContent);
-						if (replyContent.responsive) {
-							await this.$store.dispatch('fetchHomepageData');
-							this.showCardPopup = false;
-							const newMessage = {
-								role: "user",
-								content: replyContent.responsive,
-								shouldAnimate: false,
-							};
-							this.chattingHistory.push(newMessage);
-							this.allHistory.push(newMessage);
-							this.$nextTick(() => {
-								// Force a repaint to trigger the animation
-								void this.$el.offsetWidth;
-
-								newMessage.shouldAnimate = true;
-								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing'); // 中文翻译
-
-								// 使用 requestAnimationFrame 确保动画在下一帧开始
-								requestAnimationFrame(() => {
-									setTimeout(() => {
-										// 这个空函数强制浏览器应用更改
-									}, 0);
-								});
-							});
-
-							this.sendMessageNavShow = false;
-							await new Promise(resolve => setTimeout(resolve, 3000));
-							const validChatsRepy = filterChatHistory(this.allHistory);
-							const judgeResultRepy = await reply(validChatsRepy, "1");
-							await this.handleRecorderReply(judgeResultRepy);
-						} else {
-							this.sendMessageNavShow = false;
-							uni.showToast({
-								title: "回复异常",
-								icon: "none",
-								duration: 2000,
-							});
-						}
-					}
-					if (selectedCard == 2) {
-						console.log("get hint card!!!!!!!!!!1");
-						this.anasLoadingObj = {
-							loading: true,
-							text: this.$t('pages.battlefield.playground.generating'),
-						};
-						const judgeResult = await hint(validChats, "1");
-						console.log("get tips from backend:", judgeResult);
-						if (judgeResult.tips) {
-							await this.$store.dispatch('fetchHomepageData');
-							this.showCardPopup = false;
-							const newMessage2 = {
-								role: "tipping",
-								content: judgeResult.tips,
-								shouldAnimate: false,
-							};
-							this.chattingHistory.push(newMessage2);
-							this.$nextTick(() => {
-								// Force a repaint to trigger the animation
-								void this.$el.offsetWidth;
-
-								newMessage2.shouldAnimate = true;
-								this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');
-
-								// 使用 requestAnimationFrame 确保动画在下一帧开始
-								requestAnimationFrame(() => {
-									setTimeout(() => {
-										// 这个空函数强制浏览器应用更改
-									}, 0);
-								});
-							});
-						}
-					}
-					this.cardButtonLoading = false;
-					this.anasLoadingObj.loading = false;
-				} catch (error) {
-					this.anasLoadingObj.loading = false;
-					this.sendMessageNavShow = true;
-				}
-			},
-			async handleRecorderReply(judgeResult) {
-				try {
-					console.log("1111111judgeResult:", judgeResult);
-					if (judgeResult) {
-						const taskCheck = judgeResult.task_check;
-						console.log("t222222222askCheck:", taskCheck);
-						judgeResult = judgeResult.response;
-						await this.checkBossComplimentTask1(judgeResult, taskCheck);
-
-						this.updateScrollIntoView();
-
-						// 遍历 judgeResult.moods 并根据角色调整 this.mood 的值
-						judgeResult.moods.forEach((item) => {
-							const moodValue = parseInt(item.mood, 10);
-							if (item.role === "领导") {
-								this.npcs[0].health = Math.min(
-									this.npcs[0].health +
-									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
-									20
-								);
-							} else if (item.role === "同事A") {
-								this.npcs[1].health = Math.min(
-									this.npcs[1].health +
-									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
-									20
-								);
-							} else if (item.role === "同事B") {
-								this.npcs[2].health = Math.min(
-									this.npcs[2].health +
-									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
-									20
-								);
-							}
-						});
-						// 检查任何 NPC 的 health 是否 <= 0，通关失败
-						const anyNpcHealthLow = this.npcs.some((npc) => npc.health <= 0);
-						if (anyNpcHealthLow) {
-							this.isPass = false;
-							this.diamonds = 3;
-							this.isFinish = true;
-							await this.Pass();
-						}
-
-						return true; // 添加返回值，表示处理成功
-					} else {
-						throw new Error("judgeResult is undefined or null");
-					}
-				} catch (error) {
-					uni.showToast({
-						title: this.$t('pages.battlefield.playground.error'),
-						icon: "none",
-						duration: 2000,
-					});
-					if (this.chattingHistory.length > 0) {
-						this.chattingHistory.pop();
-					}
-					this.sendMessageNavShow = true;
-					return false; // 添加返回值，表示处理失败
-				}
-			},
-			async checkBossComplimentTask1(judgeResult, taskCheck) {
-				if (judgeResult) {
-					
-					// const hasNegativeMood = judgeResult.moods.some(
-					// 	(item) => parseInt(item.mood, 10) < 0
-					// );
-					// if (totalScore >= 0) {
-					// if (!hasNegativeMood) {
 					if (taskCheck === 1 || taskCheck === 3) {
-						console.log("taskCheck11111111111111",taskCheck);
+						console.log("taskCheck11111111111111", taskCheck);
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments;
 						this.answerNotGoodNum = 0;
@@ -974,7 +613,7 @@
 						// 	(item) => parseInt(item.mood, 10) > 0
 						// );
 						// console.log(allPositive);
-						
+
 						// if (allPositive) {
 						if (taskCheck === 1 || taskCheck === 3) {
 							if (!this.taskFinished && !this.taskList.getTask(0).one) {
@@ -1047,8 +686,8 @@
 					const goalKeyword = this.$t('pages.battlefield.playground.goal_keyword');
 					console.log(dialog);
 					for (let chat of dialog) {
-						if (taskCheck === 2|| taskCheck === 3) {
-						// if (chat.content.includes(goalKeyword)) {
+						if (taskCheck === 2 || taskCheck === 3) {
+							// if (chat.content.includes(goalKeyword)) {
 							if (this.taskList && this.taskList.getTask(1)) {
 								this.isGoodReply = true;
 								this.state = "judge";
@@ -1625,6 +1264,7 @@
 		background-color: #F2BC74;
 		border-radius: 50%;
 	}
+
 	.send-sms-icon {
 		width: 28rpx;
 		height: 32rpx;
@@ -1739,7 +1379,7 @@
 		border-radius: 5px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	}
-	
+
 
 
 	.navbar.shadowed,
@@ -1792,14 +1432,14 @@
 		flex-direction: column;
 		z-index: 1000;
 	}
-	
+
 	.text-area {
-	  margin-top: 30rpx;
-	  padding: 20rpx;
-	  min-height: 100rpx;
-	  border: 1px solid #eee;
-	  border-radius: 10rpx;
-	  z-index: 1001;
+		margin-top: 30rpx;
+		padding: 20rpx;
+		min-height: 100rpx;
+		border: 1px solid #eee;
+		border-radius: 10rpx;
+		z-index: 1001;
 	}
 
 	.loading-spinner {

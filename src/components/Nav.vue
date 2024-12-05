@@ -79,7 +79,7 @@
 	.nav-contation {
 		display: flex;
 		z-index: 9999;
-		height: 150rpx;
+		height: 140rpx;
 		width: 100%;
 		position: fixed;
 		bottom: 0px;
@@ -95,6 +95,8 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		padding: 0 120rpx; /* 添加左右距离 */
+		margin-top: -10rpx;
 		/* height: 150rpx;
     background-color: #252529;
     color: #252529;
@@ -123,6 +125,7 @@
 		font-size: 24rpx;
 		font-weight: 400;
 		text-align: center;
+		margin-top: 10rpx;
 	}
 
 	.highlight {

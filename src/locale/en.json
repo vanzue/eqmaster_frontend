@@ -4,6 +4,9 @@
     "locale.zh-hans": "简体中文",
     "locale.zh-hant": "繁体中文",
 
+    "index.confirm": "Confirm",
+    "index.cancel": "Cancel",
+
     "index.title": "EQoach",
     "components.Nav.home": "Home",
     "components.Nav.Battlefield": "Arena",
@@ -16,7 +19,7 @@
     "pages.landing.input_name":  "Your name",
     "pages.landing.input_name_reminder":  "Enter your name please",
     "pages.landing.get_wechatlogin": "Login",
-    "images.onboarding.splash" : "/static/web/splashEN1.webp",
+    "images.onboarding.splash" : "/static/web/splashEN.webp",
     "images.startTest": "/static/web/onboarding/startTest2.webp",
     "images.onboarding.landing": "/static/web/onboarding/landing_en.webp",
 
@@ -38,6 +41,17 @@
     "pages.dashboard.emotion.monkey": "Self-regulation Hill",
     "pages.dashboard.emotion.emotion": "Emotion",
     "images.dashboard.import-button": "/static/web/dashboard/import-button.webp",
+
+    "pages.dashboard.moment_analysis.title": "Moment Analysis",
+    "pages.dashboard.moment_analysis.youcan": "You can:",
+    "pages.dashboard.moment_analysis.chathistory": "Chat History",
+    "pages.dashboard.moment_analysis.deletethismoment": "Delete this moment",
+    "pages.dashboard.moment_analysis.deletesuccess": "Deleted successfully",
+    "pages.dashboard.moment_analysis.delete_success_text": "Chat analysis and chat history deleted",
+    "pages.dashboard.moment_analysis.bank_home": "Back to Home",
+    "pages.dashboard.moment_analysis.delete_record": "Delete chat history?",
+    "pages.dashboard.moment_analysis.delete_record_analysis": "Are you sure you want to delete chat history analysis?",
+
 
     "pages.result.loading.splash": "Next\n Let's take a look at your workplace personality type!",
     "pages.result.loading.status": "Generating your own EQ report",

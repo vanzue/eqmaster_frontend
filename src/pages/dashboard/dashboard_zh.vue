@@ -6,12 +6,13 @@
 			<div></div>
 			<div></div>
 		</view>
-		<view v-else>
+		<view v-else class="content-box">
 			<view v-if="currentView === 'dashboard'" class="content">
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
-					<text class="score-title-head">{{ $t('pages.dashboard.morning') }}, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
+					<text class="score-title-head">{{ $t('pages.dashboard.morning') }},
+						{{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
 					<view class="character-view" @click="navigateToResult">
@@ -62,14 +63,14 @@
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" :key="index"
 									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
-									@click="navigateToAnalysis(item)">
+									@tap="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList" :key="index"
 								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
-								@click="navigateToAnalysis(item)">
+								@tap="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
 					</view>
@@ -89,12 +90,14 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
+								mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')"
+								mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
@@ -104,7 +107,8 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
+					<view class="dashboard2-card1"
+						:style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -130,12 +134,11 @@
 						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
-						<SProgressBar v-if="courseData"  class="container-sprogress" 
-						:finish-components="courseData.course_result.length+1"
-						:total-components="courseData.course_list.length"
-						:star-ratings="courseData.course_result.map(item => item.result)"
-						:level-names="courseData.course_list.map(item => item.title)"
-						/>
+						<SProgressBar v-if="courseData" class="container-sprogress"
+							:finish-components="courseData.course_result.length+1"
+							:total-components="courseData.course_list.length"
+							:star-ratings="courseData.course_result.map(item => item.result)"
+							:level-names="courseData.course_list.map(item => item.title)" />
 						<!-- 
 
 						
@@ -172,7 +175,9 @@
 	import {
 		illustrationSrc
 	} from '../../scripts/illustrationHelper_zh';
-	import { getImg } from '../../scripts/constants';
+	import {
+		getImg
+	} from '../../scripts/constants';
 	import locale from '@/locale';
 
 	export default {
@@ -373,13 +378,13 @@
 					case 'capybara': //水豚
 						return this.$t('pages.dashboard.emotion.capybara');
 					case 'hedgehog': //刺猬
-					return this.$t('pages.dashboard.emotion.hedgehog');
+						return this.$t('pages.dashboard.emotion.hedgehog');
 					case 'coyote': //狼
-					return this.$t('pages.dashboard.emotion.coyote');
+						return this.$t('pages.dashboard.emotion.coyote');
 					case 'ostrich': //鸵鸟
-					return this.$t('pages.dashboard.emotion.ostrich');
+						return this.$t('pages.dashboard.emotion.ostrich');
 					case 'monkey':
-					return this.$t('pages.dashboard.emotion.monkey');
+						return this.$t('pages.dashboard.emotion.monkey');
 					default:
 						return 'Emotion'; // Default text if animal is not recognized
 				}
@@ -389,17 +394,17 @@
 				console.log('jobid:', this.jobId);
 				console.log('results for backgrounds:', scores);
 				const maxScore = Math.max(
-					Number(scores.perception_score) || 0, 
-					Number(scores.self_regulation_score) || 0, 
+					Number(scores.perception_score) || 0,
+					Number(scores.self_regulation_score) || 0,
 					Number(scores.social_skill_score) || 0,
-					Number(scores.empathy_score) || 0, 
+					Number(scores.empathy_score) || 0,
 					Number(scores.motivation_score) || 0
 				);
 				const minScore = Math.min(
-					Number(scores.perception_score) || 0, 
-					Number(scores.self_regulation_score) || 0, 
+					Number(scores.perception_score) || 0,
+					Number(scores.self_regulation_score) || 0,
 					Number(scores.social_skill_score) || 0,
-					Number(scores.empathy_score) || 0, 
+					Number(scores.empathy_score) || 0,
 					Number(scores.motivation_score) || 0
 				);
 				console.log('@@@@@@@@@@@@最高分:', maxScore);
@@ -514,7 +519,7 @@
 			this.$store.dispatch('fetchcourseData');
 			// console.log('…………^-^Course Data:', this.courseData)
 			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
-			
+
 			// const evalResult = uni.getStorage({
 			// 	key: "evalResult",
 			// 	success: (res) => {
@@ -528,7 +533,7 @@
 			// 		this.suggestion = res.data.db_course.tips.join('\n');
 			// 	},
 			// });
-			
+
 
 			// await this.getBattlefield();
 		},
@@ -605,11 +610,12 @@
 				});
 			},
 			navigateToAnalysis(analysis) {
+				console.log("navigate To analysis....");
 				uni.setStorage({
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.reLaunch({
+						uni.navigateTo({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
@@ -756,7 +762,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
+						url: apiService.baseURL + `/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -803,7 +809,7 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
+						url: apiService.baseURL + `/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -1058,6 +1064,7 @@
 		display: flex;
 		flex-direction: row;
 		gap: 22rpx;
+		margin-bottom: 200rpx;
 	}
 
 	.left-history-container {
@@ -1086,6 +1093,11 @@
 		width: 100%;
 		/* height: calc(100vh - 150rpx); */
 		height: 100vh;
+		/* overflow-y: auto; */
+		/* -webkit-overflow-scrolling: touch; */
+	}
+	.content-box {
+		position: relative;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -1095,8 +1107,10 @@
 		/* 避免 flex 布局干扰 */
 		flex-direction: column;
 		align-items: left;
+		height: 100vh;
 		/* width: 100%; */
 		margin-left: 20px;
+		/* padding-bottom: 90px; */
 	}
 
 

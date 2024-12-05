@@ -3,10 +3,11 @@
 		<view class="container" @click="handleContainerClick">
 
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')" mode="aspectFill" />
-			<view class="overlay"></view>
+			<view v-if="state === 'userTalk'" class="overlay user-overlay"></view>
+			<view v-else class="overlay"></view>
 
 			<view class="navbar" :style="{ height: navBarHeight + 'px' }" :class="{ shadowed: shouldShadow }">
-				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+				<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
 				<!-- #ifdef MP-WEIXIN -->
 				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList" :style="{marginTop: navBarTop + 'px'}"></image>
 				<!-- #endif -->
@@ -30,8 +31,8 @@
 					:characterName="npc.characterName"></npc-status>
 			</view>
 
-			<view class="chat-container" :class="{ shadowed: shouldShadow }" v-if="state !== 'NpcTalk'">
-				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true">
+			<view class="chat-container" v-if="state !== 'NpcTalk'">
+				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true" :scroll-top="scrollTop">
 					<view v-for="(chat, index) in displayedMessages" class="chat-item" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
                 // ['领导', '同事A', '同事B'].includes(
@@ -51,6 +52,7 @@
 							<tipping-chat-box :key="'tipping' + index" :tip="chat.content"></tipping-chat-box>
 						</view>
 						<view v-else-if="chat.role === 'empty'" :class="['message-wrapper']"></view>
+						<view v-else-if="chat.role === 'empty-audio'" :class="['message-wrapper-empty']"></view>
 					</view>
 					<view class="loading-container" v-if="anasLoadingObj.loading">
 						<image class="loading-icon" src="/static/battlefield/loading.png"></image>
@@ -69,23 +71,25 @@
 
 			<!-- 录音弹框 -->
 			<!-- avoid opacity inheriting -->
-			<view v-if="isRecording" class="recording-box">
-				<text class="timer">{{ remainingTime }}''</text>
-				<view class="waveform">
-					<!-- 声波动画 -->
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
-					<view class="wave"></view>
+			<view class="popup-overlay" v-if="isRecording" @click="handleRecordingDone">
+				<view class="recording-box">
+					<text class="timer">{{ remainingTime }}''</text>
+					<view class="waveform">
+						<!-- 声波动画 -->
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+						<view class="wave"></view>
+					</view>
+	
+					<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
 				</view>
-
-				<text class="cancel-text">{{ $t('pages.battlefield.playground.submit_or_cancel') }}</text>
 			</view>
 
 			<view
 				v-if="state === 'userTalk' && showToolTips && isTooltipVisible && (showHintTooltip || showRecordTooltip || showTaskTooltip)"
-				class="tooltipOverlay" @click="hideTooltip">
+				class="tooltipOverlay" @click.stop="hideTooltip">
 			</view>
 			<!-- tooltip -->
 			<!-- tooltip for record -->
@@ -120,24 +124,23 @@
 				{{ $t('pages.battlefield.playground.help') }}
 			</view>
 
-
-			<view class="player-action-container" :class="{ shadowed: shouldShadow }"
-				v-if="state !== 'NpcTalk' && sendMessageNavShow">
-				<view class="action-item" v-if="!isRecording" @click="handleClickInput()">
+			<!-- 操作按钮组 -->
+			<view class="player-action-container"
+				v-if="state !== 'NpcTalk' && sendMessageNavShow" :style="{ zIndex: isRecording ? 1000 : 10 }">
+				<view class="action-item" v-if="!isRecording" @click.stop="handleClickInput()">
 					<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 				</view>
 
 				<!-- #ifndef H5 -->
 				<view class="middle-container">
 					<view class="action-item action-item-middle" @touchstart="handleClickRecording"
-						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click="hideTooltip">
+						@touchend="handleRecordingDone" @touchmove="handleTouchMove" @click.stop="hideTooltip">
 						<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
 					</view>
 				</view>
 				<!-- #endif -->
-				<view class="action-item" v-if="!isRecording">
-					<image class="action-icon" src="/static/battlefield/light.svg" @click="clickHintButton">
-					</image>
+				<view class="action-item" v-if="!isRecording" @click.stop="clickHintButton">
+					<image class="action-icon" src="/static/battlefield/light.svg"></image>
 				</view>
 			</view>
 
@@ -146,7 +149,7 @@
 			</view>
 
 			<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-				<view class="input-container-wrapper" :style="{position: showKeyboardInput ? 'unset' : 'fixed'}">
+				<view class="input-container-wrapper" :style="{position: showKeyboardInput ? 'unset' : 'fixed', marginBottom: showKeyboardInput ? '24rpx' : ''}">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
 						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height @focus="scrollToInput" />
@@ -267,7 +270,6 @@
 				isPass: false, // 初始化 isPass 值，可以是 true 或 false
 				diamonds: 0,
 				tempFilePath: "", // 临时录音文件路径
-				isRecording: false, // Controls the display state of left and right icons
 				getBattlefieldAvatar,
 				showCardPopup: false,
 				cardButtonLoading: false,
@@ -382,6 +384,11 @@
 			handleClickRecording(e) {
 				// console.log("click start , isRecording: ", this.isRecording)
 				this.isRecording = true;
+				const newMessage = {
+					role: "empty-audio",
+					content: 'empty-audio',
+				};
+				this.chattingHistory.push(newMessage);
 				this.showInput = false;
 				this.inputContent = "";
 				this.isCanceling = false;
@@ -414,7 +421,8 @@
 				recorderManager.stop();
 				clearInterval(this.countdownInterval);
 				this.isRecording = false;
-
+				// Remove the empty message from chattingHistory
+				this.chattingHistory = this.chattingHistory.filter(chat => chat.role !== 'empty-audio');
 				// if (this.isCanceling) {
 				//   this.cancelRecording();
 				// } else {
@@ -556,7 +564,6 @@
 			},
 			// showInput = true; focusInput = true;
 			handleClickInput() {
-				console.log(555);
 				this.showInput = true;
 				this.focusInput = true;
 				this.inputContent = "";
@@ -567,7 +574,8 @@
 			hint() {
 				console.log("Choose hint card");
 			},
-			clickHintButton() {
+			clickHintButton(event) {
+				event.stopPropagation();
 				this.state = "hint";
 				this.showCardPopup = true;
 				this.showHintTooltip = false;
@@ -1277,7 +1285,8 @@
 					chat.role === "Sam" ||
 					chat.role === "Anna" ||
 					chat.role === "tipping" ||
-					chat.role === "empty"
+					chat.role === "empty" ||
+					chat.role === "empty-audio"
 				);
 				// console.log("displayedMessages", userAndNpcChats);
 				this.gemCount = this.calculateStars();
@@ -1362,9 +1371,9 @@
 	}
 
 	.back-button {
-		width: 24px;
-		height: 24px;
-		margin-left: 20rpx;
+		width: 24rpx;
+		height: 50rpx;
+		/* margin-left: 20rpx; */
 	}
 
 	.content {
@@ -1501,7 +1510,7 @@
 		align-items: center;
 		position: absolute;
 		bottom: -10rpx;
-		box-shadow: 0px 0px 4px 0px rgba(254, 211, 151, 1);
+		box-shadow: 0px 0px 4px 0px #90e0e7;
 		z-index: 12;
 	}
 
@@ -1578,12 +1587,12 @@
 		border-style: solid;
 		border-color: rgba(16, 16, 16, 0.4) transparent transparent transparent;
 	}
-
+	
 	.taskTooltip {
 		position: absolute;
 		z-index: 12;
-		top: 12%;
-		right: 3.2%;
+		top: 10.5%;
+		left: 3.5%;
 		width: 192rpx;
 		padding: 10px 5px;
 		font-size: 26rpx;
@@ -1618,7 +1627,8 @@
 	.recording-box {
 		position: absolute;
 		z-index: 12;
-		top: 76%;
+		/* top: 76%; */
+		bottom: 298rpx;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 420rpx;
@@ -1638,7 +1648,7 @@
 		top: 20%;
 		width: 80%;
 		height: 120rpx;
-		margin-bottom: 20rpx;
+		/* margin-bottom: 20rpx; */
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: center;
@@ -1656,7 +1666,7 @@
 
 	.cancel-text {
 		position: relative;
-		top: 50%;
+		top: 60%;
 		font-size: 26rpx;
 		line-height: 34rpx;
 		color: white;
@@ -1822,6 +1832,13 @@
 		transform: translateX(-100%);
 		transition: opacity 0.5s ease-out,
 			transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+	}
+	.message-wrapper-empty {
+		opacity: 0;
+		transform: translateX(-100%);
+		transition: opacity 0.5s ease-out,
+			transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+		height: 300px;
 	}
 
 	.message-wrapper.animate {

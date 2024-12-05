@@ -36,12 +36,12 @@
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
-		width: 250rpx;
+		width: 190rpx;
 		background-color: rgba(16, 16, 16, 0.4);
 		/* 半透明背景 */
 		border-radius: 50rpx;
 		/* 圆角背景 */
-		padding: 10px 20px;
+		padding: 10px 46rpx;
 		/* 内边距 */
 	}
 

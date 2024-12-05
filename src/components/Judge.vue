@@ -232,7 +232,7 @@
 		position: absolute;
 		left: 50%;
 		width: 2rpx;
-		height: 10px;
+		height: 10rpx;
 		background-color: #ffffff;
 		z-index: 3;
 		/* 中间的白线 */
