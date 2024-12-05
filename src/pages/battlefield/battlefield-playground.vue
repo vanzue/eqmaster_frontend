@@ -504,7 +504,6 @@
 
 						console.log("current chatting history:", this.chattingHistory);
 						this.chattingHistory = nextRound.dialog;
-						this.taskcheck = nextRound.taskcheck;
 						this.allHistory = [...this.allHistory, ...nextRound.dialog];
 						console.log("after concat, chatting history:", this.chattingHistory);
 
@@ -1181,6 +1180,7 @@
 						this.taskFinished = true;
 						this.isPass = true;
 						taskCompleted = false;
+						await this.Pass();
 					}
 					console.log("243234232this.taskFinished", this.taskFinished);
 				} else {
