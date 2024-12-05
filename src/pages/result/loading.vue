@@ -1,7 +1,7 @@
 <template>
 	<view class="container" @touchmove.prevent>
 		<view class="splash-screen">
-			<text class="splash-text">Now, let's see your EQ report!</text>
+			<text class="splash-text">Now, lets see your workplace personality type!</text>
 			<view class="image-container">
 				<image class="splash-image" :src="getImg('/static/web/cta-new.webp')" mode="widthFix"
 					:style="{ left: splashImageLeft1 + 'rpx' }"></image>
