@@ -18,7 +18,7 @@
 			</view>
 			<view class="card-center" @click.stop>
 				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
-					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-right.webp')"></image>
+					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-right1.webp')"></image>
 					<view class="top">
 						<text>Best Answer</text>
 						
@@ -39,7 +39,7 @@
 					</view>
 				</view>
 				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
-					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-right.webp')"></image>
+					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-left1.webp')"></image>
 					<view class="top">
 						<text>Get Hint</text>
 						<view class="top-content">
@@ -292,10 +292,10 @@
 	}
 	.tip-mark-yellow {
 		position: absolute;
-		top: 10rpx; /* Adjust as needed */
+		top: 70rpx; /* Adjust as needed */
 		right: 10rpx; /* Adjust as needed */
-		width: 40rpx;
-		height: 40rpx;
+		width: 200rpx;
+		height: 220rpx;
 	}
 
 	/* .card-selected {
