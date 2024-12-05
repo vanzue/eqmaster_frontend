@@ -55,13 +55,15 @@
 						</view>
 					</view>
 					<view v-else>
-						<view class="model-title">{{ $t('pages.dashboard.moment_analysis.delete_record') }}</view>
-						<view class="model-desc">{{ $t('pages.dashboard.moment_analysis.delete_record_analysis') }}</view>
+						<view class="overlay-content">
+							<view class="model-title">{{ $t('pages.dashboard.moment_analysis.delete_record') }}</view>
+							<view class="model-desc">{{ $t('pages.dashboard.moment_analysis.delete_record_analysis') }}</view>
+						</view>
 						<view class="button-container">
-							<view class="button left" :class="{ 'is-loading': isLoading }" @click="cancelDelete">{{ $t('index.confirm') }}
+							<view class="button left" :class="{ 'is-loading': isLoading }" @click="cancelDelete">{{ $t('index.cancel') }}
 							</view>
 							<view class="button right" @click="deleteMoment">
-								<text v-if="!isDeleting">{{ $t('index.cancel') }}</text>
+								<text v-if="!isDeleting">{{ $t('index.confirm') }}</text>
 								<view v-else class="loader"></view>
 							</view>
 						</view>
@@ -162,9 +164,9 @@
 
 <style scoped>
 	.container {
-		position: fixed;
+		position: relative;
 		background-color: #2f2f38;
-		height: 100vh;
+		height: auto;
 		width: 100%;
 		/* display: flex; */
 	}
@@ -175,9 +177,9 @@
 		justify-content: space-between;
 		align-items: center;
 		z-index: 6;
-		width: 95%;
+		width: 100%;
 		height: 104rpx;
-		padding: 0 32rpx;
+		/* padding: 0 32rpx; */
 		/* padding-top: 82rpx; */
 	}
 
@@ -187,6 +189,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		padding-left: 32rpx;
 	}
 
 	.content {
@@ -356,7 +359,7 @@
 	}
 
 	.overlay {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100vw;
@@ -375,9 +378,12 @@
 		background-color: #2f2f38;
 		border-radius: 32rpx;
 		box-shadow: 0px 16rpx 72rpx 0px #00000029;
-		padding-left: 48rpx;
+		/* padding-left: 48rpx; */
 	}
 
+	.overlay-content {
+		padding: 0 32rpx;
+	}
 	.model-title {
 		width: 542rpx;
 		height: 96rpx;
@@ -409,6 +415,7 @@
 		flex-direction: row;
 		gap: 12px;
 		margin-top: 24rpx;
+		justify-content: center;
 	}
 
 	.button {
@@ -443,5 +450,6 @@
 		text-underline-position: from-font;
 		text-decoration-skip-ink: none;
 		color: #9EE44D;
+		margin-bottom: 54rpx;
 	}
 </style>
