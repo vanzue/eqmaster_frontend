@@ -624,6 +624,12 @@
 				uni.setStorage({
 					key: "evalResult",
 					data: evaluationResult,
+					success: () => {
+						console.log("evalResult 设置成功:", evaluationResult);
+					},
+					fail: (err) => {
+						console.error("设置 evalResult 失败:", err);
+					},
 				});
 				uni.setStorage({
 					key: "gemCount",

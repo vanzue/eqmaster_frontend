@@ -171,13 +171,15 @@
 				key: "evalResult",
 				success: (res) => {
 					console.log("result:", res);
-					const dbCourse = res.data.db_course;
+					// const dbCourse = res.data.db_course;
+					const dbCourse = res.data.response;
 					const list = Object.keys(dbCourse)
 						.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
 						.sort() // 如果你想按照 comment1, comment2 的顺序排列
 						.map((key) => dbCourse[key]); // 提取这些键的值      ;
+					console.log("list:", list);
 					this.comments = list;
-					this.suggestion = res.data.db_course.tips
+					this.suggestion = res.data.response.tips
 						.map(tip => `• ${tip}`) // 在每行开头添加 bullet point
 						.join('\n'); // 用换行符连接所有行
 
