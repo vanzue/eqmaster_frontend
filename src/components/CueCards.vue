@@ -293,9 +293,9 @@
 	.tip-mark-yellow {
 		position: absolute;
 		top: 70rpx; /* Adjust as needed */
-		right: 10rpx; /* Adjust as needed */
+		right: 0rpx; /* Adjust as needed */
 		width: 200rpx;
-		height: 220rpx;
+		height: 240rpx;
 	}
 
 	/* .card-selected {
