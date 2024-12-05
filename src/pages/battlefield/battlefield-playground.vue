@@ -6,7 +6,7 @@
 			<view class="overlay"></view>
 
 			<view class="navbar" :style="{ height: navBarHeight + 'px' }" :class="{ shadowed: shouldShadow }">
-				<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
+				<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
 				<!-- #ifdef MP-WEIXIN -->
 				<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList" :style="{marginTop: navBarTop + 'px'}"></image>
 				<!-- #endif -->
@@ -31,7 +31,7 @@
 			</view>
 
 			<view class="chat-container" v-if="state !== 'NpcTalk'">
-				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true">
+				<scroll-view class="chat-history-container" scroll-y ref="chatHistoryContainer" :scroll-into-view="scrollIntoViewId" :show-scrollbar="false" :enable-passive="true" :scroll-top="scrollTop">
 					<view v-for="(chat, index) in displayedMessages" class="chat-item" :key="index" :id="'chat-item-' + index">
 						<npc-chat-box v-if="
                 // ['领导', '同事A', '同事B'].includes(
@@ -51,6 +51,7 @@
 							<tipping-chat-box :key="'tipping' + index" :tip="chat.content"></tipping-chat-box>
 						</view>
 						<view v-else-if="chat.role === 'empty'" :class="['message-wrapper']"></view>
+						<view v-else-if="chat.role === 'empty-audio'" :class="['message-wrapper-empty']"></view>
 					</view>
 					<view class="loading-container" v-if="anasLoadingObj.loading">
 						<image class="loading-icon" src="/static/battlefield/loading.png"></image>
@@ -122,7 +123,7 @@
 				{{ $t('pages.battlefield.playground.help') }}
 			</view>
 
-
+			<!-- 操作按钮组 -->
 			<view class="player-action-container"
 				v-if="state !== 'NpcTalk' && sendMessageNavShow" :style="{ zIndex: isRecording ? 1000 : 10 }">
 				<view class="action-item" v-if="!isRecording" @click.stop="handleClickInput()">
@@ -147,7 +148,7 @@
 			</view>
 
 			<view class="popup-overlay" v-if="showInput" @click="showInput = false">
-				<view class="input-container-wrapper" :style="{position: showKeyboardInput ? 'unset' : 'fixed'}">
+				<view class="input-container-wrapper" :style="{position: showKeyboardInput ? 'unset' : 'fixed', marginBottom: showKeyboardInput ? '24rpx' : ''}">
 					<view class="input-container" @click.stop>
 						<!-- <input type="text" :focus="focusInput" placeholder="请输入..." /> -->
 						<textarea :placeholder="$t('pages.battlefield.playground.type_in')" v-model="inputContent" auto-height @focus="scrollToInput" />
@@ -382,6 +383,11 @@
 			handleClickRecording(e) {
 				// console.log("click start , isRecording: ", this.isRecording)
 				this.isRecording = true;
+				const newMessage = {
+					role: "empty-audio",
+					content: 'empty-audio',
+				};
+				this.chattingHistory.push(newMessage);
 				this.showInput = false;
 				this.inputContent = "";
 				this.isCanceling = false;
@@ -414,7 +420,8 @@
 				recorderManager.stop();
 				clearInterval(this.countdownInterval);
 				this.isRecording = false;
-
+				// Remove the empty message from chattingHistory
+				this.chattingHistory = this.chattingHistory.filter(chat => chat.role !== 'empty-audio');
 				// if (this.isCanceling) {
 				//   this.cancelRecording();
 				// } else {
@@ -1270,7 +1277,8 @@
 					chat.role === "Sam" ||
 					chat.role === "Anna" ||
 					chat.role === "tipping" ||
-					chat.role === "empty"
+					chat.role === "empty" ||
+					chat.role === "empty-audio"
 				);
 				// console.log("displayedMessages", userAndNpcChats);
 				this.gemCount = this.calculateStars();
@@ -1355,9 +1363,9 @@
 	}
 
 	.back-button {
-		width: 24px;
-		height: 24px;
-		margin-left: 20rpx;
+		width: 24rpx;
+		height: 50rpx;
+		/* margin-left: 20rpx; */
 	}
 
 	.content {
@@ -1816,6 +1824,13 @@
 		transform: translateX(-100%);
 		transition: opacity 0.5s ease-out,
 			transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+	}
+	.message-wrapper-empty {
+		opacity: 0;
+		transform: translateX(-100%);
+		transition: opacity 0.5s ease-out,
+			transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+		height: 300px;
 	}
 
 	.message-wrapper.animate {
