@@ -169,6 +169,9 @@
 		line-height: 50px;
 		text-align: center;
 		border: none;
+		outline: none;
+		-webkit-appearance: none;
+		appearance: none;
 	}
 	.judge-action-button[disabled] {
 		opacity: 50%;
@@ -209,7 +212,7 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.3);
+		/* background-color: rgba(0, 0, 0, 0.3); */
 		border-radius: 5px;
 		position: relative;
 		overflow: visible;
@@ -225,6 +228,7 @@
 		left: 0;
 		/* 添加只在上方显示阴影的代码 */
 		overflow: visible;
+		border: 1.2px solid #E8FFC4;
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
 	}
 	
