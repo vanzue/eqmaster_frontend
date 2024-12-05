@@ -66,7 +66,7 @@
 			},
 			healthBarStyle(val) {
 				const percentage = val ? (val._completedRoundNum / val.totalRoundNum) * 100 : 0;
-				const color = percentage < 50 ? '#E8FFC4' : '#9EE44D';
+				const color = percentage < 50 ? '#E8FFC4' : '#90E0E7';
 				const width = `${percentage}%`;
 				return {
 					width,
@@ -102,7 +102,7 @@
 		height: 732rpx;
 		bottom: 0px;
 		left: 0;
-		background-color: #FDEDC8;
+		background-color: #D6FCF6;
 		display: flex;
 		flex-direction: column;
 	}
@@ -125,7 +125,7 @@
 		font-size: 40rpx;
 		font-weight: 700;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #8C5225;
+		color: #2D6985;
 	}
 
 	.card-close-image {
@@ -141,9 +141,9 @@
 		width: 686rpx;
 		height: 500rpx;
 		gap: 16rpx;
-		opacity: 0px;
+		/* opacity: 0px; */
 		margin-top: 40rpx;
-		color: #8C5225;
+		color: #2D6985;
 	}
 
 	.task-item {
@@ -162,7 +162,7 @@
 		line-height: 40rpx;
 		font-weight: 600;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #8C5225;
+		color: #2D6985;
 	}
 
 	.radiocheck-image {
@@ -215,6 +215,7 @@
 		/* 添加只在上方显示阴影的代码 */
 		overflow: visible;
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
+		border-bottom: transparent;
 	}
 
 	.health-bar-line {

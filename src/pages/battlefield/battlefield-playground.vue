@@ -650,6 +650,12 @@
 				uni.setStorage({
 					key: "evalResult",
 					data: evaluationResult,
+					success: () => {
+						console.log("evalResult 设置成功:", evaluationResult);
+					},
+					fail: (err) => {
+						console.error("设置 evalResult 失败:", err);
+					},
 				});
 				uni.setStorage({
 					key: "gemCount",
@@ -1064,7 +1070,7 @@
 							// Add a 3-second delay before going to the next round
 							setTimeout(async () => {
 								await this.gotoNextRound();
-							}, 3000);
+							}, 5000);
 						} else {
 							this.isGoodReply = false;
 							this.isTooltipVisible = true;
