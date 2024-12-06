@@ -54,6 +54,9 @@
 						});
 					}
 					this.$store.commit('setHomeNavName', 'dashboard');
+					uni.setNavigationBarTitle({
+						title: this.$t('components.Nav.home'),
+					});
 					// this.$emit('switchHomeView', "dashboard");
 				}
 				if (val === 'Battlefield') {
@@ -63,12 +66,18 @@
 						});
 					}
 					this.$store.commit('setHomeNavName', 'dashboard2');
+					uni.setNavigationBarTitle({
+						title: this.$t('components.Nav.Battlefield'),
+					});
 					// this.$emit('switchHomeView', "dashboard2");
 
 				}
 				if (val === 'Profile') {
 					uni.reLaunch({
 						url: `/pages/profile/profile_zh` // 添加查询参数
+					});
+					uni.setNavigationBarTitle({
+						title: this.$t('components.Nav.Profile'),
 					});
 				}
 			}

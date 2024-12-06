@@ -449,10 +449,10 @@
 					ctx.closePath();
 
 					// ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; // 半透明黑色
+					ctx.fillStyle = isCompleted ? '#232329' : '#2B2B34'; // 半透明黑色
 					ctx.fill();
 
 					// 添加关卡文本
-					ctx.fillStyle = isCompleted ? '#232329' : '#2B2B34'; // 添加深色背景
 					ctx.fill();
 					ctx.font = '12px Arial';
 					ctx.fillStyle = isCompleted ? 'white' : 'rgba(255, 255, 255, 0.3)'; // 未完成时设置30%透明度的白色

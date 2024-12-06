@@ -2078,6 +2078,7 @@
 
 	.dashboard2-scrollable-content {
 		z-index: 999;
+		transform: translateZ(-1);
 		padding-top: 352rpx;
 		/* 其他样式 */
 	}
