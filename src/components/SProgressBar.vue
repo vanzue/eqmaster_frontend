@@ -247,9 +247,9 @@
 				const yOffset = this.yOffset;
 
 				ctx.clearRect(0, 0, width, height);
-				ctx.save(); // Save the current state
-				// 调整绘制偏移，使图形居中
-				ctx.translate(0, 0);
+				ctx.save();
+				// Adjust the translate position if needed
+				ctx.translate(0, 8); // Move the entire drawing down by 10 pixels
 
 				// 绘制所有路径
 				for (let i = 0; i < this.totalComponents; i++) {
@@ -300,7 +300,13 @@
 						ctx.fillStyle = 'white';
 						ctx.textAlign = 'right';
 						ctx.textBaseline = 'middle';
-						ctx.fillText('LEVEL 1', lineStartX - 10, lineY);
+						ctx.fillText('LEVEL', lineStartX - 20, lineY);
+						
+						ctx.font = 'bold 40px Arial';
+						ctx.fillStyle = 'white';
+						ctx.textAlign = 'right';
+						ctx.textBaseline = 'middle';
+						ctx.fillText('1', lineStartX + 8, lineY-5);
 
 						// 绘制绿色线段
 						ctx.beginPath();
@@ -603,7 +609,7 @@
 				if (Math.sqrt(dx * dx + dy * dy) > radius) {
 					return false;
 				}
-				// 进���步判断点是否在六边形内
+				// 进步判断点是否在六边形内
 				const angle = Math.atan2(dy, dx);
 				const sector = Math.floor((angle + Math.PI) / (Math.PI / 3));
 				const distance = Math.abs(dx * Math.sin(sector * Math.PI / 3) - dy * Math.cos(sector * Math.PI / 3));
