@@ -2,10 +2,12 @@
 	<view class="tip-container">
 		<!-- <image class="tip-background" src="/static/battlefield/question-mark.png" mode="widthFix"></image> -->
 		<view class="tip-content">
-			<image class="tip-mark" src="/static/battlefield/tip-yellow-zh.svg"></image>
+			<!-- <image class="tip-mark" src="/static/battlefield/tip-yellow-zh.svg"></image> -->
+			<image class="tip-mark" src="/static/battlefield/tip-yellow.svg"></image>
 			<text class="tip-text">Tip: {{ tip }}</text>
 		</view>
-		<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon-zh.webp') "></image>
+		<!-- <image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon-zh.webp') "></image> -->
+		<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon.webp') "></image>
 	</view>
 </template>
 
