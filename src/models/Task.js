@@ -8,8 +8,8 @@ export default class Task {
 		this._status = status // 表示任务是否完成
 		this.once = false; // 确保任务完成后不会被执行
 		this.judgeResult = {};
-		this.totalRoundNum = totalRoundNum;
-		this._completedRoundNum = completedRoundNum;
+		this.totalRoundNum = totalRoundNum;//总的完成次数
+		this._completedRoundNum = completedRoundNum; //已完成任务次数
 	}
 
 	// Getter 和 Setter for id

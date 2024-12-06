@@ -511,6 +511,7 @@ export default {
 }
 
 .guide-button-container {
+	background: #2F2F38;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -521,7 +522,7 @@ export default {
 	z-index: 1000;
 	position: fixed;
 	/* 固定定位 */
-	bottom: 34px;
+	bottom: 0;
 	padding: 24rpx 48rpx;
 	width: Fixed (375px)px;
 	border-top: 0.2px solid #454552;

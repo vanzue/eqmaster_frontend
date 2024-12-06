@@ -1,8 +1,8 @@
 export default class TaskList {
 	constructor(taskList) {
 		this.taskList = taskList;
-		this.taskLength = taskList.length ? taskList.length : 0;
-		this.doneTaskLength = 0;
+		this.taskLength = taskList.length ? taskList.length : 0; //总的任务数量
+		this.doneTaskLength = 0; //已完成任务数量
 	}
 
 	getTask(index) {
