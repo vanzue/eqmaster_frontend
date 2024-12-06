@@ -663,7 +663,7 @@
 					console.error('Upload failed:', error);
 					// 处理上传失败的情况
 				} finally {
-					this.isLoading = false;
+					// this.isLoading = false;
 				}
 			},
 			async getHomepageData() {
