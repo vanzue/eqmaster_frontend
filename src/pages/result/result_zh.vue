@@ -53,9 +53,11 @@
 								</view>
 							</view>
 							<view class="speed-right">
-								<view class="speed-title">
+								<view class="speed-title key-strength-speedtitle">
 									{{ caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].name : '' }}
+									<image class="speed-icon" src="/src/static/warning.png"></image>
 								</view>
+								
 								<view class="">
 									<view class="blood-container">
 										<view class="health-bar-container">
@@ -95,7 +97,11 @@
 
 				<view class="improved-container">
 					<view class="improved">
-						<view class="improved-title">{{ $t('pages.result.result.advices') }}</view>
+						<view class="improved-title key-strength-title">
+							{{ $t('pages.result.result.advices') }}
+							<image class="improved-icon" src="/src/static/resultUpArrow.webp"></image>
+						</view>
+						
 						<view class="improved-content">
 							
 							<view class="improved-content-item">
@@ -507,7 +513,7 @@ import {
 	.overview-container {
 		display: flex;
 		position: relative;
-		background-color: #1B5A50;
+		background: linear-gradient(to bottom, #1B5A50 10%, #373742 100%);
 		width: 686rpx;
 		height: auto;
 		margin-top: 32rpx;
@@ -582,7 +588,11 @@ import {
 	.speed-title {
 		color: #373742;
 	}
-
+	.speed-icon{
+		width: 20rpx;
+		height: 20rpx;
+		padding-left: 10rpx;
+	}
 	.blood-container {
 		height: 56rpx;
 		/* padding: 20rpx 0; */
@@ -656,15 +666,23 @@ import {
 		color: #FFFFFF;
 		margin-left: 16rpx;
 	}
-
+	
 	.improved-content {
 		width: 100%;
 		/* height: 184px; */
 		gap: 0px;
+		position: relative;
 		border-radius: 24rpx;
 		background: linear-gradient(90deg, #2C6E5F 0.52%, #50856E 99.36%);
 	}
-
+	.improved-icon{
+		width: 113rpx;
+		height: 124rpx;
+		padding-left: 530rpx;
+		padding-top: 60rpx;
+		position: absolute;
+		z-index: 0;
+	}
 	.improved-content-item {
 		padding: 32rpx 32rpx 60rpx 32rpx;
 	}
@@ -697,7 +715,12 @@ import {
 		margin-top: 14rpx;
 		font-weight: 600;
 	}
-
+	.key-strength-speedtitle {
+		height: 88rpx;
+		display: flex;
+		align-items: center;
+		margin-top: 14rpx;
+	}
 	.key-strength-content {
 		position: relative;
 		background: #373742CC;

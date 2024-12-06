@@ -16,12 +16,12 @@
 				<view class="have-been-view">
 					<view class="have-been-view-center">
 						<view class="have-been-header">
-							<image src="/static/user_icon.png" class="have-been-header-icon"></image>
+							<image src="/static/calinda.png" class="have-been-header-icon"></image>
 							<text class="have-been-header-text">{{ $t('pages.profile.header') }}</text>
 						</view>
 						<view class="day">
 							<view class="day-content">
-								<view class="day-text">1</view>
+								<view class="day-text">{{ homepageData?.response?.personal_info?.days_till_reg }}</view>
 								<text class="day-text-days">{{ $t('pages.profile.days') }}</text>
 							</view>
 						</view>
@@ -529,7 +529,7 @@
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		margin-top: 76rpx;
+		margin-top: 50rpx;
 	}
 
 	.have-been-view-center {
@@ -648,19 +648,19 @@
 	.eqoach-bot-wrapper {
 		position: relative;
 		overflow: hidden;
-		margin-top: 32rpx;
+		margin-top: 10rpx;
 	}
 
 	.eqoach-bot {
 		display: flex;
 		position: relative;
-		/* height: 128rpx; */
+		 height: 80rpx; 
 		background-color: #373742;
 		border-radius: 32rpx;
 		/* justify-content: space-between; */
 		align-items: center;
-		margin-top: 32rpx;
-		padding: 32rpx 24rpx;
+		margin-top: 24rpx;
+		padding: 28rpx 24rpx;
 	}
 
 	.eqoach-bot-icon {
@@ -695,6 +695,7 @@
 		font-weight: 400;
 		color: #FFFFFF;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		margin-top: 20rpx;
 	}
 
 	.eqoach-bot-add-btn {
@@ -751,7 +752,7 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
-		margin-top: 180rpx;
+		margin-top: 280rpx;
 		bottom: 100rpx;
 		color: #9EE44D;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
