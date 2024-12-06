@@ -41,13 +41,27 @@
 								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
 								<text style="font-size: 48rpx;font-weight: 600;">{{ currentDate }}</text>
 							</view>
+							
+							
+							
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
 									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
 									{{ $t('pages.dashboard.tip.text') }}
+									
 								</text>
 							</view>
+							
+<!-- 							<view class="right-calendar">
+								<text style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
+									<text style="font-weight: bold;">{{ homepageData?.response?.personal_info?.wordings.charAt(0).toUpperCase() || $t('pages.dashboard.tip.title') }}</text>
+									{{ homepageData?.response?.personal_info?.wordings.slice(1) || $t('pages.dashboard.tip.text') }}
+									
+								</text>
+							</view> -->
+							
+							
 						</view>
 					</view>
 
@@ -135,13 +149,17 @@
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
 						<SProgressBar v-if="courseData" class="container-sprogress"
-							:finish-components="courseData.course_result.length+1"
-							:total-components="courseData.course_list.length"
-							:star-ratings="courseData.course_result.map(item => item.result)"
-							:level-names="courseData.course_list.map(item => item.title)" />
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)" 
+							/>
 						<!-- 
 
-						
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)" 
 						
 						
 						:finish-components="2"

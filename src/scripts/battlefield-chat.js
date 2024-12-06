@@ -242,6 +242,7 @@ export async function checkShowToolTips(personId) {
 // }
 export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 	// 在 body 中添加 isPass, gemCount, diamonds
+	console.log("???isPass ",isPass);
 	const course_id1 = state.getters.getCourseInfo;
 	const body = {
 		person_id: state.getters.getUserId,
