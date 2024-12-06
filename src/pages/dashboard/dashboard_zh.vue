@@ -149,11 +149,10 @@
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
 						<SProgressBar v-if="courseData" class="container-sprogress"
-
-							:finish-components="1"
-							:total-components="4"
-							:star-ratings="[2, 2, 1]"
-							:level-names="['Level 1', 'Level 2', 'Level 3']"
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)" 
 							/>
 						<!-- 
 
