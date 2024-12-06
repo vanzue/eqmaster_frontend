@@ -96,7 +96,7 @@
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')"
+							<image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
 								mode="widthFix">
 							</image>
 							<text
@@ -2245,6 +2245,14 @@
 		position: relative;
 		top: 0rpx;
 		left: 0rpx;
+	}
+	
+	.dashboard2-illustration-star {
+		width: 56rpx;
+		height: auto;
+		position: relative;
+		top: 20rpx;
+		right: 15rpx;
 	}
 
 	.dashboard2-illustration31 {
