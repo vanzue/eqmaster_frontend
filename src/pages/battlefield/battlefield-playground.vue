@@ -495,7 +495,7 @@
 						}));
 
 						const npcsMap = new Map(this.$store.getters.getNpcs.map(item => [item.characterName, item]));
-						nextRound.dialog.map( item => {
+						nextRound.response.dialog.map( item => {
 							
 							this.$store.commit('setAudios', {
 								key: `voice-${item.content}`,
