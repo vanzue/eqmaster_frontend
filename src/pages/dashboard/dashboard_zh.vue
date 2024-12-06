@@ -41,13 +41,27 @@
 								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
 								<text style="font-size: 48rpx;font-weight: 600;">{{ currentDate }}</text>
 							</view>
+							
+							
+							
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
 									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
 									{{ $t('pages.dashboard.tip.text') }}
+									
 								</text>
 							</view>
+							
+<!-- 							<view class="right-calendar">
+								<text style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
+									<text style="font-weight: bold;">{{ homepageData?.response?.personal_info?.wordings.charAt(0).toUpperCase() || $t('pages.dashboard.tip.title') }}</text>
+									{{ homepageData?.response?.personal_info?.wordings.slice(1) || $t('pages.dashboard.tip.text') }}
+									
+								</text>
+							</view> -->
+							
+							
 						</view>
 					</view>
 
@@ -96,7 +110,7 @@
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')"
+							<image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
 								mode="widthFix">
 							</image>
 							<text
@@ -135,13 +149,17 @@
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
 						<SProgressBar v-if="courseData" class="container-sprogress"
-							:finish-components="courseData.course_result.length+1"
-							:total-components="courseData.course_list.length"
-							:star-ratings="courseData.course_result.map(item => item.result)"
-							:level-names="courseData.course_list.map(item => item.title)" />
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)" 
+							/>
 						<!-- 
 
-						
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)" 
 						
 						
 						:finish-components="2"
@@ -645,7 +663,7 @@
 					console.error('Upload failed:', error);
 					// 处理上传失败的情况
 				} finally {
-					this.isLoading = false;
+					// this.isLoading = false;
 				}
 			},
 			async getHomepageData() {
@@ -2246,6 +2264,14 @@
 		position: relative;
 		top: 0rpx;
 		left: 0rpx;
+	}
+	
+	.dashboard2-illustration-star {
+		width: 56rpx;
+		height: auto;
+		position: relative;
+		top: 20rpx;
+		right: 15rpx;
 	}
 
 	.dashboard2-illustration31 {
