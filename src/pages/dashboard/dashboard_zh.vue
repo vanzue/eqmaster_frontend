@@ -1026,6 +1026,7 @@
 		display: flex;
 		flex-direction: row;
 		gap: 22rpx;
+		margin-bottom: 200rpx;
 	}
 
 	.left-history-container {
@@ -1052,7 +1053,8 @@
 		align-items: left;
 		padding-top: 40rpx;
 		width: 100%;
-		height: calc(100vh - 150rpx);
+		/* height: calc(100vh - 120rpx); */
+		height: auto;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
