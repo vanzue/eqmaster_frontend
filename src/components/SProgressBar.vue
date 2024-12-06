@@ -282,8 +282,8 @@
 					} else {
 						ctx.lineWidth = 8; // 未完成的路径设置为 6 的宽度
 						ctx.strokeStyle = '#3B413B';
-						const dashLength = 30; // 虚线的实线部分长度
-						const gapLength = 40; // 虚线的空白部分长度
+						const dashLength = 20; // 虚线的实线部分长度
+						const gapLength = 20; // 虚线的空白部分长度
 						ctx.setLineDash([dashLength, gapLength]); // 设置虚线样式
 					}
 
@@ -384,8 +384,8 @@
 					} else {
 						ctx.lineTo(endPoint.x + lineLength1, endPoint.y + yOffset);
 					}
-					ctx.lineWidth = 2;
-					ctx.strokeStyle = isCompleted ? '#9EE44D' : 'rgba(221, 221, 221, 0.3)';
+					ctx.lineWidth = 4;
+					ctx.strokeStyle = isCompleted ? '#9EE44D' : 'rgba(221, 221, 221, 0)';
 					ctx.stroke();
 
 					// 选择适当的图片路径
@@ -447,6 +447,10 @@
 					ctx.lineTo(bgX, bgY + cornerRadius);
 					ctx.quadraticCurveTo(bgX, bgY, bgX + cornerRadius, bgY);
 					ctx.closePath();
+					
+					// ctx.strokeStyle = 'rgba(0, 0, 0)'; // 将 'your-border-color' 替换为你想要的颜色，例如 '#FF0000' 表示红色
+					ctx.lineWidth = 0.001; // 可选：设置边线宽度
+					ctx.stroke(); // 绘制边线
 
 					// ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; // 半透明黑色
 					ctx.fill();
