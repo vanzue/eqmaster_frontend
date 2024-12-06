@@ -37,7 +37,7 @@
 		justify-content: space-around;
 		align-items: center;
 		width: 190rpx;
-		background-color: rgba(16, 16, 16, 0.4);
+		/* background-color: rgba(16, 16, 16, 0.4); */
 		/* 半透明背景 */
 		border-radius: 50rpx;
 		/* 圆角背景 */
