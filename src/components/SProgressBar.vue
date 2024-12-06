@@ -247,9 +247,9 @@
 				const yOffset = this.yOffset;
 
 				ctx.clearRect(0, 0, width, height);
-				ctx.save(); // Save the current state
-				// 调整绘制偏移，使图形居中
-				ctx.translate(0, 0);
+				ctx.save();
+				// Adjust the translate position if needed
+				ctx.translate(0, 8); // Move the entire drawing down by 10 pixels
 
 				// 绘制所有路径
 				for (let i = 0; i < this.totalComponents; i++) {
@@ -282,8 +282,8 @@
 					} else {
 						ctx.lineWidth = 8; // 未完成的路径设置为 6 的宽度
 						ctx.strokeStyle = '#3B413B';
-						const dashLength = 30; // 虚线的实线部分长度
-						const gapLength = 40; // 虚线的空白部分长度
+						const dashLength = 20; // 虚线的实线部分长度
+						const gapLength = 20; // 虚线的空白部分长度
 						ctx.setLineDash([dashLength, gapLength]); // 设置虚线样式
 					}
 
@@ -300,7 +300,13 @@
 						ctx.fillStyle = 'white';
 						ctx.textAlign = 'right';
 						ctx.textBaseline = 'middle';
-						ctx.fillText('LEVEL 1', lineStartX - 10, lineY);
+						ctx.fillText('LEVEL', lineStartX - 20, lineY);
+						
+						ctx.font = 'bold 40px Arial';
+						ctx.fillStyle = 'white';
+						ctx.textAlign = 'right';
+						ctx.textBaseline = 'middle';
+						ctx.fillText('1', lineStartX + 8, lineY-5);
 
 						// 绘制绿色线段
 						ctx.beginPath();
@@ -384,8 +390,8 @@
 					} else {
 						ctx.lineTo(endPoint.x + lineLength1, endPoint.y + yOffset);
 					}
-					ctx.lineWidth = 2;
-					ctx.strokeStyle = isCompleted ? '#9EE44D' : 'rgba(221, 221, 221, 0.3)';
+					ctx.lineWidth = 4;
+					ctx.strokeStyle = isCompleted ? '#9EE44D' : 'rgba(221, 221, 221, 0)';
 					ctx.stroke();
 
 					// 选择适当的图片路径
@@ -447,6 +453,10 @@
 					ctx.lineTo(bgX, bgY + cornerRadius);
 					ctx.quadraticCurveTo(bgX, bgY, bgX + cornerRadius, bgY);
 					ctx.closePath();
+					
+					// ctx.strokeStyle = 'rgba(0, 0, 0)'; // 将 'your-border-color' 替换为你想要的颜色，例如 '#FF0000' 表示红色
+					ctx.lineWidth = 0.001; // 可选：设置边线宽度
+					ctx.stroke(); // 绘制边线
 
 					// ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; // 半透明黑色
 					ctx.fill();
@@ -599,7 +609,7 @@
 				if (Math.sqrt(dx * dx + dy * dy) > radius) {
 					return false;
 				}
-				// 进���步判断点是否在六边形内
+				// 进步判断点是否在六边形内
 				const angle = Math.atan2(dy, dx);
 				const sector = Math.floor((angle + Math.PI) / (Math.PI / 3));
 				const distance = Math.abs(dx * Math.sin(sector * Math.PI / 3) - dy * Math.cos(sector * Math.PI / 3));
