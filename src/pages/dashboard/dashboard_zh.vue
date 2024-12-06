@@ -611,6 +611,7 @@
 			},
 			navigateToAnalysis(analysis) {
 				console.log("navigate To analysis....");
+				this.isLoading = false;
 				uni.setStorage({
 					key: `analysis-${analysis.id}`,
 					data: analysis,
@@ -643,6 +644,7 @@
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
 					console.error('Upload failed:', error);
+					this.isLoading = false;
 					// 处理上传失败的情况
 				} finally {
 					// this.isLoading = false;
