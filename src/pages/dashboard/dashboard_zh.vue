@@ -101,61 +101,29 @@
 						</view>
 						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
 						</image>
-
+					
 					</view>
-
+					
 					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
-
+					
 						<view class="dashboard2-progress-container">
 							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
 								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
 								:animal="this.maxanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
+					
+					<SProgressBar v-if="courseData"  class="container-sprogress"
+					:finish-components="courseData.course_result.length+1"
+					:total-components="courseData.course_list.length+1"
+					:star-ratings="courseData.course_result.map(item => item.result)"
+					:level-names="courseData.course_list.map(item => item.title)"
+					/>
+
 				</view>
-
-				<!-- 其他可滚动内容放在这里1 -->
-				<scroll-view scroll-y class="dashboard2-scrollable-content">
-					<view class="dashboard2-card-o">
-						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
-						<!-- v-if="courseData"
-						:finishComponents="courseData.courses.length"
-						:starRatings="courseData.courses.map(course => course.result)" 
-						:totalComponents="4"
-						:isCompleteTask="!!courseData.course_level" -->
-
-						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
-							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
-							:isCompleteTask="gemCount" /> -->
-						<SProgressBar v-if="courseData"  class="container-sprogress" 
-						:finish-components="courseData.course_result.length+1"
-						:total-components="courseData.course_list.length"
-						:star-ratings="courseData.course_result.map(item => item.result)"
-						:level-names="courseData.course_list.map(item => item.title)"
-						/>
-						<!-- 
-
-						
-						
-						
-						:finish-components="2"
-						:total-components="4"
-						:star-ratings="[2, 2, 1]"
-						:level-names="['Level 1', 'Level 2', 'Level 3']"
-
-						finish-components: 已完成的关卡数
-						total-components: 总关卡数
-						user-id: 用户ID
-						username: 用户名
-						star-ratings: 每个关卡的星级评分
-						level-names: 每个关卡的名称
-						is-complete-task: 是否完成所有任务
-						-->
-					</view>
-				</scroll-view>
 			</view>
 		</view>
 		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
@@ -2057,8 +2025,9 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		z-index: 10000;
+		z-index: 1;
 		background-color: #2F2F38;
+		justify-items: center;
 		/* 匹配背景色 */
 		padding: 0 20rpx;
 	}
@@ -2100,6 +2069,7 @@
 
 	.dashboard2-card1 {
 		width: calc(100% - 80rpx);
+		/* width: calc(100% - 80rpx); */
 		aspect-ratio: 9 / 3;
 		/* 调整这个比例以匹配您的背景图片 */
 		background-size: 100% 100%;
@@ -2112,6 +2082,7 @@
 		flex-direction: column;
 		align-items: left;
 		padding: 20rpx 30rpx;
+		margin: 0 auto 30rpx auto; /* 水平居中 */
 	}
 
 	.dashboard2-progress-container {
