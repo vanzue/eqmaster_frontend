@@ -194,6 +194,7 @@
 
 	.content {
 		display: flex;
+		height: calc(100vh - 60px);
 		flex-direction: column;
 		justify-content: center;
 		/* text-align: center; */

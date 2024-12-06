@@ -94,6 +94,9 @@
 	.uni-column {
 		flex-direction: column;
 	}
+	uni-button:after {
+		border: 0;
+	}
 
 	body {
 		margin: 0;

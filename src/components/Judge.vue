@@ -168,7 +168,7 @@
 		width: 80%;
 		line-height: 50px;
 		text-align: center;
-		border: none;
+		border: 1px solid #A9E55B;
 		outline: none;
 		-webkit-appearance: none;
 		appearance: none;
@@ -217,6 +217,7 @@
 		position: relative;
 		overflow: visible;
 		z-index: 3;
+		border: 1.2px solid #E8FFC4;
 	}
 	
 	.health-bar-foreground {
@@ -228,7 +229,7 @@
 		left: 0;
 		/* 添加只在上方显示阴影的代码 */
 		overflow: visible;
-		border: 1.2px solid #E8FFC4;
+		/* border: 1.2px solid #E8FFC4; */
 		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
 	}
 	
