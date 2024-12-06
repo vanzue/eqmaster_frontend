@@ -37,9 +37,9 @@ export default {
 	console.log("4444444444user_id", user_id);
     const result = await startField(user_id, course_id);
     console.log("result from start field:", result);
-	result.response.dialog.map( (item) => {
-		this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: item.voice_url });
-	})
+    result.response.dialog.map( (item) => {
+      this.$store.commit('setAudios',{ key: `voice-${item.words || item.content}`, value: item.voice_url });
+    })
     // uni.setStorage({
     //   key: "chats",
     //   data: result.response.dialog,
