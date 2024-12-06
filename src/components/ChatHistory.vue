@@ -37,7 +37,6 @@ export default{
 
     .item-container {
         margin: 32rpx 32rpx 24rpx 32rpx;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
