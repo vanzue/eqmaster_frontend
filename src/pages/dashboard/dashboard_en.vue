@@ -43,9 +43,9 @@
 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									<text style="font-weight: bold;">Empathy</text> is a cornerstone in building trust;
+									<text style="font-weight: bold;">Empathy</text> {{homepageData?.response?.personal_info?.wordings || 'is a cornerstone in building trust;
 									validating others’ feelings with phrases like "I can see why you feel that way"
-									builds connection.
+									builds connection.'}}
 								</text>
 							</view>
 						</view>
