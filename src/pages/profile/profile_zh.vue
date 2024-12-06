@@ -9,7 +9,7 @@
 		<!-- <scroll-view scroll-y> -->
 			<view class="content">
 				<view class="user-name">
-					<image src="/static/user_icon.png" class="user-icon"></image>
+					<image :src="userIconSrc" class="user-icon"></image>
 					<text class="user-name-text">{{ username }}</text>
 				</view>
 
@@ -224,6 +224,16 @@
 			},
 			navBarHeight() {
 				return this.$store.getters.getNavBarHeight;
+			},
+			userIconSrc() {
+				const numDiamond = this.homepageData?.response?.personal_info?.num_diamond;
+				if (numDiamond === 'male') {
+					return '/static/male_icon.png';
+				} else if (numDiamond === 'female') {
+					return '/static/female_icon.png';
+				} else {
+					return '/static/user_icon.png'; // default or empty case
+				}
 			},
 		},
 		
