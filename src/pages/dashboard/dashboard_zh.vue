@@ -115,13 +115,18 @@
 								:animal="this.maxanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
+
+					<view class="dashboard2-card-o">
+							<SProgressBar v-if="courseData"  class="container-sprogress"
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)"
+						/>
 					
-					<SProgressBar v-if="courseData"  class="container-sprogress"
-					:finish-components="courseData.course_result.length+1"
-					:total-components="courseData.course_list.length+1"
-					:star-ratings="courseData.course_result.map(item => item.result)"
-					:level-names="courseData.course_list.map(item => item.title)"
-					/>
+					</view>
+					
+
 
 				</view>
 			</view>
@@ -2260,6 +2265,7 @@
 		align-items: center;
 		flex-direction: column;
 		background-color: #2F2F38;
+		/* position: relative; */
 		/* margin-right: 3rpx; */
 	}
 
