@@ -6,12 +6,13 @@
 			<div></div>
 			<div></div>
 		</view>
-		<view v-else>
+		<view v-else class="content-box">
 			<view v-if="currentView === 'dashboard'" class="content">
 				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
-					<text class="score-title-head">{{ $t('pages.dashboard.morning') }}, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
+					<text class="score-title-head">{{ $t('pages.dashboard.morning') }},
+						{{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
 					<view class="character-view" @click="navigateToResult">
@@ -40,13 +41,26 @@
 								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
 								<text style="font-size: 48rpx;font-weight: 600;">{{ currentDate }}</text>
 							</view>
-							<view class="right-calendar">
+							
+							
+							
+<!-- 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
 									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
 									{{ $t('pages.dashboard.tip.text') }}
+									
+								</text>
+							</view> -->
+							
+							<view class="right-calendar">
+								<text style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
+									<text style="font-weight: bold;">{{ homepageData?.response?.personal_info?.wordings.split(' ')[0] }}</text> {{ homepageData?.response?.personal_info?.wordings.split(' ').slice(1).join(' ') }}
+									
 								</text>
 							</view>
+							
+							
 						</view>
 					</view>
 
@@ -62,26 +76,26 @@
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" :key="index"
 									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
-									@click="navigateToAnalysis(item)">
+									@tap="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList" :key="index"
 								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
-								@click="navigateToAnalysis(item)">
+								@tap="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
 					</view>
 
 					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
-					<view class="card3">
+					<!-- <view class="card3">
 						<image class="illustration36" :src="getImg('/static/web/Frame1.webp')" mode="widthFix"></image>
 						<image class="illustration37" :src="getImg('/static/web/Frame22.webp')" mode="widthFix"
 							@click="navigateToDashboard2"></image>
 						<image class="illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"></image>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<!-- chat battlefield homepage -->
@@ -89,12 +103,14 @@
 				<view class="dashboard2-fixed-content">
 					<view class="dashboard2-card-o">
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
+								mode="widthFix"></image>
 							<text
 								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
 						</view>
 						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
+							<image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
+								mode="widthFix">
 							</image>
 							<text
 								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
@@ -104,7 +120,8 @@
 
 					</view>
 
-					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
+					<view class="dashboard2-card1"
+						:style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
 						<view class="dashboard2-progress-container">
 							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
 						</view>
@@ -118,7 +135,8 @@
 				</view>
 
 				<!-- 其他可滚动内容放在这里1 -->
-				<scroll-view scroll-y class="dashboard2-scrollable-content">
+				<scroll-view scroll-y  class="dashboard2-scrollable-content">
+				<!-- <scroll-view scroll-y style=z-index: 999; class="dashboard2-scrollable-content"> -->
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
 						<!-- v-if="courseData"
@@ -130,15 +148,19 @@
 						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
-						<SProgressBar v-if="courseData"  class="container-sprogress" 
+						<SProgressBar v-if="courseData" class="container-sprogress"
+
+							:finish-components="courseData.course_result.length+1"
+							:total-components="courseData.course_list.length"
+							:star-ratings="courseData.course_result.map(item => item.result)"
+							:level-names="courseData.course_list.map(item => item.title)" 
+							/>
+						<!-- 
+
 						:finish-components="courseData.course_result.length+1"
 						:total-components="courseData.course_list.length"
 						:star-ratings="courseData.course_result.map(item => item.result)"
-						:level-names="courseData.course_list.map(item => item.title)"
-						/>
-						<!-- 
-
-						
+						:level-names="courseData.course_list.map(item => item.title)" 
 						
 						
 						:finish-components="2"
@@ -172,7 +194,9 @@
 	import {
 		illustrationSrc
 	} from '../../scripts/illustrationHelper_zh';
-	import { getImg } from '../../scripts/constants';
+	import {
+		getImg
+	} from '../../scripts/constants';
 	import locale from '@/locale';
 
 	export default {
@@ -373,13 +397,13 @@
 					case 'capybara': //水豚
 						return this.$t('pages.dashboard.emotion.capybara');
 					case 'hedgehog': //刺猬
-					return this.$t('pages.dashboard.emotion.hedgehog');
+						return this.$t('pages.dashboard.emotion.hedgehog');
 					case 'coyote': //狼
-					return this.$t('pages.dashboard.emotion.coyote');
+						return this.$t('pages.dashboard.emotion.coyote');
 					case 'ostrich': //鸵鸟
-					return this.$t('pages.dashboard.emotion.ostrich');
+						return this.$t('pages.dashboard.emotion.ostrich');
 					case 'monkey':
-					return this.$t('pages.dashboard.emotion.monkey');
+						return this.$t('pages.dashboard.emotion.monkey');
 					default:
 						return 'Emotion'; // Default text if animal is not recognized
 				}
@@ -389,17 +413,17 @@
 				console.log('jobid:', this.jobId);
 				console.log('results for backgrounds:', scores);
 				const maxScore = Math.max(
-					Number(scores.perception_score) || 0, 
-					Number(scores.self_regulation_score) || 0, 
+					Number(scores.perception_score) || 0,
+					Number(scores.self_regulation_score) || 0,
 					Number(scores.social_skill_score) || 0,
-					Number(scores.empathy_score) || 0, 
+					Number(scores.empathy_score) || 0,
 					Number(scores.motivation_score) || 0
 				);
 				const minScore = Math.min(
-					Number(scores.perception_score) || 0, 
-					Number(scores.self_regulation_score) || 0, 
+					Number(scores.perception_score) || 0,
+					Number(scores.self_regulation_score) || 0,
 					Number(scores.social_skill_score) || 0,
-					Number(scores.empathy_score) || 0, 
+					Number(scores.empathy_score) || 0,
 					Number(scores.motivation_score) || 0
 				);
 				console.log('@@@@@@@@@@@@最高分:', maxScore);
@@ -514,7 +538,7 @@
 			this.$store.dispatch('fetchcourseData');
 			// console.log('…………^-^Course Data:', this.courseData)
 			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
-			
+
 			// const evalResult = uni.getStorage({
 			// 	key: "evalResult",
 			// 	success: (res) => {
@@ -528,7 +552,7 @@
 			// 		this.suggestion = res.data.db_course.tips.join('\n');
 			// 	},
 			// });
-			
+
 
 			// await this.getBattlefield();
 		},
@@ -605,11 +629,12 @@
 				});
 			},
 			navigateToAnalysis(analysis) {
+				console.log("navigate To analysis....");
 				uni.setStorage({
 					key: `analysis-${analysis.id}`,
 					data: analysis,
 					success() {
-						uni.reLaunch({
+						uni.navigateTo({
 							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
 						});
 					},
@@ -756,7 +781,7 @@
 
 					// 发送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
+						url: apiService.baseURL + `/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -803,7 +828,7 @@
 
 					// 送请求创建联系人档案
 					uni.request({
-						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
+						url: apiService.baseURL + `/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
 						data: requestData,
 						success: (res) => {
@@ -1058,6 +1083,7 @@
 		display: flex;
 		flex-direction: row;
 		gap: 22rpx;
+		margin-bottom: 200rpx;
 	}
 
 	.left-history-container {
@@ -1082,9 +1108,15 @@
 		/* display: flex; */
 		flex-direction: column;
 		align-items: left;
-		padding-top: 40rpx;
+		/* padding-top: 40rpx; */
 		width: 100%;
-		height: calc(100vh - 150rpx);
+		/* height: calc(100vh - 150rpx); */
+		height: 100vh;
+		/* overflow-y: auto; */
+		/* -webkit-overflow-scrolling: touch; */
+	}
+	.content-box {
+		position: relative;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -1094,8 +1126,10 @@
 		/* 避免 flex 布局干扰 */
 		flex-direction: column;
 		align-items: left;
+		height: 100vh;
 		/* width: 100%; */
 		margin-left: 20px;
+		/* padding-bottom: 90px; */
 	}
 
 
@@ -2055,7 +2089,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		z-index: 10000;
+		z-index: 100;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
 		padding: 0 20rpx;
@@ -2063,7 +2097,7 @@
 
 	.dashboard2-scrollable-content {
 		z-index: 999;
-		padding-top: 352rpx;
+		padding-top: 400rpx;
 		/* 其他样式 */
 	}
 
@@ -2090,6 +2124,7 @@
 
 	.dashboard2-card1-container {
 		padding: 20 20rpx;
+		z-index: 1000;
 		/* Add left and right padding */
 		width: 100%;
 		box-sizing: border-box;
@@ -2110,6 +2145,7 @@
 		flex-direction: column;
 		align-items: left;
 		padding: 20rpx 30rpx;
+		margin: 0 auto 30rpx auto;
 	}
 
 	.dashboard2-progress-container {
@@ -2229,6 +2265,14 @@
 		position: relative;
 		top: 0rpx;
 		left: 0rpx;
+	}
+	
+	.dashboard2-illustration-star {
+		width: 56rpx;
+		height: auto;
+		position: relative;
+		top: 20rpx;
+		right: 15rpx;
 	}
 
 	.dashboard2-illustration31 {
