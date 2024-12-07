@@ -14,7 +14,8 @@
 		 	"style": {
 		 		// "navigationStyle": "custom"
 				"navigationBarBackgroundColor": "#2F2F38",
-				"navigationBarTitleText": "%components.Nav.home%"
+				"navigationBarTitleText": "%components.Nav.home%",
+				"disableScroll": true
 		 	}
 		 },
 		{

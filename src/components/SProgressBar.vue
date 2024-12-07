@@ -624,8 +624,8 @@
 <style scoped>
 	.container-sprogress {
 		width: 100%;
-		overflow-x: hidden;
-		overflow-y: hidden;
+		/* overflow-x: hidden; */
+		/* overflow-y: hidden; */
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -634,7 +634,8 @@
 		margin-right: 3rpx;
 		/* position: fixed; */
 		/* -webkit-overflow-scrolling: touch; */
-		touch-action: none; /* 禁用触摸滚动 */
+		/* z-index: -1; */
+		overflow: hidden;
 	}
 
 	.progress-canvas {

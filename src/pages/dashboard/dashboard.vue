@@ -1,265 +1,256 @@
 <template>
 	<view class="container">
-		<scroll-view scroll-y style="height: 100%;">
+		<view v-if="isLoading" class="loading">
+			Loading
+			<div></div>
+			<div></div>
+			<div></div>
+		</view>
+		<view v-else>
 			<view v-if="currentView === 'dashboard'" class="content">
-
-				<!-- 添加错误处理和加载状态 -->
-				<view v-if="isLoading">加载中...</view>
-				<view v-else-if="error">{{ error }}</view>
+				<view v-if="error">{{ error }}</view>
 				<view v-else>
 					<!-- 使用可选链操作符和默认值 -->
-					<text class="score-title-head">早，{{homepageData?.response?.personal_info?.name || '用户'}}！</text>
+					<text class="score-title-head">{{ $t('pages.dashboard.morning') }}, {{homepageData?.response?.personal_info?.name || 'user'}}！</text>
 					<!-- 添加插图 -->
 
-					<view class="dashboard1-card-o">
-						<!-- <image class="illustration1" src="/static/dashboard/ciwei.png" mode="widthFix"></image> -->
-						<image class="illustration1" :src="userCard" mode="widthFix"></image>
-						<!-- 添加白色卡片 -->
-						<view class="card">
-							<image class="illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
-							<text
-								class="score-value-large">{{ Math.round(homepageData?.response?.eq_scores?.score || 0) }}</text>
-
-							<view class="progress-bar">
-								<view class="progress"
-									:style="{ width: progressWidth(homepageData?.response?.eq_scores?.score || 0) }">
-								</view>
+					<view class="character-view" @click="navigateToResult">
+						<view style="display: flex;flex-direction: column;width: 308rpx;">
+							<view :class="['animal-tag', illustrationData.animal]">
+								<text>{{ illustrationData.animal_name }}</text>
 							</view>
-
-							<text class="card-description">{{ truncatedSuggestion }}</text>
-							<image class="illustration31" :src="getImg('/static/web/fullbutton.webp')" mode="widthFix"
-								@click="navigateToResult"></image>
+							<view style="margin-left: 32rpx;margin-top: 32rpx;display: flex;flex-direction: column;">
+								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">
+									{{ $t('pages.dashboard.superpower') }}
+								</text>
+								<text
+									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
+									{{ illustrationData.weakness }}
+								</text>
+								<text class="detail-summary">{{ illustrationData.characteristics }}</text>
+							</view>
 						</view>
+						<image class="character-image" :src="illustrationData.animal_icon" />
 					</view>
 
-
-
-
-
-					<view class="dashboard1-card-j">
-						<text class="card-title1">今日锦囊</text>
-						<Tear leftImageSrc="'/static/aboveleft.png'" rightBackImageSrc="/static/aboveright2.png"
-							rightFrontImageSrc="/static/aboveright1.png" leftText="自定义左侧文字"
-							rightText="FFI赞美法指感受(feeling)、事实(fact)和影响(influence)。首先说出内心感受，然后陈述带给你感受的客观事实，再通过举例证实影响结果。"
-							pageText="" />
-
-
+					<view style="margin-top: 24rpx;">
+						<text class="card-title1">{{ $t('pages.dashboard.tip') }}</text>
+						<view class="calendar">
+							<view class="left-calendar">
+								<text style="font-size: 24rpx;font-weight: 700;">{{ currentMonth }}</text>
+								<text style="font-size: 48rpx;font-weight: 600;">{{ currentDate }}</text>
+							</view>
+							<view class="right-calendar">
+								<text
+									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
+									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
+									{{ $t('pages.dashboard.tip.text') }}
+								</text>
+							</view>
+						</view>
 					</view>
 
 					<view class="network-title-container">
-						<text class="card-title1">我的人脉网</text>
-						<text class="card-title15">AI 战略家通过分析多维关系，帮助您建立职场联系</text>
+						<text class="card-title1">{{ $t('pages.dashboard.tip.moments') }}</text>
+						<text class="card-title15">{{ $t('pages.dashboard.tip.advice') }}</text>
 					</view>
-					<!-- 添加白色卡片1 -->
-					<view class="card1">
-						<text class="card-title14">添加微信助手，获取深度职场分析！</text>
-						<image class="illustration33" :src="getImg('/static/web/add.webp')" mode="widthFix" @click="openNewPopup">
-						</image>
-						<image class="illustration34" src="/static/x.png" mode="widthFix"></image>
-					</view>
-
-
-
-					<view class="dashboard1-card-o">
-						<image class="illustration35" :src="getImg('/static/web/CTA1.webp')" mode="widthFix" @click="openPopup"></image>
-
-						<view class="peoplecontain">
-							<view v-for="(contact, index) in homepageData?.response?.contacts || []" :key="index"
-								:class="['cardjuese', index % 2 === 1 ? 'lower-card' : '']">
-								<view class="card-a" @click="toProfilePage1(contact)">
-									<view class="card1inner">
-										<image class="illustrationhead" :src="getImg('/static/web/head.webp')" mode="widthFix"></image>
-										<view class="card2inner">
-											<text class="usercard-title1">{{ truncateName(contact?.name || '') }}</text>
-											<text
-												class="usercard-title2">{{ contact?.contact_relationship || '' }}</text>
-										</view>
-									</view>
-									<view class="white-line"></view>
-									<text class="usercard-title3">{{ contact?.relationship_analysis || '' }}</text>
-
-								</view>
-								<!-- 如果卡片有更多内容，可以在这里添加 -->
-							</view>
-							<!-- 添加一个空的占位卡片 -->
-							<view class="cardjuese1" style="visibility: hidden;"></view>
-						</view>
-
-					</view>
-
-
-					<view v-if="showPopup" class="popup-overlay">
-						<view class="popup-content" @click.stop>
-							<view class="popup-header">
-								<text class="popup-title">创建人脉档案</text>
-								<text class="popup-close" @click="closePopup">×</text>
-							</view>
-							<input class="popup-input" v-model="profileName" placeholder="请输入名字" />
-							<view class="popup-section">
-								<text class="popup-question">TA是你的？</text>
-							</view>
-							<view class="popup-options">
-								<text class="popup-option" :class="{ active: selectedOption === 'subordinate' }"
-									@click="selectOption('subordinate')">同事</text>
-								<text class="popup-option1" :class="{ active: selectedOption === 'supervisor' }"
-									@click="selectOption('supervisor')">老板</text>
-								<text class="popup-option2" :class="{ active: selectedOption === '下属' }"
-									@click="selectOption('下属')">下属</text>
-							</view>
-
-							<view class="popup-section">
-								<text class="popup-question">哪些标签可以用来形容TA？</text>
-							</view>
-							<view class="popup-tags">
-								<text v-for="tag in currentTags" :key="tag" class="popup-tag"
-									:class="{ active: selectedTags.includes(tag) }"
-									@click="toggleTag(tag)">{{ tag }}</text>
-							</view>
-
-							<image v-if="!isExpanded" @click="expand" src="/static/expand.png" class="expand-image">
+					<view class="history-list">
+						<view>
+							<image class="import-button" :src="getImg($t('images.dashboard.import-button'))"
+								mode="widthFix" @click="chooseImage">
 							</image>
-
-
-							<!-- Updated button with simplified disabled style -->
-							<button class="popup-button" @click="toProfilePage"
-								:style="{ opacity: canNavigateToProfile ? 1 : 0.5 }">
-								创建档案
-							</button>
+							<view class="left-history-container" v-if="leftList.length > 0">
+								<ChatHistory v-for="(item, index) in leftList" :key="index"
+									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
+									@click="navigateToAnalysis(item)">
+								</ChatHistory>
+							</view>
+						</view>
+						<view class="right-history-container" v-if="rightList.length > 0">
+							<ChatHistory v-for="(item, index) in rightList" :key="index"
+								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
+								@click="navigateToAnalysis(item)">
+							</ChatHistory>
 						</view>
 					</view>
 
+					<!--TODO: change to English  -->
 					<!-- 添加蓝色按钮 -->
 					<view class="card3">
 						<image class="illustration36" :src="getImg('/static/web/Frame1.webp')" mode="widthFix"></image>
 						<image class="illustration37" :src="getImg('/static/web/Frame22.webp')" mode="widthFix"
-							@click="navigateToDashboard"></image>
+							@click="navigateToDashboard2"></image>
 						<image class="illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"></image>
 					</view>
-
-					<!-- New Popup -->
-					<view v-if="showNewPopup" class="popup-overlay">
-						<view class="popup-content" @click.stop>
-							<view class="popup-wordy">
-								<image class="popup-icon2" :src="getImg('/static/web/addlater3.webp')" mode="widthFix"></image>
-
-								<text class="popup-title"> 微信号复制成功</text>
-								<text class="popup-notitle"> 微信号:wxid 3cnxu4266mt012</text>
-								<text class="popup-notitle"> 是否立即跳转微信添加助手?</text>
-								<view class="popup-icon">
-									<image class="popup-icon1" :src="getImg('/static/web/addlater.webp')" @click="closeNewPopup"
-										mode="widthFix"></image>
-									<image class="popup-icon1" :src="getImg('/static/web/addlater1.webp')" mode="widthFix"
-										@click="openWeChat"></image>
-								</view>
-							</view>
-						</view>
-					</view>
 				</view>
 			</view>
+			<!-- chat battlefield homepage -->
 			<view v-else-if="currentView === 'dashboard2'" class="dashboard2-content">
-				<!-- Integrated dashboard2.vue content -->
-				<view class="dashboard2-card-o">
-					<view class="dashboard2-card">
-						<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
-						<text
-							class="dashboard2-score-value-large-y">{{ Math.round(homepageData?.response?.eq_scores?.score || 0) }}</text>
-					</view>
-					<view class="dashboard2-card">
-						<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
+				<view class="dashboard2-fixed-content">
+					<view class="dashboard2-card-o">
+						<view class="dashboard2-card">
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')" mode="widthFix"></image>
+							<text
+								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
+						</view>
+						<view class="dashboard2-card">
+							<image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/star.jpg')" mode="widthFix">
+							</image>
+							<text
+								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
+						</view>
+						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
 						</image>
-						<text class="dashboard2-score-value-large-g">{{ Math.round(5) }}</text>
-					</view>
-				</view>
-				<image class="dashboard2-illustration31" src="/static/dashboard2/1.jpg" mode="widthFix"></image>
 
-				<view class="dashboard2-card1">
-					<text class="dashboard2-score-value-large1">{{ homepageData.response.personal_info.tag }}</text>
-					<!-- <text class="dashboard2-score-value-large1">{{homepageData }}</text> -->
-					<view class="dashboard2-level-badge">
-						<text class="dashboard2-score-title1">Lv1小试牛刀</text>
-						<!-- <text class="dashboard2-score-title1">{{courseData }}</text> -->
 					</view>
-					<view class="dashboard2-progress-container">
-						<!-- <text class="dashboard2-score-title2">情绪掌控力</text> -->
-						<text class="dashboard2-score-title2">情绪掌控力</text>
-						<view class="dashboard2-progress-bar1">
-							<view class="dashboard2-progress"
-								:style="{ width: progressWidth(homepageData?.response?.eq_scores?.dimension3_score || 0) }">
-							</view>
+
+					<view class="dashboard2-card1" :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
+						<view class="dashboard2-progress-container">
+							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
+						</view>
+
+						<view class="dashboard2-progress-container">
+							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
+								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
+								:animal="this.maxanimal" :activeColor="getActiveColor" />
 						</view>
 					</view>
 				</view>
 
-				<!-- <view class="dashboard2-card1-container">
-					
-				</view> -->
+				<!-- 其他可滚动内容放在这里1 -->
+				<view scroll-y class="dashboard2-scrollable-content">
+					<view class="dashboard2-card-o">
+						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
+						<!-- v-if="courseData"
+						:finishComponents="courseData.courses.length"
+						:starRatings="courseData.courses.map(course => course.result)" 
+						:totalComponents="4"
+						:isCompleteTask="!!courseData.course_level" -->
 
-				<view class="dashboard2-card-o">
-					<!-- 调用进度条组件 -->
+						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
+							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
+							:isCompleteTask="gemCount" /> -->
+						<SProgressBar v-if="courseData"  class="container-sprogress" 
+						:finish-components="courseData.course_result.length+1"
+						:total-components="courseData.course_list.length+1"
+						:star-ratings="courseData.course_result.map(item => item.result)"
+						:level-names="courseData.course_list.map(item => item.title)"
+						/>
+						<!-- 
+						
+						:finish-components="2"
+						:total-components="4"
+						:star-ratings="[2, 2, 1]"
+						:level-names="['Level 1', 'Level 2', 'Level 3']"
 
-					<SProgressBar v-if="courseData && courseData.courses"  class="container-sprogress" :finishComponents="courseData.courses.length"
-						:starRatings="courseData.courses.map(course => course.result)" :totalComponents="6" />
-				</view>
-
-
-
-				<!-- <image class="dashboard2-illustration35" src="/static/dashboard2/plgon9.jpg" mode="widthFix" @click="navigateToBattlefieldIntro"></image> -->
-				<view class="dashboard2-card3">
-					<image class="dashboard2-illustration36" :src="getImg('/static/web/dashboard2/icon2.jpg')" mode="widthFix"
-						@click="switchView('dashboard')"></image>
-					<image class="dashboard2-illustration37" :src="getImg('/static/web/dashboard2/icon1.jpg')" mode="widthFix"></image>
-					<image class="dashboard2-illustration38" :src="getImg('/static/web/Frame3.webp')" mode="widthFix"
-						@click="navigateToProfilePage"></image>
+						finish-components: 已完成的关卡数
+						total-components: 总关卡数
+						user-id: 用户ID
+						username: 用户名
+						star-ratings: 每个关卡的星级评分
+						level-names: 每个关卡的名称
+						is-complete-task: 是否完成所有任务
+						-->
+					</view>
 				</view>
 			</view>
-		</scroll-view>
+		</view>
+		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
+			:userId="userId" :username="username" :jobId="jobId" />
 	</view>
 </template>
 
 <script>
 	import SProgressBar from '@/components/SProgressBar.vue'; // 根据实际路径调整
 	import apiService from '../../services/api-service';
-	import Tear from '@/components/Tear.vue';
+	import ChatHistory from '@/components/ChatHistory.vue';
+	import Nav from '../../components/Nav.vue';
+	import AbilityProgressBar from '@/components/AbilityProgressBar.vue';
+	import {
+		illustrationSrc
+	} from '../../scripts/illustrationHelper_zh';
 	import { getImg } from '../../scripts/constants';
-
-	import url from '../../services/url';
-
+	import locale from '@/locale';
 
 	export default {
 
 		data() {
 			return {
 				getImg,
-				currentView: 'dashboard2',
+				// currentView: 'dashboard2',
 				score: 28, // 示例分数，可根据需要动态改
 				maxScore: 100, // 假设最大分数为100
-				userId: '',
-				username: '',
+				// userId: '',
+				// username: '',
 				gender: '',
 				birthday: null,
 				selectedOptions: [],
 				jobId: null,
 				num: null,
-				finishComponents: 2,
-				totalComponents: 5,
+				finishComponents: 1,
+				totalComponents: 3,
 				isLoading: true,
 				error: null,
-				homepageData: {
-					response: {
-						personal_info: {
-							name: ''
-						},
-						eq_scores: {
-							score: 0,
-							overall_suggestion: ''
-						},
-						contacts: []
-					}
-				},
-				courseData: null,
-
-
-				intervalId: null,
+				// homepageData: {
+				// 	response: {
+				// 		personal_info: {
+				// 			name: ''
+				// 		},
+				// 		eq_scores: {
+				// 			score: 0,
+				// 			overall_suggestion: ''
+				// 		},
+				// 		contacts: []
+				// 	}
+				// },
+				// analysisList: [{
+				// 		id: 1,
+				// 		chatHistory: {
+				// 			messages: [{
+				// 					user: "Ophelia",
+				// 					message: "hello a",
+				// 				},
+				// 				{
+				// 					user: "me",
+				// 					message: "niaklskndf",
+				// 				},
+				// 				{
+				// 					user: "Hamlet",
+				// 					message: "wa haha",
+				// 				}
+				// 			]
+				// 		},
+				// 		analysis: {
+				// 			summary: [{
+				// 				"summary": "ssdf"
+				// 			}],
+				// 			suggestions: [
+				// 				"1Import chat history to figure out what she shaid ajshdfkahdf"
+				// 			]
+				// 		}
+				// 	},
+				// 	{
+				// 		id: 2,
+				// 		chat_history: {
+				// 			messages: [{
+				// 				user: "",
+				// 				message: "",
+				// 			}]
+				// 		},
+				// 		analysis: {
+				// 			title: "2Trying to respond more sdfa fliasdf   xxxxxx xxxx",
+				// 			details: [
+				// 				"1Import chat history to figure out what she shaid ajshdfkahdf",
+				// 			]
+				// 		}
+				// 	}
+				// ],
+				analysisList: [],
+				animal: '',
+				animal_zh: '',
+				minanimal: '',
+				maxanimal: '',
+				// courseData: {},
 				showSplash: false, // 默认不显示闪屏
 				progress: 0,
 				progressInterval: null,
@@ -291,9 +282,42 @@
 				],
 				showNewPopup: false,
 				tipImageSrc: getImg('/static/web/tip.webp'), // Initial image source
+				currentDate: new Date(),
 			};
 		},
 		computed: {
+			homepageData() {
+				return this.$store.getters.getHomepageData;
+			},
+			currentView() {
+				return this.$store.getters.getHomeNavName;
+			},
+			userId() {
+				return this.$store.getters.getUserId;
+			},
+			username() {
+				return this.$store.getters.getUsername;
+			},
+			gemCount() {
+				return this.$store.getters.getGemCount;
+			},
+			weakness() {
+				return this.$store.getters.getWeakness;
+			},
+			courseData() {
+				return this.$store.getters.getcourseData;
+			},
+			// courseData() {
+			// 	const data = this.$store.getters.getcourseData;
+			// 	console.log('CourseData getter called:', data); // 添加日志
+			// 	return data;
+			// },
+			characteristics() {
+				return this.$store.getters.getCharacteristics;
+			},
+			illustrationData() {
+				return illustrationSrc(this.homepageData, this.$store, this.$t);
+			},
 			formattedBirthday() {
 				if (this.birthday) {
 					const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
@@ -303,12 +327,22 @@
 			},
 			currentMonth() {
 				const options = {
-					month: 'long'
+					month: 'short'
 				}; // 'long' for full month name
-				return new Intl.DateTimeFormat('zh-CN', options).format(new Date());
+				const monthFormatter = new Intl.DateTimeFormat(locale.getLocale(), options);
+				return monthFormatter.format(this.currentDate).toUpperCase();
 			},
 			currentDate() {
-				return new Date().getDate(); // Get only the day of the month
+				const dayFormatter = new Intl.DateTimeFormat('zh-CN', {
+					day: '2-digit'
+				});
+				return dayFormatter.format(this.currentDate).replace('日', '');
+			},
+			leftList() {
+				return this.analysisList.filter((item, index) => index % 2 == 1);
+			},
+			rightList() {
+				return this.analysisList.filter((item, index) => index % 2 == 0)
 			},
 			currentTags() {
 				if (this.selectedOption === 'subordinate') {
@@ -322,31 +356,7 @@
 			canNavigateToProfile() {
 				return this.profileName.trim() !== '' && this.selectedTags.length > 0;
 			},
-			userCard() {
-				const scores = this.homepageData?.response?.eq_scores;
-				console.log('jobid:', this.jobId);
-				console.log('results for backgrounds:', scores);
-				const minScore = Math.min(scores?.dimension1_score || 0, scores?.dimension2_score || 0, scores
-					?.dimension3_score || 0, scores?.dimension4_score || 0, scores?.dimension5_score || 0);
 
-				// 根据最低分选择图片
-				if (minScore === scores?.dimension1_score) {
-					console.log("usercard src:", '水豚')
-					return  getImg('/static/web/dashboard/shuitun.webp');
-				} else if (minScore === scores?.dimension2_score) {
-					console.log("usercard src:", '刺猬')
-					return  getImg('/static/web/dashboard/ciwei.webp');
-				} else if (minScore === scores?.dimension3_score) {
-					console.log("usercard src:", '狼')
-					return  getImg('/static/web/dashboard/lang.webp');
-				} else if (minScore === scores?.dimension4_score) {
-					console.log("usercard src:", '鸵鸟')
-					return  getImg('/static/web/dashboard/tuoniao.webp');
-				} else if (minScore === scores?.dimension5_score) {
-					console.log("usercard src:", '猴子')
-					return  getImg('/static/web/dashboard/houzi.webp');
-				}
-			},
 			truncatedSuggestion() {
 				const suggestion = this.homepageData?.response?.eq_scores?.overall_suggestion || '暂无建议';
 				return suggestion.length > 75 ? suggestion.slice(0, 75) + '...' : suggestion;
@@ -354,55 +364,222 @@
 			safeStarRatings() {
 				return this.courseData && this.courseData.courses ?
 					this.courseData.courses.map(course => course.result) : [];
+			},
+			getEmotionText() {
+				switch (this.minanimal) {
+					case 'capybara': //水豚
+						return this.$t('pages.dashboard.emotion.capybara');
+					case 'hedgehog': //刺猬
+					return this.$t('pages.dashboard.emotion.hedgehog');
+					case 'coyote': //狼
+					return this.$t('pages.dashboard.emotion.coyote');
+					case 'ostrich': //鸵鸟
+					return this.$t('pages.dashboard.emotion.ostrich');
+					case 'monkey':
+					return this.$t('pages.dashboard.emotion.monkey');
+					default:
+						return 'Emotion'; // Default text if animal is not recognized
+				}
+			},
+			getActiveColor() {
+				const scores = this.homepageData?.response?.eq_scores;
+				console.log('jobid:', this.jobId);
+				console.log('results for backgrounds:', scores);
+				const maxScore = Math.max(
+					Number(scores.perception_score) || 0, 
+					Number(scores.self_regulation_score) || 0, 
+					Number(scores.social_skill_score) || 0,
+					Number(scores.empathy_score) || 0, 
+					Number(scores.motivation_score) || 0
+				);
+				const minScore = Math.min(
+					Number(scores.perception_score) || 0, 
+					Number(scores.self_regulation_score) || 0, 
+					Number(scores.social_skill_score) || 0,
+					Number(scores.empathy_score) || 0, 
+					Number(scores.motivation_score) || 0
+				);
+				console.log('@@@@@@@@@@@@最高分:', maxScore);
+				console.log('@@@@@@@@@@@@最低分:', minScore);
+				// 根据最低分选择图片1-pereception；2-motivation/self regulation；3-socialskill；4-empathy；5-motivation/self regulation；
+				if (maxScore === scores?.perception_score) {
+					console.log("usercard src:", '鸵鸟')
+					this.maxanimal = "ostrich";
+					// return '/static/dashboard/en/capybara.png';-okokok猴子刺猬鸵鸟
+				} else if (maxScore === scores?.self_regulation_score) {
+					console.log("usercard src:", '猴子')
+					this.maxanimal = "monkey";
+					// return '/static/dashboard/en/hedgehog.png';
+				} else if (maxScore === scores?.social_skill_score) {
+					// return '/static/dashboard/en/coyote.png';
+					console.log("usercard src:", '刺猬')
+					this.maxanimal = "hedgehog";
+				} else if (maxScore === scores?.empathy_score) {
+					console.log("usercard src:", '狼')
+					this.maxanimal = "coyote";
+					// return '/static/dashboard/en/ostrich.png';
+				} else if (maxScore === scores?.motivation_score) {
+					console.log("usercard src:", '水豚')
+					this.maxanimal = "capybara";
+					// return '/static/dashboard/en/monkey.png';
+				}
+
+				if (minScore === scores?.motivation_score) {
+					console.log("usercard src:", '水豚')
+					this.minanimal = "capybara";
+				} else if (minScore === scores?.empathy_score) {
+					console.log("usercard src:", '狼')
+					this.minanimal = "coyote";
+				} else if (minScore === scores?.social_skill_score) {
+					console.log("usercard src:", '刺猬')
+					this.minanimal = "hedgehog";
+				} else if (minScore === scores?.self_regulation_score) {
+					console.log("usercard src:", '猴子')
+					this.minanimal = "monkey";
+				} else if (minScore === scores?.perception_score) {
+					console.log("usercard src:", '鸵鸟')
+					this.minanimal = "ostrich";
+				}
+				console.log(this.minanimal);
+
+				switch (this.maxanimal) {
+					case 'capybara':
+						return '#EFC59E'; // Gold
+					case 'hedgehog':
+						return '#F15D39'; // Green
+					case 'coyote':
+						return '#5555DB'; // Blue
+					case 'ostrich':
+						return '#6E4939'; // Orange
+					case 'monkey':
+						return '#C157E0'; // Purple
+					default:
+						return '#FFD700'; // Default gold
+				}
+			},
+			caleOverviewScores() {
+				if (this.homepageData && this.homepageData.response && this.homepageData.response.eq_scores) {
+					const scores = [{
+							name: 'perception',
+							score: this.homepageData.response.eq_scores.perception_score,
+						},
+						{
+							name: 'self regulation',
+							score: this.homepageData.response.eq_scores.self_regulation_score,
+						},
+						{
+							name: 'social skill',
+							score: this.homepageData.response.eq_scores.social_skill_score,
+						},
+						{
+							name: 'empathy',
+							score: this.homepageData.response.eq_scores.empathy_score,
+						},
+						{
+							name: 'motivation',
+							score: this.homepageData.response.eq_scores.motivation_score,
+						}
+					];
+
+					// Sort scores in descending order
+					scores.sort((a, b) => b.score - a.score);
+					console.log(scores);
+					return scores;
+				}
+				return [];
+			}
+		},
+		watch: {
+			homepageData: {
+				immediate: true,
+				async handler(val) {
+					if (val && val.response) {
+						this.isLoading = false;
+					}
+				},
+				// deep: true,
 			}
 		},
 		components: {
 			SProgressBar,
-			Tear
+			ChatHistory,
+			Nav,
+			AbilityProgressBar
+		},
+		async created() {
+			await this.getAnalysisList();
+			this.$store.dispatch('fetchcourseData');
+			// console.log('…………^-^Course Data:', this.courseData)
+			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
+			
+			// const evalResult = uni.getStorage({
+			// 	key: "evalResult",
+			// 	success: (res) => {
+			// 		console.log("result:", res);
+			// 		const dbCourse = res.data.db_course;
+			// 		const list = Object.keys(dbCourse)
+			// 			.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
+			// 			.sort() // 如果你想按照 comment1, comment2 的顺序排列
+			// 			.map((key) => dbCourse[key]); // 提取这些键的值      ;
+			// 		this.comments = list;
+			// 		this.suggestion = res.data.db_course.tips.join('\n');
+			// 	},
+			// });
+			
+
+			// await this.getBattlefield();
 		},
 		onLoad(option) {
-			console.log('Received options:', option);
+			// console.log('Received options:', option);
+			this.$store.dispatch('fetchHomepageData');
+			// this.$store.dispatch('fetchcourseData');
+			// console.log('…………^-^Course Data:', this.courseData)
+			// this.userCard();
+
+
+
 
 			// 接收上一个页面传递的数据
-			this.userId = option.userId || '547';
-			this.username = decodeURIComponent(option.username || 'Dgidegfiugrwi');
+			// this.userId = option.userId || '717';
+			// this.username = decodeURIComponent(option.username || 'Dgidegfiugrwi');
 
-			this.jobId = option.jobId || '154ee592-287b-4675-b8bd-8f88de348476';
+			// this.jobId = option.jobId || '154ee592-287b-4675-b8bd-8f88de348476';
+			// this.currentView = option.currentView ? option.currentView : 'dashboard'
 
 			// 立即调用一次
-			this.getHomepageData(this.userId);
-			this.getBattlefield(1);
+			// this.getHomepageData(this.userId);
+			// this.getBattlefield(1);
 			// this.username = this.homepageData.response.personal_info.name || '';
 
-			console.log('Parsed data:', {
-				userId: this.userId,
-				username: this.username,
-				jobId: this.jobId
-			});
+			// console.log('Parsed data:', {
+			// 	userId: this.userId,
+			// 	username: this.username,
+			// 	jobId: this.jobId
+			// });
 
-			console.log('Received options:', option);
+			// console.log('Received options:', option);
 
 			// 接收 currentView 参数并更新
-			if (option.currentView) {
-				this.currentView = option.currentView;
-			}
+			// if (option.currentView) {
+			// 	this.currentView = option.currentView;
+			// }
 
-			console.log('Current View:', this.currentView);
+			// console.log('Current View:', this.currentView);
 
 
 			// 设置定时调用
-			this.intervalId = setInterval(() => {
-				console.log('this.userId:', this.userId);
-				this.getHomepageData(this.userId);
-			}, 50000); // 每50秒调用一次
+			// this.intervalId = setInterval(() => {
+			// 	console.log('this.userId:', this.userId);
+			// 	this.getHomepageData(this.userId);
+			// }, 50000); // 每50秒调用一次
 		},
 		onUnload() {
-			// 页面卸载时清除定时器
-			if (this.intervalId) {
-				clearInterval(this.intervalId);
-			}
-			if (this.progressInterval) {
-				clearInterval(this.progressInterval);
+
+		},
+		onShow() {
+			this.getAnalysisList(this.userId);
+			if (typeof wx !== 'undefined') {
+				wx.hideHomeButton();
 			}
 		},
 		methods: {
@@ -420,14 +597,47 @@
 				return (percentage1 / 100) * progressBarWidth;
 			},
 			navigateToGuide() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
 				});
 			},
-			navigateToProfilePage() {
-				uni.navigateTo({
-					url: `/pages/profile/profile_zh?userId=${this.userId}`
+			navigateToAnalysis(analysis) {
+				uni.setStorage({
+					key: `analysis-${analysis.id}`,
+					data: analysis,
+					success() {
+						uni.reLaunch({
+							url: `/pages/dashboard/moment_analysis_zh?analysisId=${analysis.id}`
+						});
+					},
 				});
+			},
+			async chooseImage() {
+				try {
+					const res = await uni.chooseImage({
+						count: 1,
+						sizeType: ['original', 'compressed'],
+						sourceType: ['album', 'camera']
+					});
+					const tempFilePaths = res.tempFilePaths;
+					console.log(tempFilePaths);
+					await this.uploadImage(tempFilePaths[0]);
+				} catch (error) {
+					console.error('Error choosing image:', error);
+				}
+			},
+			async uploadImage(filePath) {
+				try {
+					this.isLoading = true;
+					const result = await apiService.uploadChatHistory(filePath, this.userId);
+					const resultJson = JSON.parse(result);
+					this.navigateToAnalysis(resultJson);
+				} catch (error) {
+					console.error('Upload failed:', error);
+					// 处理上传失败的情况
+				} finally {
+					this.isLoading = false;
+				}
 			},
 			async getHomepageData() {
 				try {
@@ -440,9 +650,9 @@
 					this.homepageData = data;
 					console.log('Homepage data received:', this.homepageData);
 
-					this.$nextTick(() => {
-						this.drawRadar();
-					});
+					// this.$nextTick(() => {
+					// 	this.drawRadar();
+					// });
 				} catch (error) {
 					this.error = 'Error fetching homepage data';
 					console.error(this.error, error);
@@ -451,26 +661,46 @@
 				}
 			},
 
-			async getBattlefield() {
+			async getAnalysisList() {
 				try {
-
-					this.userId
-					console.log('Fetching homepage data with jobId:', this.userId);
-
-					const data = await apiService.getBattlefield(1);
-					this.courseData = data;
-					console.log('Homepage data received:', this.courseData);
-
-					this.$nextTick(() => {
-						this.drawRadar();
+					this.userId;
+					const data = await apiService.getAnalysisList(this.userId);
+					data.forEach(item => {
+						item.analysis = JSON.parse(item.analysis);
+						item.chatHistory = JSON.parse(item.chatHistory);
 					});
+					console.log(data);
+					this.analysisList = data;
 				} catch (error) {
-					this.error = 'Error fetching homepage data';
+					// this.error = 'Error fetching analysis data';
 					console.error(this.error, error);
 				} finally {
-					// this.isLoading = false;
+
 				}
 			},
+
+			// async getBattlefield() {
+			// 	try {
+
+			// 		// this.userId
+			// 		console.log('Fetching homepage data with jobId:', this.userId);
+
+			// 		const data = await apiService.getBattlefield(this.userId);
+			// 		this.courseData = data;
+			// 		console.log('Homepage data received:', this.courseData);
+
+			// 		// this.$store.commit('setcourseDatas', returnObj.this.courseData);
+
+			// 		// this.$nextTick(() => {
+			// 		// 	this.drawRadar();
+			// 		// });
+			// 	} catch (error) {
+			// 		this.error = 'Error fetching homepage data';
+			// 		console.error(this.error, error);
+			// 	} finally {
+			// 		// this.isLoading = false;
+			// 	}
+			// },
 
 			expand() {
 				this.isExpanded = true; // 只展开，不再收起
@@ -483,7 +713,7 @@
 			},
 			selectOption(option) {
 				this.selectedOption = option;
-				this.selectedTags = []; // 切换选项时重置已选择的标签
+				this.selectedTags = []; // 切换选项时重已选择的标签
 			},
 			toggleTag(tag) {
 				const index = this.selectedTags.indexOf(tag);
@@ -502,7 +732,7 @@
 				this.closePopup();
 			},
 			navigateToBattlefieldIntro() {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/battlefield/battlefield-intro?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData?.response?.personal_info?.job_id}`
 
 				});
@@ -530,8 +760,8 @@
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
-									url: `/pages/profile/profile_zh?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
+								uni.reLaunch({
+									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
 								});
 							} else {
 								console.error('Failed to create contact profile:', res.statusCode, res.data);
@@ -568,7 +798,7 @@
 					// 在发送请求之前打印数据
 					console.log('Sending data to create contact profile:', requestData);
 
-					// 发送请求创建联系人档案
+					// 送请求创建联系人档案
 					uni.request({
 						url: apiService.baseURL+`/create_contact_profile?locale=${locale.getShortLocale()}`,
 						method: 'POST',
@@ -577,8 +807,8 @@
 							if (res.statusCode === 200) {
 								console.log('Contact profile created successfully:', res.data);
 								// 创建成功后，导航到档案页面
-								uni.navigateTo({
-									url: `/pages/profile/profile_zh?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(contact?.name || '')}&jobId=${this.jobId}&relation=${encodeURIComponent(contact?.contact_relationship || '')}&tags=${encodeURIComponent(contact?.tag || '')}&contactId=${res.data.contact_id}`
+								uni.reLaunch({
+									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(contact?.name || '')}&jobId=${this.jobId}&relation=${encodeURIComponent(contact?.contact_relationship || '')}&tags=${encodeURIComponent(contact?.tag || '')}&contactId=${res.data.contact_id}`
 								});
 							} else {
 								console.error('Failed to create contact profile:', res.statusCode, res.data);
@@ -599,14 +829,14 @@
 				}
 			},
 			navigateToResult() {
-				uni.navigateTo({
-					url: `/pages/result/result?userId=${this.userId}`
+				uni.reLaunch({
+					url: `/pages/result/result_zh`
 				});
 			},
 			openWeChat() {
 				try {
 					// Attempt to open WeChat using the URL scheme
-					uni.navigateTo({
+					uni.reLaunch({
 						url: 'weixin://',
 						success: () => {
 							console.log('WeChat opened successfully');
@@ -630,9 +860,9 @@
 			},
 			toggleTipImage() {
 				this.tipImageSrc = this.tipImageSrc === getImg('/static/web/tip.webp') ?
-					 getImg('/static/web/tipp.webp') // Replace with the new image path
+					getImg('/static/web/tipp.webp') // Replace with the new image path
 					:
-					 getImg('/static/web/tip.webp');
+					getImg('/static/web/tip.webp');
 			},
 			truncateName(name) {
 				const maxLength = 6; // Set the maximum length for the name
@@ -649,7 +879,12 @@
 				this.switchView('dashboard2');
 			},
 			switchView(view) {
+				console.log(333);
 				this.currentView = view;
+			},
+			calculateProgress(score) {
+				// Assuming the score is out of 100
+				return score || 0;
 			},
 		},
 	};
@@ -658,15 +893,195 @@
 
 
 <style scoped>
+	.loading {
+		width: 100vw;
+		height: calc(100vh - 250rpx);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		background-color: #2f2f38;
+		font-weight: 700;
+		font-size: 28rpx;
+		line-height: 40rpx;
+		overflow-y: hidden;
+	}
+
+	.loading>div {
+		position: relative;
+		box-sizing: border-box;
+	}
+
+	.loading.la-dark {
+		color: #333;
+	}
+
+	.loading>div {
+		display: inline-block;
+		float: none;
+		background-color: currentColor;
+		border: 0 solid currentColor;
+	}
+
+	.loading>div {
+		width: 6rpx;
+		height: 6rpx;
+		margin: 4px;
+		border-radius: 100%;
+		animation: ball-beat 0.7s -0.15s infinite linear;
+	}
+
+	.loading>div:nth-child(2n-1) {
+		animation-delay: -0.5s;
+	}
+
+	@keyframes ball-beat {
+		50% {
+			opacity: 0.2;
+			transform: scale(0.75);
+		}
+
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	.character-view {
+		margin-top: 16rpx;
+		width: 668rpx;
+		height: 420rpx;
+		color: #373742;
+		display: flex;
+		background-color: #373742;
+		border-radius: 32rpx;
+	}
+
+	.animal-tag {
+		width: 318rpx;
+		height: 80rpx;
+		font-size: 40rpx;
+		font-weight: 700;
+		color: #fdedcb;
+		border-radius: 32rpx 0px 32rpx 0px;
+		text-transform: uppercase;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.hedgehog {
+		background-color: #f15d39;
+	}
+
+	.capybara {
+		background-color: #6e5b38;
+	}
+
+	.ostrich {
+		background-color: #6e4939;
+	}
+
+	.monkey {
+		background-color: #c157e0;
+	}
+
+	.coyote {
+		background-color: #5555db;
+	}
+
+	.character-image {
+		width: 352rpx;
+		height: 420rpx;
+	}
+
+	.detail-summary {
+		display: -webkit-box;
+		font-size: 24rpx;
+		font-weight: 400;
+		line-height: 32rpx;
+		color: #ffffff;
+		margin-top: 16rpx;
+		overflow: hidden;
+		height: 160rpx;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 5;
+	}
+
+	.calendar {
+		width: 670rpx;
+		height: 240rpx;
+		margin-top: 9px;
+		border-radius: 32rpx;
+		background-image: url("/static/calendar-image.png");
+		background-size: 100% 100%;
+
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.left-calendar {
+		width: 154rpx;
+		height: 240rpx;
+		color: #FFFFFF;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.right-calendar {
+		width: 516rpx;
+		height: 240rpx;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.import-button {
+		margin-top: 8rpx;
+		width: 324rpx;
+		height: 120rpx;
+	}
+
+	.history-list {
+		display: flex;
+		flex-direction: row;
+		gap: 22rpx;
+	}
+
+	.left-history-container {
+		display: flex;
+		flex-direction: column;
+		gap: 24rpx;
+		margin-top: 24rpx;
+		padding-bottom: 24rpx;
+	}
+
+	.right-history-container {
+		display: flex;
+		flex-direction: column;
+		gap: 24rpx;
+		padding-bottom: 24rpx;
+		margin-top: 8rpx;
+	}
+
 	.container {
 		position: relative;
 		background-color: #2F2F38;
 		/* display: flex; */
 		flex-direction: column;
 		align-items: left;
-		padding-top: 100rpx;
+		padding-top: 40rpx;
 		width: 100%;
-		height: 100%;
+		height: calc(100vh - 150rpx);
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -721,12 +1136,9 @@
 	}
 
 	.illustration31 {
-		width: 250rpx;
+		width: 260rpx;
 		height: auto;
-		position: absolute;
-		top: 340rpx;
-		left: 60rpx;
-		margin-top: 3px;
+		margin-top: 24rpx;
 	}
 
 	.illustration32 {
@@ -1030,7 +1442,6 @@
 		font-size: 40rpx;
 		color: #9EE44D;
 		margin-top: 20rpx;
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 	.progress-bar1 {
@@ -1209,7 +1620,6 @@
 		/* 调整水平位置以居中 */
 		left: 50%;
 		/* 水平居中 */
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 
@@ -1618,10 +2028,6 @@
 		gap: 5rpx;
 	}
 
-	.dashboard1-card-j {
-		margin-bottom: 50rpx;
-	}
-
 	/* Styles for the first view */
 	.dashboard-content {
 		display: block;
@@ -1636,14 +2042,31 @@
 
 	/* Styles for the second view */
 	.dashboard2-content {
-		display: block;
-		flex-direction: column;
-		align-items: center;
-		padding: 10rpx;
+		position: relative;
+		/* height: 100vh; */
+		/* overflow-y: auto; */
 	}
 
+	.dashboard2-fixed-content {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 10000;
+		background-color: #2F2F38;
+		/* 匹配背景色 */
+		padding: 0 20rpx;
+	}
+
+	.dashboard2-scrollable-content {
+    width: 100%;
+    height: calc(100vh - 352rpx); /* 根据你的页面布局调整高度 */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* 在 iOS 上提供更好的滚动体验 */
+}
+
 	.dashboard2-card-o {
-		width: 105%;
+		width: 100%;
 		position: relative;
 		text-align: left;
 		display: flex;
@@ -1658,9 +2081,9 @@
 		position: relative;
 		text-align: left;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: left;
-		padding: 40rpx 20rpx 0rpx 20rpx;
+		padding: 0 20rpx 0rpx 20rpx;
 	}
 
 	.dashboard2-card1-container {
@@ -1673,27 +2096,27 @@
 
 	.dashboard2-card1 {
 		width: calc(100% - 80rpx);
-		/* Screen width minus 20rpx on each side */
-		left: 5px;
-		background-color: #373742;
+		aspect-ratio: 9 / 3;
+		/* 调整这个比例以匹配您的背景图片 */
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
 		border-radius: 50rpx;
 		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
 		position: relative;
 		z-index: 20;
-		text-align: left;
 		display: flex;
 		flex-direction: column;
 		align-items: left;
-		padding: 20rpx 30rpx 20rpx 30rpx;
+		padding: 20rpx 30rpx;
 	}
 
 	.dashboard2-progress-container {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
+		justify-content: center;
 		align-items: center;
-		margin-bottom: 10px;
+		margin-top: 15rpx;
 	}
 
 	.dashboard2-card3 {
@@ -1720,7 +2143,7 @@
 	}
 
 	.dashboard2-score-title2 {
-		font-size: 30rpx;
+		font-size: 50rpx;
 		color: #FFFFFF;
 		left: 300px;
 		top: -23px;
@@ -1731,20 +2154,20 @@
 		font-size: 50rpx;
 		font-weight: bold;
 		color: #fe9a52;
-		margin-left: 60rpx;
-		left: 30px;
-		top: 30px;
-		position: absolute;
+		margin-top: 20rpx;
+		/* left: 30px; */
+		/* top: 30px; */
+		position: relative;
 	}
 
 	.dashboard2-score-value-large-g {
 		font-size: 50rpx;
 		font-weight: bold;
 		color: #aeed50;
-		margin-left: 60rpx;
-		left: 30px;
-		top: 30px;
-		position: absolute;
+		margin-top: 20rpx;
+		/* left: 30px; */
+		/* top: 30px; */
+		position: relative;
 	}
 
 	.dashboard2-score-value-large1 {
@@ -1756,15 +2179,16 @@
 	}
 
 	.dashboard2-progress-bar1 {
-		width: 70%;
-		height: 15rpx;
-		background-color: #000000;
+		width: 100%;
+		height: 35rpx;
+		background-color: rgba(255, 255, 255, 0.35);
 		border-radius: 15rpx;
 		overflow: hidden;
 		margin-top: 15rpx;
 		margin-bottom: 15rpx;
 		margin-left: 15rpx;
 	}
+
 
 	.dashboard2-progress {
 		height: 100%;
@@ -1809,7 +2233,7 @@
 		width: 150rpx;
 		height: auto;
 		position: absolute;
-		top: 40rpx;
+		/* top: 40rpx; */
 		right: 0rpx;
 	}
 
@@ -1838,7 +2262,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		margin-bottom: 20rpx;
+		margin-top: 24rpx;
 	}
 
 	.floating-image {
@@ -1856,14 +2280,14 @@
 
 	.container-sprogress {
 		width: 100%;
-		overflow-x: hidden;
+		/* overflow-x: hidden; */
 		/* Hide horizontal overflow */
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
 		flex-direction: column;
 		background-color: #2F2F38;
-		margin-right: 3rpx;
+		/* margin-right: 3rpx; */
 	}
 
 	.progress-canvas {
