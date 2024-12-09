@@ -99,7 +99,7 @@
 					<view class="improved">
 						<view class="improved-title key-strength-title">
 							{{ $t('pages.result.result.advices') }}
-							<image class="improved-icon" src="/src/static/resultUpArrow.webp"></image>
+							<image class="improved-icon" src="/static/resultUpArrow.webp"></image>
 						</view>
 						
 						<view class="improved-content">
