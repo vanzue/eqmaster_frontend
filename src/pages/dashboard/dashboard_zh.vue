@@ -25,8 +25,7 @@
 								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">
 									{{ $t('pages.dashboard.superpower') }}
 								</text>
-								<text
-									style="font-size:34rpx;font-weight: 600;line-height: 44rpx;color: #ffffff;margin-top: 12rpx;">
+								<text>
 									{{ illustrationData.weakness }}
 								</text>
 								<text class="detail-summary">{{ illustrationData.characteristics }}</text>
@@ -76,14 +75,14 @@
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" :key="index"
-									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
+									:title="item?.analysis?.title?.title || 'No summary available'" :details="item?.analysis?.summary?.summary || ''"
 									@tap="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList" :key="index"
-								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
+								:title="item?.analysis?.title?.title || 'No summary available'" :details="item?.analysis?.summary?.summary || ''"
 								@tap="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -422,7 +421,9 @@
 				return this.analysisList.filter((item, index) => index % 2 == 1);
 			},
 			rightList() {
-				return this.analysisList.filter((item, index) => index % 2 == 0)
+				const list = this.analysisList.filter((item, index) => index % 2 == 0);
+				console.log('rightList (computed):', list); // 每次计算时输出
+				return list;
 			},
 			currentTags() {
 				if (this.selectedOption === 'subordinate') {
@@ -751,10 +752,14 @@
 					const resultJson = JSON.parse(result);
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
+					uni.showToast({
+						title: 'Upload failed, please try again',
+						icon: 'none', 
+						duration: 2000 
+					});
 					console.error('Upload failed:', error);
-					// 处理上传失败的情况
-				} finally {
 					this.isLoading = false;
+					// 处理上传失败的情况
 				}
 			},
 			async getHomepageData() {
