@@ -17,7 +17,7 @@
 
 		<!-- Test page content -->
 		<template v-if="currentPage === 'test'">
-			<view :class="[isWeChatMiniProgram ? 'banner-container-wechat' : 'banner-container']">
+			<view v-if="titleShow === true" :class="[isWeChatMiniProgram ? 'banner-container-wechat' : 'banner-container']">
 				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
 				<view class="test">
 					<text class="room-text">{{ scenarioData?.location || '' }}</text>
@@ -58,12 +58,7 @@
 
 		<!-- Test3 page content -->
 		<template v-else-if="currentPage === 'test3'">
-			<view :class="[isWeChatMiniProgram ? 'banner-container-wechat' : 'banner-container']">
-				<image class="logo" :src="getImg('/static/web/signa.webp')" mode="aspectFit" />
-				<view class="test">
-					<text class="room-text">{{ scenarioData?.location || '' }}</text>
-				</view>
-			</view>
+			
 			<view class="text-box" @click="navigateToTest4" :class="{ 'disabled': isLoading }" v-if="background">
 				<text class="text-content">{{ background }}</text>
 				<view class="expand-icon">
@@ -150,6 +145,8 @@
 				startX: 0, // 记录触摸开始时的 X 坐标
 				endX: 0, // 记录触摸结束时的 X 坐标
 				dialogueHistory: [], // Modified structure for dialogue history
+				titleShow: true,
+				
 				// scores: {
 				// 	Perception: 0,
 				// 	"Self Regulation": 0,
@@ -235,6 +232,13 @@
 		onLoad(option) {
 			console.log("Received options:", option);
 			// this.sendDataToBackend();
+		},
+		mounted() { // 使用 mounted 钩子
+			// 设置闪屏持续时间（例如 3 秒）
+			setTimeout(() => {
+				console.log('隐藏闪屏');
+				this.titleShow = false; // 完全隐藏
+			}, 2000); // 等同于 CSS 动画的持续时间
 		},
 		async created() {
 			console.log("Initial num value:", this.num);

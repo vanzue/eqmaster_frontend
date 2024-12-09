@@ -51,7 +51,7 @@
 				<view class="eqoach-bot-wrapper" v-if="!isDelEqoashBot">
 					<view class="eqoach-bot" :style="{ transform: `translateX(${swipeOffset}px)` }"
 						@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
-						<image class="eqoach-bot-icon" src="/static/eqoach-icon.png"></image>
+						<image class="eqoach-bot-icon" :src="getImg('/static/web/eqoach-icon.png')"></image>
 						<view class="eqoach-bot-center">
 							<view class="eqoach-bot-title">EQoach bot</view>
 							<view class="eqoach-bot-desc">{{ $t('pages.profile.bot.desc') }}</view>
