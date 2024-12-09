@@ -25,7 +25,7 @@
 								<text style="font-size:24rpx;font-weight: 400;line-height: 32rpx;color: #ffffff;">
 									{{ $t('pages.dashboard.superpower') }}
 								</text>
-								<text
+								<text>
 									{{ illustrationData.weakness }}
 								</text>
 								<text class="detail-summary">{{ illustrationData.characteristics }}</text>

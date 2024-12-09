@@ -1117,25 +1117,6 @@ export default {
 				}));
 				this.allHistory = JSON.parse(JSON.stringify(this.chattingHistory));
 			},
-			chattingHistory: {
-				handler(newValue, oldValue) {
-					// console.log(newValue, oldValue)
-					this.updateScrollIntoView();
-				},
-				deep: true,
-			},
-			state(newVal, oldVal) {
-				if (newVal === "userTalk") {
-					this.userTalkCount++; // 增加计数器
-					console.log("The user round:", this.userTalkCount);
-
-					// 第二次进入 'userTalk' 时显示任务tooltip
-					if (this.userTalkCount === 2) {
-						// console.log("show task tool tip!!!!", this.showTaskTooltip);
-						this.showTaskTooltip = true;
-						this.isTooltipVisible = true;
-					}
-				}
 		});
 		this.jobId = option.jobId || "154ee592-287b-4675-b8bd-8f88de348476";
 		this.initRecorderManager();
@@ -1159,7 +1140,20 @@ export default {
 				this.updateScrollIntoView();
 			},
 			deep: true,
-		}
+		},
+		state(newVal, oldVal) {
+			if (newVal === "userTalk") {
+				this.userTalkCount++; // 增加计数器
+				console.log("The user round:", this.userTalkCount);
+		
+				// 第二次进入 'userTalk' 时显示任务tooltip
+				if (this.userTalkCount === 2) {
+					// console.log("show task tool tip!!!!", this.showTaskTooltip);
+					this.showTaskTooltip = true;
+					this.isTooltipVisible = true;
+				}
+			}
+		},
 	},
 	computed: {
 		userId() {
