@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
 		<view class="header" :style="{ height: navBarHeight + 'px' }">
-			<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px', opacity: 0}"></image>
+			<!--<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px', opacity: 0}"></image>
 			<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('components.Nav.Profile') }}</text>
 			<view class="header-icon"></view>
-			<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
+			 <image class="header-icon" src="/static/battlefield/share.png"></image> -->
 		</view>
 		<!-- <scroll-view scroll-y> -->
 			<view class="content">
