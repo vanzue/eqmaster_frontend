@@ -3,6 +3,8 @@
   <view class="container-sprogress">
     <canvas :id="canvasId" :canvas-id="canvasId" class="progress-canvas" @tap="handleCanvasTap"></canvas>
   </view>
+
+  
 </template>
 
 <script>
