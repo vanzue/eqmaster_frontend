@@ -55,7 +55,7 @@
 							<view class="speed-right">
 								<view class="speed-title key-strength-speedtitle">
 									{{ caleOverviewScores.length > 0 ? caleOverviewScores[caleOverviewScores.length - 1].name : '' }}
-									<image class="speed-icon" src="/src/static/warning.png"></image>
+									<image class="speed-icon" src="/static/warning.png"></image>
 								</view>
 								
 								<view class="">
