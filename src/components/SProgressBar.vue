@@ -434,7 +434,8 @@
 
 					// 计算背景的尺寸
 					const textMetrics = ctx.measureText(`Unit${this.numberToChineseCharacter(i + 1)}`);
-					const bgWidth = textMetrics.width + padding * 2;
+					const bgWidth = 60;
+					// const bgWidth = textMetrics.width + padding * 2;
 					const bgHeight = 24; // 根据需要调整高度
 
 					// 计算背景的位置

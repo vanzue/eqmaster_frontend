@@ -213,25 +213,25 @@
 					:src="currentView === 'dashboard' ? '/static/nav/home1.png' : '/static/nav/home.png'" 
 					mode="widthFix">
 					</cover-image>
-					<cover-view class="nav-text" :class="{ 'highlight': currentView === 'dashboard' }">
+					<text class="nav-text" :class="{ 'highlight': currentView === 'dashboard' }">
 					{{ $t('components.Nav.home') }}
-					</cover-view>
+					</text>
 				</cover-view>
 				<cover-view class="nav-item" @click="navigateToProfilePage('Battlefield')">
 					<cover-image class="nav-image"
 					:src="currentView === 'dashboard2' ? '/static/nav/battlefield1.png' : '/static/nav/battlefield.png'"
 					mode="widthFix"></cover-image>
-					<cover-view class="nav-text" :class="{ 'highlight': currentView === 'dashboard2' }">
+					<text class="nav-text" :class="{ 'highlight': currentView === 'dashboard2' }">
 					{{ $t('components.Nav.Battlefield') }}
-					</cover-view>
+					</text>
 				</cover-view>
 				<cover-view class="nav-item" @click="navigateToProfilePage('Profile')">
 					<cover-image class="nav-image"
 					:src="selectedView === 'Profile' ? '/static/nav/profile1.png' : '/static/nav/profile.png'"
 					mode="widthFix"></cover-image>
-					<cover-view class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">
+					<text class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">
 					{{ $t('components.Nav.Profile') }}
-					</cover-view>
+					</text>
 				</cover-view>
 			</cover-view>
 		</cover-view >
@@ -2499,7 +2499,6 @@
 		align-items: center;
 		padding: 0 120rpx; /* 添加左右距离 */
 		margin-top: -10rpx;
-		position: fixed;
 		/* height: 150rpx;
     background-color: #252529;
     color: #252529;
@@ -2513,7 +2512,6 @@
 		height: 44rpx;
 		display: block;
 		margin: 0 auto;
-		position: fixed;
 	}
 
 	.nav-item {
@@ -2522,7 +2520,6 @@
 		width: 100rpx;
 		text-align: center;
 		height: 82rpx;
-		position: fixed;
 	}
 
 	.nav-text {
@@ -2531,11 +2528,9 @@
 		font-weight: 400;
 		text-align: center;
 		margin-top: 10rpx;
-		position: fixed;
 	}
 
 	.highlight {
 		color: #9EE44D;
-		position: fixed;
 	}
 </style>
