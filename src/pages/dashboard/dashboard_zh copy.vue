@@ -109,11 +109,9 @@
                                 class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</cover-view>
                         </cover-view>
                         <cover-view class="dashboard2-card">
-                            <!-- <cover-image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
+                            <cover-image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
                                 mode="widthFix">
-                            </cover-image> -->
-							<cover-image class="dashboard2-illustration3star" :src="getImg('/static/web/battlefield/star.webp')"
-							mode="widthFix"></cover-image>
+                            </cover-image>
                             <cover-view
                                 class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</cover-view>
                         </cover-view>
@@ -121,43 +119,24 @@
                         </cover-image>
                     </cover-view>
 
+                    <cover-view class="dashboard2-card1"
+                        :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
+                        <cover-view class="dashboard2-progress-container">
+                            <cover-view class="dashboard2-score-title2">{{ getEmotionText }}</cover-view>
+                        </cover-view>
 
-
-					<!-- <view class="dashboard2-card11">
-						<image class="dashboard2-card1-bg" :src="getImg('/static/web/card-course.webp')" />
-						<view class="dashboard2-card1-content">
-							<view class="dashboard2-progress-container">
-								<view class="dashboard2-score-title2">{{ getEmotionText }}</view>
-							</view>
-
-							<view class="dashboard2-progress-container">
-								<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-									:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
-									:animal="this.maxanimal" :activeColor="getActiveColor" />
-							</view>
-						</view>
-					</view> -->
+                        <cover-view class="dashboard2-progress-container">
+                            <AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
+                                :currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
+                                :animal="this.maxanimal" :activeColor="getActiveColor" />
+                        </cover-view>
+                    </cover-view>
                 </cover-view>
 
 				<!-- 其他可滚动内容放在这里1 -->
 				<view scroll-y  class="dashboard2-scrollable-content">
 				<!-- <scroll-view scroll-y style=z-index: 999; class="dashboard2-scrollable-content"> -->
 					
-					<view class="dashboard2-card11">
-						<image class="dashboard2-card1-bg" :src="getImg('/static/web/card-course.webp')" />
-						<view class="dashboard2-card1-content">
-							<!-- 原来的内容放这里 -->
-							<view class="dashboard2-progress-container">
-								<view class="dashboard2-score-title2">{{ getEmotionText }}</view>
-							</view>
-
-							<view class="dashboard2-progress-container">
-								<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-									:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
-									:animal="this.maxanimal" :activeColor="getActiveColor" />
-							</view>
-						</view>
-					</view>
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
 						<!-- v-if="courseData"
@@ -169,7 +148,8 @@
 						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
-
+						<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
+							mode="widthFix"></image>
 						<SProgressBar v-if="courseData" class="container-sprogress"
 
 							:finish-components="courseData.course_result.length+1"
@@ -2119,9 +2099,9 @@
 
 	.dashboard2-scrollable-content {
 		z-index: 999;
-		padding-top: 120rpx;
+		padding-top: 400rpx;
 		/* webkit-overflow-scrolling: touch; */
-		touch-action: none;
+		touch-action: none; /* 禁用触摸滚动 */
 		/* 其他样式 */
 	}
 
@@ -2156,45 +2136,21 @@
 	}
 
 	.dashboard2-card1 {
-		/* width: calc(100% - 80rpx); */
+		width: calc(100% - 80rpx);
 		aspect-ratio: 9 / 3;
 		/* 调整这个比例以匹配您的背景图片 */
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
-		/* border-radius: 50rpx; */
-		/* box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1); */
+		border-radius: 50rpx;
+		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
 		position: relative;
-		/* z-index: 20; */
+		z-index: 20;
 		display: flex;
 		flex-direction: column;
 		align-items: left;
 		padding: 20rpx 30rpx;
 		margin: 0 auto 30rpx auto;
 	}
-
-	.dashboard2-card11 {
-    position: relative;
-    width: calc(100% - 40rpx);
-    aspect-ratio: 9 / 3;
-    border-radius: 50rpx;
-    overflow: hidden; /* 确保背景图片不会超出圆角边框 */
-	margin: 0 auto 30rpx auto;
-}
-
-.dashboard2-card1-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.dashboard2-card1-content {
-    position: relative;
-    z-index: 2;
-    padding: 20rpx 30rpx;
-}
 
 	.dashboard2-progress-container {
 		width: 100%;
@@ -2313,15 +2269,6 @@
 		position: relative;
 		top: 0rpx;
 		left: 0rpx;
-	}
-
-	.dashboard2-illustration3star {
-		width: 65rpx;
-		height: 65rpx;
-		position: relative;
-		top: 19rpx;
-		left: 0rpx;
-		margin-right: 15rpx;
 	}
 	
 	.dashboard2-illustration-star {

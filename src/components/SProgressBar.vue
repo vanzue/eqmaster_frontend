@@ -640,7 +640,7 @@
 	.progress-canvas {
 		width: 100%;
 		/* 将宽度设置为100% */
-		height: 1900rpx;
+		height: 1200rpx;
 		/* margin-top: 45rpx; */
 		/* 移除transform属性 */
 		/* -webkit-overflow-scrolling: touch; */
