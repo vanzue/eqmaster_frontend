@@ -203,8 +203,38 @@
 				</view>
 			</view>
 		</view>
-		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
-			:userId="userId" :username="username" :jobId="jobId" />
+		<!-- <Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
+			:userId="userId" :username="username" :jobId="jobId" /> -->
+
+		<cover-view  class="nav-contation">
+			<cover-view class="nav-contation-inner">
+				<cover-view class="nav-item" @click="navigateToProfilePage('Home')">
+					<cover-image class="nav-image"
+					:src="currentView === 'dashboard' ? '/static/nav/home1.png' : '/static/nav/home.png'" 
+					mode="widthFix">
+					</cover-image>
+					<cover-view class="nav-text" :class="{ 'highlight': currentView === 'dashboard' }">
+					{{ $t('components.Nav.home') }}
+					</cover-view>
+				</cover-view>
+				<cover-view class="nav-item" @click="navigateToProfilePage('Battlefield')">
+					<cover-image class="nav-image"
+					:src="currentView === 'dashboard2' ? '/static/nav/battlefield1.png' : '/static/nav/battlefield.png'"
+					mode="widthFix"></cover-image>
+					<cover-view class="nav-text" :class="{ 'highlight': currentView === 'dashboard2' }">
+					{{ $t('components.Nav.Battlefield') }}
+					</cover-view>
+				</cover-view>
+				<cover-view class="nav-item" @click="navigateToProfilePage('Profile')">
+					<cover-image class="nav-image"
+					:src="selectedView === 'Profile' ? '/static/nav/profile1.png' : '/static/nav/profile.png'"
+					mode="widthFix"></cover-image>
+					<cover-view class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">
+					{{ $t('components.Nav.Profile') }}
+					</cover-view>
+				</cover-view>
+			</cover-view>
+		</cover-view >
 	</view>
 </template>
 
@@ -633,6 +663,43 @@
 			}
 		},
 		methods: {
+			navigateToProfilePage(val) {
+				const currentPages = getCurrentPages();
+				const currentRoute = currentPages[currentPages.length - 1].route;
+				if (val === 'Home') {
+					if (currentRoute !== 'pages/dashboard/dashboard_zh') {
+						uni.reLaunch({
+							url: `/pages/dashboard/dashboard_zh` // 添加查询参数
+						});
+					}
+					this.$store.commit('setHomeNavName', 'dashboard');
+					uni.setNavigationBarTitle({
+						title: this.$t('components.Nav.home'),
+					});
+					// this.$emit('switchHomeView', "dashboard");
+				}
+				if (val === 'Battlefield') {
+					if (currentRoute !== 'pages/dashboard/dashboard_zh') {
+						uni.reLaunch({
+							url: `/pages/dashboard/dashboard_zh` // 添加查询参数
+						});
+					}
+					this.$store.commit('setHomeNavName', 'dashboard2');
+					uni.setNavigationBarTitle({
+						title: this.$t('components.Nav.Battlefield'),
+					});
+					// this.$emit('switchHomeView', "dashboard2");
+
+				}
+				if (val === 'Profile') {
+					uni.reLaunch({
+						url: `/pages/profile/profile_zh` // 添加查询参数
+					});
+					uni.setNavigationBarTitle({
+						title: this.$t('components.Nav.Profile'),
+					});
+				}
+			},
 			progressWidth(value) {
 				// 算进度条宽度百分比
 				const percentage = (value / this.maxScore) * 100;
@@ -2411,4 +2478,64 @@
 		padding-top: 0px;
 	}
 
+	.nav-contation {
+		display: flex;
+		z-index: 9999;
+		height: 140rpx;
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		transform: translateX(-50%);
+		left: 50%;
+		background: #252529;
+		border-top: 1px solid #373742;
+
+	}
+
+	.nav-contation-inner {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding: 0 120rpx; /* 添加左右距离 */
+		margin-top: -10rpx;
+		position: fixed;
+		/* height: 150rpx;
+    background-color: #252529;
+    color: #252529;
+    font-size: 36rpx;
+    text-align: center;
+    line-height: 100rpx; */
+	}
+
+	.nav-image {
+		width: 44rpx;
+		height: 44rpx;
+		display: block;
+		margin: 0 auto;
+		position: fixed;
+	}
+
+	.nav-item {
+		display: flex;
+		flex-direction: column;
+		width: 100rpx;
+		text-align: center;
+		height: 82rpx;
+		position: fixed;
+	}
+
+	.nav-text {
+		color: #67677A;
+		font-size: 24rpx;
+		font-weight: 400;
+		text-align: center;
+		margin-top: 10rpx;
+		position: fixed;
+	}
+
+	.highlight {
+		color: #9EE44D;
+		position: fixed;
+	}
 </style>
