@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
 		<view class="header" :style="{ height: navBarHeight + 'px' }">
-			<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px', opacity: 0}"></image>
+			<!--<image class="header-icon" src="/static/back-left.png" @click="navigateToHome" :style="{marginTop: navBarTop + 'px', opacity: 0}"></image>
 			<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('components.Nav.Profile') }}</text>
 			<view class="header-icon"></view>
-			<!-- <image class="header-icon" src="/static/battlefield/share.png"></image> -->
+			 <image class="header-icon" src="/static/battlefield/share.png"></image> -->
 		</view>
 		<!-- <scroll-view scroll-y> -->
 			<view class="content">
@@ -51,7 +51,7 @@
 				<view class="eqoach-bot-wrapper" v-if="!isDelEqoashBot">
 					<view class="eqoach-bot" :style="{ transform: `translateX(${swipeOffset}px)` }"
 						@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
-						<image class="eqoach-bot-icon" src="/static/eqoach-icon.png"></image>
+						<image class="eqoach-bot-icon" :src="getImg('/static/web/eqoach-icon.png')"></image>
 						<view class="eqoach-bot-center">
 							<view class="eqoach-bot-title">EQoach bot</view>
 							<view class="eqoach-bot-desc">{{ $t('pages.profile.bot.desc') }}</view>
