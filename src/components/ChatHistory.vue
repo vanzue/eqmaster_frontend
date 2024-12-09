@@ -2,7 +2,7 @@
 <template>
     <view class="history-item">
         <view class="item-container">
-            <view class="title">{{title}}</view>
+            <view class="title">{{ randomEmoji }} {{ title }}</view> 
             <view class="line"></view>
             <view class="detail" v-if="details != ''">{{details}}</view>
             <view class="detail" v-else>No details available</view>
@@ -20,7 +20,14 @@ export default{
             type: String,
             required: true
         }
-    }
+    },
+	computed: {
+		randomEmoji() {
+			const emojiList = ['🌟', '✨', '🔥', '💥', '🌈', '🚀', '💫', '🎉', '🦄', '🌸'];
+			const randomIndex = Math.floor(Math.random() * emojiList.length);
+			return emojiList[randomIndex];
+		}
+	}
 }
 </script>
 <style scoped>
