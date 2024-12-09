@@ -213,25 +213,25 @@
 					:src="currentView === 'dashboard' ? '/static/nav/home1.png' : '/static/nav/home.png'" 
 					mode="widthFix">
 					</cover-image>
-					<text class="nav-text" :class="{ 'highlight': currentView === 'dashboard' }">
+					<cover-view class="nav-text" :class="{ 'highlight': currentView === 'dashboard' }">
 					{{ $t('components.Nav.home') }}
-					</text>
+					</cover-view>
 				</cover-view>
 				<cover-view class="nav-item" @click="navigateToProfilePage('Battlefield')">
 					<cover-image class="nav-image"
 					:src="currentView === 'dashboard2' ? '/static/nav/battlefield1.png' : '/static/nav/battlefield.png'"
 					mode="widthFix"></cover-image>
-					<text class="nav-text" :class="{ 'highlight': currentView === 'dashboard2' }">
+					<cover-view class="nav-text" :class="{ 'highlight': currentView === 'dashboard2' }">
 					{{ $t('components.Nav.Battlefield') }}
-					</text>
+					</cover-view>
 				</cover-view>
 				<cover-view class="nav-item" @click="navigateToProfilePage('Profile')">
 					<cover-image class="nav-image"
 					:src="selectedView === 'Profile' ? '/static/nav/profile1.png' : '/static/nav/profile.png'"
 					mode="widthFix"></cover-image>
-					<text class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">
+					<cover-view class="nav-text" :class="{ 'highlight': selectedView === 'Profile' }">
 					{{ $t('components.Nav.Profile') }}
-					</text>
+					</cover-view>
 				</cover-view>
 			</cover-view>
 		</cover-view >
