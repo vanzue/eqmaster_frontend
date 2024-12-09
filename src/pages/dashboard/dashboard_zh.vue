@@ -1,3 +1,4 @@
+
 <template>
 	<view class="container">
 		<view v-if="isLoading" class="loading">
@@ -44,22 +45,21 @@
 							
 							
 							
-							<view class="right-calendar">
+<!-- 							<view class="right-calendar">
 								<text
 									style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
 									<text style="font-weight: bold;">{{ $t('pages.dashboard.tip.title') }}</text>
 									{{ $t('pages.dashboard.tip.text') }}
 									
 								</text>
-							</view>
+							</view> -->
 							
-<!-- 							<view class="right-calendar">
+							<view class="right-calendar">
 								<text style="font-size: 24rpx;font-weight: 400;color: #ffffff;width: 418rpx;height: 128rpx;">
-									<text style="font-weight: bold;">{{ homepageData?.response?.personal_info?.wordings.charAt(0).toUpperCase() || $t('pages.dashboard.tip.title') }}</text>
-									{{ homepageData?.response?.personal_info?.wordings.slice(1) || $t('pages.dashboard.tip.text') }}
+									<text style="font-weight: bold;">{{ homepageData?.response?.personal_info?.wordings.split(' ')[0] }}</text> {{ homepageData?.response?.personal_info?.wordings.split(' ').slice(1).join(' ') }}
 									
 								</text>
-							</view> -->
+							</view>
 							
 							
 						</view>
@@ -101,42 +101,43 @@
 			</view>
 			<!-- chat battlefield homepage -->
 			<view v-else-if="currentView === 'dashboard2'" class="dashboard2-content">
-				<view class="dashboard2-fixed-content">
-					<view class="dashboard2-card-o">
-						<view class="dashboard2-card">
-							<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
-								mode="widthFix"></image>
-							<text
-								class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</text>
-						</view>
-						<view class="dashboard2-card">
-							<image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
-								mode="widthFix">
-							</image>
-							<text
-								class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</text>
-						</view>
-						<image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
-						</image>
+                <cover-view class="dashboard2-fixed-content">
+                    <cover-view class="dashboard2-card-o">
+                        <cover-view class="dashboard2-card">
+                            <cover-image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
+                                mode="widthFix"></cover-image>
+                            <cover-view
+                                class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</cover-view>
+                        </cover-view>
+                        <cover-view class="dashboard2-card">
+                            <cover-image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
+                                mode="widthFix">
+                            </cover-image>
+                            <cover-view
+                                class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</cover-view>
+                        </cover-view>
+                        <cover-image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
+                        </cover-image>
+                    </cover-view>
 
-					</view>
+                    <cover-view class="dashboard2-card1"
+                        :style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
+                        <cover-view class="dashboard2-progress-container">
+                            <cover-view class="dashboard2-score-title2">{{ getEmotionText }}</cover-view>
+                        </cover-view>
 
-					<view class="dashboard2-card1"
-						:style="{ backgroundImage: `url(${getImg('/static/web/card-course.webp')})` }">
-						<view class="dashboard2-progress-container">
-							<text class="dashboard2-score-title2">{{ getEmotionText }}</text>
-						</view>
-
-						<view class="dashboard2-progress-container">
-							<AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
-								:currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
-								:animal="this.maxanimal" :activeColor="getActiveColor" />
-						</view>
-					</view>
-				</view>
+                        <cover-view class="dashboard2-progress-container">
+                            <AbilityProgressBar :segment1Width="33" :segment2Width="34" :segment3Width="33"
+                                :currentProgress="calculateProgress(homepageData?.response?.eq_scores?.social_skill_score)"
+                                :animal="this.maxanimal" :activeColor="getActiveColor" />
+                        </cover-view>
+                    </cover-view>
+                </cover-view>
 
 				<!-- 其他可滚动内容放在这里1 -->
-				<scroll-view scroll-y class="dashboard2-scrollable-content">
+				<view scroll-y  class="dashboard2-scrollable-content">
+				<!-- <scroll-view scroll-y style=z-index: 999; class="dashboard2-scrollable-content"> -->
+					
 					<view class="dashboard2-card-o">
 						<!-- 调用进度条组件，添加 isCompleteTask 属性 -->
 						<!-- v-if="courseData"
@@ -148,11 +149,14 @@
 						<!-- <SProgressBar v-if="courseData"  class="container-sprogress" :finishComponents="1"
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
+						<image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
+							mode="widthFix"></image>
 						<SProgressBar v-if="courseData" class="container-sprogress"
-						:finish-components="courseData.course_result.length+1"
-						:total-components="courseData.course_list.length"
-						:star-ratings="courseData.course_result.map(item => item.result)"
-						:level-names="courseData.course_list.map(item => item.title)" 
+
+							:finish-components="courseData.course_result.length+1"
+							:total-components="courseData.course_list.length+1"
+							:star-ratings="courseData.course_result.map(item => item.result)"
+							:level-names="courseData.course_list.map(item => item.title)" 
 							/>
 						<!-- 
 
@@ -176,7 +180,7 @@
 						is-complete-task: 是否完成所有任务
 						-->
 					</view>
-				</scroll-view>
+				</view>
 			</view>
 		</view>
 		<Nav :selectedView="currentView === 'dashboard' ? 'Home' : 'Battlefield'" @switchHomeView="switchView"
@@ -629,7 +633,6 @@
 			},
 			navigateToAnalysis(analysis) {
 				console.log("navigate To analysis....");
-				this.isLoading = false;
 				uni.setStorage({
 					key: `analysis-${analysis.id}`,
 					data: analysis,
@@ -662,10 +665,9 @@
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
 					console.error('Upload failed:', error);
-					this.isLoading = false;
 					// 处理上传失败的情况
 				} finally {
-					// this.isLoading = false;
+					this.isLoading = false;
 				}
 			},
 			async getHomepageData() {
@@ -1109,7 +1111,7 @@
 		/* display: flex; */
 		flex-direction: column;
 		align-items: left;
-		padding-top: 40rpx;
+		/* padding-top: 40rpx; */
 		width: 100%;
 		/* height: calc(100vh - 150rpx); */
 		height: 100vh;
@@ -2090,7 +2092,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		z-index: 1000;
+		z-index: 1001;
 		background-color: #2F2F38;
 		/* 匹配背景色 */
 		padding: 0 20rpx;
@@ -2098,8 +2100,9 @@
 
 	.dashboard2-scrollable-content {
 		z-index: 999;
-		transform: translateZ(-1);
-		padding-top: 352rpx;
+		padding-top: 400rpx;
+		/* webkit-overflow-scrolling: touch; */
+		touch-action: none; /* 禁用触摸滚动 */
 		/* 其他样式 */
 	}
 
@@ -2147,6 +2150,7 @@
 		flex-direction: column;
 		align-items: left;
 		padding: 20rpx 30rpx;
+		margin: 0 auto 30rpx auto;
 	}
 
 	.dashboard2-progress-container {
@@ -2353,4 +2357,5 @@
 		height: 134px;
 		padding-top: 0px;
 	}
+
 </style>
