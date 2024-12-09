@@ -324,7 +324,7 @@ export default {
 		};
 	},
 	created() {
-		// console.log("created");
+		console.log("created");
 		// console.log("state userid", state.userId);
 		// 动态添加任务到 taskList
 		this.taskList.addTask(
@@ -701,9 +701,11 @@ export default {
 			});
 			await this.$store.dispatch('fetchHomepageData');
 			setTimeout(() => {
-				uni.navigateTo({
-					url: "/pages/battlefield/battlefield-summary-zh",
-				});
+				if (getCurrentPages().pop().route !== "/pages/battlefield/battlefield-summary-zh") {
+					uni.navigateTo({
+						url: "/pages/battlefield/battlefield-summary-zh",
+					});
+				}
 			}, 1000);
 		},
 		calculateStars() {
@@ -765,7 +767,7 @@ export default {
 				this.$nextTick(() => {
 					setTimeout(() => {
 						newMessage.shouldAnimate = true;
-						this.anasLoadingObj.text = "正在分析中";
+						this.anasLoadingObj.text = this.$t('pages.battlefield.playground.analyzing');;
 					}, 50);
 				});
 

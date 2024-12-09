@@ -162,7 +162,11 @@
 		},
 	}
 </script>
-
+<style>
+	uni-button:after {
+		border: 0;
+	}
+</style>
 <style scoped>
 	.popup-content {
 		width: 654rpx;
@@ -195,7 +199,8 @@
 		align-items: center;
 		font-size: 40rpx;
 		font-weight: 500;
-		color: #8C5225;
+		/* color: #8C5225; */
+		color: #2D6985;
 		margin-top: 32rpx;
 	}
 
@@ -278,14 +283,16 @@
 	}
 
 	.jewelry-num {
-		color: #F2BC74;
+		/* color: #F2BC74; */
+		color: #2D6985;
 		font-size: 40rpx;
 		font-weight: 800;
 		text-align: left;
 	}
 
 	.jewelry-num-dark {
-		color: #8C5225;
+		/* color: #8C5225; */
+		color: #2D6985;
 		font-size: 40rpx;
 		font-weight: 900;
 		text-align: left;

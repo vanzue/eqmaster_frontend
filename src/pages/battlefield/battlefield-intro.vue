@@ -3,24 +3,26 @@
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
-			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
-				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
-				<progress-bar :isActive="false" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
-			</view>
 			<!-- #ifdef MP-WEIXIN -->
-			<view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view>
+			<!-- <view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view> -->
 			<!-- #endif -->
 		</view>
-
+		
 		<!-- Content -->
 		<view class="content">
-			<text class="title content-item">Unit {{ this.courseInfo.course_data.course_level }} </text>
-			<text class="subtitle content-item">{{ this.courseInfo.course_data.title }}</text>
-			<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
-			<view class="description content-item" id="desc">
-				{{ this.courseInfo.course_data.background }}
+			<view class="progress-bar">
+				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
+				<progress-bar :isActive="false" class="progress-bar-item"></progress-bar>
 			</view>
-
+			<view class="content-text">
+				<text class="title content-item">Unit {{ this.courseInfo.course_data.course_level }} </text>
+				<text class="subtitle content-item">{{ this.courseInfo.course_data.title }}</text>
+				<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
+				<rich-text :nodes="generateNpcHtml"></rich-text>
+			</view>
+			<!-- <view class="description content-item" id="desc">
+				{{ this.courseInfo.course_data.background }}
+			</view> -->
 			<!-- <text class="title content-item">{{ $t('pages.battlefield.intro.unit1.title') }}</text>
 			<text class="subtitle content-item">{{ $t('pages.battlefield.intro.unit1.subtitle') }}</text>
 			<text class="time-info content-item">{{ $t('pages.battlefield.intro.unit1.time') }}</text>
@@ -36,16 +38,22 @@
 
 <script>
 	import ProgressBar from '@/components/ProgressBar.vue'; // 引入组件
+	import {
+		getImg
+	} from "../../scripts/constants";
 	export default {
 		components: {
 			ProgressBar, // 注册组件
 		},
 		data() {
-			return {};
+			return {
+				htmlContent: `<view class="description content-item" id="desc">111</view>`,
+				nodes: [],
+				previousCourseData: null // 初始化之前的课程数据
+			};
 		},
 		created() {
 			this.loadCourse();
-			// console.log('courseInfo:', this.courseInfo)
 		},
 		computed: {
 			npcs() {
@@ -66,6 +74,101 @@
 			isWeChatMiniProgram() {
 				const systemInfo = uni.getSystemInfoSync();
 				return systemInfo.uniPlatform === 'mp-weixin';
+			},
+			generateNpcHtml() {
+				if(this.courseInfo.course_data && this.courseInfo.course_data.npc) {
+					const npcData = JSON.parse(this.courseInfo.course_data.npc);
+					let content = this.courseInfo.course_data.background;
+					const names = Object.values(npcData).map(npc => npc.name);
+					// 定义一个空的节点数组
+					let nodes = [
+					];
+       				let lastIndex = 0;
+					// names.forEach((npcName) => {
+					// 	const regex = new RegExp(`(${npcName})`, 'gi'); // 正则匹配npcName，不区分大小写
+					// 	content = content.replace(regex, (match) => {
+					// 		const npc = Object.values(npcData).find(n => n.name === npcName);
+					// 		return `<span class="npc-name"><img src="${npc.avatar_url}" class="npc-avatar">${match}</span>`;
+					// 	});
+					// });
+					// return `
+					// 	<div class="description content-item" id="desc">
+					// 		${content}
+					// 	</div>
+					// `;
+					// 遍历所有 NPC 名字并替换
+					names.forEach((npcName) => {
+						const regex = new RegExp(`(${npcName})`, 'gi'); // 匹配 npcName，不区分大小写
+						let match;
+
+						while ((match = regex.exec(content)) !== null) {
+							// 插入 NPC 名字前的文本
+							if (match.index > lastIndex) {
+								nodes.push({
+									type: 'text',
+									text: content.substring(lastIndex, match.index)
+								});
+							}
+
+							// 找到对应的 NPC
+							const npc = Object.values(npcData).find(n => n.name === npcName);
+							
+							// 用 <view> 和 <image> 替代 <span> 和 <img>
+							nodes.push({
+								name: 'span',
+								attrs: {
+									class: "npc-name",
+								},
+								children: [
+									{
+										name: 'img',
+										attrs: {
+											src: getImg(npc.avatar_url), // NPC 头像 URL
+											class: 'npc-avatar', // 可以使用样式类来控制图像大小等
+											alt: npc.name // 可选：提供 alt 属性用于图像描述
+										}
+									},
+									{
+										type: 'text',
+										text: match[0] // 插入 NPC 名字
+									}
+								]
+							});
+
+							lastIndex = regex.lastIndex;
+						}
+					});
+
+					// 插入剩余的文本
+					if (lastIndex < content.length) {
+						nodes.push({
+							type: 'text',
+							text: content.substring(lastIndex)
+						});
+					}
+
+					// 包装所有内容的 view 组件，模拟 <div> 标签
+					return [{
+							name: 'div',
+							attrs: {
+								class: 'description content-item', // 如果需要样式，可以通过 class 或 style 来模拟
+								id: 'desc'
+							},
+							children: nodes
+						}]
+				}
+			},
+		},
+		onLoad() {
+			// this.generateNpcHtml();
+		},
+		watch: {
+			courseInfo(newValue) {
+				// console.log("courseInfo : ", newValue);
+				if (newValue && newValue.course_data && newValue.course_data !== this.previousCourseData) {
+					this.previousCourseData = newValue.course_data; // 存储当前的 course_data
+					// this.generateNpcHtml(newValue.course_data);
+				}
 			},
 		},
 		methods: {
@@ -91,18 +194,58 @@
 				} catch (error) {
 					// 处理错误
 				}
-			},
+			}
 		}
 	}
 </script>
-
+<style>
+.description {
+		font-size: 16px;
+		font-weight: 400;
+		align-items: center;
+		line-height: 30px;
+		text-align: center;
+		color: #fff;
+		/* 具体设置白色 */
+	}
+	.npc-name {
+		width: max-content;
+		height: 26px;
+		background-color: #2D6985;
+		font-size: 17px;
+		font-weight: 400;
+		white-space: nowrap;
+		/* 强制不换行 */
+		padding: 4rpx 12rpx;
+		line-height: 26px;
+		/* 上下居中 */
+		position: relative;
+		border-radius: 12px;
+	}
+	.npc-avatar {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background-color: #fff;
+		position: relative;
+		top: 8rpx;
+		margin-right: 4px;
+		/* position: absolute;
+		top: 50%;
+		transform: translateY(-50%); */
+	}
+	#desc,
+	#desc .npc-name {
+		line-height: 27px;
+	}
+</style>
 <style scoped>
 	@import "./common.css";
 
 	.navbar {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: left;
 		align-items: center;
 		padding: 0 20rpx;
 		position: relative;
@@ -116,11 +259,14 @@
 		width: 24rpx;
 		height: 50rpx;
 	}
-
+	.content-text {
+		margin-top: 156rpx;
+		display: grid;
+	}
 	.progress-bar {
-		flex: 1;
+		/* flex: 1; */
 		width: 100%;
-		height: 20px;
+		height: 28px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -128,10 +274,7 @@
 		gap: 16rpx;
 	}
 	.progress-bar-item {
-		width: 193rpx;
-	}
-	.progress-bar-item-wetchat {
-		width: 274rpx;
+		width: 50%;
 	}
 
 	.wetchat-menu {
@@ -139,14 +282,14 @@
 	}
 
 	.content {
-		padding: 40rpx;
+		padding: 0 40rpx;
 		text-align: center;
 		z-index: 3;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin-top: 160rpx;
+		/* margin-top: 160rpx; */
 		/* 确保页面内容在叠加层之上 */
 	}
 
@@ -191,17 +334,15 @@
 		line-height: 68rpx;
 	}
 
-	.npc-name {
+	/* .npc-name {
 		width: max-content;
 		height: 52rpx;
 		background-color: #2D6985;
 		font-size: 34rpx;
 		font-weight: 400;
 		white-space: nowrap;
-		/* 强制不换行 */
 		padding: 4rpx 12rpx;
 		line-height: 52rpx;
-		/* 上下居中 */
 		position: relative;
 		border-radius: 26rpx;
 	}
@@ -213,10 +354,6 @@
 		background-color: #fff;
 		position: relative;
 		top: 8rpx;
-		/* position: absolute;
-		top: 50%;
-		transform: translateY(-50%); */
-	}
-
-	.description-text {}
+		margin-right: 8rpx;
+	} */
 </style>
