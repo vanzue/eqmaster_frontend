@@ -624,8 +624,8 @@
 <style scoped>
 	.container-sprogress {
 		width: 100%;
-		/* overflow-x: hidden; */
-		/* overflow-y: hidden; */
+		overflow-x: hidden;
+		overflow-y: auto;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -633,15 +633,14 @@
 		background-color: #2F2F38;
 		margin-right: 3rpx;
 		/* position: fixed; */
-		/* -webkit-overflow-scrolling: touch; */
-		/* z-index: -1; */
-		overflow: hidden;
+		-webkit-overflow-scrolling: touch;
+		
 	}
 
 	.progress-canvas {
 		width: 100%;
 		/* 将宽度设置为100% */
-		height: 900rpx;
+		height: 1900rpx;
 		/* margin-top: 45rpx; */
 		/* 移除transform属性 */
 		/* -webkit-overflow-scrolling: touch; */
