@@ -1,5 +1,5 @@
 <template>
-	<view class="bubble-container">
+	<!--<view class="bubble-container">-->
 		<view class="text-box" @click="dismiss">
 			<view class="user-info" :class="isOddRequest ? 'odd-style' : 'even-style'">
 				<image class="user-avatar" :src="avatar" mode="aspectFill" />
@@ -16,7 +16,7 @@
 				<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
 			</view>
 		</view>
-	</view>
+	<!--</view>-->
 </template>
 
 <script>

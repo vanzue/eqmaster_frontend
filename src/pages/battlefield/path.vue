@@ -8,7 +8,7 @@
 				<image mode="aspectFill" class="header-img h2" :src="getImg('/static/web/course-star.webp')"></image>
 			</view>
 			<view class="icon-container">
-				<image mode="aspectFill" class="header-img h3" src="/static/course-hill.png"></image>
+				<image mode="aspectFill" class="header-img h3" :src="getImg('/static/web/course-hill.png)"></image>
 			</view>
 		</view>
 		<view class="dimension">
