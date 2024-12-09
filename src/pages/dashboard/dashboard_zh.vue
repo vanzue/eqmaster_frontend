@@ -1,3 +1,4 @@
+
 <template>
 	<view class="container">
 		<view v-if="isLoading" class="loading">
@@ -2356,4 +2357,5 @@
 		height: 134px;
 		padding-top: 0px;
 	}
+
 </style>
