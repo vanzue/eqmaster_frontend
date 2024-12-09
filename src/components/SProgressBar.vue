@@ -348,7 +348,7 @@
 				const completedImages = [
 					'/static/web/level1completed1.webp',
 					'/static/web/level2completed.webp',
-					'/static/web/level3completed.webp',
+					'/static/web/level3completed3.webp',
 					//'/static/web/level4completed.webp',
 					//'/static/web/level5completed.webp'
 				];
@@ -434,7 +434,8 @@
 
 					// 计算背景的尺寸
 					const textMetrics = ctx.measureText(`Unit${this.numberToChineseCharacter(i + 1)}`);
-					const bgWidth = textMetrics.width + padding * 2;
+					const bgWidth = 60;
+					// const bgWidth = textMetrics.width + padding * 2;
 					const bgHeight = 24; // 根据需要调整高度
 
 					// 计算背景的位置
@@ -640,7 +641,7 @@
 	.progress-canvas {
 		width: 100%;
 		/* 将宽度设置为100% */
-		height: 1900rpx;
+		height: 1200rpx;
 		/* margin-top: 45rpx; */
 		/* 移除transform属性 */
 		/* -webkit-overflow-scrolling: touch; */
