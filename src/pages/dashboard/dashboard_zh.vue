@@ -76,14 +76,14 @@
 							</image>
 							<view class="left-history-container" v-if="leftList.length > 0">
 								<ChatHistory v-for="(item, index) in leftList" :key="index"
-									:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
+									:title="item?.analysis?.title?.title || 'No summary available'" :details="item?.analysis?.summary?.summary || ''"
 									@tap="navigateToAnalysis(item)">
 								</ChatHistory>
 							</view>
 						</view>
 						<view class="right-history-container" v-if="rightList.length > 0">
 							<ChatHistory v-for="(item, index) in rightList" :key="index"
-								:title="item.low_dim || 'No summary available'" :details="item?.summary || ''"
+								:title="item?.analysis?.title?.title || 'No summary available'" :details="item?.analysis?.summary?.summary || ''"
 								@tap="navigateToAnalysis(item)">
 							</ChatHistory>
 						</view>
@@ -368,7 +368,9 @@
 				return this.analysisList.filter((item, index) => index % 2 == 1);
 			},
 			rightList() {
-				return this.analysisList.filter((item, index) => index % 2 == 0)
+				const list = this.analysisList.filter((item, index) => index % 2 == 0);
+				console.log('rightList (computed):', list); // 每次计算时输出
+				return list;
 			},
 			currentTags() {
 				if (this.selectedOption === 'subordinate') {
@@ -662,6 +664,12 @@
 					this.navigateToAnalysis(resultJson);
 				} catch (error) {
 					console.error('Upload failed:', error);
+					uni.showToast({
+						title: 'Upload failed, please try again',
+						icon: 'none', 
+						duration: 2000 
+					});
+
 					this.isLoading = false;
 					// 处理上传失败的情况
 				} finally {
@@ -2098,7 +2106,6 @@
 
 	.dashboard2-scrollable-content {
 		z-index: 999;
-		transform: translateZ(-1);
 		padding-top: 352rpx;
 		/* 其他样式 */
 	}

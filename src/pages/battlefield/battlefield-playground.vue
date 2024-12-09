@@ -1254,6 +1254,7 @@
 			state(newVal, oldVal) {
 				if (newVal === "userTalk") {
 					this.userTalkCount++; // 增加计数器
+					console.log("The user round:", this.userTalkCount);
 
 					// 第二次进入 'userTalk' 时显示任务tooltip
 					if (this.userTalkCount === 2) {
