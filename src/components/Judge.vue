@@ -168,7 +168,7 @@
 		width: 80%;
 		line-height: 50px;
 		text-align: center;
-		border: 1px solid #A9E55B;
+		/* border: 1px solid #A9E55B; */
 		outline: none;
 		-webkit-appearance: none;
 		appearance: none;
