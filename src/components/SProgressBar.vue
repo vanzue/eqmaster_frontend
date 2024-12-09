@@ -348,7 +348,7 @@
 				const completedImages = [
 					'/static/web/level1completed1.webp',
 					'/static/web/level2completed.webp',
-					'/static/web/level3completed.webp',
+					'/static/web/level3completed3.webp',
 					//'/static/web/level4completed.webp',
 					//'/static/web/level5completed.webp'
 				];
