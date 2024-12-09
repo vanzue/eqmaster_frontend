@@ -643,6 +643,7 @@
 						});
 					},
 				});
+				this.isLoading = false;
 			},
 			async chooseImage() {
 				try {
