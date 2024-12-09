@@ -3,40 +3,42 @@
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image @click="goback" class="back-button" src="/static/back-left.png" :style="{marginTop: navBarTop + 'px'}"></image>
-			<view class="progress-bar" :style="{marginTop: navBarTop + 'px'}">
-				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
-				<progress-bar :isActive="true" :class="isWeChatMiniProgram ? 'progress-bar-item' : 'progress-bar-item-wetchat'"></progress-bar>
-			</view>
 			<!-- #ifdef MP-WEIXIN -->
-			<view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view>
+			<!-- <view class="wetchat-menu" :style="{marginTop: navBarTop + 'px'}"></view> -->
 			<!-- #endif -->
 		</view>
 		<view class="content">
-			<view class="task-header">
-				<!-- <text class="main-title">A Cross-Department Meeting</text> -->
-				<text class="sub-title">{{ $t('pages.battlefield.task.subtitle') }}</text>
+			<view class="progress-bar">
+				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
+				<progress-bar :isActive="true" class="progress-bar-item"></progress-bar>
 			</view>
-
-			<!-- 任务列表 -->
-			<view class="task-list">
-				<view class="task-item">
-					<view class="index-circle">
-						<text class="index-word">
-							1
-						</text>
-					</view>
-					<text class="task-word">{{ taskList[0]}}</text>
-					<!-- <text class="task-word">{{ $t('pages.battlefield.task.task1') }}</text> -->
-					<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
+			<view class="content-text">
+				<view class="task-header">
+					<!-- <text class="main-title">A Cross-Department Meeting</text> -->
+					<text class="sub-title">{{ $t('pages.battlefield.task.subtitle') }}</text>
 				</view>
-				<view class="task-item">
-					<view class="index-circle">
-						<text class="index-word">
-							2
-						</text>
+	
+				<!-- 任务列表 -->
+				<view class="task-list">
+					<view class="task-item">
+						<view class="index-circle">
+							<text class="index-word">
+								1
+							</text>
+						</view>
+						<text class="task-word">{{ taskList[0]}}</text>
+						<!-- <text class="task-word">{{ $t('pages.battlefield.task.task1') }}</text> -->
+						<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 					</view>
-					<text class="task-word">{{ taskList[1] }}</text>
-					<!-- <text class="task-word">{{ $t('pages.battlefield.task.task2') }}</text> -->
+					<view class="task-item">
+						<view class="index-circle">
+							<text class="index-word">
+								2
+							</text>
+						</view>
+						<text class="task-word">{{ taskList[1] }}</text>
+						<!-- <text class="task-word">{{ $t('pages.battlefield.task.task2') }}</text> -->
+					</view>
 				</view>
 			</view>
 		</view>
@@ -101,7 +103,7 @@
 	.navbar {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: left;
 		align-items: center;
 		padding: 0 20rpx;
 		position: relative;
@@ -115,11 +117,14 @@
 		width: 24rpx;
 		height: 50rpx;
 	}
-
+	.content-text {
+		margin-top: 156rpx;
+		display: grid;
+	}
 	.progress-bar {
-		flex: 1;
+		/* flex: 1; */
 		width: 100%;
-		height: 20px;
+		height: 28px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -127,7 +132,7 @@
 		gap: 16rpx;
 	}
 	.progress-bar-item {
-		width: 193rpx;
+		width: 50%;
 	}
 	.progress-bar-item-wetchat {
 		width: 274rpx;
@@ -138,11 +143,13 @@
 	}
 
 	.content {
+		padding: 0 40rpx;
+		text-align: center;
+		z-index: 3;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		text-align: center;
-		margin-top: 160rpx;
+		align-items: center;
 	}
 
 	.task-word {
@@ -222,5 +229,6 @@
 	.index-word {
 		color: #000;
 		font-size: 40rpx;
+		font-weight: 600;
 	}
 </style>
