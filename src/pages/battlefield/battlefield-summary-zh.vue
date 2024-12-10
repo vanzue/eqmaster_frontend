@@ -8,7 +8,7 @@
 			<image class="head-image" :src="this.isPass
 				? getImg('/static/web/battlefield/IP-green.webp')
 				: getImg('/static/web/battlefield/IP-grey.webp')
-			" mode="aspectFit"></image>
+			" mode="aspectFit" :style="{ top: navBarHeight + 'px' }"></image>
 			<scroll-view scroll-y style="height: 100%">
 				<view class="card first-card">
 					<view class="status-text">
@@ -256,7 +256,7 @@ export default {
 	flex-direction: row;
 	justify-content: left;
 	align-items: center;
-	padding: 0 20rpx;
+	/* padding: 0 20rpx; */
 	position: relative;
 	z-index: 3;
 	/* margin-top: 90rpx; */
@@ -293,11 +293,29 @@ export default {
 	font-size: 40rpx;
 	line-height: 50rpx;
 	text-decoration: underline;
-	text-decoration-thickness: 6rpx;
+	text-decoration-thickness: 10rpx;
 	text-decoration-color: #9EE44D;
-	text-underline-offset: 8rpx;
-	border-radius: 10rpx;
+	text-underline-offset: 0;
+	border-radius: 5rpx;
 	/* box-shadow: inset 0 -3px 0 0 #9EE44D, inset 0 -3px 0 0 #9EE44D; */
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+}
+.comment-title::after, .comment-title::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 55%;
+	height: 5px;
+	background: #9EE44D;
+	border-radius: 5rpx; /* Added rounded corners */
+}
+.comment-title::before {
+	left: 0;
+}
+.comment-title::after {
+	right: 0;
 }
 
 .tips-title {
@@ -305,14 +323,30 @@ export default {
 	font-weight: 600;
 	font-size: 40rpx;
 	line-height: 50rpx;
-	width: 230rpx;
+	/* width: 210rpx; */
 	text-decoration: underline;
-	text-decoration-thickness: 6rpx;
+	text-decoration-thickness: 10rpx;
 	text-decoration-color: #9EE44D;
-	text-underline-offset: 8rpx;
-	border-radius: 10rpx;
-	margin: 20px 3px 0px 0px;
-	white-space: nowrap;
+	text-underline-offset: 5rpx;
+	border-radius: 5rpx;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+}
+.tips-title::after, .tips-title::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 55%;
+	height: 5px;
+	background: #9EE44D;
+	border-radius: 5rpx; /* Added rounded corners */
+}
+.tips-title::before {
+	left: 0;
+}
+.tips-title::after {
+	right: 0;
 }
 
 .tips-title1 {
@@ -349,7 +383,7 @@ export default {
 .first-card {
 	width: auto;
 	height: 25vh;
-	margin-top: 10vh;
+	margin-top: 76px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -359,8 +393,10 @@ export default {
 .head-image {
 	position: absolute;
 	/* left: 0; */
-	top: 0;
-	width: 50%;
+	/* top: 60rpx; */
+	width: 338rpx;
+	height: 256rpx;
+	/* width: 50%; */
 	z-index: 4;
 }
 
@@ -370,7 +406,7 @@ export default {
 	font-size: 56rpx;
 	line-height: 64rpx;
 	height: 64rpx;
-	margin-top: 80rpx;
+	margin-top: 72rpx;
 	font-weight: 700;
 
 }
@@ -390,7 +426,10 @@ export default {
 }
 
 .diamond-wrapper {
-	margin-top: 10rpx;
+	margin-top: 15px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .diamond-image {
@@ -403,7 +442,7 @@ export default {
 	font-weight: 800;
 	line-height: 56rpx;
 	position: relative;
-	top: -12%;
+	/* top: -12%; */
 	left: 5%;
 	color: #f2bc74;
 }
@@ -478,7 +517,11 @@ export default {
 }
 
 .tips-icon {
-	width: 400rpx;
+	width: 200px;
+	position: absolute;
+    height: 143rpx!important;
+    right: 0;
+	top: -10px;
 }
 
 .tips-icon1 {
@@ -499,6 +542,7 @@ export default {
 
 .suggestion {
 	width: 654rpx;
+	margin-top: 40rpx;
 	margin-left: 24rpx;
 	margin-bottom: 44rpx;
 	line-height: 48rpx;
@@ -507,6 +551,7 @@ export default {
 
 .third-card {
 	height: auto;
+	padding: 24px 16px;
 	/* margin-bottom: 13vh; */
 }
 
@@ -537,7 +582,7 @@ export default {
 }
 
 .guide-button {
-	width: 50%;
+	width: 223px;
 	height: 100rpx;
 	background: linear-gradient(101.13deg, #EDFB8B 13.84%, #9EE44D 84.78%);
 	color: #252529;
