@@ -94,10 +94,10 @@
 				};
 			},
 			bgColor() {
-				return this.goodJudge ? '#E8FFC4' : '#fcddb2';
+				return this.goodJudge ? '#E8FFC4' : '#FCDDB2';
 			},
 			fontColor() {
-				return this.goodJudge ? '#315B00' : '#936A15';
+				return this.goodJudge ? '#315B00' : '#872E13';
 			},
 			buttonBgColor() {
 				return this.goodJudge ? '#A9E55B' : '#ea833d';
@@ -125,7 +125,7 @@
 		padding: 40rpx 48rpx 120rpx 40rpx;
 	}
 	.title {
-		font-weight: 700;
+		font-weight: 600;
 		font-size: 17px;
 		margin-top: 10px;
 		margin-left: 10px;
@@ -161,10 +161,11 @@
 	}
 
 	.judge-action-button {
-		color: #3E3E3E;
+		color: #252529;
 		border-radius: 50px;
 		font-size: 16px;
 		height: 50px;
+		font-weight: 600;
 		width: 80%;
 		line-height: 50px;
 		text-align: center;
