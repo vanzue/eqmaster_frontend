@@ -20,7 +20,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.3);
   /* 默认灰色背景 */
   border-radius: 20px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 .active {
