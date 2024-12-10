@@ -700,13 +700,12 @@ export default {
 				},
 			});
 			await this.$store.dispatch('fetchHomepageData');
-			setTimeout(() => {
-				if (getCurrentPages().pop().route !== "/pages/battlefield/battlefield-summary-zh") {
-					uni.navigateTo({
-						url: "/pages/battlefield/battlefield-summary-zh",
-					});
-				}
-			}, 1000);
+			// console.log("getCurrentPages().pop().route", getCurrentPages().pop().route);
+			if (getCurrentPages().pop().route !== "pages/battlefield/battlefield-summary-zh") {
+				uni.navigateTo({
+					url: "/pages/battlefield/battlefield-summary-zh",
+				});
+			}
 		},
 		calculateStars() {
 			const totalMood = this.npcs.reduce((sum, npc) => sum + npc.health, 0);
