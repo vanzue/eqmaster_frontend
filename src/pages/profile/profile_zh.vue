@@ -738,10 +738,11 @@
 		border-radius: 32rpx;
 		/* justify-content: space-between; */
 		align-items: center;
-		margin-top: 32rpx;
+		margin-top: 24rpx;
+		padding: 28rpx 24rpx;
 		/* padding: 32rpx 24rpx; */
-		width: 96rpx;
-		height: 152rpx;
+		width: 60rpx;
+		height: 80rpx;
 		color: white;
 		display: flex;
 		align-items: center;
