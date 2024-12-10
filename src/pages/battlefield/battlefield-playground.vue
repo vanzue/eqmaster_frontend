@@ -15,7 +15,7 @@
 					:style="{ marginTop: navBarTop + 'px' }"></image>
 				<!-- #endif -->
 				<reward-bar :gemCount="gemCount"
-					:style="{ marginTop: navBarTop + 'px', marginLeft: isWeChatMiniProgram ? '' : '80rpx' }"></reward-bar>
+					:style="{ marginTop: navBarTop + 'px', marginLeft: isWeChatMiniProgram ? '' : '80rpx', background: '#10101066', borderRadius: '21px' }"></reward-bar>
 				<view class="setting-group" :style="{ marginTop: navBarTop + 'px' }">
 					<!-- #ifdef APP-PLUS || H5 -->
 					<image class="setting-item" src="/static/battlefield/task-list.png" @click="handleClickTaskList">
@@ -1337,9 +1337,9 @@ export default {
 }
 
 .setting-item {
-	width: 24px;
+	width: 28px;
 	/* margin-right: 20rpx; */
-	height: 24px;
+	height: 28px;
 	z-index: 12;
 }
 
