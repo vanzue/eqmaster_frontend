@@ -4,7 +4,7 @@
 			<image class="avatar" :src="avatar" mode="aspectFill"></image>
 		</view>
 		<view class="description">
-			<view class="name-icon-container" style="display: flex; flex-direction: row; align-items: center;">
+			<view class="name-icon-container" style="">
 				<view class="name">{{ name }}</view>
 				<!-- 根据 npcHealth 显示不同的 SVG 图标 -->
 				<image v-if="npcHealth > 10" :src="greenIcon" class="health-icon"></image>
@@ -48,10 +48,10 @@
 	.card-container {
 		display: flex;
 		align-items: flex-start;
-		padding: 10px;
-		border-radius: 10px;
+		padding: 20px 16px;
+		border-radius: 16px;
 		background-color: #454552;
-		margin: 10px 0;
+		margin: 16px 0;
 
 	}
 
@@ -70,26 +70,33 @@
 	}
 
 	.description {
-		margin-left: 20px;
+		margin-left: 16px;
 		color: #fff;
 		display: flex;
 		flex-direction: column;
 	}
-
+	.name-icon-container {
+		display: flex; 
+		align-items: center;
+		height: 22px;
+		flex-direction: row; 
+		align-items: center;
+	}
 	.name {
 		font-weight: bold;
-		font-size: 16px;
+		font-size: 17px;
 	}
 
 	.health-icon {
 		width: 16px;
 		height: 16px;
-		margin-left: 5px;
+		margin-left: 8px;
+		margin-top: 4px;
 	}
 
 	.comment {
 		font-size: 14px;
 		font-weight: 400;
-		margin-top: 5px;
+		margin-top: 8px;
 	}
 </style>
