@@ -6,10 +6,15 @@
 					<image class="avatar" :src="avatar" mode="aspectFill"></image>
 				</view>
 				<view class="name">
-					<image class="character-background"
+					<!-- <image class="character-background"
 						:src="playAudioIndex === index ? '/static/battlefield/character_background1.png' : '/static/battlefield/character_background2.png'"
-						mode="scaleToFill" @click="playAudio()"></image>
-					<view class="character">{{ name }}</view>
+						mode="scaleToFill" @click="playAudio()"></image> -->
+					<!-- <view class="character">{{ name }}</view> -->
+					<view class="character-background" :style="{backgroundColor: themeColors.theme}">
+						<view class="character">{{ name }}</view>
+						<image class="playing" src="/static/battlefield/playing.png"></image>
+					</view>
+					<view class="character-background-radius" :style="{backgroundColor: themeColors.theme}"></view>
 				</view>
 			</view>
 		</view>
@@ -46,6 +51,11 @@
 				default: 0,
 			}
 		},
+		computed: {
+			themeColors() {
+				return this.$store.getters.getThemeColors;
+			},
+		},
 		methods: {
 			playAudio() {
 				if (this.playAudioIndex == -1) {
@@ -75,21 +85,49 @@
 
 	.background-parent {
 		position: absolute;
-		top: -45rpx;
-		width: 100%;
+		top: -43rpx;
+		width: 91px;
 		left: 60rpx;
 		/*Use height to cut the image*/
-		height: 20px;
+		height: 24px;
 		overflow: visible;
 		display: flex;
 		flex-direction: row;
 	}
 
-	.character-background {
+	/* .character-background {
 		width: 200rpx;
 		height: 50rpx;
 		position: absolute;
 		left: 10%;
+	} */
+
+	.character-background {
+		width: 91px;
+		height: 100%;
+		background-color: #90e0e7;
+		border-top-left-radius: 10px;
+		clip-path: polygon(90% 0, 100% 100%, 0 100%, 0 0);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.character-background-radius {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 10px; /* 调整大小以匹配斜边 */
+		height: 100%;
+		background: #90e0e7;
+		transform: skewX(20deg); /* 调整倾斜度以匹配斜边角度 */
+		transform-origin: right top;
+		border-radius: 0 6px 0 0; /* 设置圆角以匹配上面clip-path斜切角的弧度 */
+	}
+	.playing {
+		position: absolute;
+		width: 14px;
+		height: 10px;
+		left: 130rpx;
 	}
 
 	.character {
@@ -129,8 +167,10 @@
 
 	.name {
 		position: absolute;
-		left: 10rpx;
-		height: 42rpx;
+		left: 80rpx;
+		height: 25px;
 		width: 100%;
+		top: -1px;
+		z-index: -1;
 	}
 </style>

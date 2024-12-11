@@ -31,7 +31,7 @@
 			</view> -->
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.intro.continue') }}</button>
+			<button class="continue-btn" @click="navigateToNextPage" :style="{backgroundColor: themeColors.theme}">{{ $t('pages.battlefield.intro.continue') }}</button>
 		</view>
 	</view>
 </template>
@@ -118,6 +118,9 @@
 								name: 'span',
 								attrs: {
 									class: "npc-name",
+									style: {
+										backgroundColor: this.themeColors.theme_deep
+									}
 								},
 								children: [
 									{
@@ -157,6 +160,9 @@
 							children: nodes
 						}]
 				}
+			},
+			themeColors() {
+				return this.$store.getters.getThemeColors;
 			},
 		},
 		onLoad() {
@@ -211,7 +217,7 @@
 	.npc-name {
 		width: max-content;
 		height: 26px;
-		background-color: #2D6985;
+		/* background-color: #2D6985; */
 		font-size: 17px;
 		font-weight: 400;
 		white-space: nowrap;

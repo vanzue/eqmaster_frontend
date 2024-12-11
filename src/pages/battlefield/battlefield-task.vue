@@ -21,7 +21,7 @@
 				<!-- 任务列表 -->
 				<view class="task-list">
 					<view class="task-item">
-						<view class="index-circle">
+						<view class="index-circle" :style="{backgroundColor: themeColors.theme}">
 							<text class="index-word">
 								1
 							</text>
@@ -31,7 +31,7 @@
 						<!-- <text class="task-word">得到领导的夸赞× 2</text> -->
 					</view>
 					<view class="task-item">
-						<view class="index-circle">
+						<view class="index-circle" :style="{backgroundColor: themeColors.theme}">
 							<text class="index-word">
 								2
 							</text>
@@ -43,7 +43,7 @@
 			</view>
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.task.continue') }}</button>
+			<button class="continue-btn" @click="navigateToNextPage" :style="{backgroundColor: themeColors.theme}">{{ $t('pages.battlefield.task.continue') }}</button>
 		</view>
 	</view>
 </template>
@@ -75,6 +75,9 @@
 			isWeChatMiniProgram() {
 				const systemInfo = uni.getSystemInfoSync();
 				return systemInfo.uniPlatform === 'mp-weixin';
+			},
+			themeColors() {
+				return this.$store.getters.getThemeColors;
 			},
 		},
 

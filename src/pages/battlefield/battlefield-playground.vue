@@ -1166,6 +1166,9 @@ export default {
 		npcs() {
 			return this.$store.getters.getNpcs;
 		},
+		themeColors() {
+			return this.$store.getters.getThemeColors;
+		},
 		shouldShadow() {
 			return (
 				this.state === "NpcTalk" || this.isRecording || this.showTippingCard

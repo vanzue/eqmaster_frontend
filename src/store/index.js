@@ -53,7 +53,17 @@ export default createStore({
 		scenarioResponse: {},
 		courseInfo: {}, // 添加新的state属性
 		navBarTop: 0,
-		navBarHeight: (typeof wx !== 'undefined' ? wx.getSystemInfoSync().statusBarHeight + 60 : 60)
+		navBarHeight: (typeof wx !== 'undefined' ? wx.getSystemInfoSync().statusBarHeight + 60 : 60),
+		themeColors: {
+			theme: '#90E0E7', //主题颜色
+			theme_deep: '#2D6985', //主题深颜色
+			matching: '#D6FCF6', //搭配主题颜色
+			// popup_success_bg: '#E8FFC4', //弹框成功背景颜色
+			// popup_success_content_bg: '#9EE44D', //弹框成功内容颜色
+			// popup_warn_bg: '#FCDDB2', //弹框警告背景颜色
+			// popup_warn_content_bg: '#EA833D', //弹框警告内容颜色
+			popup_font_title: '#2D6985', //弹框标题文字颜色
+		}
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -139,6 +149,9 @@ export default createStore({
 		setNavBarHeight(state, navBarHeight) {
 			state.navBarHeight = navBarHeight;
 		},
+		setThemeColors(state, themeColors) {
+			state.themeColors = themeColors;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -205,6 +218,9 @@ export default createStore({
 		},
 		getNavBarTop(state) {
 			return state.navBarTop;
+		},
+		getThemeColors(state) {
+			return state.themeColors;
 		},
 	},
 	actions: {
