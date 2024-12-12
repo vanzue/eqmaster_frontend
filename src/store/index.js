@@ -62,6 +62,9 @@ export default createStore({
 			// matching: '#FDEDC8', //搭配主题颜色
 			popup_font_title: '#2D6985', //弹框标题文字颜色
 			// popup_font_title: '#8C5225', //弹框标题文字颜色
+			tipping_info: '/static/web/battlefield/tipping-right1.webp', //锦囊卡帮回卡背景图
+			tipping_quest: '/static/web/battlefield/tipping-left1.webp', //锦囊卡提示卡背景图
+			tipping_main_icon: '/static/battlefield/tip-yellow.svg' //帮回 提示小图标
 		}
 	},
 	mutations: {
