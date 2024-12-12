@@ -123,6 +123,12 @@
     "pages.battlefield.playground.goal_keyword": "I agree with you",
     "pages.battlefield.playground.achieved": "Goals achieved",
     "pages.battlefield.playground.tasks_title": "Tasks",
+    "pages.battlefield.playground.choose_card_title": "Choose your advice card",
+    "pages.battlefield.playground.choose_card_best_answer": "Best Answer",
+    "pages.battlefield.playground.choose_card_best_answer_text": "Refine your answer for smoother conversations.",
+    "pages.battlefield.playground.choose_card_get_hint": "Get Hint",
+    "pages.battlefield.playground.choose_card_get_hint_text": "Reveal helpful clues to guide your next move.",
+    "pages.battlefield.playground.choose_card_confirm": "Confirm",
 
 
     "illustration.animal.ostrich.name": "Ostrich",

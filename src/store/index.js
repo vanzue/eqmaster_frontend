@@ -56,13 +56,12 @@ export default createStore({
 		navBarHeight: (typeof wx !== 'undefined' ? wx.getSystemInfoSync().statusBarHeight + 60 : 60),
 		themeColors: {
 			theme: '#90E0E7', //主题颜色
+			// theme: '#F2BC74', //主题颜色
 			theme_deep: '#2D6985', //主题深颜色
 			matching: '#D6FCF6', //搭配主题颜色
-			// popup_success_bg: '#E8FFC4', //弹框成功背景颜色
-			// popup_success_content_bg: '#9EE44D', //弹框成功内容颜色
-			// popup_warn_bg: '#FCDDB2', //弹框警告背景颜色
-			// popup_warn_content_bg: '#EA833D', //弹框警告内容颜色
+			// matching: '#FDEDC8', //搭配主题颜色
 			popup_font_title: '#2D6985', //弹框标题文字颜色
+			// popup_font_title: '#8C5225', //弹框标题文字颜色
 		}
 	},
 	mutations: {

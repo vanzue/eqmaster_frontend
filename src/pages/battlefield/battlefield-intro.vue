@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
@@ -31,7 +31,7 @@
 			</view> -->
 		</view>
 		<view class="continue-button-container">
-			<button class="continue-btn" @click="navigateToNextPage" :style="{backgroundColor: themeColors.theme}">{{ $t('pages.battlefield.intro.continue') }}</button>
+			<button class="continue-btn" @click="navigateToNextPage">{{ $t('pages.battlefield.intro.continue') }}</button>
 		</view>
 	</view>
 </template>
@@ -118,9 +118,7 @@
 								name: 'span',
 								attrs: {
 									class: "npc-name",
-									style: {
-										backgroundColor: this.themeColors.theme_deep
-									}
+									style: "background-color: " + this.themeColors.theme_deep
 								},
 								children: [
 									{
@@ -297,6 +295,21 @@
 		align-items: center;
 		/* margin-top: 160rpx; */
 		/* 确保页面内容在叠加层之上 */
+	}
+
+	.continue-btn {
+		width: 80%;
+		height: 44px;
+		line-height: 44px;
+		/* 调整这里的值来控制按钮距离底部的高度 */
+		background-color: var(--theme-color-theme); /* #F2BC74 */
+		border: none;
+		border-radius: 25px;
+		font-size: 15px;
+		font-weight: 600;
+		color: #252529;
+		padding: 10px, 23px;
+		z-index: 3;
 	}
 
 	.title {

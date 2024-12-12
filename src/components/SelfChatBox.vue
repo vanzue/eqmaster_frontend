@@ -1,5 +1,5 @@
 <template>
-	<view class="bubble-container">
+	<view class="bubble-container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
 		<text class="txt">{{ wording }}</text>
 		<view class="commit-container" v-if="commit !== '' && isLastElement">
 			<image class="commit-icon" src="/static/battlefield/commit_warning-fill.png"></image>
@@ -24,13 +24,18 @@
 				type: Boolean,
 				default: false,
 			}
+		},
+		computed: {
+			themeColors() {
+				return this.$store.getters.getThemeColors;
+			},
 		}
 	}
 </script>
 
 <style scoped>
 	.bubble-container {
-		background-color: #d6fcf6;
+		background-color: var(--theme-color-matching);
 		border-radius: 10px;
 		padding: 12px;
 		margin-top: 48rpx;

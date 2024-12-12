@@ -1,12 +1,11 @@
 <template>
-	<view class="popup-content" @click.stop>
+	<view class="popup-content" @click.stop :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme, '--theme-color-font-title': themeColors.popup_font_title }">
 		<view class="card-box">
 			<image class="card-close-image" src="/static/battlefield/material-symbols_close.png" mode=""
 				@click="setShowCardPopup"></image>
 			<view class="card-header">
 				<view class="title">
-					Choose your advice card
-					<!-- {{ $t('选择锦囊卡片') }} -->
+					{{ $t('pages.battlefield.playground.choose_card_title') }}
 					<!-- 选择锦囊卡片 -->
 				</view>
 				<view class="jewelry">
@@ -17,14 +16,13 @@
 				</view>
 			</view>
 			<view class="card-center" @click.stop>
-				<view class="box" :class="{ 'card-selected': selectedCard === 1 }" @click="selectCard(1)">
+				<view class="box" :class="{ 'card-selected': selectedCard === 1}" @click="selectCard(1)" :style="{'--selected-border-color': selectedCard === 1 ? themeColors.theme : 'transparent'}">
 					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-right1.webp')"></image>
 					<view class="top">
-						<text>Best Answer</text>
+						<text>{{ $t('pages.battlefield.playground.choose_card_best_answer') }}</text>
 						
 						<view class="top-content">
-							
-							Refine your answer for smoother conversations.
+							{{ $t('pages.battlefield.playground.choose_card_best_answer_text') }}
 							<!-- {{ $t('快速调整你的回答，提升质量，让对话更流畅。') }} -->
 							<!-- 快速调整你的回答，提升质量，让对话更流畅。 <image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon-zh.webp') "></image> -->
 						</view>
@@ -38,12 +36,12 @@
 						</view>
 					</view>
 				</view>
-				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)">
+				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)" :style="{'--selected-border-color': selectedCard === 2 ? themeColors.theme : 'transparent'}">
 					<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tipping-left1.webp')"></image>
 					<view class="top">
-						<text>Get Hint</text>
+						<text>{{ $t('pages.battlefield.playground.choose_card_get_hint') }}</text>
 						<view class="top-content">
-							Reveal helpful clues to guide your next move.
+							{{ $t('pages.battlefield.playground.choose_card_get_hint_text') }}
 							<!-- {{ $t('提供情绪引导或建议，帮助你更好地理解和回应。') }} -->
 						</view>
 					</view>
@@ -57,7 +55,7 @@
 			</view>
 			<view class="card-button">
 				<button :disabled="!selectedCard || cardButtonLoading || !canAfford(selectedCard) || !eqScoresNum"
-					@click="exchangeClick">Confirm</button>
+					@click="exchangeClick" :style="{backgroundColor: themeColors.theme}">{{ $t('pages.battlefield.playground.choose_card_confirm') }}</button>
 			</view>
 		</view>
 	</view>
@@ -109,7 +107,10 @@
 					return false;
 				}
 				return true;
-			}
+			},
+			themeColors() {
+				return this.$store.getters.getThemeColors;
+			},
 		},
 		methods: {
 			setShowCardPopup() {
@@ -172,7 +173,7 @@
 		width: 654rpx;
 		/* Set the width to 90% */
 		/* height: 810rpx; */
-		background-color: #D6FCF6;
+		background-color: var(--theme-color-matching);
 		/* background-color: #FDEDC8; */
 		border-radius: 32rpx;
 		display: flex;
@@ -200,7 +201,7 @@
 		font-size: 40rpx;
 		font-weight: 500;
 		/* color: #8C5225; */
-		color: #2D6985;
+		color: var(--theme-color-font-title);
 		margin-top: 32rpx;
 	}
 
@@ -244,7 +245,7 @@
 		gap: 40rpx;
 		border-radius: 32rpx;
 		background: #FFFFFF;
-		box-shadow: 0px 0px 12px 0px #90E0E7;
+		box-shadow: 0px 0px 12px 0px var(--theme-color-theme);
 		/* box-shadow: 0px 0px 12px 0px #FED397; */
 	}
 
@@ -305,9 +306,10 @@
 		height: 240rpx;
 	}
 
-	/* .card-selected {
-		border: 3px solid #90E0E7;
-	} */
+	.card-selected {
+		/* border: 3px solid #90E0E7; */
+
+	}
 	.card-selected::after {
 		content: '';
 		position: absolute;
@@ -315,7 +317,7 @@
 		left: -3px;
 		right: -3px;
 		bottom: -3px;
-		border: 3px solid #90E0E7;
+		border: 3px solid var(--selected-border-color, transparent);
 		/* border: 3px solid #F2BC74; */
 		border-radius: 35rpx;
 		pointer-events: none;
@@ -331,7 +333,7 @@
 		width: 100%;
 		height: 88rpx;
 		line-height: 88rpx;
-		background-color: #90E0E7 !important;
+		/* background-color: #90E0E7 !important; */
 		/* background-color: #F2BC74 !important; */
 		border-radius: 400rpx;
 		font-size: 30rpx;

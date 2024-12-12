@@ -1,6 +1,6 @@
 <template>
-	<view class="inner-container">
-		<view class="bubble-container" :style="{borderColor: themeColors.theme}">
+	<view class="inner-container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme, '--theme-color-font-title': themeColors.popup_font_title }">
+		<view class="bubble-container">
 			<image class="avatar" :src="avatar" mode="aspectFill"></image>
 			<view class="background-parent">
 				<view class="character-background" :style="{backgroundColor: themeColors.theme}">
@@ -105,7 +105,7 @@ import apiService from '../services/api-service'
 		color: #FFFFFF;
 		max-width: 80%;
 		/* border: solid 2px #F2BC74; */
-		border: solid 2px #90E0E7;
+		border: solid 2px var(--theme-color-theme);
 		overflow: visible;
 		z-index: 3;
 	}
@@ -140,9 +140,9 @@ import apiService from '../services/api-service'
 	}
 	.playing {
 		position: absolute;
-		width: 14px;
-		height: 10px;
-		left: 130rpx;
+		width: 40rpx;
+		height: 40rpx;
+		right: 10rpx;
 	}
 
 	.background-parent {
