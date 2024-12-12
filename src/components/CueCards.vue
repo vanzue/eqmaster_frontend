@@ -17,7 +17,7 @@
 			</view>
 			<view class="card-center" @click.stop>
 				<view class="box" :class="{ 'card-selected': selectedCard === 1}" @click="selectCard(1)" :style="{'--selected-border-color': selectedCard === 1 ? themeColors.theme : 'transparent'}">
-					<image class="tip-mark-yellow" :src="getImg(themeColors.tipping_info)"></image>
+					<image class="tip-mark-yellow" :src="getImg(themeColors.tipping_quest)"></image>
 					<view class="top">
 						<text>{{ $t('pages.battlefield.playground.choose_card_best_answer') }}</text>
 						
@@ -37,7 +37,7 @@
 					</view>
 				</view>
 				<view class="box" :class="{ 'card-selected': selectedCard === 2 }" @click="selectCard(2)" :style="{'--selected-border-color': selectedCard === 2 ? themeColors.theme : 'transparent'}">
-					<image class="tip-mark-yellow" :src="getImg(themeColors.tipping_quest)"></image>
+					<image class="tip-mark-yellow" :src="getImg(themeColors.tipping_info)"></image>
 					<view class="top">
 						<text>{{ $t('pages.battlefield.playground.choose_card_get_hint') }}</text>
 						<view class="top-content">
