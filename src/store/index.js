@@ -53,7 +53,16 @@ export default createStore({
 		scenarioResponse: {},
 		courseInfo: {}, // 添加新的state属性
 		navBarTop: 0,
-		navBarHeight: (typeof wx !== 'undefined' ? wx.getSystemInfoSync().statusBarHeight + 60 : 60)
+		navBarHeight: (typeof wx !== 'undefined' ? wx.getSystemInfoSync().statusBarHeight + 60 : 60),
+		themeColors: {
+			theme: '#90E0E7', //主题颜色
+			// theme: '#F2BC74', //主题颜色
+			theme_deep: '#2D6985', //主题深颜色
+			matching: '#D6FCF6', //搭配主题颜色
+			// matching: '#FDEDC8', //搭配主题颜色
+			popup_font_title: '#2D6985', //弹框标题文字颜色
+			// popup_font_title: '#8C5225', //弹框标题文字颜色
+		}
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -139,6 +148,9 @@ export default createStore({
 		setNavBarHeight(state, navBarHeight) {
 			state.navBarHeight = navBarHeight;
 		},
+		setThemeColors(state, themeColors) {
+			state.themeColors = themeColors;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -206,6 +218,9 @@ export default createStore({
 		getNavBarTop(state) {
 			return state.navBarTop;
 		},
+		getThemeColors(state) {
+			return state.themeColors;
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -254,6 +269,10 @@ export default createStore({
 				}
 				console.log("Fetched course info:", courseInfo);
 				commit('setCourseInfo', courseInfo);
+				if(courseInfo.course_data && courseInfo.course_data.theme) {
+					// console.log(courseInfo.course_data.theme);
+					commit('setThemeColors', JSON.parse(courseInfo.course_data.theme));
+				}
 			} catch (error) {
 				console.error('Error fetching course info:', error);
 				throw error;

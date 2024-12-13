@@ -3,11 +3,11 @@
 		<!-- <image class="tip-background" src="/static/battlefield/question-mark.png" mode="widthFix"></image> -->
 		<view class="tip-content">
 			<!-- <image class="tip-mark" src="/static/battlefield/tip-yellow-zh.svg"></image> -->
-			<image class="tip-mark" src="/static/battlefield/tip-yellow.svg"></image>
+			<image class="tip-mark" :src="getImgUrl(1)"></image>
 			<text class="tip-text">Tip: {{ tip }}</text>
 		</view>
 		<!-- <image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon-zh.webp') "></image> -->
-		<image class="tip-mark-yellow" :src="getImg('/static/web/battlefield/tips-icon.webp') "></image>
+		<image class="tip-mark-yellow" :src="getImgUrl(2)"></image>
 	</view>
 </template>
 
@@ -24,6 +24,21 @@
 			return {
 				getImg,
 			};
+		},
+		computed: {
+			themeColors() {
+				return this.$store.getters.getThemeColors;
+			}
+		},
+		methods: {
+			getImgUrl(type) {
+				const theme = this.themeColors.theme.replace(/^#/, '');
+				if(type == 1) {
+					return getImg(`/static/battlefield/tip-yellow-${theme}.svg`);
+				} else {
+					return getImg(`/static/web/battlefield/tipping-quest-${theme}.webp`);
+				}
+			}
 		}
 	};
 </script>
@@ -79,7 +94,7 @@
 		position: absolute;
 		right: 0;
 		bottom: 0;
-		width: 222rpx;
+		width: 162rpx;
 		height: 220rpx;
 	}
 </style>
