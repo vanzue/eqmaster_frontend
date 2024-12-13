@@ -34,7 +34,7 @@
 			getImgUrl(type) {
 				const theme = this.themeColors.theme.replace(/^#/, '');
 				if(type == 1) {
-					return getImg(`/static/battlefield/tip-yellow-${theme}.svg`);
+					return `/static/battlefield/tip-yellow-${theme}.svg`;
 				} else {
 					return getImg(`/static/web/battlefield/tipping-quest-${theme}.webp`);
 				}
