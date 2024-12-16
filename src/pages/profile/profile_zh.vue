@@ -76,9 +76,9 @@
 			{{ $t('pages.profile.logout') }}
 		</view>
 
-		<!-- <view class="language" @click="showLanguagePopup = true">
+		<view class="language" @click="showLanguagePopup = true">
 			{{ $t('pages.profile.language') }}
-		</view> -->
+		</view>
 
 		<Nav selectedView="Profile" :userId="userId" :username="username" :jobId="jobId" />
 
@@ -776,8 +776,9 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
-		margin-top: 40rpx;
-		bottom: 100rpx;
+		/* margin-top: 40rpx; */
+		/* margin-bottom: 20px; */
+		bottom: 120rpx;
 		color: #9EE44D;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}

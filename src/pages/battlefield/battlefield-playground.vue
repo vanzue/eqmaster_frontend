@@ -1,5 +1,5 @@
 <template>
-	<view :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
+	<view :style="{ '--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
 		<view class="container" @click="handleContainerClick">
 
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')"
@@ -42,8 +42,7 @@
 					<view v-for="(chat, index) in displayedMessages" class="chat-item" :key="index"
 						:id="'chat-item-' + index">
 						<npc-chat-box v-if="
-							// ['领导', '同事A', '同事B'].includes(
-							['Jason', 'Sam', 'Anna'].includes(
+							npcNames.includes(
 								chat.role
 							)
 						" :key="'npc-' + index" :index="index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
@@ -226,11 +225,10 @@ import {
 	getBattlefieldAvatar
 } from "../../scripts/locate_name";
 import {
-	filterChatHistory,
-	getNpcIndex
+	filterChatHistory
 } from "../../scripts/battlefield-chat";
-import Task from "../../models/Task";
-import TaskList from "../../models/TaskList";
+// import Task from "../../models/Task";
+// import TaskList from "../../models/TaskList";
 import state from "../../state";
 import apiService from '../../services/api-service';
 import { getImg } from "../../scripts/constants";
@@ -255,7 +253,7 @@ export default {
 			judgeTitle: "",
 			judgeContent: "",
 			userJudgeContent: "",
-			taskList: new TaskList([]),
+			// taskList: new TaskList([]),
 			isGoodReply: true,
 			state: "NpcTalk", // Current state
 			userTalkCount: 0, // 计数器，用来控制tooltip的出现时机
@@ -327,37 +325,12 @@ export default {
 		console.log("created");
 		// console.log("state userid", state.userId);
 		// 动态添加任务到 taskList
-		this.taskList.addTask(
-			new Task(0, "Cheer up Sam while avoiding further infuriating Jason.", async (judgeResult) => {
-				const samMood = judgeResult.find(item => item.role === "Sam")?.mood;
-				const jasonMood = judgeResult.find(item => item.role === "Jason")?.mood;
-
-				const taskResult = parseInt(samMood, 10) > 0 && parseInt(jasonMood, 10) >= 0;
-				// const allPositive = judgeResult.moods.some((item) => parseInt(item.mood, 10) > 0);
-				if (taskResult && !this.taskList.getTask(0).once) {
-					this.judgeTitle = `Well done！ ${this.taskList.getTask(0).title} (${this.taskList.doneTaskLength + 1
-						}/${this.taskList.taskLength})`;
-					return true;
-				}
-				return false;
-			})
-		);
-		this.taskList.addTask(
-			new Task(1, "Encourage teammates to engage and get at least one to say, \"I agree with you.\"", async (
-				judgeResult) => {
-				let res = "";
-
-				judgeResult.moods.filter((mood) => {
-					if (mood.role === "Anna") res = mood.mood;
-				});
-				const bMood = parseInt(res ? res : 0, 10);
-				if (bMood < 0 && !this.taskList.getTask(1).once) {
-					this.judgeTitle = `Well done！ ${this.taskList.getTask(1).title} (${this.taskList.doneTaskLength + 1
-						}/${this.taskList.taskLength})`;
-				}
-				return false;
-			})
-		);
+		// this.taskList.addTask(
+		// 	new Task(0, "Cheer up Sam while avoiding further infuriating Jason.")
+		// );
+		// this.taskList.addTask(
+		// 	new Task(1, "Encourage teammates to engage and get at least one to say, \"I agree with you.\"")
+		// );
 		this.scrollToInput();
 	},
 	methods: {
@@ -609,6 +582,7 @@ export default {
 					// Found the next NPC message
 					this.displayedNpcChatIndex = i;
 					this.talkingNpc = this.getNpcIndexByName(history[i].role);
+					console.log(this.talkingNpc);
 					this.npcDialog = history[i].content;
 					foundNpcMessage = true;
 					break;
@@ -641,6 +615,7 @@ export default {
 
 		// Helper method to get NPC index by name
 		getNpcIndexByName(name) {
+			console.log(this.npcs, name);
 			return this.npcs.findIndex((npc) => npc.characterName === name);
 		},
 		async Pass() {
@@ -744,7 +719,7 @@ export default {
 					this.isCanceling = true;
 					this.resetRecording();
 					uni.showToast({
-						title: "没有听清楚",
+						title: "Not clear",
 						icon: "none"
 					});
 					this.anasLoadingObj.loading = false;
@@ -782,7 +757,7 @@ export default {
 				} catch (error) {
 					console.error('处理录音回复出错:', error);
 					uni.showToast({
-						title: "处理消息失败",
+						title: "Failed to process the message",
 						icon: "none"
 					});
 				} finally {
@@ -1041,11 +1016,11 @@ export default {
 						this.isGoodReply = true;
 						this.judgeContent = judgeResult.comments ? judgeResult.comments : '';
 						this.answerNotGoodNum = 0;
-						const task = this.taskList.getTask(taskCheck - 1);
+						const task = this.getTask(taskCheck - 1);
 						console.log("task", task);
 						if (task) {
 							if (!this.taskFinished && !task.one) { //如果该任务还没有完成
-								const totalTaskLength = this.taskList.getTotalTaskLength();
+								const totalTaskLength = this.getTotalTaskLength;
 								this.state = "judge";
 								this.currentTask = task;
 								task._status = true;
@@ -1053,15 +1028,16 @@ export default {
 								if (task.totalRoundNum >= task._completedRoundNum) { //如果该任务已经全部完成
 									this.isCompleteTask = true;
 									task.one = true;
-									this.taskList.doneTaskLength++;
-									this.judgeTitle = `(${this.taskList.doneTaskLength}/${totalTaskLength}) ` + this.$t('pages.battlefield.playground.achieved');
+									this.$store.commit('setDoneTaskLength');
+									// this.taskList.doneTaskLength++;
+									this.judgeTitle = `(${this.getDoneTaskLength}/${totalTaskLength}) ` + this.$t('pages.battlefield.playground.achieved');
 									// taskCompleted = false;
 									console.log(`task ${taskCheck} success`);
 								} else { //若一个任务包含多次重复动作（得到领导的夸赞2次），完成一次则只显示“任务达成”
 									this.judgeTitle = this.$('pages.battlefield.playground.achieved');
 									this.isCompleteTask = true;
 								}
-								if (this.taskList.doneTaskLength >= totalTaskLength) { //如果任务全部完成 
+								if (this.getDoneTaskLength >= totalTaskLength) { //如果任务全部完成 
 									this.taskFinished = true;
 									this.isPass = true; //通关成功
 									setTimeout(async () => {
@@ -1146,7 +1122,7 @@ export default {
 			if (newVal === "userTalk") {
 				this.userTalkCount++; // 增加计数器
 				console.log("The user round:", this.userTalkCount);
-		
+
 				// 第二次进入 'userTalk' 时显示任务tooltip
 				if (this.userTalkCount === 2) {
 					// console.log("show task tool tip!!!!", this.showTaskTooltip);
@@ -1166,6 +1142,9 @@ export default {
 		npcs() {
 			return this.$store.getters.getNpcs;
 		},
+		taskList() {
+			return this.$store.getters.getTaskList;
+		},
 		themeColors() {
 			return this.$store.getters.getThemeColors;
 		},
@@ -1174,15 +1153,15 @@ export default {
 				this.state === "NpcTalk" || this.isRecording || this.showTippingCard
 			);
 		},
-
+		npcNames() {
+			return this.npcs.map(npc => npc.characterName);
+		},
 		displayedMessages() {
 			const validChats = filterChatHistory(this.chattingHistory);
 			const userAndNpcChats = validChats.filter(
 				(chat) =>
 					chat.role === "user" ||
-					chat.role === "Jason" ||
-					chat.role === "Sam" ||
-					chat.role === "Anna" ||
+					this.npcNames.includes(chat.role) ||
 					chat.role === "tipping" ||
 					chat.role === "empty" ||
 					chat.role === "empty-audio"
@@ -1202,7 +1181,7 @@ export default {
 			const userChats = this.chattingHistory.filter(
 				(chat) => chat.role === "user"
 			);
-			const npcChats = this.chattingHistory.filter((chat) => ["Jason", "Sam", "Anna"].includes(chat.role));
+			const npcChats = this.chattingHistory.filter((chat) => this.npcNames.includes(chat.role));
 			// const npcChats = this.chattingHistory.filter((chat) => ["领导", "同事A", "同事B"].includes(chat.role));
 
 			// 只保留来自 'user' 的最新一条
@@ -1223,6 +1202,15 @@ export default {
 		isWeChatMiniProgram() {
 			const systemInfo = uni.getSystemInfoSync();
 			return systemInfo.uniPlatform === 'mp-weixin';
+		},
+		getTask() {
+			return this.$store.getters.getTask;
+		},
+		getTotalTaskLength() {
+			return this.$store.getters.getTotalTaskLength;
+		},
+		getDoneTaskLength() {
+			return this.$store.getters.getDoneTaskLength;
 		},
 	},
 };
@@ -1659,7 +1647,7 @@ export default {
 	/* 增加一些内边距 */
 	background-color: var(--theme-color-matching);
 	border: 2px solid var(--theme-color-theme)
-	/* 可选的背景色，用于强调输入框 */
+		/* 可选的背景色，用于强调输入框 */
 }
 
 .input-container textarea {
