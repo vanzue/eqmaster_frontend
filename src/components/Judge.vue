@@ -104,7 +104,7 @@
 			},
 			buttonText() {
 				// return this.goodJudge ? '继续' : '再试一次';
-				return this.goodJudge ? 'Contiune' : 'Try Again';
+				return this.goodJudge ? this.$t('pages.battlefield.summary.finish') : this.$t('pages.battlefield.summary.again');
 			}
 		}
 	}
