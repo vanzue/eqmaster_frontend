@@ -125,6 +125,13 @@
 	"pages.battlefield.playground.achieved": "任务达成",
 	"pages.battlefield.playground.tasks_title": "通关任务",
 
+	"pages.battlefield.playground.choose_card_title": "选择锦囊卡片",
+    "pages.battlefield.playground.choose_card_best_answer": "帮回卡",
+    "pages.battlefield.playground.choose_card_best_answer_text": "快速调整你的回答，提升质量，让对话更流畅。",
+    "pages.battlefield.playground.choose_card_get_hint": "提示卡",
+    "pages.battlefield.playground.choose_card_get_hint_text": "提供情绪引导或建议，帮助你更好地理解和回应。",
+	"pages.battlefield.playground.choose_card_confirm": "确定兑换",
+
 
 	"illustration.animal.ostrich.name": "鸵鸟",
 	"illustration.animal.ostrich.weakness": "感知力",

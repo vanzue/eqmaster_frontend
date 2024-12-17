@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
 		<view class="container" @click="handleContainerClick">
 
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')"
@@ -1166,6 +1166,9 @@ export default {
 		npcs() {
 			return this.$store.getters.getNpcs;
 		},
+		themeColors() {
+			return this.$store.getters.getThemeColors;
+		},
 		shouldShadow() {
 			return (
 				this.state === "NpcTalk" || this.isRecording || this.showTippingCard
@@ -1382,7 +1385,7 @@ export default {
 	width: 40px;
 	height: 40px;
 	border-radius: 20px;
-	background: #d6fcf6;
+	background: var(--theme-color-matching);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -1392,7 +1395,7 @@ export default {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background: linear-gradient(180deg, #d6fcf6 0%, #90e0e7 100%);
+	background: linear-gradient(180deg, var(--theme-color-matching) 0%, var(--theme-color-theme) 100%);
 }
 
 .middle-container {
@@ -1400,13 +1403,13 @@ export default {
 	height: 56px;
 	border-radius: 50%;
 	background-color: transparent;
-	border: 2rpx solid #90e0e7;
+	border: 2rpx solid var(--theme-color-theme);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: absolute;
 	bottom: -10rpx;
-	box-shadow: 0px 0px 4px 0px #90e0e7;
+	box-shadow: 0px 0px 4px 0px var(--theme-color-theme);
 	z-index: 12;
 }
 
@@ -1529,7 +1532,7 @@ export default {
 	transform: translateX(-50%);
 	width: 420rpx;
 	height: 160rpx;
-	background-color: #d6fcf6;
+	background-color: var(--theme-color-matching);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -1654,8 +1657,8 @@ export default {
 	/* padding: 20rpx 0; */
 	border-radius: 40rpx;
 	/* 增加一些内边距 */
-	background-color: #d6fcf6;
-	border: 2px solid #90E0E7;
+	background-color: var(--theme-color-matching);
+	border: 2px solid var(--theme-color-theme)
 	/* 可选的背景色，用于强调输入框 */
 }
 
@@ -1669,7 +1672,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #90E0E7;
+	background-color: var(--theme-color-matching);
 	border-radius: 50%;
 }
 

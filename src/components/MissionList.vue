@@ -1,5 +1,5 @@
 <template>
-	<view class="container-box">
+	<view class="container-box" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme, '--theme-color-font-title': themeColors.popup_font_title }">
 		<view class="content-task">
 			<view class="card-header">
 				<view class="title">
@@ -29,7 +29,7 @@
 										</view>
 									</view>
 								</view>
-								<view class="">
+								<view class="completed-num">
 									{{ item._completedRoundNum }}/{{ item.totalRoundNum }}
 								</view>
 							</view>
@@ -81,7 +81,10 @@
 			},
 			completedTasks() {
 				return this.taskList ? this.taskList.getDoneTaskLength() : 0;
-			}
+			},
+			themeColors() {
+				return this.$store.getters.getThemeColors;
+			},
 		},
 		listData: {
 			handler(newListData) {
@@ -102,7 +105,7 @@
 		height: 732rpx;
 		bottom: 0px;
 		left: 0;
-		background-color: #D6FCF6;
+		background-color: var(--theme-color-matching);
 		display: flex;
 		flex-direction: column;
 	}
@@ -125,7 +128,7 @@
 		font-size: 40rpx;
 		font-weight: 700;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #2D6985;
+		color: var(--theme-color-font-title);
 	}
 
 	.card-close-image {
@@ -162,7 +165,7 @@
 		line-height: 40rpx;
 		font-weight: 600;
 		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #2D6985;
+		color: var(--theme-color-font-title);
 	}
 
 	.radiocheck-image {
@@ -192,6 +195,9 @@
 		position: relative;
 		overflow: visible;
 	}
+	.completed-num {
+		color: var(--theme-color-font-title);
+	}
 
 	.health-bar-background {
 		display: flex;
@@ -214,7 +220,7 @@
 		left: 0;
 		/* 添加只在上方显示阴影的代码 */
 		overflow: visible;
-		box-shadow: 0 -6px 6px -3px rgba(255, 255, 255, 0.3);
+		box-shadow: 0 -6px 6px -3px var(--theme-color-theme);
 		border-bottom: transparent;
 	}
 

@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image @click="goback" class="back-button" src="/static/back-left.png" :style="{marginTop: navBarTop + 'px'}"></image>
@@ -75,6 +75,9 @@
 			isWeChatMiniProgram() {
 				const systemInfo = uni.getSystemInfoSync();
 				return systemInfo.uniPlatform === 'mp-weixin';
+			},
+			themeColors() {
+				return this.$store.getters.getThemeColors;
 			},
 		},
 
@@ -219,7 +222,7 @@
 		height: 72rpx;
 		border-radius: 50%;
 		/* background-color: #F2BC74; */
-		background-color: #90E0E7;
+		background-color: var(--theme-color-theme);
 		color: #fff;
 		display: flex;
 		justify-content: center;
@@ -230,5 +233,20 @@
 		color: #000;
 		font-size: 40rpx;
 		font-weight: 600;
+	}
+
+	.continue-btn {
+		width: 80%;
+		height: 44px;
+		line-height: 44px;
+		/* 调整这里的值来控制按钮距离底部的高度 */
+		background-color: var(--theme-color-theme); /* #F2BC74 */
+		border: none;
+		border-radius: 25px;
+		font-size: 15px;
+		font-weight: 600;
+		color: #252529;
+		padding: 10px, 23px;
+		z-index: 3;
 	}
 </style>
