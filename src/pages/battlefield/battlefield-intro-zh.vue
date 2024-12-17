@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="{'--bgimg':`url(${getBgImg()})`}">
 		<view class="overlay"></view>
 		<view class="navbar">
 			<image class="back-button" src="/static/battlefield/back-iconpng.png" @tap="goToDashboard"></image>
@@ -56,6 +56,9 @@
 			},
 		},
 		methods: {
+			getBgImg(){
+				return getImg('/static/web/battlefield/background1.webp');
+			},
 			navigateToNextPage() {
 				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-task-zh' // Replace this with the actual path to your next page

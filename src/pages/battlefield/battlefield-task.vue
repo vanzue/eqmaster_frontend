@@ -1,5 +1,5 @@
 <template>
-	<view class="container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
+	<view class="container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme, '--bgimg':`url(${getBgImg()})`}">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image @click="goback" class="back-button" src="/static/back-left.png" :style="{marginTop: navBarTop + 'px'}"></image>
@@ -50,6 +50,7 @@
 
 <script>
 	import ProgressBar from '@/components/ProgressBar.vue'; // 引入组件
+	import { getImg } from '../../scripts/constants';
 	export default {
 		components: {
 			ProgressBar, // 注册组件
@@ -82,6 +83,9 @@
 		},
 
 		methods: {
+			getBgImg(){
+				return getImg('/static/web/battlefield/background1.webp');
+			},
 			navigateToNextPage() {
 				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-loading'

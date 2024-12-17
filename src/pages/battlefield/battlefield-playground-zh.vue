@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="container" @click="handleContainerClick">
+		<view class="container" :style="{'--bgimg':`url(${getBgImg()})`}" @click="handleContainerClick">
 			<image class="background-image" :src="getImg('/static/web/battlefield/background.webp')"
 				mode="aspectFill" />
 			<view class="overlay"></view>
@@ -349,6 +349,9 @@
 			);
 		},
 		methods: {
+			getBgImg(){
+				return getImg('/static/web/battlefield/background1.webp');
+			},
 			setIsLoadingShow(value) {
 				this.isLoadingShow = value;
 			},

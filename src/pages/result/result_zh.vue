@@ -7,7 +7,7 @@
 					<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('pages.result.result.title') }}</text>
 					<view class="header-icon"></view>
 				</view>
-				<view class="background-curve">
+				<view class="background-curve" :style="{backgroundImage:`url(${getImg('/static/web/resulten/header-bg.webp')})`}">
 					<view class="animal-box">
 						<view class="animal-my-eq-type">
 							{{ $t('pages.result.result.type') }}
@@ -255,7 +255,25 @@ import {
 		onReady(option) {
 			// console.log('option', option);
 		},
+		mounted() {
+			this.addFontFace();
+		},
 		methods: {
+			addFontFace() {
+				const fontFace = `
+					@font-face {
+					font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+					src: url('${getImg('/static/web/fonts/Poppins-Italic.ttf')}')  format('truetype');
+					font-weight: normal;
+					font-style: normal;
+					}
+				`;
+				const styleSheet = document.createElement('style');
+				styleSheet.type = 'text/css';
+				styleSheet.innerText = fontFace;
+				document.head.appendChild(styleSheet);
+				
+			},
 			progressWidth(value, isOne) {
 				if (!value) return {};
 
@@ -308,12 +326,6 @@ import {
 </script>
 
 <style scoped>
-	@font-face {
-		font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-		src: url('https://eqmaster.blob.core.chinacloudapi.cn/static/web/fonts/Poppins-Italic.ttf?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-	}
 
 	.container {
 		/* position: absolute; */
@@ -371,7 +383,6 @@ import {
 		/* Changed from visible to hidden */
 		/* justify-content: center;
 		align-items: center; */
-		background-image: url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/resulten/header-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
