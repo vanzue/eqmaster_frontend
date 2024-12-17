@@ -399,7 +399,7 @@
 					const imagePath = isCompleted ?
 						(completedImages[i] || '/static/default_completed.png') :
 						(incompleteImages[i] || '/static/default_incomplete.png');
-					// console.log(imagePath);
+					console.log(imagePath);
 					const imageSize = 160;
 					const lineLength = 100;
 					const imageX = i % 2 === 0 ? endPoint.x - lineLength - imageSize / 2 : endPoint.x + lineLength -
@@ -540,7 +540,6 @@
 						}
 					}
 				}
-
 				ctx.restore(); // Restore the original state
 				ctx.draw(false, () => {
 					console.log('Canvas drawing completed');
