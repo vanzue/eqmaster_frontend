@@ -528,6 +528,22 @@ export default {
 			throw error;
 		}
 	},
+	async getImgToken() {
+		try {
+			const response = await uni.request({
+				url: API_ENDPOINT+'/getImgToken',
+				method: 'POST'
+			});
 
+			if (response.statusCode === 200) {
+				return response.data.token;
+			} else {
+				throw new Error(`Failed to get img token: ${response.statusCode}`);
+			}
+		} catch (error) {
+			console.error('Error getting img token:', error);
+			throw error;
+		}
+	}
 	// Add more API methods here as needed
 };

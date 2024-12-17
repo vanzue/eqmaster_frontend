@@ -1,4 +1,6 @@
 <script lang="uts">
+	import Api from './services/api-service.js';
+	import { setToken } from './scripts/constants';
 	let firstBackTime = 0
 	export default {
 		onLaunch: function () {
@@ -7,6 +9,7 @@
 			this.globalData={
 				audioContextGloabal:null
 			}
+			this.fetchImageToken()
 			const userId = uni.getStorageSync('userId');
 			console.log('userId', userId)
 			const currentPages = getCurrentPages();
@@ -82,6 +85,16 @@
 		onExit: function () {
 			console.log('App Exit')
 		},
+		
+		methods: {
+			async fetchImageToken() {
+				try {
+					setToken(await Api.getImgToken());
+				} catch (error) {
+					console.error('Error fetching image token:', error);
+				}
+			}
+		}
 	}
 </script>
 
