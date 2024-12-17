@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="containerStyle">
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image class="back-button" src="/static/back-left.png" @tap="goToDashboard"
 				:style="{ marginTop: navBarTop + 'px' }"></image>
@@ -99,6 +99,15 @@ export default {
 		RewardBar,
 	},
 	computed: {
+		containerStyle() {
+			const gradient = ' linear-gradient(180deg, rgba(47, 47, 56, 0) 0%, rgba(47, 47, 56, 0.5) 10%, #2F2F38 20%, #2F2F38 100%)';
+			const imageUrl =getImg('/static/web/battlefield/background1.webp');
+			return {
+				backgroundImage: `${gradient}, url(${imageUrl})`,
+				backgroundSize: 'cover',
+				backgroundPosition: 'center',
+			};
+		},
 		navBarTop() {
 			return this.$store.getters.getNavBarTop;
 		},
@@ -236,9 +245,6 @@ export default {
 .container {
 	width: 100%;
 	min-height: 100vh;
-	background-image: linear-gradient(180deg, rgba(47, 47, 56, 0) 0%, rgba(47, 47, 56, 0.5) 10%, #2F2F38 20%, #2F2F38 100%),
-		url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/battlefield/background1.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
-	/* background: linear-gradient(180deg, rgba(47, 47, 56, 0) 0%, rgba(47, 47, 56, 0.5) 10%, #2F2F38 20%, #2F2F38 100%); */
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;

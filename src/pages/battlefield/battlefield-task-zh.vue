@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="{'--bgimg':`url(${getBgImg()})`}">
 		<view class="overlay"></view>
 		<view class="navbar">
 			<image @click="goback" class="back-button" src="/static/battlefield/back-iconpng.png"></image>
@@ -45,6 +45,7 @@
 
 <script>
 	import ProgressBar from '@/components/ProgressBar.vue'; // 引入组件
+	import { getImg } from '../../scripts/constants';
 	export default {
 		components: {
 			ProgressBar, // 注册组件
@@ -64,6 +65,9 @@
 		},
 
 		methods: {
+			getBgImg(){
+				return getImg('/static/web/battlefield/background1.webp');
+			},
 			navigateToNextPage() {
 				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-loading-zh'

@@ -1,6 +1,6 @@
 <template>
 	<view :style="{ '--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
-		<view class="container" @click="handleContainerClick">
+		<view class="container" :style="{'--bgimg':`url(${getBgImg()})`}" @click="handleContainerClick">
 
 			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')"
 				mode="aspectFill" />
@@ -334,6 +334,9 @@ export default {
 		this.scrollToInput();
 	},
 	methods: {
+		getBgImg(){
+			return getImg('/static/web/battlefield/background1.webp');
+		},
 		scrollToInput() {
 			// 监听键盘高度变化
 			uni.onKeyboardHeightChange(res => {

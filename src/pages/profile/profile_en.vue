@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="{ backgroundImage: `url(${getImg('/static/web/profile-bg.webp')})` }">
 		<scroll-view scroll-y>
 			<view class="content">
 
@@ -8,7 +8,7 @@
 					<text class="user-name-text">{{ username }}</text>
 				</view>
 
-				<view class="have-been-view">
+				<view class="have-been-view"  :style="{ backgroundImage: `url(${getImg('/static/web/have-been-bg.webp')})` }">
 					<view class="have-been-view-center">
 						<view class="have-been-header">
 							<image src="/static/user_icon.png" class="have-been-header-icon"></image>
@@ -156,6 +156,7 @@ import {
 			};
 		},
 		computed: {
+			
 			homepageData() {
 				return this.$store.getters.getHomepageData;
 			},
@@ -361,8 +362,6 @@ import {
 		overflow-x: hidden;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		background-image:
-		url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/profile-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -403,8 +402,6 @@ import {
 		/* display: flex; */
 		/* width: auto; */
 		height: 654rpx;
-		background-image:
-		url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/have-been-bg.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;

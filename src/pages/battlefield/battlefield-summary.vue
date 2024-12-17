@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" :style="containerStyle">
 		<scroll-view scroll-y style="height: 100%">
 			<!-- <view class="debug-info">
     如需调试信息，可取消注释以下行
@@ -146,7 +146,16 @@
 				});
 			},
 		},
-
+		computed:{
+			containerStyle() {
+				const gradient = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9))';
+				const imageUrl =getImg('/static/web/battlefield/background1.webp');
+				return {
+					backgroundImage: `${gradient}, url(${imageUrl})`,
+					
+				};
+			},
+		},
 		onLoad(options) {
 			// 接收上个页面传来的参数
 			if (options.isFromMap !== undefined) {
@@ -221,8 +230,6 @@
 	.container {
 		width: 100%;
 		min-height: 100vh;
-		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-			url("https://eqmaster.blob.core.chinacloudapi.cn/static/web/battlefield/background1.webp?sp=r&st=2024-11-18T09:41:26Z&se=2025-11-18T17:41:26Z&sv=2022-11-02&sr=c&sig=WL07d2l6cOkDXNTjNxkTEU3Yl0J%2FrNlWU%2FUPGJRPfhA%3D");
 		background-color: #2F2F38;
 		display: flex;
 		flex-direction: column;
