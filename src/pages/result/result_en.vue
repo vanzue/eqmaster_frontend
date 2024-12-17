@@ -7,7 +7,7 @@
 					<text class="score-title-head">My EQ report</text>
 					<image class="header-icon" src="/static/battlefield/share.png"></image>
 				</view>
-				<view class="background-curve" :style="{backgroundimage:`url(${getImg('/static/web/resulten/header-bg.webp')})`}">
+				<view class="background-curve" :style="{backgroundImage:`url(${getImg('/static/web/resulten/header-bg.webp')})`}">
 					<view class="animal-box">
 						<view class="animal-my-eq-type">
 							My EQ companion

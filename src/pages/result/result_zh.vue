@@ -7,7 +7,7 @@
 					<text class="score-title-head" :style="{marginTop: navBarTop + 'px'}">{{ $t('pages.result.result.title') }}</text>
 					<view class="header-icon"></view>
 				</view>
-				<view class="background-curve" :style="{backgroundimage:`url(${getImg('/static/web/resulten/header-bg.webp')})`}">
+				<view class="background-curve" :style="{backgroundImage:`url(${getImg('/static/web/resulten/header-bg.webp')})`}">
 					<view class="animal-box">
 						<view class="animal-my-eq-type">
 							{{ $t('pages.result.result.type') }}
