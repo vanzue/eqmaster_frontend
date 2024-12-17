@@ -293,7 +293,7 @@
 
 	.jewelry-num {
 		/* color: #F2BC74; */
-		color: #2D6985;
+		color: var(--theme-color-font-title);
 		font-size: 40rpx;
 		font-weight: 800;
 		text-align: left;
@@ -301,7 +301,7 @@
 
 	.jewelry-num-dark {
 		/* color: #8C5225; */
-		color: #2D6985;
+		color: var(--theme-color-font-title);
 		font-size: 40rpx;
 		font-weight: 900;
 		text-align: left;

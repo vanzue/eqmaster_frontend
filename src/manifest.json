@@ -110,29 +110,28 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx216f07aba6aad308",
+        "appid" : "wx6cbbf0de3a50aefd",
         "setting" : {
             "urlCheck" : false,
             "minified" : true
         },
         "usingComponents" : true,
-		"plugins" : {
-		    "WechatSI" : {
-		        "version" : "0.3.5",
-		        "provider" : "wx069ba97219f66d99"
-		    }
-		},
+        "plugins" : {
+            "WechatSI" : {
+                "version" : "0.3.5",
+                "provider" : "wx069ba97219f66d99"
+            }
+        },
         "lazyCodeLoading" : "requiredComponents",
-		"permission": {
-		      "scope.userInfo": {
-		        "desc": "用于完善会员资料"
-		      },
-			  "scope.record" : {
-			      "desc" : "需要使用录音功能"
-			  }
-		    }
+        "permission" : {
+            "scope.userInfo" : {
+                "desc" : "用于完善会员资料"
+            },
+            "scope.record" : {
+                "desc" : "需要使用录音功能"
+            }
+        }
     },
-  
     "mp-alipay" : {
         "usingComponents" : true
     },

@@ -112,7 +112,7 @@
 				}
 				for(let i=0; i<incompleteImages.length; i++){
 				  this.loadAndDrawImageWx(incompleteImages[i])
-				  }
+				}
 			},
 			loadAndDrawImageWx(src) {
 				const filePath = getImg(src);
@@ -120,8 +120,9 @@
 				if (filePath.endsWith('.webp') || filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.gif')) {
 					this.imgDic[src] = filePath;
 					this.downImgNum++;
+					// console.log(`index=${this.downImgNum}`)
 					if (this.downImgNum >= 6) {
-					this.drawSProgress();
+						this.drawSProgress();
 					}
 				} else {
 					uni.downloadFile({
@@ -398,7 +399,7 @@
 					const imagePath = isCompleted ?
 						(completedImages[i] || '/static/default_completed.png') :
 						(incompleteImages[i] || '/static/default_incomplete.png');
-
+					// console.log(imagePath);
 					const imageSize = 160;
 					const lineLength = 100;
 					const imageX = i % 2 === 0 ? endPoint.x - lineLength - imageSize / 2 : endPoint.x + lineLength -

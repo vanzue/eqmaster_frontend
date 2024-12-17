@@ -30,7 +30,7 @@ function sendRequest(
 			person_id: state.getters.getUserId,
 			course_id: course_id.course_data.id,
 			chat_content: JSON.stringify(formattedChatContent),
-			locale:  "en",
+			locale:  locale.getShortLocale(),
 			npcs:  course_id.course_data.npc,
 		};
 
@@ -253,7 +253,7 @@ export async function evalBattlefield(chatHistory, isPass, gemCount, diamonds) {
 		// status:  "complete" , // 添加 isPass
 		result: gemCount, // 添加 gemCount
 		person_diamond: diamonds, // 添加 diamonds
-		locale: "en"
+		locale: locale.getShortLocale()
 	};
 	console.log("evalBattlefield chatHistory: ", chatHistory);
 	console.log("evalBattlefield body: ", body);

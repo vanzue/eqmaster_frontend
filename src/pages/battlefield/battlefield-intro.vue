@@ -41,6 +41,7 @@
 	import {
 		getImg
 	} from "../../scripts/constants";
+	import locale from '@/locale';
 	export default {
 		components: {
 			ProgressBar, // 注册组件
@@ -84,6 +85,7 @@
 					let nodes = [
 					];
        				let lastIndex = 0;
+					
 					// names.forEach((npcName) => {
 					// 	const regex = new RegExp(`(${npcName})`, 'gi'); // 正则匹配npcName，不区分大小写
 					// 	content = content.replace(regex, (match) => {
@@ -97,48 +99,50 @@
 					// 	</div>
 					// `;
 					// 遍历所有 NPC 名字并替换
-					names.forEach((npcName) => {
-						const regex = new RegExp(`(${npcName})`, 'gi'); // 匹配 npcName，不区分大小写
-						let match;
-
-						while ((match = regex.exec(content)) !== null) {
-							// 插入 NPC 名字前的文本
-							if (match.index > lastIndex) {
-								nodes.push({
-									type: 'text',
-									text: content.substring(lastIndex, match.index)
-								});
-							}
-
-							// 找到对应的 NPC
-							const npc = Object.values(npcData).find(n => n.name === npcName);
-							
-							// 用 <view> 和 <image> 替代 <span> 和 <img>
-							nodes.push({
-								name: 'span',
-								attrs: {
-									class: "npc-name",
-									style: "background-color: " + this.themeColors.theme_deep
-								},
-								children: [
-									{
-										name: 'img',
-										attrs: {
-											src: getImg(npc.avatar_url), // NPC 头像 URL
-											class: 'npc-avatar', // 可以使用样式类来控制图像大小等
-											alt: npc.name // 可选：提供 alt 属性用于图像描述
-										}
-									},
-									{
+					if(locale.getShortLocale() === 'en') {
+						names.forEach((npcName) => {
+							const regex = new RegExp(`(${npcName})`, 'gi'); // 匹配 npcName，不区分大小写
+							let match;
+	
+							while ((match = regex.exec(content)) !== null) {
+								// 插入 NPC 名字前的文本
+								if (match.index > lastIndex) {
+									nodes.push({
 										type: 'text',
-										text: match[0] // 插入 NPC 名字
-									}
-								]
-							});
-
-							lastIndex = regex.lastIndex;
-						}
-					});
+										text: content.substring(lastIndex, match.index)
+									});
+								}
+	
+								// 找到对应的 NPC
+								const npc = Object.values(npcData).find(n => n.name === npcName);
+								console.log(npc);
+								// 用 <view> 和 <image> 替代 <span> 和 <img>
+								nodes.push({
+									name: 'span',
+									attrs: {
+										class: "npc-name",
+										style: "background-color: " + this.themeColors.theme_deep
+									},
+									children: [
+										{
+											name: 'img',
+											attrs: {
+												src: getImg(npc.avatar_url), // NPC 头像 URL
+												class: 'npc-avatar', // 可以使用样式类来控制图像大小等
+												alt: npc.name // 可选：提供 alt 属性用于图像描述
+											}
+										},
+										{
+											type: 'text',
+											text: match[0] // 插入 NPC 名字
+										}
+									]
+								});
+								console.log(regex);
+								lastIndex = regex.lastIndex;
+							}
+						});
+					}
 
 					// 插入剩余的文本
 					if (lastIndex < content.length) {
@@ -150,13 +154,13 @@
 
 					// 包装所有内容的 view 组件，模拟 <div> 标签
 					return [{
-							name: 'div',
-							attrs: {
-								class: 'description content-item', // 如果需要样式，可以通过 class 或 style 来模拟
-								id: 'desc'
-							},
-							children: nodes
-						}]
+						name: 'div',
+						attrs: {
+							class: 'description content-item', // 如果需要样式，可以通过 class 或 style 来模拟
+							id: 'desc'
+						},
+						children: nodes
+					}]
 				}
 			},
 			themeColors() {

@@ -3,7 +3,8 @@ import {
 } from 'vuex';
 import apiService from "@/services/api-service";
 import {DEFAULT_LOCALE} from "@/locale";
-
+import TaskList from "../models/TaskList";
+import Task from "../models/Task";
 import { getImg } from '../scripts/constants';
 export default createStore({
 	state: {
@@ -62,7 +63,8 @@ export default createStore({
 			// matching: '#FDEDC8', //搭配主题颜色
 			popup_font_title: '#2D6985', //弹框标题文字颜色
 			// popup_font_title: '#8C5225', //弹框标题文字颜色
-		}
+		},
+		taskList: new TaskList([]),
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -151,6 +153,12 @@ export default createStore({
 		setThemeColors(state, themeColors) {
 			state.themeColors = themeColors;
 		},
+		setTaskList(state, taskList) {
+			state.taskList = taskList;
+		},
+		setDoneTaskLength(state) { 
+			state.taskList.doneTaskLength++;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -221,6 +229,27 @@ export default createStore({
 		getThemeColors(state) {
 			return state.themeColors;
 		},
+		getTaskList(state) {
+			return state.taskList;
+		},
+		getTask: (state) => (taskCheck) => { 
+			return state.taskList.getTask(taskCheck)
+		},
+		doneTaskLength(state) { 
+			return state.taskList.doneTaskLength
+		},
+		getTaskLength(state) {
+			return state.taskList.taskLength;
+		},
+		getDoneTaskLength(state) {
+			return state.taskList.doneTaskLength;
+		},
+		getTotalTaskLength(state) {
+			return state.taskList.getTotalTaskLength();
+		},
+		getOnceTaskCount(state) {
+			return state.taskList.getOnceTaskCount();
+		},
 	},
 	actions: {
 		async fetchHomepageData({
@@ -261,7 +290,7 @@ export default createStore({
 				console.error('Error fetching course Data:', error);
 			}
 		},
-		async fetchCourseInfo({ commit }, courseId) {
+		async fetchCourseInfo({ commit, state }, courseId) {
 			try {
 				const courseInfo = await apiService.getCourseInfo(courseId);
 				if (!courseInfo) {
@@ -273,6 +302,34 @@ export default createStore({
 					// console.log(courseInfo.course_data.theme);
 					commit('setThemeColors', JSON.parse(courseInfo.course_data.theme));
 				}
+				if(courseInfo.course_data && courseInfo.course_data.npc) {
+					const npcArr = JSON.parse(courseInfo.course_data.npc);
+					console.log(npcArr);
+					let obj = [];
+					Object.entries(npcArr).forEach(([key, npc]) => {
+						obj.push({
+							characterName: npc.name,
+							health: 10,
+							avatar: getImg(npc.avatar_url),
+							voice: npc.voice,
+							style: npc.style,
+							rate: npc.rate,
+							personality: npc.personality
+							// Add any additional properties needed
+						});
+					});
+					commit('setNpcs', obj);
+					// console.log(state.npcs);
+				}
+				const taskList = new TaskList([]);
+				if (courseInfo && courseInfo.course_data && courseInfo.course_data.task) {
+					const tasks = courseInfo.course_data.task.split(':');
+					tasks.forEach((task, index) => {
+						taskList.addTask(new Task(index, task.trim()));
+					});
+				}
+				console.log(taskList);
+				commit('setTaskList', taskList);
 			} catch (error) {
 				console.error('Error fetching course info:', error);
 				throw error;

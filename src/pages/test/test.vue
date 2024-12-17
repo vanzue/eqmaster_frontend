@@ -181,6 +181,9 @@
 			navBarHeight() {
 				return this.$store.getters.getNavBarHeight;
 			},
+			getLocale() {
+				return locale.getShortLocale();
+			},
 		},
 		watch: {
 			isLoading: {
@@ -283,7 +286,11 @@
 				try {
 					this.scenarioData = scenarioResponse.scene.scenes;
 					this.npcAvatar = getAvatar(this.scenarioData.role, scenarioResponse.scenario_id);
-					this.backgroundImageSrc = getImg(`/static/web/onboarding/bg${scenarioResponse.scenario_id}.webp`);
+					if(this.getLocale === 'en') {
+						this.backgroundImageSrc = getImg(`/static/web/onboarding/bg${scenarioResponse.scenario_id}.webp`);
+					} else {
+						this.backgroundImageSrc = getImg(`/static/web/onboarding/bgzh${scenarioResponse.scenario_id}.webp`);
+					}
 					this.scenarioId = scenarioResponse.scenario_id;
 					this.handleScenarioData();
 					this.updateProgress();

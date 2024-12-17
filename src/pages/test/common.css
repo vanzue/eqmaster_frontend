@@ -243,8 +243,8 @@
 	z-index: 1;
 	min-height: 100rpx;
 	max-height: 400rpx;
-	overflow: auto;
-	border: 6rpx solid #f2bc74;
+	/* overflow: auto; */
+	/* border: 6rpx solid #f2bc74; */
 }
 
 .text-content {
