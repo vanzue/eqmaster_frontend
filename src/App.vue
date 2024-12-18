@@ -9,7 +9,7 @@
 			this.globalData={
 				audioContextGloabal:null
 			}
-			this.fetchImageToken()
+			await this.fetchImageToken();
 			const userId = uni.getStorageSync('userId');
 			console.log('userId', userId)
 			const currentPages = getCurrentPages();
