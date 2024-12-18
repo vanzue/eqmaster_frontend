@@ -3,7 +3,7 @@
 	import { setToken } from './scripts/constants';
 	let firstBackTime = 0
 	export default {
-		onLaunch: function () {
+		onLaunch: async function () {
 			console.log('App Launch')
 			this.$store.dispatch('getNavBarHeight');
 			this.globalData={
