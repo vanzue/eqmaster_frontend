@@ -635,48 +635,12 @@ export default {
 			);
 			const userId = this.$store.getters.getUserId;
 			console.log("evaluation result！！！！！！！！:", evaluationResult);
-			uni.setStorage({
-				key: "evalResult",
-				data: evaluationResult,
-				success: () => {
-					console.log("evalResult 设置成功:", evaluationResult);
-				},
-				fail: (err) => {
-					console.error("设置 evalResult 失败:", err);
-				},
-			});
-			uni.setStorage({
-				key: "gemCount",
-				data: this.gemCount,
-				success: () => {
-					console.log("gemCount 设置成功:", this.gemCount);
-				},
-				fail: (err) => {
-					console.error("设置 gemCount 失败:", err);
-				},
-			});
-			uni.setStorage({
-				key: "isPass",
-				data: this.isPass,
-				success: () => {
-					console.log("isPass 设置成功:", this.isPass);
-				},
-				fail: (err) => {
-					console.error("设置 isPass 失败:", err);
-				},
-			});
+			this.$store.commit('setEvalResult', evaluationResult);
+			this.$store.commit('setGemCount', this.gemCount);
+			this.$store.commit('setIsPass', this.isPass);
 			// 将所有 NPC 的 health 值保存到本地存储
 			const npcHealthValues = this.npcs.map((npc) => npc.health);
-			uni.setStorage({
-				key: "npcHealth",
-				data: npcHealthValues,
-				success: () => {
-					console.log("NPC health 设置成功:", npcHealthValues);
-				},
-				fail: (err) => {
-					console.error("设置 NPC health 失败:", err);
-				},
-			});
+			// this.$store.commit('setNpcHealth', npcHealthValues);
 			await this.$store.dispatch('fetchHomepageData');
 			// console.log("getCurrentPages().pop().route", getCurrentPages().pop().route);
 			if (getCurrentPages().pop().route !== "pages/battlefield/battlefield-summary-zh") {
@@ -932,25 +896,17 @@ export default {
 					// 遍历 judgeResult.moods 并根据角色调整 this.mood 的值
 					judgeResult.moods.forEach((item) => {
 						const moodValue = parseInt(item.mood, 10);
-						if (item.role === "Jason") {
-							this.npcs[0].health = Math.min(
-								this.npcs[0].health +
-								(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
-								20
-							);
-						} else if (item.role === "Sam") {
-							this.npcs[1].health = Math.min(
-								this.npcs[1].health +
-								(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
-								20
-							);
-						} else if (item.role === "Anna") {
-							this.npcs[2].health = Math.min(
-								this.npcs[2].health +
-								(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
-								20
-							);
-						}
+						this.npcs.forEach((npc, index) => {
+							if (npc.characterName === item.role) {
+								const health = Math.min(
+									npc.health +
+									(moodValue > 0 ? 4 : moodValue < 0 ? -2 : 0),
+									20
+								);
+								// console.log(npc.characterName, "health:", health);
+								this.$store.commit('setNpcHealth', { index, health });
+							}
+						});
 					});
 					// 检查任何 NPC 的 health 是否 <= 0，通关失败
 					const anyNpcHealthLow = this.npcs.some((npc) => npc.health <= 0);
