@@ -125,7 +125,8 @@
 						<view class="eqoach-center-text">
 							{{$t('pages.profile.line.addbot')}}
 						</view>
-						<image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-telegram.webp')" ref="qrCodeImage"></image>
+						<!-- <image class="eqoach-center-code-image" :src="getImg('/static/web/eqoach-telegram.webp')" ref="qrCodeImage"></image> -->
+						<image class="eqoach-center-code-image" :src="qrCodeBase64" ref="qrCodeImage"></image>
 						<view class="eqoach-center-line">
 							<view class="save-code-one">
 								<view class="save-code-num">1</view>
@@ -161,6 +162,7 @@
 	import {
 			getImg
 		} from '../../scripts/constants.js';
+import { generateAsync } from 'jszip';
 	export default {
 		components: {
 			Nav
@@ -195,6 +197,7 @@
 				isDelEqoashBot: false,
 				applicationLocale: '',
 				qrImg: null,
+				qrCodeBase64: '',
 			};
 		},
 		computed: {
@@ -239,6 +242,7 @@
 		
 		onLoad(option) {
 			console.log('Received options:', option);
+			this.getQrCode();
 
 			// 接收上一个页面传递的数据
 			// this.userId = option.userId || '';
@@ -303,6 +307,15 @@
 					this.isLoading = false;
 				}
 			},
+			async getQrCode() {
+				try {
+					const data = await apiService.generate_qrcode(this.userId, "telegram");
+					this.qrCodeBase64 = `data:image/png;base64,${data.qr_code}`;
+				} catch (error) {
+					this.error = 'Error generating qrcode';
+					console.error(this.error, error);
+				}
+			},
 			touchStart(event) {
 				this.startX = event.touches[0].clientX;
 			},
@@ -329,6 +342,36 @@
 			},
 			saveQRCode() {
 				this.saveqrcodeLoding = true;
+
+				const saveImage = () => {
+					var save = wx.getFileSystemManager(); // 获取文件管理器对象
+					var number = Math.random();
+					save.writeFile({
+					filePath: wx.env.USER_DATA_PATH + '/pic' + number + '.png', // 表示生成一个临时文件名
+					data: this.qrCodeBase64.replace(/^data:image\/png;base64,/, ''),
+					encoding: 'base64',
+					success: res => {
+						wx.saveImageToPhotosAlbum({
+							filePath: wx.env.USER_DATA_PATH + '/pic' + number + '.png',
+							success: function (res) {
+								uni.showToast({
+									title: 'Image saved successfully',
+									icon: 'success'
+								});
+							},
+							fail: function (err) {
+								uni.showToast({
+									title: 'Image save failed',
+									icon: 'none'
+								});
+							}
+						})
+						console.log(res)
+					}, fail: err => {
+						console.log(err)
+					}
+					});
+				};
 				// const qrCodeImage = this.$refs.qrCodeImage;
 				// if (!qrCodeImage) {
 				// 	console.error('QR code image not found');
@@ -357,38 +400,40 @@
 					uni.authorize({
 					scope: 'scope.writePhotosAlbum',
 					success: () => {
-						uni.downloadFile({
-						url: getImg('/static/web/eqoach-telegram.webp'),
-						success: (downloadRes) => {
-							if (downloadRes.statusCode === 200) {
-							uni.saveImageToPhotosAlbum({
-								filePath: downloadRes.tempFilePath,
-								success: () => {
-								uni.showToast({
-									title: 'Image saved successfully',
-									icon: 'success'
-								});
-								this.saveqrcodeLoding = false;
-								},
-								fail: (err) => {
-								console.log('保存图片失败：', err);
-								uni.showToast({
-									title: 'Image save failed',
-									icon: 'none'
-								});
-								this.saveqrcodeLoding = false;
-								}
-							});
-							} else {
-							console.error('下载图片失败：', downloadRes.statusCode);
-							this.saveqrcodeLoding = false;
-							}
-						},
-						fail: (err) => {
-							console.error('下载图片失败：', err);
-							this.saveqrcodeLoding = false;
-						}
-						});
+						saveImage();
+						this.saveqrcodeLoding = false;
+						// uni.downloadFile({
+						// url: getImg('/static/web/eqoach-telegram.webp'),
+						// success: (downloadRes) => {
+						// 	if (downloadRes.statusCode === 200) {
+						// 	uni.saveImageToPhotosAlbum({
+						// 		filePath: downloadRes.tempFilePath,
+						// 		success: () => {
+						// 		uni.showToast({
+						// 			title: 'Image saved successfully',
+						// 			icon: 'success'
+						// 		});
+						// 		this.saveqrcodeLoding = false;
+						// 		},
+						// 		fail: (err) => {
+						// 		console.log('保存图片失败：', err);
+						// 		uni.showToast({
+						// 			title: 'Image save failed',
+						// 			icon: 'none'
+						// 		});
+						// 		this.saveqrcodeLoding = false;
+						// 		}
+						// 	});
+						// 	} else {
+						// 	console.error('下载图片失败：', downloadRes.statusCode);
+						// 	this.saveqrcodeLoding = false;
+						// 	}
+						// },
+						// fail: (err) => {
+						// 	console.error('下载图片失败：', err);
+						// 	this.saveqrcodeLoding = false;
+						// }
+						// });
 					},
 					fail: (err) => {
 						console.log('授权失败：', err);

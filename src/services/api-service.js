@@ -544,6 +544,25 @@ export default {
 			console.error('Error getting img token:', error);
 			throw error;
 		}
+	},
+
+	async generate_qrcode(userId, platform) {
+		try {
+			const response = await uni.request({
+				url: API_ENDPOINT + '/generate_qr',
+				method: 'GET',
+				data: {
+					userId: userId,
+					platform: platform
+				}
+			});
+			if (response.statusCode === 200) {
+				return response.data;
+			}
+		} catch(error) {
+			console.log('generate qrcode failed', error);
+			throw error;
+		}
 	}
 	// Add more API methods here as needed
 };
