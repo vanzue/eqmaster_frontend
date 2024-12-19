@@ -154,10 +154,10 @@
 	"components.SProgressBar.unit2.name": "在团队遭遇挫折时保持冷静",
 	"components.SProgressBar.unit3.name": "通过阅读房间来解决冲突",
 
-	"scores.dimensions.perception": "感知力",
-	"scores.dimensions.empathy": "共情力",
-	"scores.dimensions.self_regulation": "自我调节",
-	"scores.dimensions.social_skill": "社交能力",
-	"scores.dimensions.motivation": "驱动力",
+	"scores.dimensions.perception": "情绪侦查力",
+	"scores.dimensions.empathy": "情绪掌控力",
+	"scores.dimensions.self_regulation": "人际平衡术",
+	"scores.dimensions.social_skill": "沟通表达力",
+	"scores.dimensions.motivation": "社交得体度",
 	"": ""
 }

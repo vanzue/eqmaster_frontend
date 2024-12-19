@@ -103,22 +103,20 @@
                 <cover-view class="dashboard2-fixed-content">
                     <cover-view class="dashboard2-card-o">
                         <cover-view class="dashboard2-card">
-                            <cover-image class="dashboard2-illustration3" :src="getImg('/static/web/diamond.webp')"
-                                mode="widthFix"></cover-image>
-                            <cover-view
-                                class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</cover-view>
+                            <cover-image class="dashboard2-illustration3" src="/static/dashboard2/diamond.png" mode="widthFix"></cover-image>
+                            <cover-view class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</cover-view>
                         </cover-view>
                         <cover-view class="dashboard2-card">
                             <!-- <cover-image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
                                 mode="widthFix">
                             </cover-image> -->
-							<cover-image class="dashboard2-illustration3star" :src="getImg('/static/web/battlefield/star.webp')"
+							<cover-image class="dashboard2-illustration3star" src="/static/dashboard2/star.png"
 							mode="widthFix"></cover-image>
-                            <cover-view
-                                class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</cover-view>
+                            <cover-view class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</cover-view>
                         </cover-view>
-                        <cover-image class="dashboard2-illustration31" src="/static/dashboard2/111.png" mode="widthFix">
-                        </cover-image>
+						<cover-view class="dashboard2-card">
+							<cover-image class="dashboard2-illustration31" src="/static/dashboard2/leaderboard-star.png" mode="widthFix"></cover-image>
+						</cover-view>
                     </cover-view>
 
 
@@ -2181,6 +2179,7 @@
 
 	.dashboard2-fixed-content {
 		position: fixed;
+		/* justify-content: space-between; */
 		top: 0;
 		left: 0;
 		right: 0;
@@ -2201,22 +2200,22 @@
 	.dashboard2-card-o {
 		width: 100%;
 		position: relative;
-		text-align: left;
 		display: flex;
+		justify-content: space-between;
 		flex-direction: row;
-		align-items: left;
-		margin-bottom: 10rpx;
+		align-items: center;
+		/* margin-bottom: 10rpx; */
 		/* top: -50rpx; */
 	}
 
 	.dashboard2-card {
-		width: 150px;
+		/* width: 150px; */
 		position: relative;
 		text-align: left;
 		display: flex;
 		flex-direction: row;
-		align-items: left;
-		padding: 0 20rpx 0rpx 20rpx;
+		align-items: center;
+		/* padding: 0 20rpx 0rpx 20rpx; */
 	}
 
 	.dashboard2-card1-container {
@@ -2313,7 +2312,7 @@
 		font-size: 50rpx;
 		font-weight: bold;
 		color: #fe9a52;
-		margin-top: 20rpx;
+		/* margin-top: 20rpx; */
 		/* left: 30px; */
 		/* top: 30px; */
 		position: relative;
@@ -2323,7 +2322,7 @@
 		font-size: 50rpx;
 		font-weight: bold;
 		color: #aeed50;
-		margin-top: 20rpx;
+		/* margin-top: 20rpx; */
 		/* left: 30px; */
 		/* top: 30px; */
 		position: relative;
@@ -2371,7 +2370,7 @@
 	}
 
 	.dashboard2-illustration35 {
-		width: 300rpx;
+		/* width: 300rpx; */
 		height: auto;
 		position: absolute;
 		top: 470rpx;
@@ -2381,18 +2380,18 @@
 	}
 
 	.dashboard2-illustration3 {
-		width: 100rpx;
-		height: auto;
+		width: 95rpx;
+		height: 95rpx;
 		position: relative;
-		top: 0rpx;
+		/* top: 0rpx; */
 		left: 0rpx;
 	}
 
 	.dashboard2-illustration3star {
-		width: 65rpx;
-		height: 65rpx;
+		width: 66rpx;
+		height: 66rpx;
 		position: relative;
-		top: 19rpx;
+		/* top: 19rpx; */
 		left: 0rpx;
 		margin-right: 15rpx;
 	}
@@ -2406,11 +2405,11 @@
 	}
 
 	.dashboard2-illustration31 {
-		width: 150rpx;
-		height: auto;
-		position: absolute;
+		width: 36px;
+		height: 36px;
+		position: relative;
 		/* top: 40rpx; */
-		right: 0rpx;
+		/* right: 0rpx; */
 	}
 
 	.dashboard2-illustration36,

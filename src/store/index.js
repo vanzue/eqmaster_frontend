@@ -65,6 +65,10 @@ export default createStore({
 			// popup_font_title: '#8C5225', //弹框标题文字颜色
 		},
 		taskList: new TaskList([]),
+		evalResult: {},
+		gemCount: 0,
+		isPass: false,
+		npcHealth: {},
 	},
 	mutations: {
 		setUserId(state, userId) {
@@ -159,6 +163,24 @@ export default createStore({
 		setDoneTaskLength(state) { 
 			state.taskList.doneTaskLength++;
 		},
+		setIsPass(state, isPass) {
+			state.isPass = isPass;
+		},
+		setGemCount(state, gemCount) {
+			state.gemCount = gemCount;
+		},
+		setEvalResult(state, evalResult) {
+			state.evalResult = evalResult;
+		},
+		setNpcHealth(state, { index, health }) {
+			// console.log("setNpcHealth", index, health);
+			state.npcs.forEach((item, i) => {
+				if (i === index) {
+					item.health = health;
+				}
+			});
+			console.log(state.npcs);
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -249,6 +271,18 @@ export default createStore({
 		},
 		getOnceTaskCount(state) {
 			return state.taskList.getOnceTaskCount();
+		},
+		getIsPass(state) {
+			return state.isPass;
+		},
+		getEvalResult(state) {
+			return state.evalResult;
+		},
+		getGemCount(state) {
+			return state.gemCount;
+		},
+		getNpcHealth(state) {
+			return state.npcHealth;
 		},
 	},
 	actions: {

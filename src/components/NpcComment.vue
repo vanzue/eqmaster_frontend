@@ -81,6 +81,7 @@
 		height: 22px;
 		flex-direction: row; 
 		align-items: center;
+		align-items: baseline;
 	}
 	.name {
 		font-weight: bold;

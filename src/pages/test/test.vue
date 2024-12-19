@@ -425,6 +425,7 @@
 				this.num = this.num + (this.selectedOptionIndex + 1).toString();
 				if (this.selectedOption.scores) {
 					Object.entries(this.selectedOption.scores).forEach(([dimension, score]) => {
+						console.log("nextPage", dimension, score);
 						// const newDimension = this.resetScoresByName(dimension);
 						if (this.scores.hasOwnProperty(dimension)) {
 							this.scores[dimension] += score;

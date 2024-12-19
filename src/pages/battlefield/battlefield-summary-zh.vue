@@ -44,17 +44,18 @@
 						</view>
 	
 						<view class="sub-card" v-if="comments && comments.length">
-							<npc-comment :name="'Jason'" :avatar="getImg('/static/web/battlefield/boss11.webp')"
+							<npc-comment :name="item.role" :avatar="item.avatar"
+								:comment="item.description" :npcHealth="item.health" v-for="(item, index) in comments" :key="index"></npc-comment>
+
+							<!-- <npc-comment :name="'Jason'" :avatar="getImg('/static/web/battlefield/boss11.webp')"
 								:comment="comments[0]" :npcHealth="Number(npcHealthValues[0])"></npc-comment>
 							<npc-comment :name="'Sam'" :avatar="getImg('/static/web/battlefield/xiaoA1.webp')"
 								:comment="comments[1]" :npcHealth="npcHealthValues[1]"></npc-comment>
 							<npc-comment :name="'Anna'" :avatar="getImg('/static/web/battlefield/xiaoB1.webp')"
-								:comment="comments[2]" :npcHealth="npcHealthValues[2]"></npc-comment>
+								:comment="comments[2]" :npcHealth="npcHealthValues[2]"></npc-comment> -->
 						</view>
-	
 					</view>
 				</view>
-	
 				<view class="card third-card">
 					<view class="third-card-title">
 						<text class="tips-title">{{ $t('pages.battlefield.summary.tips') }}</text>
@@ -66,11 +67,8 @@
 						<text>{{ suggestion }}</text>
 						<image class="tips-icon1" :src="getImg('/static/web/battlefield/eqtips1.webp')" mode="widthFix">
 						</image>
-	
 					</view>
-	
 				</view>
-				
 				<view class="status-text1">
 					<text class="tips-title1">{{ $t('pages.battlefield.summary.end') }}</text>
 				</view>
@@ -114,14 +112,26 @@ export default {
 		navBarHeight() {
 			return this.$store.getters.getNavBarHeight;
 		},
+		evalResult() {
+			return this.$store.getters.getEvalResult;
+		},
+		isPass() {
+			return this.$store.getters.getIsPass;
+		},
+		gemCount() {
+			return this.$store.getters.getGemCount;
+		},
+		npcs() {
+			return this.$store.getters.getNpcs;
+		}
 	},
 	data() {
 		return {
 			getImg,
 			comments: [],
 			suggestion: this.$t('pages.battlefield.summary.suggestion'),
-			gemCount: 0,
-			npcHealthValues: [],
+			// gemCount: 0,
+			// npcHealthValues: [],
 			isFromMap: false, // 新增属性以接收参数
 		};
 	},
@@ -168,75 +178,100 @@ export default {
 			});
 		},
 	},
+	watch: {
+		evalResult: {
+			handler(newValue) {
+				if(newValue) {
+					const dbCourse = newValue.response;
+					const list = Object.keys(dbCourse)
+						.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
+						.sort() // 如果你想按照 comment1, comment2 的顺序排列
+						.map((key) => {
+							const npcIndex = parseInt(key.split('comment')[1]) - 1; // 提取数字部分，例如 comment1 -> 0
+							const npc = this.npcs[npcIndex]; // 根据索引找到对应的npc
+							return { role: npc.characterName, description: dbCourse[key], health: npc.health, avatar: npc.avatar }; // 返回npc名字和评论的对象
+						});
+					// console.log("list:", list);
+					this.comments = list;
+					this.suggestion = dbCourse.tips
+						.map(tip => `• ${tip}`) // 在每行开头添加 bullet point
+						.join('\n'); // 用换行符连接所有行
 
+				}
+			},
+			deep: true,
+			immediate: true, // Add this line to make the watcher fire immediately
+		},
+	},
 	onLoad(options) {
 		// 接收上个页面传来的参数
 		if (options.isFromMap !== undefined) {
 			this.isFromMap = options.isFromMap === 'true'; // 将字符串转换为布尔值
 		}
 		// this.homepageData = api.getHomepageData()
-		uni.getStorage({
-			key: "isPass",
-			success: (res) => {
-				// 根据存储的值更新 isPass
-				console.log("res: ", res);
-				this.isPass = res.data || false; // 如果 res.data 为 undefined，则默认为 false
-			},
-			fail: () => {
-				console.warn("获取 isPass 值败");
-				this.isPass = false; // 失败时可以设置默认值
-				// console.log("this.isPass: ", this.isPass);
-			},
-		});
-		const evalResult = uni.getStorage({
-			key: "evalResult",
-			success: (res) => {
-				console.log("result:", res);
-				// const dbCourse = res.data.db_course;
-				const dbCourse = res.data.response;
-				const list = Object.keys(dbCourse)
-					.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
-					.sort() // 如果你想按照 comment1, comment2 的顺序排列
-					.map((key) => dbCourse[key]); // 提取这些键的值      ;
-				console.log("list:", list);
-				this.comments = list;
-				this.suggestion = res.data.response.tips
-					.map(tip => `• ${tip}`) // 在每行开头添加 bullet point
-					.join('\n'); // 用换行符连接所有行
+		// uni.getStorage({
+		// 	key: "isPass",
+		// 	success: (res) => {
+		// 		// 根据存储的值更新 isPass
+		// 		console.log("res: ", res);
+		// 		this.isPass = res.data || false; // 如果 res.data 为 undefined，则默认为 false
+		// 	},
+		// 	fail: () => {
+		// 		console.warn("获取 isPass 值败");
+		// 		this.isPass = false; // 失败时可以设置默认值
+		// 		// console.log("this.isPass: ", this.isPass);
+		// 	},
+		// });
+		// const evalResult = uni.getStorage({
+		// 	key: "evalResult",
+		// 	success: (res) => {
+		// 		console.log("result:", res);
+		// 		// const dbCourse = res.data.db_course;
+		// 		const dbCourse = res.data.response;
+		// 		const list = Object.keys(dbCourse)
+		// 			.filter((key) => key.startsWith("comment")) // 筛选以 'comment' 开头的键
+		// 			.sort() // 如果你想按照 comment1, comment2 的顺序排列
+		// 			.map((key) => dbCourse[key]); // 提取这些键的值      ;
+		// 		console.log("list:", list);
+		// 		this.comments = list;
+		// 		this.suggestion = res.data.response.tips
+		// 			.map(tip => `• ${tip}`) // 在每行开头添加 bullet point
+		// 			.join('\n'); // 用换行符连接所有行
 
-			},
-		});
-		uni.getStorage({
-			key: "npcHealth",
-			success: (res) => {
-				this.npcHealthValues = res.data;
-				console.log("NPC health 获取成功:", this.npcHealthValues);
-			},
-			fail: (err) => {
-				console.error("获取 NPC health 失���:", err);
-			},
-		});
+		// 	},
+		// });
+
+		// uni.getStorage({
+		// 	key: "npcHealth",
+		// 	success: (res) => {
+		// 		this.npcHealthValues = res.data;
+		// 		console.log("NPC health 获取成功:", this.npcHealthValues);
+		// 	},
+		// 	fail: (err) => {
+		// 		console.error("获取 NPC health 失���:", err);
+		// 	},
+		// });
 
 
-		uni.getStorage({
-			key: "gemCount",
-			success: (res) => {
-				console.log("res.data: ", res.data);
-				this.gemCount = parseInt(res.data);
-				// let diamondAdd = 3; // 默认值为 3
-				// if (gemCount > 0) {
-				//  diamondAdd = 10; // 如果 gemCount > 0, 设置 diamondAdd 为 10
-				// }
-				// this.diamondAdd = diamondAdd;
-				// console.log('获取到的 Gem Count:', gemCount, 'Diamond Add 值为:', diamondAdd);
-			},
-			fail: (err) => {
-				console.error("获取 Gem Count 失败:", err);
-				this.gemCount = 0;
-				// this.diamondAdd = 3;
-			},
-		});
-		this.$store.commit('initNpcsHealth');
+		// uni.getStorage({
+		// 	key: "gemCount",
+		// 	success: (res) => {
+		// 		console.log("res.data: ", res.data);
+		// 		this.gemCount = parseInt(res.data);
+		// 		// let diamondAdd = 3; // 默认值为 3
+		// 		// if (gemCount > 0) {
+		// 		//  diamondAdd = 10; // 如果 gemCount > 0, 设置 diamondAdd 为 10
+		// 		// }
+		// 		// this.diamondAdd = diamondAdd;
+		// 		// console.log('获取到的 Gem Count:', gemCount, 'Diamond Add 值为:', diamondAdd);
+		// 	},
+		// 	fail: (err) => {
+		// 		console.error("获取 Gem Count 失败:", err);
+		// 		this.gemCount = 0;
+		// 		// this.diamondAdd = 3;
+		// 	},
+		// });
+		// this.$store.commit('initNpcsHealth');
 	},
 };
 </script>
