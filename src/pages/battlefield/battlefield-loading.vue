@@ -2,7 +2,7 @@
   <view class="background-image loading-container">
     <image
       class="background-image"
-      :src="getImg('/static/web/battlefield/background1.webp')"
+      :src="getBgImg"
       mode="aspectFill"
     />
     <!-- Content -->
@@ -26,6 +26,12 @@ export default {
 	computed: {
 		courseInfo() {
 			return this.$store.getters.getCourseInfo;
+		},
+    themeColors() {
+      return this.$store.getters.getThemeColors;
+    },
+    getBgImg(){
+				return getImg(this.themeColors.background);
 		},
 	},
 

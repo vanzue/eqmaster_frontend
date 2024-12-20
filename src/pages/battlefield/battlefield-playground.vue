@@ -1,8 +1,8 @@
 <template>
 	<view :style="{ '--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme }">
-		<view class="container" :style="{'--bgimg':`url(${getBgImg()})`}" @click="handleContainerClick">
+		<view class="container" :style="{'--bgimg':`url(${getBgImg})`}" @click="handleContainerClick">
 
-			<image class="background-image" :src="getImg('/static/web/battlefield/background1.webp')"
+			<image class="background-image" :src="getBgImg"
 				mode="aspectFill" />
 			<view v-if="state === 'userTalk'" class="overlay user-overlay"></view>
 			<view v-else class="overlay"></view>
@@ -334,9 +334,6 @@ export default {
 		this.scrollToInput();
 	},
 	methods: {
-		getBgImg(){
-			return getImg('/static/web/battlefield/background1.webp');
-		},
 		scrollToInput() {
 			// 监听键盘高度变化
 			uni.onKeyboardHeightChange(res => {
@@ -1170,6 +1167,9 @@ export default {
 		},
 		getDoneTaskLength() {
 			return this.$store.getters.getDoneTaskLength;
+		},
+		getBgImg(){
+			return getImg(this.themeColors.background);
 		},
 	},
 };

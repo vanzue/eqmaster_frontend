@@ -9,14 +9,6 @@
 	import { getImg } from '../scripts/constants';
 	export default {
 		props: {
-			finishComponents: {
-				type: Number,
-				default: 2
-			},
-			totalComponents: {
-				type: Number,
-				default: 4
-			},
 			circleRadius: {
 				type: Number,
 				default: 90
@@ -29,25 +21,14 @@
 				type: Number,
 				default: 5
 			},
-			userId: {
-				type: [String, Number],
-				required: true
-			},
 			username: {
 				type: String,
 				required: true
 			},
 			homepageData: {
 				type: Object,
-				default: () => ({})
+				default: () => ({})	
 			},
-			starRatings: {
-				type: Array,
-				default: () => [2, 2, 1, ]
-			},
-			levelNames: {
-				type: Array,
-			}, 
 			isCompleteTask: {
 				type: Boolean,
 				default: false
@@ -69,73 +50,80 @@
 			};
 		},
 		computed: {
-			localLevelNames() {
-				return this.levelNames || [
-					this.$t('components.SProgressBar.unit1.name'),
-					this.$t('components.SProgressBar.unit2.name'),
-					this.$t('components.SProgressBar.unit3.name'),
-				];
+			themeColors() {
+				return this.$store.getters.getThemeColors;
+			},
+			course_list() {
+				return this.$store.getters.getCourseDataList;
+			},
+			courseData() {
+				return this.$store.getters.getcourseData
+			},
+			finish_components() {
+				return this.course_list.filter(course => course.is_complete).length;
+			},
+			starRatings() {
+				const course_result = this.$store.getters.getCourseDataResult;
+				// console.log("course_result", course_result);
+				return Object.values(course_result).map(item => item.result);
 			}
+		},
+		watch: {
+			course_list: {
+				immediate: true,
+				async handler(newValue) {
+					// console.log("newValue", newValue);
+					if(newValue && newValue.length > 0) {
+						await this.calculateBezierPoints();
+						newValue.forEach(course => {
+							const theme = JSON.parse(course.theme);
+							const completedImage = theme.card_bg_completed || '/static/default_completed.png';
+							const incompleteImage = theme.card_bg_incompleted || '/static/default_incomplete.png';
+							this.loadAndDrawImageWx(completedImage);
+							this.loadAndDrawImageWx(incompleteImage);
+						});
+					}
+				},
+				deep: true,
+			},
+			imgDic: {
+				immediate: true,
+				async handler(newValue) {
+					if(newValue && Object.keys(newValue).length >= this.course_list.length * 2) {
+						await this.drawSProgress();
+					}
+				},
+				deep: true,
+			},
 		},
 		mounted() {
 			uni.getSystemInfo({
-				success: (res) => {
+				success: async (res) => {
+					// console.log("mounted", res, this.circleRadius);
 					this.canvasWidth = res.windowWidth; // 将Canvas宽度设置为窗口宽度
-					this.canvasHeight = (this.circleRadius * 4 * (this.totalComponents + 1)) + this
+					this.canvasHeight = (this.circleRadius * 4 * (this.finish_components + 1)) + this
 						.verticalOffset * 2;
-					this.calculateBezierPoints();
-					this.loadimg();
+					await this.calculateBezierPoints();
 				},
 			});
 		},
 		updated() {
-			this.drawSProgress();
+			// this.drawSProgress();
 		},
 		methods: {
-			loadimg(){
-				const completedImages = [
-					'/static/web/level1completed1.webp',
-					'/static/web/level2completed.webp',
-					'/static/web/level3completed.webp',
-					//'/static/web/level4completed.webp',
-					//'/static/web/level5completed.webp'
-				];
-				const incompleteImages = [
-					'/static/web/level1incomplete.webp',
-					'/static/web/level2incomplete1.webp',
-					'/static/web/level3incomplete1.webp',
-					//'/static/web/level4incomplete.webp',
-					//'/static/web/level5incomplete.webp'
-				];
-				for(let i=0; i<completedImages.length; i++){
-				  this.loadAndDrawImageWx(completedImages[i])
-				}
-				for(let i=0; i<incompleteImages.length; i++){
-				  this.loadAndDrawImageWx(incompleteImages[i])
-				}
-			},
 			loadAndDrawImageWx(src) {
 				const filePath = getImg(src);
 
 				if (filePath.endsWith('.webp') || filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.gif')) {
 					this.imgDic[src] = filePath;
-					this.downImgNum++;
-					// console.log(`index=${this.downImgNum}`)
-					if (this.downImgNum >= 6) {
-						this.drawSProgress();
-					}
 				} else {
 					uni.downloadFile({
 				        url: getImg(src),
 				        success: (res) => {
 				          if (res.statusCode === 200) {
 				            const imgPath = res.tempFilePath;
-							// console.log(`index=${index} src=${src}`)
+							// console.log(`index= src=${src}`)
 							  this.imgDic[src] = imgPath
-							  this.downImgNum++
-							  if (this.downImgNum >=6) {
-								this.drawSProgress()
-							  }
 							// ctx.drawImage(imgPath,x, y, size, size);
 							// this.drawPath(ctx,index,x, y,size,isCompleted)
 							// ctx.draw();
@@ -150,7 +138,7 @@
 				}
 				
 			},
-			calculateBezierPoints() {
+			async calculateBezierPoints() {
 				const width = this.canvasWidth;
 				const radius = this.circleRadius;
 				const offset = this.verticalOffset;
@@ -178,8 +166,8 @@
 				}
 				this.bezierPoints.push(initialPoints);
 				this.endPoints.push(initialPoints[initialPoints.length - 1]);
-
-				for (let component = 0; component < this.totalComponents; component++) {
+				console.log("1111", this.course_list);
+				for (let component = 0; component < this.course_list.length; component++) {
 					const componentPoints = [];
 					const baseY = component * 2 * radius;
 
@@ -241,7 +229,7 @@
 						10 - 1]);
 				}
 			},
-			drawSProgress() {
+			async drawSProgress() {
 				const ctx = uni.createCanvasContext(this.canvasId, this);
 				const width = this.canvasWidth;
 				const height = this.canvasHeight;
@@ -253,8 +241,15 @@
 				ctx.translate(0, 8); // Move the entire drawing down by 10 pixels
 
 				// 绘制所有路径
-				for (let i = 0; i < this.totalComponents; i++) {
+				for (let i = 0; i < this.course_list.length; i++) {
 					const points = this.bezierPoints[i];
+
+					const element1 = this.course_list[i];
+					// const isCompleted = i < this.finishComponents;
+					const isCompleted1 = this.course_list[i].is_complete;
+					const next_course_id1 = this.courseData.next_course_id;
+					const isHighlight1 = isCompleted1 || element1.id == next_course_id1;
+
 					ctx.beginPath();
 					ctx.lineCap = 'round'; // 设置线条端点为圆形
 
@@ -276,7 +271,7 @@
 					ctx.lineTo(endPoint.x, endPoint.y + yOffset);
 
 					// 修改这里：为完成和未完成的路径设置不同的线宽
-					if (i < this.finishComponents) {
+					if (isHighlight1) {
 						ctx.lineWidth = 10; // 完成的路径保持 10 的宽度
 						ctx.strokeStyle = '#EDFB8B';
 						ctx.setLineDash([]); // 设置虚线样式
@@ -345,27 +340,30 @@
 					}
 				}
 
-				// 定义完成和未完成的图片路径数组
-				const completedImages = [
-					'/static/web/level1completed1.webp',
-					'/static/web/level2completed.webp',
-					'/static/web/level3completed3.webp',
-					//'/static/web/level4completed.webp',
-					//'/static/web/level5completed.webp'
-				];
-				const incompleteImages = [
-					'/static/web/level1incomplete.webp',
-					'/static/web/level2incomplete1.webp',
-					'/static/web/level3incomplete1.webp',
-					//'/static/web/level4incomplete.webp',
-					//'/static/web/level5incomplete.webp'
-				];
+				// // 定义完成和未完成的图片路径数组
+				// const completedImages = [
+				// 	'/static/web/level1completed.webp',
+				// 	'/static/web/level2completed.webp',
+				// 	'/static/web/level3completed3.webp',
+				// 	//'/static/web/level4completed.webp',
+				// 	//'/static/web/level5completed.webp'
+				// ];
+				// const incompleteImages = [
+				// 	'/static/web/level1incomplete.webp',
+				// 	'/static/web/level2incomplete1.webp',
+				// 	'/static/web/level3incomplete1.webp',
+				// 	//'/static/web/level4incomplete.webp',
+				// 	//'/static/web/level5incomplete.webp'
+				// ];
 
 				// 绘制所有端点、线段和图片
-				for (let i = 0; i < this.totalComponents; i++) {
+				for (let i = 0; i < this.course_list.length; i++) {
 					const endPoint = this.endPoints[i];
-					const isCompleted = i < this.finishComponents;
-
+					const element = this.course_list[i];
+					// const isCompleted = i < this.finishComponents;
+					const isCompleted = this.course_list[i].is_complete;
+					const next_course_id = this.courseData.next_course_id;
+					const isHighlight = isCompleted || element.id == next_course_id;
 					// 绘制端点圆圈
 					ctx.beginPath();
 					ctx.arc(endPoint.x, endPoint.y + yOffset, 12, 0, 2 * Math.PI);
@@ -395,21 +393,23 @@
 					ctx.strokeStyle = isCompleted ? '#9EE44D' : 'rgba(221, 221, 221, 0)';
 					ctx.stroke();
 
+					const theme = JSON.parse(element.theme);
+
 					// 选择适当的图片路径
-					const imagePath = isCompleted ?
-						(completedImages[i] || '/static/default_completed.png') :
-						(incompleteImages[i] || '/static/default_incomplete.png');
+					const imagePath = isHighlight ?
+						(theme.card_bg_completed || '/static/default_completed.png') :
+						(theme.card_bg_incompleted || '/static/default_incomplete.png');
 					console.log(imagePath);
 					const imageSize = 160;
 					const lineLength = 100;
 					const imageX = i % 2 === 0 ? endPoint.x - lineLength - imageSize / 2 : endPoint.x + lineLength -
 						imageSize / 2;
 					const imageY = endPoint.y - imageSize / 2 + yOffset;
-
+					// console.log(getImg(imagePath));
 					try {
 						ctx.drawImage(this.imgDic[imagePath], imageX, imageY, imageSize, imageSize);
 						// 只在激活（已完成）的关卡上添加红色实体六边形
-						if (isCompleted) {
+						if (isHighlight) {
 							this.hexagons[i] = {
 								centerX: imageX + imageSize / 2,
 								centerY: imageY + imageSize / 2,
@@ -419,7 +419,7 @@
 					} catch (error) {
 						console.error(`Error drawing image for level ${i + 1}:`, error);
 					}
-
+					// console.log(this.hexagons);
 					// 计算文本容器的宽度和位置
 					const textContainerWidth = 140; // 调整此值以适应您的需求
 					const textContainerX = i % 2 === 0 ?
@@ -481,7 +481,7 @@
 					ctx.fillStyle = isCompleted ? 'white' : 'rgba(255, 255, 255, 0.3)'; // 或者您想要的其他颜色
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
-					const levelName = this.localLevelNames[i] || `Level ${i + 1}`;
+					const levelName = element.title || `Level ${i + 1}`;
 
 					// 添加文本换行逻辑
 					const maxWidth = textContainerWidth*1.1; // 留一些边距
@@ -534,7 +534,7 @@
 						for (let j = 0; j < 3; j++) {
 							const starX = starContainerX + (j * (starSize + starSpacing));
 							const starY = starContainerY;
-							const starPath = j < this.starRatings[i] ? '/static/dashboard2/star.png' :
+							const starPath = j < this.starRatings[i] ? '/static/dashboard2/start_noshadow.png' :
 								'/static/dashboard2/star-end.png';
 							ctx.drawImage(starPath, starX, starY, starSize, starSize);
 						}

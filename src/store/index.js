@@ -63,6 +63,9 @@ export default createStore({
 			// matching: '#FDEDC8', //搭配主题颜色
 			popup_font_title: '#2D6985', //弹框标题文字颜色
 			// popup_font_title: '#8C5225', //弹框标题文字颜色
+			card_bg_completed: '',
+			card_bg_incompleted: '',
+			background: '',
 		},
 		taskList: new TaskList([]),
 		evalResult: {},
@@ -242,6 +245,12 @@ export default createStore({
 		getCourseInfo(state) {
 			return state.courseInfo;
 		},
+		getCourseDataList(state) {
+			return state.courseData.course_list;
+		},
+		getCourseDataResult(state) {
+			return state.courseData.course_result;
+		},
 		getNavBarHeight(state) {
 			return state.navBarHeight;
 		},
@@ -312,7 +321,6 @@ export default createStore({
 			state
 		}) {
 			try {
-				console
 				const courseData = await apiService.getBattlefield(this.state.userId);
 				if (!courseData) {
 					throw new Error('No course data received');

@@ -103,19 +103,19 @@
                 <cover-view class="dashboard2-fixed-content">
                     <cover-view class="dashboard2-card-o">
                         <cover-view class="dashboard2-card">
-                            <cover-image class="dashboard2-illustration3" src="/static/dashboard2/diamond.png" mode="widthFix"></cover-image>
+                            <cover-image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/diamond.png')" mode="widthFix"></cover-image>
                             <cover-view class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</cover-view>
                         </cover-view>
                         <cover-view class="dashboard2-card">
                             <!-- <cover-image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
                                 mode="widthFix">
                             </cover-image> -->
-							<cover-image class="dashboard2-illustration3star" src="/static/dashboard2/star.png"
+							<cover-image class="dashboard2-illustration3star" :src="getImg('/static/web/dashboard2/star.png')"
 							mode="widthFix"></cover-image>
                             <cover-view class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</cover-view>
                         </cover-view>
 						<cover-view class="dashboard2-card">
-							<cover-image class="dashboard2-illustration31" src="/static/dashboard2/leaderboard-star.png" mode="widthFix"></cover-image>
+							<cover-image class="dashboard2-illustration31" :src="getImg('/static/web/dashboard2/leaderboard-star.png')" mode="widthFix"></cover-image>
 						</cover-view>
                     </cover-view>
 
@@ -168,12 +168,7 @@
 							:starRatings="Array(1).fill(gemCount)" :totalComponents="4"
 							:isCompleteTask="gemCount" /> -->
 
-						<SProgressBar v-if="courseData" class="container-sprogress"
-							:finish-components="courseData.course_list.length"
-							:total-components="3"
-							:star-ratings="courseData.course_result.map(item => item.result)"
-							:level-names="courseData.course_list.map(item => item.title)" 
-							/>
+						<SProgressBar v-if="courseData" class="container-sprogress"/>
 						<!-- 
 
 						:finish-components="courseData.course_result.length+1"
@@ -576,7 +571,16 @@
 					}
 				},
 				// deep: true,
-			}
+			},
+			userId: {
+				immediate: true,
+				async handler(val) {
+					if (val && val > 0) {
+						this.$store.dispatch('fetchcourseData');
+					}
+				},
+				// deep: true,
+			},
 		},
 		components: {
 			SProgressBar,
@@ -586,7 +590,7 @@
 		},
 		async created() {
 			await this.getAnalysisList();
-			this.$store.dispatch('fetchcourseData');
+			// this.$store.dispatch('fetchcourseData');
 			// console.log('…………^-^Course Data:', this.courseData)
 			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
 
@@ -2380,20 +2384,21 @@
 	}
 
 	.dashboard2-illustration3 {
-		width: 95rpx;
-		height: 95rpx;
+		width: 100rpx;
+		height: 100rpx;
 		position: relative;
 		/* top: 0rpx; */
 		left: 0rpx;
+		/* margin-right: 15rpx; */
 	}
 
 	.dashboard2-illustration3star {
-		width: 66rpx;
-		height: 66rpx;
+		width: 100rpx;
+		height: 100rpx;
 		position: relative;
 		/* top: 19rpx; */
 		left: 0rpx;
-		margin-right: 15rpx;
+		/* margin-right: 15rpx; */
 	}
 	
 	.dashboard2-illustration-star {
