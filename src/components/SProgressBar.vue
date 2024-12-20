@@ -9,14 +9,6 @@
 	import { getImg } from '../scripts/constants';
 	export default {
 		props: {
-			finishComponents: {
-				type: Number,
-				default: 2
-			},
-			totalComponents: {
-				type: Number,
-				default: 4
-			},
 			circleRadius: {
 				type: Number,
 				default: 90
@@ -29,25 +21,14 @@
 				type: Number,
 				default: 5
 			},
-			userId: {
-				type: [String, Number],
-				required: true
-			},
 			username: {
 				type: String,
 				required: true
 			},
 			homepageData: {
 				type: Object,
-				default: () => ({})
+				default: () => ({})	
 			},
-			starRatings: {
-				type: Array,
-				default: () => [2, 2, 1, ]
-			},
-			levelNames: {
-				type: Array,
-			}, 
 			isCompleteTask: {
 				type: Boolean,
 				default: false
@@ -69,13 +50,6 @@
 			};
 		},
 		computed: {
-			localLevelNames() {
-				return this.levelNames || [
-					this.$t('components.SProgressBar.unit1.name'),
-					this.$t('components.SProgressBar.unit2.name'),
-					this.$t('components.SProgressBar.unit3.name'),
-				];
-			},
 			themeColors() {
 				return this.$store.getters.getThemeColors;
 			},
@@ -87,6 +61,11 @@
 			},
 			finish_components() {
 				return this.course_list.filter(course => course.is_complete).length;
+			},
+			starRatings() {
+				const course_result = this.$store.getters.getCourseDataResult;
+				// console.log("course_result", course_result);
+				return Object.values(course_result).map(item => item.result);
 			}
 		},
 		watch: {
@@ -120,9 +99,9 @@
 		mounted() {
 			uni.getSystemInfo({
 				success: async (res) => {
-					// console.log("mounted", res);
+					// console.log("mounted", res, this.circleRadius);
 					this.canvasWidth = res.windowWidth; // 将Canvas宽度设置为窗口宽度
-					this.canvasHeight = (this.circleRadius * 4 * (this.totalComponents + 1)) + this
+					this.canvasHeight = (this.circleRadius * 4 * (this.finish_components + 1)) + this
 						.verticalOffset * 2;
 					await this.calculateBezierPoints();
 				},

@@ -248,6 +248,9 @@ export default createStore({
 		getCourseDataList(state) {
 			return state.courseData.course_list;
 		},
+		getCourseDataResult(state) {
+			return state.courseData.course_result;
+		},
 		getNavBarHeight(state) {
 			return state.navBarHeight;
 		},
