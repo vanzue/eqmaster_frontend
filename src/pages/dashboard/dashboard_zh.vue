@@ -103,19 +103,19 @@
                 <cover-view class="dashboard2-fixed-content">
                     <cover-view class="dashboard2-card-o">
                         <cover-view class="dashboard2-card">
-                            <cover-image class="dashboard2-illustration3" src="/static/dashboard2/diamond.png" mode="widthFix"></cover-image>
+                            <cover-image class="dashboard2-illustration3" :src="getImg('/static/web/dashboard2/diamond.png')" mode="widthFix"></cover-image>
                             <cover-view class="dashboard2-score-value-large-y">{{ homepageData?.response?.personal_info?.num_diamond || 0 }}</cover-view>
                         </cover-view>
                         <cover-view class="dashboard2-card">
                             <!-- <cover-image class="dashboard2-illustration-star" src="/static/battlefield/mingcute_star-fill.svg"
                                 mode="widthFix">
                             </cover-image> -->
-							<cover-image class="dashboard2-illustration3star" src="/static/dashboard2/star.png"
+							<cover-image class="dashboard2-illustration3star" :src="getImg('/static/web/dashboard2/star.png')"
 							mode="widthFix"></cover-image>
                             <cover-view class="dashboard2-score-value-large-g">{{ gemCount <= 0 ? homepageData?.response?.personal_info?.num_star : gemCount}}</cover-view>
                         </cover-view>
 						<cover-view class="dashboard2-card">
-							<cover-image class="dashboard2-illustration31" src="/static/dashboard2/leaderboard-star.png" mode="widthFix"></cover-image>
+							<cover-image class="dashboard2-illustration31" :src="getImg('/static/web/dashboard2/leaderboard-star.png')" mode="widthFix"></cover-image>
 						</cover-view>
                     </cover-view>
 
