@@ -576,7 +576,16 @@
 					}
 				},
 				// deep: true,
-			}
+			},
+			userId: {
+				immediate: true,
+				async handler(val) {
+					if (val && val > 0) {
+						this.$store.dispatch('fetchcourseData');
+					}
+				},
+				// deep: true,
+			},
 		},
 		components: {
 			SProgressBar,
@@ -586,7 +595,7 @@
 		},
 		async created() {
 			await this.getAnalysisList();
-			this.$store.dispatch('fetchcourseData');
+			// this.$store.dispatch('fetchcourseData');
 			// console.log('…………^-^Course Data:', this.courseData)
 			const result = illustrationSrc(this.homepageData, this.$store, this.$t);
 
@@ -2380,20 +2389,21 @@
 	}
 
 	.dashboard2-illustration3 {
-		width: 95rpx;
-		height: 95rpx;
+		width: 100rpx;
+		height: 100rpx;
 		position: relative;
 		/* top: 0rpx; */
 		left: 0rpx;
+		/* margin-right: 15rpx; */
 	}
 
 	.dashboard2-illustration3star {
-		width: 66rpx;
-		height: 66rpx;
+		width: 100rpx;
+		height: 100rpx;
 		position: relative;
 		/* top: 19rpx; */
 		left: 0rpx;
-		margin-right: 15rpx;
+		/* margin-right: 15rpx; */
 	}
 	
 	.dashboard2-illustration-star {

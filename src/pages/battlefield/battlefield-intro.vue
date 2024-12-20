@@ -1,5 +1,5 @@
 <template>
-	<view class="container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme ,'--bgimg':`url(${getBgImg()})`}">
+	<view class="container" :style="{'--theme-color-matching': themeColors.matching, '--theme-color-theme': themeColors.theme ,'--bgimg':`url(${getBgImg})`}">
 		<view class="overlay"></view>
 		<view class="navbar" :style="{ height: navBarHeight + 'px' }">
 			<image class="back-button" src="/static/back-left.png" @tap="goToDashboard" :style="{marginTop: navBarTop + 'px'}"></image>
@@ -166,6 +166,9 @@
 			themeColors() {
 				return this.$store.getters.getThemeColors;
 			},
+			getBgImg(){
+				return getImg(this.themeColors.background);
+			},
 		},
 		onLoad() {
 			// this.generateNpcHtml();
@@ -180,9 +183,6 @@
 			},
 		},
 		methods: {
-			getBgImg(){
-				return getImg('/static/web/battlefield/background1.webp');
-			},
 			navigateToNextPage() {
 				uni.reLaunch({
 					url: '/pages/battlefield/battlefield-task' // Replace this with the actual path to your next page
