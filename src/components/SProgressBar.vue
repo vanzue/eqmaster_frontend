@@ -244,11 +244,11 @@
 				for (let i = 0; i < this.course_list.length; i++) {
 					const points = this.bezierPoints[i];
 
-					const element1 = this.course_list[i];
+					const element = this.course_list[i];
 					// const isCompleted = i < this.finishComponents;
-					const isCompleted1 = this.course_list[i].is_complete;
-					const next_course_id1 = this.courseData.next_course_id;
-					const isHighlight1 = isCompleted1 || element1.id == next_course_id1;
+					const isCompleted = this.course_list[i].is_complete;
+					const next_course_id = this.courseData.next_course_id;
+					const isHighlight1 = (isCompleted || element.id == next_course_id) && element.status == 1;
 
 					ctx.beginPath();
 					ctx.lineCap = 'round'; // 设置线条端点为圆形
@@ -363,7 +363,7 @@
 					// const isCompleted = i < this.finishComponents;
 					const isCompleted = this.course_list[i].is_complete;
 					const next_course_id = this.courseData.next_course_id;
-					const isHighlight = isCompleted || element.id == next_course_id;
+					const isHighlight = (isCompleted || element.id == next_course_id) && element.status == 1;
 					// 绘制端点圆圈
 					ctx.beginPath();
 					ctx.arc(endPoint.x, endPoint.y + yOffset, 12, 0, 2 * Math.PI);
